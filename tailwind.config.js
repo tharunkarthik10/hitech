@@ -76,25 +76,25 @@ export default {
         "unit": "8px"
       },
       "fontFamily": {
-        "headline-xl": ["Montserrat", "sans-serif"],
-        "status-code": ["Montserrat", "sans-serif"],
-        "body-lg": ["Montserrat", "sans-serif"],
-        "label-caps": ["Montserrat", "sans-serif"],
-        "headline-lg": ["Montserrat", "sans-serif"],
-        "body-md": ["Montserrat", "sans-serif"],
-        "headline-lg-mobile": ["Montserrat", "sans-serif"],
-        "price-display": ["Montserrat", "sans-serif"],
-        "serif": ["Lora", "serif"]
+        "headline-xl": ["Outfit", "sans-serif"],
+        "status-code": ["Outfit", "sans-serif"],
+        "body-lg": ["Outfit", "sans-serif"],
+        "label-caps": ["Outfit", "sans-serif"],
+        "headline-lg": ["Outfit", "sans-serif"],
+        "body-md": ["Outfit", "sans-serif"],
+        "headline-lg-mobile": ["Outfit", "sans-serif"],
+        "price-display": ["Outfit", "sans-serif"],
+        "serif": ["Outfit", "sans-serif"]
       },
       "fontSize": {
-        "headline-xl": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-        "status-code": ["10px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}],
+        "headline-xl": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+        "status-code": ["10px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
         "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
-        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "700"}],
+        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600"}],
         "headline-lg": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
         "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
         "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
-        "price-display": ["24px", {"lineHeight": "1", "fontWeight": "700"}]
+        "price-display": ["24px", {"lineHeight": "1", "fontWeight": "600"}]
       }
     },
   },
