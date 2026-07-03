@@ -1,15 +1,19 @@
+import { useState } from 'react';
+
 export default function QualityFeatures() {
+  const [activeCert, setActiveCert] = useState<string | null>(null);
+
   return (
     <>
       {/* Quality Commitment Redesign */}
-      <section className="bg-[#eaf6ff] py-20 relative overflow-hidden">
+      <section className="bg-[#F1F5F9] py-20 relative overflow-hidden">
         <div className="max-w-container-max mx-auto px-gutter relative z-10">
           
           {/* Header Row */}
           <div className="flex flex-col gap-6 mb-16 max-w-3xl">
             <div className="space-y-4">
               <h2 className="font-headline-xl text-[36px] md:text-[48px] text-on-surface uppercase tracking-wide font-bold leading-tight">
-                Quality Comes First<span className="text-industrial-yellow">.</span>
+                Quality Comes First<span className="text-[#0F1B2D]">.</span>
               </h2>
             </div>
             <p className="font-body-md text-[#4a4a4a] text-[16px] md:text-[20px] leading-relaxed">
@@ -17,210 +21,133 @@ export default function QualityFeatures() {
             </p>
           </div>
 
-          {/* 3-Column Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Certificates Stack */}
+          <div className="w-full flex flex-col gap-6">
             
-            {/* Card 1 */}
-            <div className="bg-white border border-outline/30 p-8 flex flex-col items-center text-center shadow-sm">
-              <div className="flex-1 w-full flex items-center justify-center bg-[#f4f5f6] p-6 mb-8 border border-outline/10 shadow-inner">
-                <img 
-                  src="/assets/images/certs/cer2.jpg" 
-                  alt="Global QMS Certificate" 
-                  className="w-full max-w-[200px] object-contain shadow-md border border-outline/20"
-                />
+            {/* Cert 1 */}
+            <div 
+              className="bg-white rounded-[16px] p-8 md:p-10 shadow-xl border border-black/5 hover:-translate-y-1 hover:shadow-2xl hover:border-[#7dd3fc]/50 cursor-pointer flex flex-col md:flex-row justify-between items-start md:items-center gap-6 group transition-all duration-300"
+              onClick={() => setActiveCert('/assets/images/certs/cer2.jpg')}
+            >
+              <div className="flex-1 pr-4">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="material-symbols-outlined text-[#0284c7] font-light">workspace_premium</span>
+                  <h3 className="text-2xl md:text-3xl font-headline-xl font-bold text-[#0F1B2D] tracking-tight group-hover:text-[#0284c7] transition-colors">Global QMS</h3>
+                </div>
+                <p className="text-[17px] text-[#475569] leading-relaxed">
+                  Certified Quality Management System for design, manufacturing, and technical services ensuring consistent excellence across all our global operations. This certification validates our commitment to continuous improvement, stringent quality control, and strict adherence to international manufacturing standards. Our facility undergoes rigorous annual audits to maintain this prestigious credential.
+                </p>
               </div>
-              <h3 className="font-headline-lg font-bold text-xl text-[#1a1a1a] mb-3">Global QMS</h3>
-              <p className="font-body-md text-[#5a5a5a] text-sm leading-relaxed">
-                Certified Quality Management System for design, manufacturing, and technical services.
-              </p>
+              <div className="hidden md:flex w-16 h-16 shrink-0 rounded-full bg-[#f1f5f9] group-hover:bg-[#e0f2fe] items-center justify-center transition-colors">
+                <span className="material-symbols-outlined text-[#475569] group-hover:text-[#0284c7]">arrow_outward</span>
+              </div>
+              {/* Mobile View Button */}
+              <div className="md:hidden flex items-center gap-2 text-[#0284c7] font-bold font-label-caps uppercase text-sm mt-2">
+                <span className="material-symbols-outlined text-lg">arrow_outward</span> View Certificate
+              </div>
             </div>
 
-            {/* Card 2 */}
-            <div className="bg-white border border-outline/30 p-8 flex flex-col items-center text-center shadow-sm">
-              <div className="flex-1 w-full flex items-center justify-center bg-[#1e2022] p-6 mb-8 shadow-inner">
-                <img 
-                  src="/assets/images/certs/cer1.jpg" 
-                  alt="Supply Excellence Certificate" 
-                  className="w-full max-w-[280px] object-contain shadow-lg border-[6px] border-[#4a2e22] rounded-sm"
-                />
+            {/* Cert 2 */}
+            <div 
+              className="bg-white rounded-[16px] p-8 md:p-10 shadow-xl border border-black/5 hover:-translate-y-1 hover:shadow-2xl hover:border-[#7dd3fc]/50 cursor-pointer flex flex-col md:flex-row justify-between items-start md:items-center gap-6 group transition-all duration-300"
+              onClick={() => setActiveCert('/assets/images/certs/cer1.jpg')}
+            >
+              <div className="flex-1 pr-4">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="material-symbols-outlined text-[#0284c7] font-light">military_tech</span>
+                  <h3 className="text-2xl md:text-3xl font-headline-xl font-bold text-[#0F1B2D] tracking-tight group-hover:text-[#0284c7] transition-colors">Supply Excellence</h3>
+                </div>
+                <p className="text-[17px] text-[#475569] leading-relaxed">
+                  Recognized for consistent 100% on-time delivery and zero-defect performance by leading OEMs, demonstrating our commitment to reliable partnerships. We have been awarded the 'Best Supplier' accolade for three consecutive years, reflecting our robust supply chain management, advanced logistical planning, and unwavering dedication to exceeding client expectations in every project phase.
+                </p>
               </div>
-              <h3 className="font-headline-lg font-bold text-xl text-[#1a1a1a] mb-3">Supply Excellence</h3>
-              <p className="font-body-md text-[#5a5a5a] text-sm leading-relaxed">
-                Recognized for consistent 100% on-time delivery and zero-defect performance by leading OEMs.
-              </p>
+              <div className="hidden md:flex w-16 h-16 shrink-0 rounded-full bg-[#f1f5f9] group-hover:bg-[#e0f2fe] items-center justify-center transition-colors">
+                <span className="material-symbols-outlined text-[#475569] group-hover:text-[#0284c7]">arrow_outward</span>
+              </div>
+              {/* Mobile View Button */}
+              <div className="md:hidden flex items-center gap-2 text-[#0284c7] font-bold font-label-caps uppercase text-sm mt-2">
+                <span className="material-symbols-outlined text-lg">arrow_outward</span> View Certificate
+              </div>
             </div>
 
-            {/* Card 3 */}
-            <div className="bg-[#f0f4f8] border border-[#dce5ed] p-8 flex flex-col">
-              <span className="material-symbols-outlined text-2xl text-[#4a5a6a] mb-6">analytics</span>
-              <h3 className="font-headline-lg font-bold text-2xl text-[#1a1a1a] mb-6 pr-8 leading-tight">Metric Driven Reliability</h3>
-              
-              <div className="flex-1 space-y-0">
-                <div className="flex justify-between items-center py-4 border-t border-[#dce5ed]">
-                  <span className="font-body-md text-sm text-[#3a3a3a] font-medium">Audit Compliance</span>
-                  <span className="font-headline-lg font-bold text-lg text-[#006085]">100%</span>
-                </div>
-                <div className="flex justify-between items-center py-4 border-t border-[#dce5ed]">
-                  <span className="font-body-md text-sm text-[#3a3a3a] font-medium">Defect Rate (PPM)</span>
-                  <span className="font-headline-lg font-bold text-lg text-[#006085]">&lt; 50</span>
-                </div>
-                <div className="flex justify-between items-center py-4 border-y border-[#dce5ed]">
-                  <span className="font-body-md text-sm text-[#3a3a3a] font-medium">Inspection Gates</span>
-                  <span className="font-headline-lg font-bold text-lg text-[#006085]">128pt</span>
-                </div>
-              </div>
-
-              <button className="mt-10 w-full py-4 border-2 border-[#5c7a94] text-[#5c7a94] font-status-code uppercase tracking-widest text-[10px] font-bold hover:bg-[#5c7a94] hover:text-white transition-colors">
-                DOWNLOAD QUALITY MANUAL
-              </button>
-            </div>
-            
           </div>
         </div>
       </section>
 
-      {/* Features */}
-      <section className="max-w-container-max mx-auto px-gutter pt-section-padding pb-0 bg-stark-white overflow-hidden">
-        
-        {/* MOBILE LAYOUT (Hidden on Desktop) */}
-        <div className="md:hidden flex flex-col items-center space-y-12 mt-10">
-          <div className="flex flex-col items-center text-center space-y-3">
-            <div className="w-16 h-16 bg-[#0a192f] text-white flex items-center justify-center rounded-full shadow-lg">
-              <span className="material-symbols-outlined text-3xl">star</span>
-            </div>
-            <h3 className="font-status-code text-industrial-yellow tracking-widest uppercase text-sm">Why HITECH ENGINEERING</h3>
-            <h2 className="font-headline-lg font-bold text-on-surface text-[24px]">Great & Awesome Features</h2>
-          </div>
-
-          <div className="flex flex-col items-center text-center space-y-4">
-            <div className="w-16 h-16 bg-[#3a3a3a] text-stark-white flex items-center justify-center rounded-full shadow-lg">
-              <span className="material-symbols-outlined text-3xl">database</span>
-            </div>
-            <h4 className="font-headline-lg font-bold text-on-surface text-[18px]">FAIR PRICES</h4>
-            <p className="font-body-md text-on-surface-variant text-[14px] max-w-xs leading-relaxed">
-              You can be 100% sure that our product is budget friendly compared with any other competitors of our equal specification.
-            </p>
-          </div>
-
-          <div className="flex flex-col items-center text-center space-y-4">
-            <div className="w-16 h-16 bg-[#3a3a3a] text-stark-white flex items-center justify-center rounded-full shadow-lg">
-              <span className="material-symbols-outlined text-3xl">work</span>
-            </div>
-            <h4 className="font-headline-lg font-bold text-on-surface text-[18px]">QUALIFIED AGENTS</h4>
-            <p className="font-body-md text-on-surface-variant text-[14px] max-w-xs leading-relaxed">
-              We have a team of specialists capable of maximizing the result and delivering the projects
-            </p>
-          </div>
-
-          <div className="w-full flex justify-center py-8">
-            <img alt="HITECH ENGINEERING Expert" className="w-full max-w-sm object-contain" src="https://motiequipments.com/assets/images/features/3.png" />
-          </div>
-
-          <div className="flex flex-col items-center text-center space-y-4">
-            <div className="w-16 h-16 bg-[#3a3a3a] text-stark-white flex items-center justify-center rounded-full shadow-lg">
-              <span className="material-symbols-outlined text-3xl">calendar_month</span>
-            </div>
-            <h4 className="font-headline-lg font-bold text-on-surface text-[18px]">ALWAYS AVAILABLE</h4>
-            <p className="font-body-md text-on-surface-variant text-[14px] max-w-xs leading-relaxed">
-              Our customer care support functions 24/7 & your free to contact us anytime of your convince.
-            </p>
-          </div>
-
-          <div className="flex flex-col items-center text-center space-y-4">
-            <div className="w-16 h-16 bg-[#3a3a3a] text-stark-white flex items-center justify-center rounded-full shadow-lg">
-              <span className="material-symbols-outlined text-3xl">shopping_cart</span>
-            </div>
-            <h4 className="font-headline-lg font-bold text-on-surface text-[18px]">BEST OFFERS</h4>
-            <p className="font-body-md text-on-surface-variant text-[14px] max-w-xs leading-relaxed">
-              All aspects of the operations being transparent and clear for clients and partners
-            </p>
-          </div>
-        </div>
-
-        {/* DESKTOP LAYOUT (Mathematical Perfect Semi-Circle Formation) */}
-        <div className="hidden md:flex relative w-full max-w-6xl mx-auto h-[650px] mt-10 justify-center">
+      {/* Features (Fictiv Style Testimonial converted to Massive Box) */}
+      <section className="bg-stark-white py-8 md:py-16 font-body-md">
+        {/* Massive Box Wrapper */}
+        <div className="relative w-full bg-gradient-to-br from-[#7dd3fc] to-[#0284c7] shadow-2xl overflow-hidden">
           
-          {/* Glowing Backdrop behind the man */}
-          <div className="absolute bottom-[-50px] left-1/2 translate-x-[calc(-50%+24px)] w-[500px] h-[600px] bg-industrial-yellow/20 rounded-full blur-[100px] pointer-events-none z-0"></div>
+          {/* Solid Background (Blobs removed to match the bright blue style) */}
+          <div className="absolute inset-0 z-0 pointer-events-none"></div>
 
-          {/* Central Image */}
-          <div className="absolute bottom-[-40px] left-1/2 translate-x-[calc(-50%+24px)] w-full max-w-sm z-10 flex justify-center pointer-events-none">
-            <img alt="HITECH ENGINEERING Expert" className="w-full object-contain object-bottom h-[650px] drop-shadow-[0_20px_30px_rgba(0,0,0,0.4)]" src="https://motiequipments.com/assets/images/features/3.png" />
-          </div>
-
-          {/* The Perfect Semi-Circle Line */}
-          {/* Width 800px, Height 400px. Center is at bottom 180px. Top is at 580px (clearing the man's head). */}
-          <div 
-            className="absolute left-1/2 -translate-x-1/2 bottom-[180px] w-[800px] h-[400px] border-t-[1.5px] border-l-[1.5px] border-r-[1.5px] border-black/30 rounded-t-full border-b-0 z-0"
-          >
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2">
             
-            {/* Top Center: 90 degrees */}
-            <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center z-20">
-              <div className="w-16 h-16 bg-[#0a192f] text-white flex items-center justify-center rounded-full shadow-lg">
-                <span className="material-symbols-outlined text-3xl">star</span>
+            {/* Left Side: Quote */}
+            <div className="px-8 md:px-16 lg:px-20 py-8 md:py-10 flex flex-col justify-center relative z-10">
+              {/* Stars */}
+              <div className="flex gap-2 mb-8 text-[#00C2CB]">
+                {[1,2,3,4,5].map(i => (
+                  <span key={i} className="material-symbols-outlined text-[32px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                ))}
               </div>
-              {/* Text positioned ABOVE the icon */}
-              <div className="absolute bottom-20 flex flex-col items-center text-center w-80 space-y-2">
-                <h3 className="font-status-code text-on-surface/70 tracking-widest uppercase text-sm font-bold">Why HITECH ENGINEERING</h3>
-                <h2 className="font-headline-lg font-bold text-on-surface text-[24px]">Great & Awesome Features</h2>
-              </div>
-            </div>
-
-            {/* Top Left: 135 degrees */}
-            <div className="absolute left-[14.64%] top-[29.28%] -translate-x-1/2 -translate-y-1/2 flex justify-center items-center z-20">
-              <div className="w-16 h-16 bg-[#2a2a2a] text-stark-white flex items-center justify-center rounded-full shadow-lg">
-                <span className="material-symbols-outlined text-3xl">database</span>
-              </div>
-              <div className="absolute right-full mr-6 w-60 text-right flex flex-col items-end space-y-2">
-                <h4 className="font-headline-lg font-bold text-on-surface text-[18px]">FAIR PRICES</h4>
-                <p className="font-body-md text-on-surface-variant text-[14px] leading-relaxed">
-                  You can be 100% sure that our product is budget friendly compared with any other competitors.
-                </p>
+              
+              {/* Quote */}
+              <h2 className="font-headline-xl text-xl md:text-[24px] leading-[1.4] text-white font-medium mb-6 drop-shadow-sm">
+                “The difference that Hitech offers is that tight turnaround time. I have a concept in my head, discuss it with the team, and I get the machinery days later. I don't think there's anything faster available.”
+              </h2>
+              
+              {/* Author */}
+              <div>
+                <p className="text-white font-bold text-xl mb-1 font-body-lg">Mr. Suresh</p>
+                <p className="text-[#00C2CB] font-medium text-base font-body-md">Founder, Hitech Engineering Works</p>
               </div>
             </div>
-
-            {/* Top Right: 45 degrees */}
-            <div className="absolute left-[85.36%] top-[29.28%] -translate-x-1/2 -translate-y-1/2 flex justify-center items-center z-20">
-              <div className="w-16 h-16 bg-[#2a2a2a] text-stark-white flex items-center justify-center rounded-full shadow-lg">
-                <span className="material-symbols-outlined text-3xl">work</span>
-              </div>
-              <div className="absolute left-full ml-6 w-60 text-left flex flex-col items-start space-y-2">
-                <h4 className="font-headline-lg font-bold text-on-surface text-[18px]">QUALIFIED AGENTS</h4>
-                <p className="font-body-md text-on-surface-variant text-[14px] leading-relaxed">
-                  We have a team of specialists capable of maximizing the result and delivering the projects.
-                </p>
-              </div>
+            
+            {/* Right Side: Person Image & Background */}
+            <div className="relative min-h-[250px] lg:min-h-[300px] flex items-end justify-center overflow-hidden bg-black/10">
+               
+               {/* Large Background Typography */}
+               <div className="absolute inset-0 flex flex-col justify-between py-6 select-none overflow-hidden opacity-[0.04] pointer-events-none">
+                 <span className="font-headline-xl text-[80px] md:text-[90px] leading-none text-white font-black tracking-tighter ml-4">HITECH</span>
+                 <span className="font-headline-xl text-[80px] md:text-[90px] leading-none text-white font-black tracking-tighter text-right mr-4 outline-text">ENGINEERING</span>
+                 <span className="font-headline-xl text-[80px] md:text-[90px] leading-none text-white font-black tracking-tighter ml-4">HITECH</span>
+               </div>
+               
+               {/* Uploaded Person Image */}
+               <img 
+                 src="/new_person_transparent.png" 
+                 alt="Testimonial Author" 
+                 className="relative z-10 w-[75%] max-w-[300px] object-contain object-bottom drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)] mt-12 lg:mt-0 lg:max-h-[340px]"
+               />
             </div>
-
-            {/* Bottom Left: 180 degrees */}
-            <div className="absolute left-0 top-full -translate-x-1/2 -translate-y-1/2 flex justify-center items-center z-20">
-              <div className="w-16 h-16 bg-[#2a2a2a] text-stark-white flex items-center justify-center rounded-full shadow-lg">
-                <span className="material-symbols-outlined text-3xl">calendar_month</span>
-              </div>
-              <div className="absolute right-full mr-6 w-60 text-right flex flex-col items-end space-y-2">
-                <h4 className="font-headline-lg font-bold text-on-surface text-[18px]">ALWAYS AVAILABLE</h4>
-                <p className="font-body-md text-on-surface-variant text-[14px] leading-relaxed">
-                  Our customer care support functions 24/7 & your free to contact us anytime of your convince.
-                </p>
-              </div>
-            </div>
-
-            {/* Bottom Right: 0 degrees */}
-            <div className="absolute left-full top-full -translate-x-1/2 -translate-y-1/2 flex justify-center items-center z-20">
-              <div className="w-16 h-16 bg-[#2a2a2a] text-stark-white flex items-center justify-center rounded-full shadow-lg">
-                <span className="material-symbols-outlined text-3xl">shopping_cart</span>
-              </div>
-              <div className="absolute left-full ml-6 w-60 text-left flex flex-col items-start space-y-2">
-                <h4 className="font-headline-lg font-bold text-on-surface text-[18px]">BEST OFFERS</h4>
-                <p className="font-body-md text-on-surface-variant text-[14px] leading-relaxed">
-                  All aspects of the operations being transparent and clear for clients and partners.
-                </p>
-              </div>
-            </div>
-
           </div>
         </div>
       </section>
+
+      {/* Certificate Modal */}
+      {activeCert && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0F1B2D]/90 backdrop-blur-sm transition-opacity" 
+          onClick={() => setActiveCert(null)}
+        >
+          <div className="relative max-w-4xl w-full flex items-center justify-center animate-fade-in" onClick={(e) => e.stopPropagation()}>
+            <button 
+              className="absolute -top-16 right-0 text-white/50 hover:text-white transition-colors flex items-center gap-2" 
+              onClick={() => setActiveCert(null)}
+            >
+              <span className="font-label-caps tracking-widest text-sm font-bold uppercase">Close</span>
+              <span className="material-symbols-outlined text-[32px]">cancel</span>
+            </button>
+            <img 
+              src={activeCert} 
+              alt="Certificate Fullscreen" 
+              className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl" 
+            />
+          </div>
+        </div>
+      )}
     </>
   );
 }

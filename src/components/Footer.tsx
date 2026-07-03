@@ -1,126 +1,103 @@
 export default function Footer() {
   return (
-    <footer className="bg-[#0a192f] text-white">
-      <div className="max-w-container-max mx-auto px-gutter py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
-          
-          {/* Column 1: Logo & Info */}
-          <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <div className="bg-white/10 p-2.5 rounded-sm inline-flex items-center justify-center shadow-sm">
-                <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
-                  {/* Robotic arm icon */}
-                  <path d="M19 14h-3v-2l1.5-3H20a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h.5l-1.5 3H11V8a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h.5l-1.5 3H3v2h4a1 1 0 0 0 1-1v-2l1.5-3h3v2a1 1 0 0 0 1 1h5v-2h-1.5l1.5-3H20v2h-1z M14 9h-2V6h2v3zm-8 3H4V9h2v3zm11 5h-2v-3h2v3z" />
-                  <circle cx="9" cy="18" r="3" />
-                  <circle cx="17" cy="18" r="3" />
-                  <path d="M5 21h14v2H5z" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="font-extrabold text-xl leading-tight tracking-tight text-white">HITECH<br/>ENGINEERING</h3>
-              </div>
-            </div>
-            <p className="text-[14px] leading-relaxed text-gray-300 font-medium pr-4">
-              Leading the industry with high-precision engineering solutions and robust industrial infrastructure projects worldwide.
-            </p>
-            <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-2.5 rounded-sm border border-white/20 shadow-sm">
-              <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-              </svg>
-              <span className="font-bold text-xs tracking-wider uppercase text-white">ISO 9001:2015 CERTIFIED</span>
-            </div>
-          </div>
+    <footer className="bg-[#18181b] text-white pt-24 pb-8 border-t border-outline-variant">
+      <div className="max-w-container-max mx-auto px-gutter flex flex-col items-center">
+        
+        {/* Top Hero Section */}
+        <div className="text-center mb-28 w-full">
+          <h2 className="font-headline-xl text-[40px] md:text-[64px] font-bold leading-tight mb-2 tracking-tight">
+            Work <span className="text-[#0284c7]">Smart</span> <span className="text-white">|</span> Manufacture <span className="text-[#0284c7]">Heavy</span>
+          </h2>
+          <h2 className="font-headline-xl text-[40px] md:text-[64px] font-bold leading-tight mb-10 tracking-tight">
+            Automate With <span className="text-[#0284c7]">HITECH</span>
+          </h2>
+          <button className="border border-white/30 rounded-full px-8 py-3.5 font-medium text-[15px] hover:bg-white hover:text-black transition-colors inline-flex items-center gap-2">
+            Get a Quote <span className="material-symbols-outlined text-[18px]">arrow_outward</span>
+          </button>
+        </div>
 
-          {/* Column 2: Quick Links */}
-          <div className="space-y-6 md:pl-8">
-            <h4 className="flex items-center gap-2 font-bold text-[11px] tracking-widest uppercase text-white">
-              <span className="w-0.5 h-4 bg-white"></span>
-              Quick Links
-            </h4>
-            <ul className="space-y-4">
-              <li><a href="#" className="font-semibold text-[15px] text-gray-300 hover:text-white transition-colors">About Us</a></li>
-              <li><a href="#" className="font-semibold text-[15px] text-gray-300 hover:text-white transition-colors">Products</a></li>
-              <li><a href="#" className="font-semibold text-[15px] text-gray-300 hover:text-white transition-colors">Infrastructure</a></li>
-              <li><a href="#" className="font-semibold text-[15px] text-gray-300 hover:text-white transition-colors">Contact</a></li>
-            </ul>
-          </div>
-
-          {/* Column 3: Contact Us */}
-          <div className="space-y-6">
-            <h4 className="flex items-center gap-2 font-bold text-[11px] tracking-widest uppercase text-white">
-              <span className="w-0.5 h-4 bg-white"></span>
-              Contact Us
-            </h4>
-            <div className="space-y-6">
-              <div className="flex items-start gap-3">
-                <svg className="w-5 h-5 mt-0.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                </svg>
-                <div>
-                  <div className="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1">Email</div>
-                  <a href="mailto:contact@hitechengineering.works" className="font-semibold text-[15px] text-gray-300 hover:text-white transition-colors">
-                    contact@hitechengineering.works
-                  </a>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <svg className="w-5 h-5 mt-0.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                </svg>
-                <div>
-                  <div className="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1">Phone</div>
-                  <div className="font-semibold text-[15px] text-gray-300">+91 98431 22885</div>
-                  <div className="font-semibold text-[15px] text-gray-300">0422-2668885</div>
-                </div>
-              </div>
+        {/* Bottom Columns */}
+        <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 mb-16">
+          {/* Logo & Socials (Col span 6) */}
+          <div className="md:col-span-6 flex flex-col items-start">
+            <div className="flex items-center gap-3 mb-8">
+              <img 
+                src="/hitech_logo.png" 
+                alt="Hitech" 
+                className="h-[40px] md:h-[50px] w-auto max-w-none flex-shrink-0 object-contain" 
+              />
             </div>
-          </div>
-
-          {/* Column 4: Headquarters */}
-          <div className="space-y-6">
-            <h4 className="flex items-center gap-2 font-bold text-[11px] tracking-widest uppercase text-white">
-              <span className="w-0.5 h-4 bg-white"></span>
-              Headquarters
-            </h4>
-            <div className="flex items-start gap-3">
-              <svg className="w-5 h-5 mt-0.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.242-4.243a8 8 0 1111.314 0z"/>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-              </svg>
-              <div className="font-semibold text-[15px] text-gray-300 leading-relaxed pr-4">
-                Coimbatore, Tamil Nadu,<br/>India - 641032
-              </div>
-            </div>
-            <div className="flex gap-3 pt-4">
-              <a href="#" className="w-9 h-9 flex items-center justify-center border border-white/20 rounded-sm hover:bg-white/10 transition-colors text-white">
-                {/* LinkedIn Icon */}
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                </svg>
-              </a>
-              <a href="#" className="w-9 h-9 flex items-center justify-center border border-white/20 rounded-sm hover:bg-white/10 transition-colors text-white">
-                {/* Facebook Icon */}
+            
+            <div className="flex gap-6">
+              {/* Facebook */}
+              <a href="#" className="text-gray-400 hover:text-white transition-colors">
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                   <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
                 </svg>
               </a>
+              {/* Instagram */}
+              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                </svg>
+              </a>
+              {/* Twitter X */}
+              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+              </a>
+              {/* LinkedIn */}
+              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+              </a>
+              {/* Youtube */}
+              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <svg className="w-5 h-5 fill-current -mt-0.5" viewBox="0 0 24 24">
+                  <path d="M21.582,6.186c-0.23-0.86-0.908-1.538-1.768-1.768C18.254,4,12,4,12,4s-6.254,0-7.814,0.418 c-0.86,0.23-1.538,0.908-1.768,1.768C2,7.746,2,12,2,12s0,4.254,0.418,5.814c0.23,0.86,0.908,1.538,1.768,1.768 C6.254,20,12,20,12,20s6.254,0,7.814-0.418c0.86-0.23,1.538-0.908,1.768-1.768C22,16.254,22,12,22,12S22,7.746,21.582,6.186z M10,15.464V8.536L16,12L10,15.464z"/>
+                </svg>
+              </a>
             </div>
           </div>
 
+          {/* Quick Links (Col span 3) */}
+          <div className="md:col-span-3 lg:pl-12">
+            <h4 className="font-bold text-[18px] text-white mb-6">Quick Links</h4>
+            <ul className="space-y-4">
+              <li><a href="#" className="text-[14px] font-medium text-gray-400 hover:text-white transition-colors">Industries</a></li>
+              <li><a href="#" className="text-[14px] font-medium text-gray-400 hover:text-white transition-colors">Products</a></li>
+              <li><a href="#" className="text-[14px] font-medium text-gray-400 hover:text-white transition-colors">Careers</a></li>
+              <li><a href="#" className="text-[14px] font-medium text-gray-400 hover:text-white transition-colors">About us</a></li>
+              <li><a href="#" className="text-[14px] font-medium text-gray-400 hover:text-white transition-colors">Blogs</a></li>
+              <li><a href="#" className="text-[14px] font-medium text-gray-400 hover:text-white transition-colors">Contact us</a></li>
+            </ul>
+          </div>
+
+          {/* Industries (Col span 3) */}
+          <div className="md:col-span-3">
+            <h4 className="font-bold text-[18px] text-white mb-6">Industries</h4>
+            <ul className="space-y-4">
+              <li><a href="#" className="text-[14px] font-medium text-gray-400 hover:text-white transition-colors">Automotive</a></li>
+              <li><a href="#" className="text-[14px] font-medium text-gray-400 hover:text-white transition-colors">FMCG</a></li>
+              <li><a href="#" className="text-[14px] font-medium text-gray-400 hover:text-white transition-colors">Heavy Engineering</a></li>
+              <li><a href="#" className="text-[14px] font-medium text-gray-400 hover:text-white transition-colors">Manufacturing</a></li>
+              <li><a href="#" className="text-[14px] font-medium text-gray-400 hover:text-white transition-colors">Pharmaceutical</a></li>
+              <li><a href="#" className="text-[14px] font-medium text-gray-400 hover:text-white transition-colors">Warehousing & Logistics</a></li>
+            </ul>
+          </div>
         </div>
 
-      </div>
-      
-      {/* Bottom Bar */}
-      <div className="bg-black border-t border-white/10">
-        <div className="max-w-container-max mx-auto px-gutter py-6 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-xs font-semibold text-gray-400">
-            © 2024 HITECH Engineering. All Rights Reserved. ISO 9001:2015 Certified Company.
-          </p>
-          <p className="text-xs font-semibold text-gray-400">
-            Designed and developed by <span className="text-industrial-yellow">ACALA SOLUTIONS</span>
-          </p>
+        {/* Bottom Bar */}
+        <div className="w-full flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/10 text-[13px] text-gray-500 font-medium pb-4">
+          <p>© <a href="#" className="underline hover:text-white">Hitech Engineering</a> 2026. All rights reserved.</p>
+          <div className="flex gap-4 mt-4 md:mt-0">
+            <a href="#" className="hover:text-white underline decoration-gray-500 underline-offset-2">Terms of use</a>
+            <a href="#" className="hover:text-white underline decoration-gray-500 underline-offset-2">Privacy Policy</a>
+          </div>
         </div>
+
       </div>
     </footer>
   );

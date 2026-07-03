@@ -17,12 +17,12 @@ export default function Clients() {
   const duplicatedLogos = [...logos, ...logos];
 
   return (
-    <section className="bg-stark-white pt-16 pb-24 border-t border-outline-variant overflow-hidden">
+    <section className="bg-stark-white pt-10 pb-16 border-t border-outline-variant overflow-hidden">
       <div className="max-w-container-max mx-auto px-gutter relative flex flex-col items-center">
         <div className="text-center mb-16 z-10 relative bg-stark-white px-8 py-4">
           <p className="font-label-caps text-[14px] text-on-surface-variant">They Always Trust Us</p>
           <h3 className="font-headline-lg text-[32px] text-on-surface mt-1">
-            OUR CLIENTS<span className="text-industrial-yellow">.</span>
+            OUR CLIENTS<span className="text-[#0F1B2D]">.</span>
           </h3>
         </div>
       </div>
@@ -67,7 +67,7 @@ export default function Clients() {
               <img
                 src={logo}
                 alt={`Client ${index + 1}`}
-                className="h-28 md:h-32 w-auto object-contain transition-all duration-300"
+                className="h-20 md:h-24 w-auto object-contain transition-all duration-300"
               />
             </div>
           ))}

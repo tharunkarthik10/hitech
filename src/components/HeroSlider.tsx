@@ -22,10 +22,20 @@ export default function HeroSlider() {
           <h2 className="font-heading text-[38px] md:text-[52px] leading-tight text-white uppercase tracking-wide">
             Innovation and Excellence in Manufacturing Since 1999
           </h2>
-          <div className="w-24 h-1.5 bg-industrial-yellow"></div>
+          <div className="flex items-center gap-2">
+            <div className="w-16 h-1 bg-black rounded-full"></div>
+            <div className="w-4 h-1 bg-black rounded-full opacity-75"></div>
+            <div className="w-1.5 h-1.5 bg-black rounded-full opacity-50"></div>
+          </div>
           <p className="font-body-lg text-lg md:text-[20px] leading-relaxed text-gray-200">
             Founded in 1999 in Coimbatore by Mr. Suresh, Hitech Engineering Works has embodied a vision of excellence through innovation. Originally established as a job order service, Hitech Engineering has evolved into a premier manufacturing hub, offering a comprehensive array of cutting-edge machinery all under one roof.
           </p>
+          <div className="pt-8">
+            <button className="inline-flex items-center gap-3 px-8 py-3.5 rounded-full border-[1.5px] border-white/80 text-white font-body-md font-medium text-[17px] hover:bg-white hover:text-black transition-all duration-300">
+              View Our Infra
+              <span className="material-symbols-outlined text-[20px] font-bold" style={{ fontVariationSettings: "'wght' 600" }}>north_east</span>
+            </button>
+          </div>
         </div>
       </div>
     </section>

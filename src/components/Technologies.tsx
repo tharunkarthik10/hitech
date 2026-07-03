@@ -1,84 +1,115 @@
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Mousewheel, FreeMode } from 'swiper/modules';
-
-import 'swiper/css';
-import 'swiper/css/free-mode';
-import 'swiper/css/navigation';
-
 export default function Technologies() {
   const assets = [
-    { id: 'STR-P-01', title: 'Manual Pallet Jack', img: 'https://motiequipments.com/assets/images/shop/grid/palette-1.jpg', price: '$299', spec: '2.5 Ton Capacity, Polyurethane Wheels' },
-    { id: 'FLX-R-02', title: 'Flexible Roller Conveyor', img: 'https://motiequipments.com/assets/images/shop/grid/flex-2.jpg', price: '$850', spec: 'Expandable up to 24ft, Steel Rollers' },
-    { id: 'INC-C-04', title: 'Inclined Conveyor Belt', img: 'https://motiequipments.com/assets/images/shop/grid/truck-2.jpg', price: '$1,200', spec: 'Adjustable Angle, High Grip Belt' },
-    { id: 'ACR-R-08', title: 'Accordion Roller', img: 'https://motiequipments.com/assets/images/shop/grid/flex-1.jpg', price: '$940', spec: 'Curvable up to 180°, Heavy Duty' },
-    { id: 'MOD-C-10', title: 'Modular Conveyor System', img: 'https://motiequipments.com/assets/images/shop/grid/truck-1.jpg', price: '$2,100', spec: 'Customizable Length, 1HP Motor' },
-    { id: 'ERS-M-03', title: 'Electric Reach Stacker', img: 'https://motiequipments.com/assets/images/shop/grid/palette-3.jpg', price: '$3,400', spec: '1.5 Ton Capacity, 24V Battery' },
-    { id: 'SCL-P-07', title: 'Scissor Lift Platform', img: 'https://motiequipments.com/assets/images/shop/grid/scissor.jpg', price: '$2,800', spec: '30ft Max Height, 500lb Load' },
-    { id: 'HMS-L-12', title: 'Heavy Manual Stacker', img: 'https://motiequipments.com/assets/images/shop/grid/manual-hand-stacker.jpg', price: '$750', spec: '1 Ton Capacity, Hydraulic Pump' },
+    { 
+      id: 'PRD-01', 
+      title: 'Hydraulic Cylinders', 
+      img: 'https://motiequipments.com/assets/images/shop/grid/palette-1.jpg',
+      desc: 'High-performance hydraulic cylinders engineered for heavy-duty industrial applications with precision seals and robust construction.' 
+    },
+    { 
+      id: 'PRD-02', 
+      title: 'VMC Precision Components', 
+      img: 'https://motiequipments.com/assets/images/shop/grid/flex-2.jpg',
+      desc: 'Expertly machined Vertical Machining Center components that meet stringent tolerance requirements for complex assemblies.'
+    },
+    { 
+      id: 'PRD-03', 
+      title: 'SPM Machine', 
+      img: 'https://motiequipments.com/assets/images/shop/grid/truck-2.jpg',
+      desc: 'Special Purpose Machines custom-built to automate your unique manufacturing processes and maximize production efficiency.'
+    },
+    { 
+      id: 'PRD-04', 
+      title: 'CNC Precision Components', 
+      img: 'https://motiequipments.com/assets/images/shop/grid/flex-1.jpg',
+      desc: 'Computer Numerical Control machined parts delivering unparalleled accuracy and repeatability for critical engineering needs.'
+    },
+    { 
+      id: 'PRD-05', 
+      title: 'Laser Cutting', 
+      img: 'https://motiequipments.com/assets/images/shop/grid/truck-1.jpg',
+      desc: 'State-of-the-art laser cutting services providing clean, precise cuts on a variety of industrial metals and alloys.'
+    },
+    { 
+      id: 'PRD-06', 
+      title: 'Hydraulic Power Pack', 
+      img: 'https://motiequipments.com/assets/images/shop/grid/palette-3.jpg',
+      desc: 'Reliable and efficient hydraulic power units designed to drive your most demanding hydraulic machinery.'
+    },
+    { 
+      id: 'PRD-07', 
+      title: 'Industrial Rollers', 
+      img: 'https://motiequipments.com/assets/images/shop/grid/scissor.jpg',
+      desc: 'Durable industrial rollers manufactured to withstand heavy loads and ensure smooth continuous operation.'
+    },
+    { 
+      id: 'PRD-08', 
+      title: 'Rubber Moulding Machines', 
+      img: 'https://motiequipments.com/assets/images/shop/grid/manual-hand-stacker.jpg',
+      desc: 'Advanced rubber moulding equipment engineered for consistent quality in producing complex rubber parts.'
+    },
+    { 
+      id: 'PRD-09', 
+      title: 'Polyurethane Moulds', 
+      img: 'https://motiequipments.com/assets/images/shop/grid/palette-1.jpg',
+      desc: 'Custom-designed polyurethane moulds that offer exceptional wear resistance and longevity for mass production.'
+    },
   ];
 
   return (
-    <section className="bg-surface-container-lowest">
-      <div className="max-w-container-max mx-auto px-gutter pt-8 pb-section-padding">
-        <div className="flex justify-between items-end mb-12">
-          <div className="space-y-2">
-            <span className="font-status-code text-status-code text-primary uppercase">CATALOG_01</span>
-            <h2 className="font-headline-lg text-headline-lg text-on-surface">Core Engineering Assets</h2>
-          </div>
-          <div className="flex gap-4 items-center">
-            <button className="tech-prev w-10 h-10 border border-outline-variant flex items-center justify-center hover:bg-[#5F6B76] hover:text-white transition-all rounded-full disabled:opacity-50">
-              <span className="material-symbols-outlined text-[20px]">chevron_left</span>
-            </button>
-            <button className="tech-next w-10 h-10 border border-outline-variant flex items-center justify-center hover:bg-[#5F6B76] hover:text-white transition-all rounded-full disabled:opacity-50">
-              <span className="material-symbols-outlined text-[20px]">chevron_right</span>
-            </button>
-          </div>
+    <section className="bg-stark-white pt-12 pb-24 font-body-md">
+      <div className="max-w-container-max mx-auto px-gutter">
+        
+        {/* Header Section */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
+          <h2 className="text-4xl md:text-5xl lg:text-[56px] text-[#0F1B2D] font-headline-xl font-semibold leading-[1.1] tracking-tight max-w-2xl">
+            Our Core Engineering Products
+          </h2>
+          <button className="flex items-center gap-2 px-6 py-2.5 rounded-full border border-outline-variant text-[#475569] hover:border-[#0F1B2D] hover:text-[#0F1B2D] transition-all font-medium text-sm whitespace-nowrap">
+            View all products <span className="material-symbols-outlined text-sm font-bold">north_east</span>
+          </button>
         </div>
-        <Swiper
-          modules={[Navigation, Mousewheel, FreeMode]}
-          slidesPerView={1}
-          spaceBetween={24}
-          freeMode={true}
-          speed={800}
-          mousewheel={{ forceToAxis: true, sensitivity: 1, releaseOnEdges: true }}
-          navigation={{
-            nextEl: '.tech-next',
-            prevEl: '.tech-prev',
-          }}
-          breakpoints={{
-            640: { slidesPerView: 2 },
-            768: { slidesPerView: 3 },
-            1024: { slidesPerView: 4 },
-          }}
-          className="mySwiper overflow-visible"
-        >
-          {assets.map((asset, idx) => (
-            <SwiperSlide
-              key={idx}
-              className="group border border-outline-variant p-2 hover:border-transparent transition-all duration-300 h-auto flex flex-col bg-stark-white relative overflow-hidden cursor-pointer"
-            >
-              <div className="overflow-hidden aspect-square flex items-center justify-center p-4 relative">
-                <img
-                  alt={asset.title}
-                  className="w-full h-full object-contain group-hover:scale-105 transition-all duration-500"
-                  src={asset.img}
-                />
-              </div>
-              <div className="mt-4 px-2 pb-2 flex-grow transition-opacity duration-300 group-hover:opacity-0">
-                <span className="font-status-code text-status-code text-outline-muted">{asset.id}</span>
-                <h3 className="font-label-caps text-label-caps mt-1">{asset.title}</h3>
-              </div>
 
-              {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-[#00AEEF]/60 backdrop-blur-[2px] text-gray-900 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out flex flex-col justify-center items-center p-6 text-center z-10 -translate-y-full group-hover:translate-y-0">
-                <h3 className="font-label-caps text-lg font-bold mb-2 uppercase tracking-wide">{asset.title}</h3>
-                <div className="w-8 h-1 bg-gray-900 mb-4 rounded-full"></div>
-                <p className="font-body-md text-sm mb-4 opacity-90 leading-relaxed font-medium">{asset.spec}</p>
-                <p className="font-headline-md font-bold text-xl">{asset.price}</p>
+        {/* Horizontal Scroll (Replaces Grid) */}
+        <div className="flex overflow-x-auto snap-x snap-mandatory gap-8 pb-12 hide-scrollbar items-start w-full">
+          {assets.map((asset, idx) => {
+            // Staggering heights to create a 2-4cm difference at the bottom
+            const heightClass = ['h-[460px]', 'h-[540px]', 'h-[500px]'][idx % 3];
+            
+            return (
+              <div 
+                key={idx} 
+                className={`w-[320px] md:w-[360px] snap-start shrink-0 flex flex-col group rounded-[24px] bg-white border border-outline/10 shadow-sm hover:shadow-xl transition-all duration-300 overflow-visible ${heightClass}`}
+              >
+                
+                {/* Image Container */}
+                <div className="relative h-[240px] shrink-0 rounded-t-[24px] overflow-hidden bg-[#F1F5F9]">
+                  <img 
+                    src={asset.img} 
+                    alt={asset.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 mix-blend-multiply" 
+                  />
+                </div>
+                
+                {/* Content Container */}
+                <div className="relative px-8 pt-8 pb-8 flex flex-col flex-grow">
+                  {/* Overlapping Pill */}
+                  <div className="absolute -top-4 left-8 bg-white px-5 py-1.5 rounded-full shadow-sm text-[11px] font-bold text-[#475569] border border-outline/10 z-10 tracking-widest uppercase">
+                    {asset.id}
+                  </div>
+                  
+                  <h3 className="text-[22px] font-bold text-[#0F1B2D] mb-3 leading-tight mt-1">{asset.title}</h3>
+                  <p className="text-[#475569] text-[14px] leading-relaxed mb-6 flex-grow">{asset.desc}</p>
+                  
+                  <a href="#" className="text-[#00C2CB] font-bold text-[11px] tracking-widest uppercase hover:text-[#0F1B2D] transition-colors mt-auto">
+                    READ MORE
+                  </a>
+                </div>
               </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+            );
+          })}
+        </div>
+
       </div>
     </section>
   );

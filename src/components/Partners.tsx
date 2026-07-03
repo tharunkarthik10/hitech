@@ -22,15 +22,16 @@ export default function Partners() {
   const marqueeItems = [...countries, ...countries, ...countries];
 
   return (
-    <section className="bg-stark-white pt-32 lg:pt-40 pb-0 relative overflow-hidden flex flex-col justify-center">
+    <section className="bg-stark-white pt-12 lg:pt-16 pb-0 relative overflow-hidden flex flex-col justify-center">
       {/* Subtle Dotted World Map Pattern */}
       <div 
-        className="absolute inset-0 z-0 opacity-[0.25] pointer-events-none"
+        className="absolute inset-0 z-0 pointer-events-none"
         style={{ 
           backgroundImage: `url('https://upload.wikimedia.org/wikipedia/commons/a/a0/World_map_with_points.svg')`,
-          backgroundSize: 'auto 110%',
-          backgroundPosition: 'calc(100% + 5vw) center',
+          backgroundSize: '60% auto',
+          backgroundPosition: 'right center',
           backgroundRepeat: 'no-repeat',
+          opacity: 0.15
         }}
       >
       </div>

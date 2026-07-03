@@ -8,30 +8,20 @@ import 'swiper/css/navigation';
 export default function FeaturedSolutions() {
   const services = [
     {
-      title: 'Motor Gear Box',
-      desc: 'HITECH ENGINEERING is a prime dealer of Motor & Gear Boxes. We have a wide range of brands all in ready stock & can be delivered immediately.',
-      img: 'https://motiequipments.com/assets/images/services/motors.jpg',
+      title: 'Manufacturing',
+      desc: 'Our state-of-the-art manufacturing facilities produce high-precision components for critical industrial applications, ensuring robustness and efficiency in every part.',
+      img: 'https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?auto=format&fit=crop&w=800&q=80',
     },
     {
-      title: 'Wheel',
-      desc: 'HITECH ENGINEERING deals with all kind of MHE Wheels, all sizes of wheels are readily available at a very affordable price.',
-      img: 'https://motiequipments.com/assets/images/services/wheels.jpg',
+      title: 'Laser Cutting',
+      desc: 'Equipped with advanced laser cutting technology, we offer unmatched precision and speed for intricate designs across a wide variety of metal sheets and materials.',
+      img: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=800&q=80',
     },
     {
-      title: 'Rollers & Pulleys',
-      desc: 'HITECH ENGINEERING have their own in-house team who manufacture Rollers, Pulleys & Idlers for their own equipment purposes & sales as spares. The quality & performance is top notch.',
-      img: 'https://motiequipments.com/assets/images/services/rollers.jpg',
-    },
-    {
-      title: 'Conveyor Belts',
-      desc: 'HITECH ENGINEERING is a major dealer & Stockist of all kinds of conveyor belts. We have ready stock goods available of all standard & non-standard sizes.',
-      img: 'https://motiequipments.com/assets/images/services/conveyor.jpg',
-    },
-    {
-      title: 'Bearings',
-      desc: 'HITECH ENGINEERING is a major dealer & Stockist of all kinds & all brands of bearings. We have ready stock goods available of all standard sizes.',
-      img: 'https://motiequipments.com/assets/images/services/bearings.jpg',
-    },
+      title: 'Production',
+      desc: 'End-to-end production lines optimized for high-volume, defect-free output. We scale to meet global demands while maintaining uncompromising quality control.',
+      img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80',
+    }
   ];
 
   return (
@@ -40,17 +30,17 @@ export default function FeaturedSolutions() {
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16">
           <div className="space-y-4 max-w-3xl">
             <h2 className="font-headline-xl text-[36px] md:text-[48px] text-on-surface uppercase tracking-wide font-bold leading-tight">
-              Industrial Material<br />Handling Solutions<span className="text-industrial-yellow">.</span>
+              Visit our specialised<br />industries<span className="text-[#0F1B2D]">.</span>
             </h2>
             <p className="font-body-md text-[16px] text-on-surface-variant italic">
-              Apart From MHE Manufacturing, HITECH ENGINEERING deals in supply of all kind of conveyor equipment spare sales & services.
+              Discover the core sectors where Hitech Engineering drives innovation, precision, and world-class capabilities.
             </p>
           </div>
           <div className="flex gap-4 items-center mt-6 lg:mt-0">
-            <button className="feat-prev w-10 h-10 border border-outline-variant flex items-center justify-center hover:bg-[#5F6B76] hover:text-white transition-all rounded-full disabled:opacity-50">
+            <button className="feat-prev w-10 h-10 border border-outline-variant flex items-center justify-center hover:bg-[#475569] hover:text-white transition-all rounded-full disabled:opacity-50">
               <span className="material-symbols-outlined text-[20px]">chevron_left</span>
             </button>
-            <button className="feat-next w-10 h-10 border border-outline-variant flex items-center justify-center hover:bg-[#5F6B76] hover:text-white transition-all rounded-full disabled:opacity-50">
+            <button className="feat-next w-10 h-10 border border-outline-variant flex items-center justify-center hover:bg-[#475569] hover:text-white transition-all rounded-full disabled:opacity-50">
               <span className="material-symbols-outlined text-[20px]">chevron_right</span>
             </button>
           </div>
@@ -74,8 +64,9 @@ export default function FeaturedSolutions() {
           className="servicesSwiper overflow-visible cursor-grab active:cursor-grabbing"
         >
           {services.map((service, idx) => (
-            <SwiperSlide key={idx} className="bg-white flex flex-col group overflow-hidden rounded-[24px] border border-gray-200">
-              <div className="relative w-full aspect-[4/3] md:aspect-[3/2] overflow-hidden">
+            <SwiperSlide key={idx} className="!h-auto flex items-start pb-16">
+              <div className={`bg-white w-full flex flex-col group overflow-hidden rounded-[24px] border border-gray-200 shadow-sm transition-all duration-500 ${idx === 0 ? 'pb-10' : idx === 1 ? 'pb-0' : 'pb-16'}`}>
+                <div className="relative w-full aspect-[4/3] md:aspect-[3/2] overflow-hidden">
                 <img
                   src={service.img}
                   alt={service.title}
@@ -110,11 +101,12 @@ export default function FeaturedSolutions() {
                   {service.desc}
                 </p>
                 <div className="mt-auto">
-                  <button className="text-[#3FC1B6] font-semibold text-[13px] uppercase underline underline-offset-4 decoration-1 hover:text-gray-900 transition-colors">
-                    READ MORE
+                  <button className="text-[#00C2CB] font-semibold text-[13px] uppercase underline underline-offset-4 decoration-1 hover:text-gray-900 transition-colors">
+                    VISIT US
                   </button>
                 </div>
               </div>
+            </div>
             </SwiperSlide>
           ))}
         </Swiper>
