@@ -27,13 +27,23 @@ export default function Header() {
                 e.preventDefault();
                 setActiveTab(item);
               }}
-              className={`px-6 py-2.5 rounded-xl transition-colors duration-300 ${
+              className={`px-6 py-2.5 rounded-xl transition-all duration-300 relative group overflow-hidden ${
                 activeTab === item
-                  ? 'bg-[#0F1B2D] text-white'
-                  : 'bg-white text-[#475569] hover:bg-gray-100'
+                  ? 'bg-[#0F1B2D] text-white shadow-md'
+                  : 'bg-white text-[#475569] hover:bg-gray-50 hover:shadow-sm'
               }`}
             >
-              {item}
+              <span className="relative block overflow-hidden">
+                {/* Default Text (Slides down and fades out) */}
+                <span className="block transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:translate-y-[120%] group-hover:opacity-0">
+                  {item}
+                </span>
+                
+                {/* Hover Text (Slides down from top and fades in with a sleek gradient) */}
+                <span className="absolute inset-0 flex items-center justify-center -translate-y-[120%] opacity-0 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:translate-y-0 group-hover:opacity-100 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 font-bold">
+                  {item}
+                </span>
+              </span>
             </a>
           ))}
         </div>

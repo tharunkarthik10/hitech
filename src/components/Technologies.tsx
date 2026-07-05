@@ -1,115 +1,147 @@
+import { useState } from 'react';
+
 export default function Technologies() {
   const assets = [
     { 
       id: 'PRD-01', 
       title: 'Hydraulic Cylinders', 
+      shortTitle: 'Hydraulic',
       img: 'https://motiequipments.com/assets/images/shop/grid/palette-1.jpg',
-      desc: 'High-performance hydraulic cylinders engineered for heavy-duty industrial applications with precision seals and robust construction.' 
+      features: [
+        'Heavy-duty industrial applications',
+        'Precision seals & robust construction'
+      ]
     },
     { 
       id: 'PRD-02', 
       title: 'VMC Precision Components', 
+      shortTitle: 'VMC Parts',
       img: 'https://motiequipments.com/assets/images/shop/grid/flex-2.jpg',
-      desc: 'Expertly machined Vertical Machining Center components that meet stringent tolerance requirements for complex assemblies.'
+      features: [
+        'Expertly machined components',
+        'Stringent tolerance requirements'
+      ]
     },
     { 
       id: 'PRD-03', 
       title: 'SPM Machine', 
+      shortTitle: 'SPM Machine',
       img: 'https://motiequipments.com/assets/images/shop/grid/truck-2.jpg',
-      desc: 'Special Purpose Machines custom-built to automate your unique manufacturing processes and maximize production efficiency.'
+      features: [
+        'Custom-built automation',
+        'Maximized production efficiency'
+      ]
     },
     { 
       id: 'PRD-04', 
       title: 'CNC Precision Components', 
+      shortTitle: 'CNC Parts',
       img: 'https://motiequipments.com/assets/images/shop/grid/flex-1.jpg',
-      desc: 'Computer Numerical Control machined parts delivering unparalleled accuracy and repeatability for critical engineering needs.'
+      features: [
+        'Unparalleled accuracy',
+        'Critical engineering needs'
+      ]
     },
     { 
       id: 'PRD-05', 
       title: 'Laser Cutting', 
+      shortTitle: 'Laser Cut',
       img: 'https://motiequipments.com/assets/images/shop/grid/truck-1.jpg',
-      desc: 'State-of-the-art laser cutting services providing clean, precise cuts on a variety of industrial metals and alloys.'
-    },
-    { 
-      id: 'PRD-06', 
-      title: 'Hydraulic Power Pack', 
-      img: 'https://motiequipments.com/assets/images/shop/grid/palette-3.jpg',
-      desc: 'Reliable and efficient hydraulic power units designed to drive your most demanding hydraulic machinery.'
-    },
-    { 
-      id: 'PRD-07', 
-      title: 'Industrial Rollers', 
-      img: 'https://motiequipments.com/assets/images/shop/grid/scissor.jpg',
-      desc: 'Durable industrial rollers manufactured to withstand heavy loads and ensure smooth continuous operation.'
-    },
-    { 
-      id: 'PRD-08', 
-      title: 'Rubber Moulding Machines', 
-      img: 'https://motiequipments.com/assets/images/shop/grid/manual-hand-stacker.jpg',
-      desc: 'Advanced rubber moulding equipment engineered for consistent quality in producing complex rubber parts.'
-    },
-    { 
-      id: 'PRD-09', 
-      title: 'Polyurethane Moulds', 
-      img: 'https://motiequipments.com/assets/images/shop/grid/palette-1.jpg',
-      desc: 'Custom-designed polyurethane moulds that offer exceptional wear resistance and longevity for mass production.'
+      features: [
+        'Clean, precise cuts',
+        'Variety of industrial metals'
+      ]
     },
   ];
 
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [openFeatureIndex, setOpenFeatureIndex] = useState<number | null>(null);
+  const activeAsset = assets[activeIndex];
+
   return (
-    <section className="bg-stark-white pt-12 pb-24 font-body-md">
+    <section className="bg-[#18181b] text-white py-24 font-body-md border-y border-outline-variant/20">
       <div className="max-w-container-max mx-auto px-gutter">
-        
-        {/* Header Section */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
-          <h2 className="text-4xl md:text-5xl lg:text-[56px] text-[#0F1B2D] font-headline-xl font-semibold leading-[1.1] tracking-tight max-w-2xl">
-            Our Core Engineering Products
-          </h2>
-          <button className="flex items-center gap-2 px-6 py-2.5 rounded-full border border-outline-variant text-[#475569] hover:border-[#0F1B2D] hover:text-[#0F1B2D] transition-all font-medium text-sm whitespace-nowrap">
-            View all products <span className="material-symbols-outlined text-sm font-bold">north_east</span>
-          </button>
-        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center">
+          
+          {/* Left Column */}
+          <div className="lg:col-span-7 flex flex-col">
+            {/* Tabs */}
+            <div className="flex flex-wrap gap-3 mb-10">
+              {assets.map((asset, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => {
+                    setActiveIndex(idx);
+                    setOpenFeatureIndex(null);
+                  }}
+                  className={`px-5 py-2 rounded-lg text-sm font-semibold transition-colors ${
+                    activeIndex === idx
+                      ? 'bg-blue-200 text-blue-900'
+                      : 'bg-white text-black hover:bg-[#0088cc] hover:text-white'
+                  }`}
+                >
+                  {asset.shortTitle}
+                </button>
+              ))}
+            </div>
 
-        {/* Horizontal Scroll (Replaces Grid) */}
-        <div className="flex overflow-x-auto snap-x snap-mandatory gap-8 pb-12 hide-scrollbar items-start w-full">
-          {assets.map((asset, idx) => {
-            // Staggering heights to create a 2-4cm difference at the bottom
-            const heightClass = ['h-[460px]', 'h-[540px]', 'h-[500px]'][idx % 3];
-            
-            return (
-              <div 
-                key={idx} 
-                className={`w-[320px] md:w-[360px] snap-start shrink-0 flex flex-col group rounded-[24px] bg-white border border-outline/10 shadow-sm hover:shadow-xl transition-all duration-300 overflow-visible ${heightClass}`}
-              >
-                
-                {/* Image Container */}
-                <div className="relative h-[240px] shrink-0 rounded-t-[24px] overflow-hidden bg-[#F1F5F9]">
-                  <img 
-                    src={asset.img} 
-                    alt={asset.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 mix-blend-multiply" 
-                  />
-                </div>
-                
-                {/* Content Container */}
-                <div className="relative px-8 pt-8 pb-8 flex flex-col flex-grow">
-                  {/* Overlapping Pill */}
-                  <div className="absolute -top-4 left-8 bg-white px-5 py-1.5 rounded-full shadow-sm text-[11px] font-bold text-[#475569] border border-outline/10 z-10 tracking-widest uppercase">
-                    {asset.id}
+            {/* Heading */}
+            <h2 className="text-4xl md:text-5xl lg:text-[56px] font-headline-xl font-medium leading-[1.1] mb-12 tracking-tight">
+              Our Core Engineering Products
+            </h2>
+
+            {/* Features Accordion-style */}
+            <div className="flex flex-col mb-12">
+              {activeAsset.features.map((feature, idx) => {
+                const isOpen = openFeatureIndex === idx;
+                return (
+                  <div key={idx} className="flex flex-col border-b border-white/20">
+                    <div 
+                      className="flex justify-between items-center py-6 group cursor-pointer hover:text-white transition-colors"
+                      onClick={() => setOpenFeatureIndex(isOpen ? null : idx)}
+                    >
+                      <h4 className="text-xl md:text-2xl font-bold tracking-tight text-white/90 group-hover:text-white transition-colors">
+                        {feature}
+                      </h4>
+                      {/* Small arrow triangle */}
+                      <div className={`w-0 h-0 border-b-[6px] border-b-transparent border-l-[6px] border-l-white border-t-[6px] border-t-transparent transform transition-transform duration-300 ${isOpen ? 'rotate-90' : '-rotate-45 group-hover:translate-x-1'}`}></div>
+                    </div>
+                    
+                    {/* Dropdown Content */}
+                    <div className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-[500px] pb-6 opacity-100' : 'max-h-0 opacity-0'}`}>
+                      <p className="text-gray-400 leading-relaxed text-[15px] pr-8">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                      </p>
+                    </div>
                   </div>
-                  
-                  <h3 className="text-[22px] font-bold text-[#0F1B2D] mb-3 leading-tight mt-1">{asset.title}</h3>
-                  <p className="text-[#475569] text-[14px] leading-relaxed mb-6 flex-grow">{asset.desc}</p>
-                  
-                  <a href="#" className="text-[#00C2CB] font-bold text-[11px] tracking-widest uppercase hover:text-[#0F1B2D] transition-colors mt-auto">
-                    READ MORE
-                  </a>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+                );
+              })}
+            </div>
 
+            {/* Explore More Button */}
+            <div>
+              <button className="flex items-center justify-center gap-3 px-6 py-3 rounded-[12px] border border-white/30 text-white hover:bg-white hover:text-black transition-colors font-medium text-sm">
+                Explore more 
+                <span className="material-symbols-outlined text-[18px]">north_east</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Right Column (Image) */}
+          <div className="lg:col-span-5 relative w-full aspect-square bg-black flex items-center justify-center overflow-hidden rounded-xl border border-white/10">
+            {/* Soft glow effects mimicking the provided image */}
+            <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-red-500/10 to-transparent"></div>
+            <div className="absolute inset-x-0 top-0 h-[60%] bg-gradient-to-b from-teal-500/10 to-transparent"></div>
+            
+            <img 
+              src={activeAsset.img} 
+              alt={activeAsset.title}
+              key={activeAsset.id}
+              className="relative z-10 w-full h-full object-cover transition-opacity duration-500 hover:scale-105 transform" 
+            />
+          </div>
+
+        </div>
       </div>
     </section>
   );

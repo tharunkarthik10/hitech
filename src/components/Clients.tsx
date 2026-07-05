@@ -67,7 +67,7 @@ export default function Clients() {
               <img
                 src={logo}
                 alt={`Client ${index + 1}`}
-                className="h-20 md:h-24 w-auto object-contain transition-all duration-300"
+                className="h-20 md:h-24 w-auto object-contain transition-all duration-300 grayscale opacity-70 hover:grayscale-0 hover:opacity-100"
               />
             </div>
           ))}
