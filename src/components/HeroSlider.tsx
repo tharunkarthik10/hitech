@@ -9,7 +9,7 @@ export default function HeroSlider() {
         playsInline 
         className="absolute inset-0 w-full h-full object-cover z-0"
       >
-        <source src="https://cdn.coverr.co/videos/coverr-industrial-machines-in-a-factory-4268/1080p.mp4" type="video/mp4" />
+        <source src="/hero_boomerang.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
       
