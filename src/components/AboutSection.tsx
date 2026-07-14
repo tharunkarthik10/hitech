@@ -42,7 +42,7 @@ export default function AboutSection() {
   return (
     <section className="bg-stark-white py-24 px-gutter font-body-md">
       {/* Massive Box Wrapper */}
-      <div className="relative max-w-container-max mx-auto bg-gradient-to-br from-[#7dd3fc] to-[#0284c7] rounded-[40px] p-8 md:p-16 shadow-2xl overflow-hidden">
+      <div className="relative max-w-container-max mx-auto bg-[#18181b] rounded-[40px] p-8 md:p-16 shadow-2xl overflow-hidden border border-white/10">
         
         {/* Solid Background (Blobs removed to ensure zero transparency/glow) */}
         <div className="absolute inset-0 z-0 pointer-events-none"></div>

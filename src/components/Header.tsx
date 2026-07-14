@@ -1,57 +1,55 @@
-import { useState } from 'react';
 import { LayoutGrid } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+
+const mainNavigation = [
+  { name: "Homepage", path: "/" },
+  { name: "Products", path: "#" },
+  { name: "Industries Served", path: "#" },
+  { name: "About Us", path: "#" },
+  { name: "Contact", path: "#contact" },
+];
 
 export default function Header() {
-  const [activeTab, setActiveTab] = useState('HOME');
+  const location = useLocation();
 
   return (
-    <header className="fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-6rem)] max-w-none bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] z-50 transition-all duration-300 border border-gray-100">
-      <nav className="flex justify-between items-center px-gutter py-3">
-        {/* Left: Logo Area */}
-        <a href="/" className="flex items-center gap-4">
-          <LayoutGrid className="w-6 h-6 text-[#475569]" strokeWidth={1.5} />
+    <header className="fixed top-0 left-0 right-0 bg-white z-50 border-b border-gray-200 transition-all duration-300">
+      {/* Top Navbar */}
+      <nav className="h-20 flex items-center justify-between px-8 md:px-12 w-full relative bg-white">
+        {/* Left: Logo */}
+        <Link to="/" className="flex items-center gap-4 group z-10 w-1/4">
+          <LayoutGrid className="w-6 h-6 text-black group-hover:text-blue-900 transition-colors" strokeWidth={2} />
           <img 
             src="/hitech_logo.png" 
             alt="Hitech" 
-            className="h-[40px] w-auto max-w-none flex-shrink-0 object-contain drop-shadow-sm brightness-105"
+            className="h-[32px] w-auto object-contain transition-all duration-500"
           />
-        </a>
+        </Link>
 
-        {/* Middle: Nav Links (White by default, Black when active) */}
-        <div className="hidden md:flex items-center gap-2 text-[13px] font-semibold tracking-wide">
-          {['HOME', 'ABOUT', 'PRODUCTS', 'CONTACT'].map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              onClick={(e) => {
-                e.preventDefault();
-                setActiveTab(item);
-              }}
-              className={`px-6 py-2.5 rounded-xl transition-all duration-300 relative group overflow-hidden ${
-                activeTab === item
-                  ? 'bg-[#0F1B2D] text-white shadow-md'
-                  : 'bg-white text-[#475569] hover:bg-gray-50 hover:shadow-sm'
-              }`}
-            >
-              <span className="relative block overflow-hidden">
-                {/* Default Text (Slides down and fades out) */}
-                <span className="block transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:translate-y-[120%] group-hover:opacity-0">
-                  {item}
-                </span>
-                
-                {/* Hover Text (Slides down from top and fades in with a sleek gradient) */}
-                <span className="absolute inset-0 flex items-center justify-center -translate-y-[120%] opacity-0 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:translate-y-0 group-hover:opacity-100 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 font-bold">
-                  {item}
-                </span>
-              </span>
-            </a>
-          ))}
+        {/* Center: Main Links */}
+        <div className="hidden md:flex items-center h-full justify-center flex-1 gap-4 lg:gap-10">
+          {mainNavigation.map((item) => {
+            const isActive = location.pathname === item.path && item.path !== "#";
+            return (
+              <Link
+                key={item.name}
+                to={item.path}
+                className={`h-full flex items-center gap-2 text-[12px] font-bold tracking-[0.15em] uppercase transition-colors duration-300 ${
+                  isActive ? 'text-blue-900' : 'text-gray-900 hover:text-blue-900'
+                }`}
+              >
+                {item.name}
+              </Link>
+            );
+          })}
         </div>
 
         {/* Right: CTA Button */}
-        <button className="hidden md:block rounded-xl border-2 border-[#00C2CB] bg-white text-[#0F1B2D] px-7 py-2.5 text-sm font-semibold hover:bg-slate-50 transition-colors">
-          Request Quote
-        </button>
+        <div className="hidden md:flex items-center justify-end gap-6 z-10 w-1/4">
+          <button className="bg-black text-white px-8 py-3 text-[12px] font-bold tracking-[0.2em] uppercase hover:bg-gray-800 transition-colors">
+            Request Quote
+          </button>
+        </div>
       </nav>
     </header>
   );

@@ -43,7 +43,7 @@ export default function WhyChooseUs() {
   return (
     <section className="relative bg-slate-50 py-24 overflow-hidden">
       {/* Background AI Glow Effects (Light Theme) */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] md:w-[1000px] h-[600px] md:h-[1000px] bg-[#00C2CB] opacity-[0.04] rounded-full blur-[100px] md:blur-[150px] pointer-events-none"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] md:w-[1000px] h-[600px] md:h-[1000px] bg-[#1E3A8A] opacity-[0.04] rounded-full blur-[100px] md:blur-[150px] pointer-events-none"></div>
       
       <div className="relative z-10 max-w-container-max mx-auto px-gutter">
         {/* Heading */}
@@ -56,7 +56,7 @@ export default function WhyChooseUs() {
         >
           <h2 className="text-4xl md:text-5xl lg:text-[56px] text-[#0F1B2D] font-headline-xl font-bold leading-[1.1] tracking-tight">
             Why Manufacturers <br className="hidden md:block" />
-            Choose <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C2CB] to-[#0075FF]">Hitech AI</span>
+            Choose <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1E3A8A] to-[#1E3A8A]">Hitech AI</span>
           </h2>
         </motion.div>
 
@@ -72,22 +72,22 @@ export default function WhyChooseUs() {
             <motion.div 
               key={idx} 
               variants={itemVariants}
-              className="group relative p-[1.5px] rounded-[24px] bg-gradient-to-b from-gray-200 to-gray-50 hover:from-[#00C2CB]/50 transition-all duration-700 overflow-hidden shadow-sm hover:shadow-xl hover:shadow-[#00C2CB]/10"
+              className="group relative p-[1.5px] rounded-[24px] bg-gradient-to-b from-gray-200 to-gray-50 hover:from-[#1E3A8A]/50 transition-all duration-700 overflow-hidden shadow-sm hover:shadow-xl hover:shadow-[#1E3A8A]/10"
             >
-              {/* Inner Card */}
-              <div className="h-full bg-white rounded-[23px] p-8 flex flex-col items-start relative overflow-hidden transition-all duration-500">
-                {/* Sweep effect on hover */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#00C2CB]/10 to-transparent -translate-x-[200%] group-hover:translate-x-[200%] transition-transform duration-[1.5s] ease-in-out"></div>
+              {/* Card Content Area */}
+              <div className="relative bg-white rounded-[23px] h-full p-8 md:p-10 flex flex-col items-start z-10">
+                {/* Shine effect on hover */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#1E3A8A]/10 to-transparent -translate-x-[200%] group-hover:translate-x-[200%] transition-transform duration-[1.5s] ease-in-out"></div>
                 
-                {/* Icon */}
-                <div className="mb-8 p-4 rounded-2xl bg-[#f0f9fa] border border-[#00C2CB]/10 text-[#00C2CB] group-hover:scale-110 group-hover:bg-[#00C2CB]/10 transition-all duration-500">
-                  <span className="material-symbols-outlined text-[36px] font-light">
+                {/* Icon Wrapper */}
+                <div className="mb-8 p-4 rounded-2xl bg-[#f0f4fa] border border-[#1E3A8A]/10 text-[#1E3A8A] group-hover:scale-110 group-hover:bg-[#1E3A8A]/10 transition-all duration-500">
+                  <span className="material-symbols-outlined text-[32px] md:text-[40px] leading-none" style={{ fontVariationSettings: "'wght' 200" }}>
                     {feature.icon}
                   </span>
                 </div>
-                
-                {/* Title */}
-                <h3 className="text-[20px] font-bold text-[#0F1B2D] mb-4 leading-snug group-hover:text-[#00C2CB] transition-colors duration-300">
+
+                {/* Title & Description */}
+                <h3 className="text-[20px] font-bold text-[#0F1B2D] mb-4 leading-snug group-hover:text-[#1E3A8A] transition-colors duration-300">
                   {feature.title}
                 </h3>
                 

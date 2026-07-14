@@ -17,7 +17,7 @@ export default function ContactBanner() {
           {/* Text Content */}
           <div className="md:ml-64 lg:ml-80 flex flex-col z-20 text-center md:text-left space-y-2">
             <div className="flex items-center justify-center md:justify-start gap-3">
-              <div className="w-[3px] h-4 bg-[#00C2CB]"></div>
+              <div className="w-[3px] h-4 bg-[#1E3A8A]"></div>
               <p className="font-body-md text-[#F1F5F9] font-medium">Have Any Questions !</p>
             </div>
             <h2 className="font-headline-lg text-stark-white text-[24px] md:text-[32px] lg:text-[40px] font-bold leading-tight">

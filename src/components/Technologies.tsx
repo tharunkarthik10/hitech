@@ -74,10 +74,10 @@ export default function Technologies() {
                     setActiveIndex(idx);
                     setOpenFeatureIndex(null);
                   }}
-                  className={`px-5 py-2 rounded-lg text-sm font-semibold transition-colors ${
+                  className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all border ${
                     activeIndex === idx
-                      ? 'bg-blue-200 text-blue-900'
-                      : 'bg-white text-black hover:bg-[#0088cc] hover:text-white'
+                      ? 'bg-white text-black border-white shadow-[0_0_15px_rgba(255,255,255,0.15)]'
+                      : 'bg-transparent text-gray-400 border-gray-700 hover:text-white hover:border-gray-400 hover:bg-white/5'
                   }`}
                 >
                   {asset.shortTitle}
@@ -131,7 +131,7 @@ export default function Technologies() {
           <div className="lg:col-span-5 relative w-full aspect-square bg-black flex items-center justify-center overflow-hidden rounded-xl border border-white/10">
             {/* Soft glow effects mimicking the provided image */}
             <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-red-500/10 to-transparent"></div>
-            <div className="absolute inset-x-0 top-0 h-[60%] bg-gradient-to-b from-teal-500/10 to-transparent"></div>
+            <div className="absolute inset-x-0 top-0 h-[60%] bg-gradient-to-b from-blue-900/10 to-transparent"></div>
             
             <img 
               src={activeAsset.img} 

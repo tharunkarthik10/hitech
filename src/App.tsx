@@ -1,30 +1,27 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
-import HeroSlider from './components/HeroSlider'
-import WhyChooseUs from './components/WhyChooseUs'
-import AboutSection from './components/AboutSection'
-import Technologies from './components/Technologies'
-import FeaturedSolutions from './components/FeaturedSolutions'
-import QualityFeatures from './components/QualityFeatures'
-import Testimonials from './components/Testimonials'
+import SubNavbar from './components/SubNavbar'
 import Footer from './components/Footer'
-import Clients from './components/Clients'
+import Home from './pages/Home'
+import Manufacturing from './pages/Manufacturing'
+import Storage from './pages/Storage'
 
 function App() {
   return (
-    <div className="antialiased selection:bg-industrial-yellow selection:text-on-surface">
-      <Header />
-      <main className="elegant-grid overflow-x-hidden">
-        <HeroSlider />
-        <WhyChooseUs />
-        <AboutSection />
-        <Clients />
-        <Technologies />
-        <FeaturedSolutions />
-        <QualityFeatures />
-        <Testimonials />
-      </main>
-      <Footer />
-    </div>
+    <Router>
+      <div className="antialiased selection:bg-blue-900 selection:text-white">
+        <Header />
+        <SubNavbar />
+        <div className="pt-12"> {/* Push content down by SubNavbar height */}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/manufacturing" element={<Manufacturing />} />
+            <Route path="/storage" element={<Storage />} />
+          </Routes>
+        </div>
+        <Footer />
+      </div>
+    </Router>
   )
 }
 
