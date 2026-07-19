@@ -14,7 +14,7 @@ export default function AnimatedMap() {
   const flightPath = `M ${jfk.x} ${jfk.y} Q 375 80 ${zrh.x} ${zrh.y} Q 560 170 ${dxb.x} ${dxb.y} Q 735 200 ${tpe.x} ${tpe.y}`;
 
   return (
-    <div className="absolute inset-0 w-full h-full bg-[#0F172A] overflow-hidden pointer-events-none">
+    <div className="absolute inset-0 w-full h-full bg-[#051923] overflow-hidden pointer-events-none">
       {/* Background Map */}
       <div 
         className="absolute inset-0 opacity-30 pointer-events-none"

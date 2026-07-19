@@ -1,15 +1,15 @@
 export default function Footer() {
   return (
-    <footer className="bg-[#18181b] text-white pt-24 pb-8 border-t border-outline-variant">
+    <footer className="bg-[#051923] text-white pt-24 pb-8 border-t border-outline-variant">
       <div className="max-w-container-max mx-auto px-gutter flex flex-col items-center">
         
         {/* Top Hero Section */}
         <div className="text-center mb-28 w-full">
           <h2 className="font-headline-xl text-[40px] md:text-[64px] font-bold leading-tight mb-2 tracking-tight">
-            Work <span className="text-[#0284c7]">Smart</span> <span className="text-white">|</span> Manufacture <span className="text-[#0284c7]">Heavy</span>
+            Work <span className="text-[#0582CA]">Smart</span> <span className="text-white">|</span> Manufacture <span className="text-[#0582CA]">Heavy</span>
           </h2>
           <h2 className="font-headline-xl text-[40px] md:text-[64px] font-bold leading-tight mb-10 tracking-tight">
-            Automate With <span className="text-[#0284c7]">HITECH</span>
+            Automate With <span className="text-[#0582CA]">HITECH</span>
           </h2>
           <button className="border border-white/30 rounded-full px-8 py-3.5 font-medium text-[15px] hover:bg-white hover:text-black transition-colors inline-flex items-center gap-2">
             Get a Quote <span className="material-symbols-outlined text-[18px]">arrow_outward</span>

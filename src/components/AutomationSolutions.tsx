@@ -37,7 +37,7 @@ export default function AutomationSolutions() {
           {solutions.map((solution, idx) => (
             <div key={idx} className="flex flex-col">
               <div className="mb-6">
-                <span className="material-symbols-outlined text-[48px] text-[#1E3A8A]" style={{ fontVariationSettings: "'wght' 200" }}>
+                <span className="material-symbols-outlined text-[48px] text-[#006494]" style={{ fontVariationSettings: "'wght' 200" }}>
                   {solution.icon}
                 </span>
               </div>

@@ -23,7 +23,7 @@ export default function Partners() {
   const marqueeItems = [...countries, ...countries, ...countries];
 
   return (
-    <section className="bg-[#0F172A] pt-12 lg:pt-16 pb-0 relative overflow-hidden flex flex-col justify-center">
+    <section className="bg-[#051923] pt-12 lg:pt-16 pb-0 relative overflow-hidden flex flex-col justify-center">
       <div className="max-w-container-max mx-auto px-gutter relative z-10 w-full mb-12 lg:mb-16">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-12">
           
@@ -66,7 +66,7 @@ export default function Partners() {
 
       {/* Bottom Marquee */}
       <div 
-        className="w-full relative z-10 py-6 border-t border-b border-white/10 bg-[#0F172A]/60 backdrop-blur-md"
+        className="w-full relative z-10 py-6 border-t border-b border-white/10 bg-[#051923]/60 backdrop-blur-md"
         onMouseEnter={() => {
           if (swiperInstance && swiperInstance.autoplay) swiperInstance.autoplay.pause();
         }}

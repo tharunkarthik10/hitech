@@ -13,7 +13,7 @@ interface MapProps {
 
 export function WorldMap({ 
   points = [], 
-  lineColor = "#0ea5e9",
+  lineColor = "#00A6FB",
   showLabels = true,
   labelClassName = "text-sm",
   animationDuration = 15,
@@ -32,7 +32,7 @@ export function WorldMap({
       radius: 0.22,
       color: "#FFFF7F40", // Hardcoded dark theme color
       shape: "circle",
-      backgroundColor: "#0F172A", // Hardcoded dark theme color
+      backgroundColor: "#051923", // Hardcoded dark theme color
     }),
     [map]
   );

@@ -7,7 +7,7 @@
   body {
     font-family: 'Outfit', sans-serif;
     background-color: #F1F5F9;
-    color: #0F1B2D;
+    color: #003554;
   }
 }
 
@@ -31,7 +31,7 @@
       left: 0;
       width: 0;
       height: 2px;
-      background-color: #00C2CB;
+      background-color: #00A6FB;
       transition: width 0.3s ease;
   }
   .nav-underline-effect:hover::after {

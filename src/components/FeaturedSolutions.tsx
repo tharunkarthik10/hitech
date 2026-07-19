@@ -11,7 +11,7 @@ function SolutionCard({ service, idx }: { service: any; idx: number }) {
 
   return (
     <div 
-      className={`bg-white w-full flex flex-col group overflow-hidden rounded-[24px] border border-gray-200 shadow-sm transition-all duration-500 hover:shadow-2xl hover:shadow-[#1E3A8A]/15 hover:-translate-y-2 ${idx === 0 ? 'pb-10' : idx === 1 ? 'pb-0' : 'pb-16'}`}
+      className={`bg-white w-full flex flex-col group overflow-hidden rounded-[24px] border border-gray-200 shadow-sm transition-all duration-500 hover:shadow-2xl hover:shadow-[#006494]/15 hover:-translate-y-2 ${idx === 0 ? 'pb-10' : idx === 1 ? 'pb-0' : 'pb-16'}`}
       onMouseEnter={() => videoRef.current?.play().catch(() => {})}
       onMouseLeave={() => {
         if (videoRef.current) {
@@ -48,14 +48,14 @@ function SolutionCard({ service, idx }: { service: any; idx: number }) {
       </div>
 
       <div className="p-6 md:p-8 flex flex-col flex-grow relative z-20 bg-white">
-        <h3 className="font-headline-md text-[20px] md:text-[22px] font-bold text-gray-900 mb-3 leading-snug group-hover:text-[#1E3A8A] transition-colors duration-300">
+        <h3 className="font-headline-md text-[20px] md:text-[22px] font-bold text-gray-900 mb-3 leading-snug group-hover:text-[#006494] transition-colors duration-300">
           {service.title}
         </h3>
         <p className="font-body-md text-[15px] text-gray-600 leading-relaxed mb-8 line-clamp-3">
           {service.desc}
         </p>
         <div className="mt-auto">
-          <button className="text-[#1E3A8A] font-semibold text-[13px] uppercase underline underline-offset-4 decoration-1 hover:text-gray-900 transition-colors">
+          <button className="text-[#006494] font-semibold text-[13px] uppercase underline underline-offset-4 decoration-1 hover:text-gray-900 transition-colors">
             VISIT US
           </button>
         </div>
@@ -92,7 +92,7 @@ export default function FeaturedSolutions() {
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16">
           <div className="space-y-4 max-w-3xl">
             <h2 className="font-headline-xl text-[36px] md:text-[48px] text-on-surface uppercase tracking-wide font-bold leading-tight">
-              Visit our specialised<br />industries<span className="text-[#0F1B2D]">.</span>
+              Visit our specialised<br />industries<span className="text-[#003554]">.</span>
             </h2>
             <p className="font-body-md text-[16px] text-on-surface-variant italic">
               Discover the core sectors where Hitech Engineering drives innovation, precision, and world-class capabilities.

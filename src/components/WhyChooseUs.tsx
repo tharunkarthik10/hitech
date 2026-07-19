@@ -1,30 +1,34 @@
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 
 export default function WhyChooseUs() {
   const features = [
     {
       icon: 'precision_manufacturing',
       title: 'AI-Driven Precision',
-      desc: 'Smart engineering algorithms tailored for real factory conditions and high-duty cycles.'
+      desc: 'Smart engineering algorithms tailored for real factory conditions and high-duty cycles.',
+      image: '/images/feature-1.png'
     },
     {
       icon: 'memory',
       title: 'Intelligent Automation',
-      desc: 'Machine-learning optimized layouts and payloads that adapt perfectly to your process flow.'
+      desc: 'Machine-learning optimized layouts and payloads that adapt perfectly to your process flow.',
+      image: '/images/feature-2.png'
     },
     {
       icon: 'rocket_launch',
       title: 'Future-Ready Tech',
-      desc: 'Scalable robotic systems equipped with dynamic vision and predictive maintenance.'
+      desc: 'Scalable robotic systems equipped with dynamic vision and predictive maintenance.',
+      image: '/images/feature-3.png'
     },
     {
       icon: 'shield_locked',
       title: 'Secure & Proven',
-      desc: 'Validated across multiple manufacturing and internal logistics use cases with 99.9% uptime.'
+      desc: 'Validated across multiple manufacturing and internal logistics use cases with 99.9% uptime.',
+      image: '/images/feature-4.png'
     }
   ];
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -32,7 +36,7 @@ export default function WhyChooseUs() {
     }
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1, y: 0,
@@ -43,9 +47,9 @@ export default function WhyChooseUs() {
   return (
     <section className="relative bg-slate-50 py-24 overflow-hidden">
       {/* Background AI Glow Effects (Light Theme) */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] md:w-[1000px] h-[600px] md:h-[1000px] bg-[#1E3A8A] opacity-[0.04] rounded-full blur-[100px] md:blur-[150px] pointer-events-none"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] md:w-[1000px] h-[600px] md:h-[1000px] bg-[#006494] opacity-[0.04] rounded-full blur-[100px] md:blur-[150px] pointer-events-none"></div>
       
-      <div className="relative z-10 max-w-container-max mx-auto px-gutter">
+      <div className="relative z-10 w-full max-w-[96%] 2xl:max-w-[1920px] mx-auto px-2 lg:px-4">
         {/* Heading */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
@@ -54,47 +58,67 @@ export default function WhyChooseUs() {
           transition={{ duration: 0.8 }}
           className="mb-20 text-center max-w-3xl mx-auto"
         >
-          <h2 className="text-4xl md:text-5xl lg:text-[56px] text-[#0F1B2D] font-headline-xl font-bold leading-[1.1] tracking-tight">
+          <h2 className="text-4xl md:text-5xl lg:text-[56px] text-[#003554] font-headline-xl font-bold leading-[1.1] tracking-tight">
             Why Manufacturers <br className="hidden md:block" />
-            Choose <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1E3A8A] to-[#1E3A8A]">Hitech AI</span>
+            Choose <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#006494] to-[#006494]">Hitech Engineering</span>
           </h2>
         </motion.div>
 
-        {/* 4-Column Grid */}
+        {/* Interactive Horizontal Accordion */}
         <motion.div 
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="flex flex-col lg:flex-row gap-4 lg:gap-6 h-auto lg:h-[500px] w-full"
         >
           {features.map((feature, idx) => (
             <motion.div 
               key={idx} 
               variants={itemVariants}
-              className="group relative p-[1.5px] rounded-[24px] bg-gradient-to-b from-gray-200 to-gray-50 hover:from-[#1E3A8A]/50 transition-all duration-700 overflow-hidden shadow-sm hover:shadow-xl hover:shadow-[#1E3A8A]/10"
+              className="relative flex-1 lg:hover:flex-[2.5] transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] overflow-hidden rounded-[32px] bg-white group/card flex flex-col justify-between p-6 md:p-8 cursor-pointer shadow-lg border border-gray-200 hover:border-[#00A6FB]/30 hover:shadow-[#00A6FB]/20 min-h-[220px]"
             >
-              {/* Card Content Area */}
-              <div className="relative bg-white rounded-[23px] h-full p-8 md:p-10 flex flex-col items-start z-10">
-                {/* Shine effect on hover */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#1E3A8A]/10 to-transparent -translate-x-[200%] group-hover:translate-x-[200%] transition-transform duration-[1.5s] ease-in-out"></div>
-                
-                {/* Icon Wrapper */}
-                <div className="mb-8 p-4 rounded-2xl bg-[#f0f4fa] border border-[#1E3A8A]/10 text-[#1E3A8A] group-hover:scale-110 group-hover:bg-[#1E3A8A]/10 transition-all duration-500">
-                  <span className="material-symbols-outlined text-[32px] md:text-[40px] leading-none" style={{ fontVariationSettings: "'wght' 200" }}>
-                    {feature.icon}
-                  </span>
-                </div>
+              {/* Background Image */}
+              <div className="absolute inset-0 z-0">
+                <img 
+                  src={feature.image} 
+                  alt={feature.title} 
+                  className="w-full h-full object-cover opacity-90 group-hover/card:opacity-100 group-hover/card:scale-105 transition-all duration-1000 ease-out" 
+                />
+                {/* Minimal overlay just for text readability at the bottom */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover/card:via-black/40 transition-all duration-700"></div>
+              </div>
 
-                {/* Title & Description */}
-                <h3 className="text-[20px] font-bold text-[#0F1B2D] mb-4 leading-snug group-hover:text-[#1E3A8A] transition-colors duration-300">
+              {/* Giant Background Icon */}
+              <span 
+                className="material-symbols-outlined absolute -right-6 -top-6 text-[180px] text-white opacity-[0.03] group-hover/card:text-[#00A6FB] group-hover/card:opacity-[0.1] group-hover/card:scale-110 group-hover/card:-translate-x-6 group-hover/card:translate-y-6 transition-all duration-1000 ease-out z-0 pointer-events-none select-none" 
+                style={{ fontVariationSettings: "'wght' 200" }}
+              >
+                {feature.icon}
+              </span>
+
+              {/* Top Icon */}
+              <div className="relative z-10 w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white backdrop-blur-md group-hover/card:bg-[#00A6FB] group-hover/card:border-[#00A6FB] group-hover/card:scale-110 transition-all duration-500 shadow-sm">
+                <span className="material-symbols-outlined text-[28px] font-light">
+                  {feature.icon}
+                </span>
+              </div>
+              
+              {/* Bottom Content */}
+              <div className="relative z-10 mt-12 lg:mt-auto">
+                {/* Title */}
+                <h3 className="text-[22px] md:text-[26px] font-bold text-white mb-2 tracking-wide whitespace-nowrap overflow-hidden text-ellipsis drop-shadow-md">
                   {feature.title}
                 </h3>
                 
-                {/* Description */}
-                <p className="text-[15px] text-gray-600 leading-relaxed group-hover:text-gray-900 transition-colors duration-300">
-                  {feature.desc}
-                </p>
+                {/* Expandable Description */}
+                <div className="lg:grid lg:grid-rows-[0fr] lg:group-hover/card:grid-rows-[1fr] transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] lg:opacity-0 lg:group-hover/card:opacity-100 mt-2 lg:mt-0 lg:group-hover/card:mt-4">
+                  <div className="lg:overflow-hidden">
+                    <p className="text-white/70 text-[15px] md:text-[16px] leading-relaxed max-w-[320px] font-medium lg:w-[320px]">
+                      {feature.desc}
+                    </p>
+                  </div>
+                </div>
               </div>
             </motion.div>
           ))}

@@ -7,6 +7,7 @@ export default function Technologies() {
       title: 'Hydraulic Cylinders', 
       shortTitle: 'Hydraulic',
       img: 'https://motiequipments.com/assets/images/shop/grid/palette-1.jpg',
+      video: '/pallet-jack-rotation.mp4',
       features: [
         'Heavy-duty industrial applications',
         'Precision seals & robust construction'
@@ -59,7 +60,7 @@ export default function Technologies() {
   const activeAsset = assets[activeIndex];
 
   return (
-    <section className="bg-[#18181b] text-white py-24 font-body-md border-y border-outline-variant/20">
+    <section className="bg-[#051923] text-white py-24 font-body-md border-y border-outline-variant/20">
       <div className="max-w-container-max mx-auto px-gutter">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center">
           
@@ -133,12 +134,24 @@ export default function Technologies() {
             <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-red-500/10 to-transparent"></div>
             <div className="absolute inset-x-0 top-0 h-[60%] bg-gradient-to-b from-blue-900/10 to-transparent"></div>
             
-            <img 
-              src={activeAsset.img} 
-              alt={activeAsset.title}
-              key={activeAsset.id}
-              className="relative z-10 w-full h-full object-cover transition-opacity duration-500 hover:scale-105 transform" 
-            />
+            {activeAsset.video ? (
+              <video 
+                src={activeAsset.video} 
+                key={activeAsset.id + '-vid'}
+                className="relative z-10 w-full h-full object-cover transition-opacity duration-500 hover:scale-105" 
+                autoPlay 
+                loop 
+                muted 
+                playsInline
+              />
+            ) : (
+              <img 
+                src={activeAsset.img} 
+                alt={activeAsset.title}
+                key={activeAsset.id}
+                className="relative z-10 w-full h-full object-contain transition-opacity duration-500 hover:scale-105" 
+              />
+            )}
           </div>
 
         </div>

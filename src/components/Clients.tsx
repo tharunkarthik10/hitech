@@ -22,7 +22,7 @@ export default function Clients() {
         <div className="text-center mb-16 z-10 relative bg-stark-white px-8 py-4">
           <p className="font-label-caps text-[14px] text-on-surface-variant">They Always Trust Us</p>
           <h3 className="font-headline-lg text-[32px] text-on-surface mt-1">
-            OUR CLIENTS<span className="text-[#0F1B2D]">.</span>
+            OUR CLIENTS<span className="text-[#003554]">.</span>
           </h3>
         </div>
       </div>
