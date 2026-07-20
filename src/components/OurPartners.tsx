@@ -1,121 +1,120 @@
 export default function OurPartners() {
-  const cities = [
-    { name: 'Fairbanks', x: 20, y: 35, active: true },
-    { name: 'Los Angeles', x: 25, y: 45 },
-    { name: 'Brasília', x: 38, y: 68 },
-    { name: 'London', x: 48, y: 38 },
-    { name: 'Nairobi', x: 57, y: 60 },
-    { name: 'New Delhi', x: 70, y: 45 },
-    { name: 'Vladivostok', x: 85, y: 35 },
-  ];
-
-  // Generate SVG path connecting the dots with smooth curves
-  // Path goes from city to city
-  const pathData = `M ${cities[0].x}% ${cities[0].y}% 
-    S ${cities[1].x - 2}% ${cities[1].y + 5}%, ${cities[1].x}% ${cities[1].y}% 
-    S ${cities[2].x - 5}% ${cities[2].y + 5}%, ${cities[2].x}% ${cities[2].y}% 
-    S ${cities[3].x - 5}% ${cities[3].y - 5}%, ${cities[3].x}% ${cities[3].y}% 
-    S ${cities[4].x - 4}% ${cities[4].y + 5}%, ${cities[4].x}% ${cities[4].y}% 
-    S ${cities[5].x - 5}% ${cities[5].y - 5}%, ${cities[5].x}% ${cities[5].y}% 
-    S ${cities[6].x - 5}% ${cities[6].y - 5}%, ${cities[6].x}% ${cities[6].y}%`;
-
   return (
-    <section className="bg-[#051923] pt-12 pb-24 font-body-md relative overflow-hidden">
-      <div className="max-w-container-max mx-auto px-gutter relative z-10">
-        
-        {/* Header Row */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-8">
-          <div>
-            <h2 className="text-4xl md:text-[44px] text-white font-headline-xl font-bold tracking-tight mb-3">
-              Our Partners
-            </h2>
-            <p className="text-gray-300 text-[17px] max-w-md leading-relaxed">
-              HITECH ENGINEERING Operates in<br className="hidden sm:block" /> following countries
-            </p>
-          </div>
-          <div className="text-left md:text-right">
-            <h3 className="text-6xl md:text-[70px] text-white font-headline-xl font-bold tracking-tight mb-2">
-              07+
-            </h3>
-            <p className="text-gray-400 text-sm tracking-[0.25em] font-semibold uppercase">
-              COUNTRIES
-            </p>
-          </div>
-        </div>
-      </div> {/* Close max-w-container-max */}
-
-      {/* Full Bleed Map Container with reduced height (aspect 3/1) */}
-        <div className="relative w-full aspect-[16/9] md:aspect-[3/1] mt-8 overflow-hidden z-10 pb-8">
+    <section className="bg-[#051923] w-full py-24 relative overflow-hidden min-h-[450px] flex items-center">
+      
+      {/* Left Map: India Focus */}
+      <div className="absolute left-[-5%] md:left-[-2%] top-0 bottom-0 w-[50%] md:w-[40%] opacity-60 pointer-events-none overflow-hidden">
+        {/* 
+          Absolute positioning guarantees the top-left of this container is exactly at the center of the parent.
+          By translating -70% and -45%, the point (70%, 45%) of the map (India) sits exactly in the dead center.
+        */}
+        <div 
+          className="absolute top-1/2 left-1/2 w-[600%] aspect-[2/1]"
+          style={{ transform: 'translate(-70%, -45%)' }}
+        >
+          {/* Dotted Mask - 100% of this inner container */}
+          <div 
+            className="absolute inset-0"
+            style={{
+              maskImage: 'url("/world-map.svg")',
+              maskSize: '100% 100%',
+              WebkitMaskImage: 'url("/world-map.svg")',
+              WebkitMaskSize: '100% 100%',
+              backgroundImage: 'radial-gradient(circle, #ffffff 1px, transparent 1px)',
+              backgroundSize: '4px 4px'
+            }}
+          />
           
-          {/* Inner Map Container (preserves map aspect ratio) */}
-          <div className="absolute top-1/2 left-0 w-full -translate-y-1/2 aspect-[2.2/1] min-w-[800px]">
-            
-            {/* Dotted Map Effect using SVG Mask */}
-            <div 
-              className="absolute inset-0 z-0 opacity-40"
-              style={{
-                maskImage: 'url("/world-map.svg")',
-                maskSize: '100% 100%',
-                maskPosition: 'center',
-                maskRepeat: 'no-repeat',
-                WebkitMaskImage: 'url("/world-map.svg")',
-                WebkitMaskSize: '100% 100%',
-                WebkitMaskPosition: 'center',
-                WebkitMaskRepeat: 'no-repeat',
-              }}
-            >
-              {/* The dot pattern */}
-              <div 
-                className="absolute inset-0"
-                style={{
-                  backgroundImage: 'radial-gradient(circle, #ffffff 1px, transparent 1.5px)',
-                  backgroundSize: '8px 8px'
-                }}
-              ></div>
-            </div>
+          {/* Network Nodes exactly mapped to India's position at (70, 45) */}
+          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+             {/* Network lines clustered tightly around 70, 45 */}
+             <path d="M 68 43 L 69 41 L 71 44 L 70 47 L 68 43" fill="none" stroke="#00A6FB" strokeWidth="0.05" className="opacity-60"/>
+             <path d="M 71 44 L 74 45 L 72 49 L 70 47" fill="none" stroke="#00A6FB" strokeWidth="0.05" className="opacity-60"/>
+             <path d="M 69 41 L 73 40 L 74 45" fill="none" stroke="#00A6FB" strokeWidth="0.05" className="opacity-60"/>
+             <path d="M 68 43 L 66 45 L 70 47" fill="none" stroke="#00A6FB" strokeWidth="0.05" className="opacity-60"/>
+             <path d="M 72 49 L 71 52 L 70 47" fill="none" stroke="#00A6FB" strokeWidth="0.05" className="opacity-60"/>
+             
+             {/* Nodes */}
+             <circle cx="68" cy="43" r="0.15" fill="#00A6FB" />
+             <circle cx="69" cy="41" r="0.15" fill="#00A6FB" />
+             <circle cx="71" cy="44" r="0.25" fill="#00A6FB" className="animate-ping opacity-60"/>
+             <circle cx="71" cy="44" r="0.2" fill="#ffffff" />
+             <circle cx="70" cy="47" r="0.15" fill="#00A6FB" />
+             <circle cx="74" cy="45" r="0.15" fill="#00A6FB" />
+             <circle cx="72" cy="49" r="0.15" fill="#00A6FB" />
+             <circle cx="73" cy="40" r="0.15" fill="#00A6FB" />
+             <circle cx="66" cy="45" r="0.15" fill="#00A6FB" />
+             <circle cx="71" cy="52" r="0.15" fill="#00A6FB" />
+          </svg>
+        </div>
+      </div>
 
-            {/* Curved connection line (SVG) */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 100 100" preserveAspectRatio="none">
-               <path 
-                 d={pathData} 
-                 fill="none" 
-                 stroke="#00A6FB" 
-                 strokeWidth="2"
-                 vectorEffect="non-scaling-stroke"
-                 className="opacity-80"
-               />
+      {/* Center Content */}
+      <div className="relative z-20 max-w-4xl mx-auto px-6 text-center flex flex-col items-center">
+        <h2 className="text-white text-[32px] md:text-[44px] font-bold tracking-wide mb-6">
+          Connect with HITECH
+        </h2>
+        <p className="text-white/80 text-[16px] md:text-[17px] max-w-2xl mb-10 leading-relaxed font-medium">
+          From Product support to Exploring New Collaborations, we're here to ensure you get the right answers, quickly and reliably.
+        </p>
+        <button className="bg-white text-[#051923] px-10 py-3.5 rounded-[4px] text-[15px] font-bold shadow-lg hover:bg-gray-100 hover:shadow-xl transition-all duration-300">
+          Enquiry Now
+        </button>
+      </div>
+
+      {/* Right Map: World with Arches */}
+      <div className="absolute right-[-15%] md:right-[-5%] top-0 bottom-0 w-[60%] md:w-[45%] opacity-60 pointer-events-none overflow-hidden">
+        
+        {/* Centered at 85% width so India (70%) appears on the left half, leaving room for arches to the right */}
+        <div 
+          className="absolute top-1/2 left-1/2 w-[130%] aspect-[2/1]"
+          style={{ transform: 'translate(-85%, -50%)' }}
+        >
+          {/* Dotted Mask */}
+          <div 
+            className="absolute inset-0"
+            style={{
+              maskImage: 'url("/world-map.svg")',
+              maskSize: '100% 100%',
+              WebkitMaskImage: 'url("/world-map.svg")',
+              WebkitMaskSize: '100% 100%',
+              backgroundImage: 'radial-gradient(circle, #ffffff 1px, transparent 1px)',
+              backgroundSize: '8px 8px'
+            }}
+          />
+          
+          {/* Arched Lines mapped EXACTLY to cities from the original dataset */}
+          <div className="absolute inset-0 z-10">
+            <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+               {/* India (New Delhi) is exactly at (70, 45) */}
+               
+               {/* To Europe (London: 48, 38) */}
+               <path d="M 70 45 Q 60 20 48 38" fill="none" stroke="#00A6FB" strokeWidth="0.2" className="opacity-70" />
+               <circle cx="48" cy="38" r="0.4" fill="#00A6FB" />
+               
+               {/* To Africa (Nairobi: 57, 60) */}
+               <path d="M 70 45 Q 60 60 57 60" fill="none" stroke="#00A6FB" strokeWidth="0.2" className="opacity-70" />
+               <circle cx="57" cy="60" r="0.4" fill="#00A6FB" />
+               
+               {/* To SE Asia (Vladivostok: 85, 35) */}
+               <path d="M 70 45 Q 80 30 85 35" fill="none" stroke="#00A6FB" strokeWidth="0.2" className="opacity-70" />
+               <circle cx="85" cy="35" r="0.4" fill="#00A6FB" />
+               
+               {/* To Australia / Oceania (Approx 85, 65) */}
+               <path d="M 70 45 Q 85 55 85 65" fill="none" stroke="#00A6FB" strokeWidth="0.2" className="opacity-70" />
+               <circle cx="85" cy="65" r="0.4" fill="#00A6FB" />
+               
+               {/* To North America (LA: 25, 45) */}
+               <path d="M 70 45 Q 45 15 25 45" fill="none" stroke="#00A6FB" strokeWidth="0.2" className="opacity-70" />
+               <circle cx="25" cy="45" r="0.4" fill="#00A6FB" />
+
+               {/* Source Node (India) */}
+               <circle cx="70" cy="45" r="0.8" fill="#00A6FB" className="animate-pulse" />
+               <circle cx="70" cy="45" r="0.5" fill="#ffffff" />
             </svg>
-
-            {/* City Dots */}
-            {cities.map((city, idx) => (
-              <div 
-                key={idx}
-                className="absolute z-20 flex flex-col items-center"
-                style={{ top: `${city.y}%`, left: `${city.x}%`, transform: 'translate(-50%, -50%)' }}
-              >
-                {/* Dot */}
-                <div className="relative">
-                  <div className="w-2.5 h-2.5 bg-[#00A6FB] rounded-full shadow-[0_0_12px_#00A6FB]"></div>
-                  {/* Ping animation */}
-                  <div className="absolute inset-0 w-2.5 h-2.5 bg-[#00A6FB] rounded-full animate-ping opacity-60"></div>
-                </div>
-                
-                {/* Label */}
-                <div className="mt-2 bg-[#051923] border border-white/20 px-2.5 py-1 rounded-sm text-[11px] text-white font-semibold whitespace-nowrap shadow-xl">
-                  {city.name}
-                </div>
-
-                {/* Active Client Tooltip (only for Fairbanks) */}
-                {city.active && (
-                  <div className="absolute top-1/2 left-[120%] -translate-y-1/2 ml-2 bg-[#006494] px-4 py-1.5 rounded-full text-[10px] text-white font-bold tracking-widest whitespace-nowrap shadow-[0_0_20px_rgba(0,100,148,0.6)] z-30 flex items-center">
-                    <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-[#006494] rotate-45 rounded-sm"></div>
-                    <span className="relative z-10">ACTIVE CLIENT</span>
-                  </div>
-                )}
-              </div>
-            ))}
           </div>
         </div>
+      </div>
     </section>
   );
 }

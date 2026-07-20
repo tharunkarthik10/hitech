@@ -4,8 +4,9 @@ import { Link, useLocation } from 'react-router-dom';
 const mainNavigation = [
   { name: "Homepage", path: "/" },
   { name: "Products", path: "#" },
-  { name: "Industries Served", path: "#" },
+  { name: "Services", path: "#" },
   { name: "About Us", path: "#" },
+  { name: "Blog", path: "#" },
   { name: "Contact", path: "#contact" },
 ];
 
