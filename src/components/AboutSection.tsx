@@ -1,61 +1,7 @@
-import { useState, useRef, useEffect } from 'react';
-import { motion, useMotionValue, useSpring, useMotionValueEvent } from 'framer-motion';
+import { useState } from 'react';
 
 export default function AboutSection() {
   const [activeTab, setActiveTab] = useState('Overview');
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const imgRef = useRef<HTMLImageElement>(null);
-  const imageContainerRef = useRef<HTMLDivElement>(null);
-  
-  // Create a raw motion value for the frame
-  const frame = useMotionValue(30);
-  
-  // Smooth it out with spring physics
-  const smoothFrame = useSpring(frame, {
-    stiffness: 80,
-    damping: 25,
-    restDelta: 0.001
-  });
-  
-  // Update image source when the smoothed frame changes
-  useMotionValueEvent(smoothFrame, "change", (latest) => {
-    if (imgRef.current) {
-      const frameNum = Math.max(30, Math.min(300, Math.floor(latest))).toString().padStart(3, '0');
-      imgRef.current.src = `/about-sequence/ezgif-frame-${frameNum}.jpg`;
-    }
-  });
-
-  // Hijack scroll only when hovering the image container
-  useEffect(() => {
-    const el = imageContainerRef.current;
-    if (!el) return;
-
-    const handleWheel = (e: WheelEvent) => {
-      // Stop the page from scrolling
-      e.preventDefault();
-      
-      // Adjust frame based on scroll direction and speed
-      // 0.2 is the sensitivity multiplier
-      const current = frame.get();
-      const next = current + (e.deltaY * 0.2);
-      
-      // Keep it within bounds
-      frame.set(Math.max(30, Math.min(300, next)));
-    };
-
-    // { passive: false } is required to allow e.preventDefault()
-    el.addEventListener('wheel', handleWheel, { passive: false });
-    return () => el.removeEventListener('wheel', handleWheel);
-  }, [frame]);
-
-  // Preload adjacent frames for smoother scrubbing
-  useEffect(() => {
-    for (let i = 1; i <= 50; i++) {
-      const img = new Image();
-      const num = i.toString().padStart(3, '0');
-      img.src = `/about-sequence/ezgif-frame-${num}.jpg`;
-    }
-  }, []);
 
   const tabs = ['Overview', 'Mission', 'Vision', 'Strategy'];
   
@@ -94,7 +40,7 @@ export default function AboutSection() {
   };
 
   return (
-    <section ref={sectionRef} className="bg-stark-white relative py-12 md:py-16 lg:py-24">
+    <section className="bg-stark-white relative py-12 md:py-16 lg:py-24">
       <div className="w-full flex justify-center font-body-md group/section">
         {/* Massive Box Wrapper */}
         <div className="relative w-full max-w-[96%] 2xl:max-w-[1920px] mx-auto bg-[#051923] rounded-[40px] p-6 md:p-8 lg:p-12 shadow-2xl border border-white/10 flex flex-col">
@@ -143,15 +89,16 @@ export default function AboutSection() {
             </div>
           </div>
 
-          {/* Right Side Image Area */}
+          {/* Right Side Video Area */}
           <div 
-            ref={imageContainerRef}
-            className="w-full lg:w-[45%] flex-none rounded-[24px] bg-[#050A10]/50 flex items-center justify-center p-0 overflow-hidden h-[300px] md:h-[400px] lg:h-[500px] xl:h-[550px] relative border border-white/10 backdrop-blur-sm shadow-2xl group cursor-ns-resize"
+            className="w-full lg:w-[45%] flex-none rounded-[24px] bg-[#050A10]/50 flex items-center justify-center p-0 overflow-hidden h-[300px] md:h-[400px] lg:h-[500px] xl:h-[550px] relative border border-white/10 backdrop-blur-sm shadow-2xl group"
           >
-              <img 
-               ref={imgRef}
-               src="/about-sequence/ezgif-frame-030.jpg" 
-               alt="Hitech Machinery" 
+              <video 
+               src="/Product_explosion_reassembly_ani…_202607180933.mp4" 
+               autoPlay
+               loop
+               muted
+               playsInline
                className="w-[105%] max-w-none h-full object-cover object-center transition-transform duration-300 ease-out scale-[1.05] group-hover:scale-[1.1]"
              />
           </div>

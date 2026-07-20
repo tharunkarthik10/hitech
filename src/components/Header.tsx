@@ -20,9 +20,9 @@ export default function Header() {
         <Link to="/" className="flex items-center gap-4 group z-10 w-1/4">
           <LayoutGrid className="w-6 h-6 text-black group-hover:text-blue-900 transition-colors" strokeWidth={2} />
           <img 
-            src="/hitech_logo.png" 
+            src="/Remove background project - July 20, 2026 at 11.47.52.png" 
             alt="Hitech" 
-            className="h-[32px] w-auto object-contain transition-all duration-500"
+            className="h-20 w-auto object-contain scale-125 origin-left translate-y-1 transition-all duration-500"
           />
         </Link>
 

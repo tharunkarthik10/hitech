@@ -60,9 +60,12 @@ export default function Technologies() {
   const activeAsset = assets[activeIndex];
 
   return (
-    <section className="bg-[#051923] text-white py-24 font-body-md border-y border-outline-variant/20">
-      <div className="max-w-container-max mx-auto px-gutter">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center">
+    <section className="bg-stark-white relative py-12 md:py-16 lg:py-24">
+      <div className="w-full flex justify-center font-body-md group/section">
+        {/* Massive Box Wrapper */}
+        <div className="relative w-full max-w-[96%] 2xl:max-w-[1920px] mx-auto bg-[#051923] text-white rounded-[40px] p-6 md:p-8 lg:p-12 shadow-2xl border border-white/10 flex flex-col">
+          <div className="w-full mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center">
           
           {/* Left Column */}
           <div className="lg:col-span-7 flex flex-col">
@@ -129,7 +132,7 @@ export default function Technologies() {
           </div>
 
           {/* Right Column (Image) */}
-          <div className="lg:col-span-5 relative w-full aspect-square bg-black flex items-center justify-center overflow-hidden rounded-xl border border-white/10">
+          <div className="lg:col-span-5 relative w-full aspect-square bg-black flex items-center justify-center overflow-hidden rounded-[24px] border border-white/10">
             {/* Soft glow effects mimicking the provided image */}
             <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-red-500/10 to-transparent"></div>
             <div className="absolute inset-x-0 top-0 h-[60%] bg-gradient-to-b from-blue-900/10 to-transparent"></div>
@@ -154,6 +157,8 @@ export default function Technologies() {
             )}
           </div>
 
+            </div>
+          </div>
         </div>
       </div>
     </section>
