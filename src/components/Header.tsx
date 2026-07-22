@@ -2,8 +2,8 @@ import { LayoutGrid } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 const mainNavigation = [
-  { name: "Homepage", path: "/" },
-  { name: "Products", path: "#" },
+  { name: "Home", path: "/" },
+  { name: "Products", path: "/products" },
   { name: "Services", path: "#" },
   { name: "About Us", path: "#" },
   { name: "Blog", path: "#" },
@@ -30,16 +30,22 @@ export default function Header() {
         {/* Center: Main Links */}
         <div className="hidden md:flex items-center h-full justify-center flex-1 gap-4 lg:gap-10">
           {mainNavigation.map((item) => {
-            const isActive = location.pathname === item.path && item.path !== "#";
+            const isActive = item.path !== "#" && (
+              location.pathname === item.path || 
+              (item.path !== "/" && location.pathname.startsWith(`${item.path}/`))
+            );
             return (
               <Link
                 key={item.name}
                 to={item.path}
-                className={`h-full flex items-center gap-2 text-[12px] font-bold tracking-[0.15em] uppercase transition-colors duration-300 ${
+                className={`relative h-full flex items-center justify-center gap-2 text-[12px] font-bold tracking-[0.15em] uppercase transition-colors duration-300 ${
                   isActive ? 'text-blue-900' : 'text-gray-900 hover:text-blue-900'
                 }`}
               >
                 {item.name}
+                {isActive && (
+                  <span className="absolute bottom-0 left-0 w-full h-[3px] bg-blue-900" />
+                )}
               </Link>
             );
           })}
