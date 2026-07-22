@@ -1,10 +1,11 @@
 import { useParams, Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { PRODUCTS, CATEGORIES } from '../data/products';
-import { ChevronRight, ChevronDown } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { PRODUCTS } from '../data/products';
+import { ChevronRight, ChevronDown, ChevronUp } from 'lucide-react';
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
+  const [isExpanded, setIsExpanded] = useState(false);
   const product = PRODUCTS.find(p => p.id === id);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ export default function ProductDetail() {
     );
   }
 
-  const similarProducts = PRODUCTS.filter(p => p.category === product.category).slice(0, 4);
+  const similarProducts = PRODUCTS.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
 
   return (
     <main className="bg-white min-h-screen pt-20">
@@ -78,12 +79,57 @@ export default function ProductDetail() {
             </ul>
           </div>
 
-          {/* Read More Dropdown Placeholder */}
+          {/* Read More Dropdown */}
           <div className="pt-6">
-            <button className="flex items-center text-black font-bold hover:opacity-70 transition-opacity">
-              <span className="border-b-2 border-black pb-0.5 text-[15px]">Read More</span>
-              <ChevronDown className="w-4 h-4 ml-1 mt-0.5" />
+            <button 
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="flex items-center text-black font-bold hover:opacity-70 transition-opacity focus:outline-none"
+            >
+              <span className="border-b-2 border-black pb-0.5 text-[15px]">
+                {isExpanded ? 'Read Less' : 'Read More'}
+              </span>
+              {isExpanded ? (
+                <ChevronUp className="w-4 h-4 ml-1 mt-0.5" />
+              ) : (
+                <ChevronDown className="w-4 h-4 ml-1 mt-0.5" />
+              )}
             </button>
+          </div>
+
+          {/* Expanded Content */}
+          <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isExpanded ? 'max-h-[1000px] opacity-100 mt-8' : 'max-h-0 opacity-0 mt-0'}`}>
+            <h5 className="text-xl font-bold text-gray-900 mb-4">Technical Specifications</h5>
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8 text-[15px]">
+                <div className="flex justify-between border-b border-gray-200 pb-2">
+                  <span className="text-gray-600">Material</span>
+                  <span className="font-semibold text-gray-900 text-right">Industrial Grade Alloy</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-200 pb-2">
+                  <span className="text-gray-600">Operating Temp</span>
+                  <span className="font-semibold text-gray-900 text-right">-20°C to 80°C</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-200 pb-2">
+                  <span className="text-gray-600">Max Pressure</span>
+                  <span className="font-semibold text-gray-900 text-right">1.0 MPa</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-200 pb-2">
+                  <span className="text-gray-600">Warranty</span>
+                  <span className="font-semibold text-gray-900 text-right">2 Years</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-200 pb-2">
+                  <span className="text-gray-600">Certifications</span>
+                  <span className="font-semibold text-gray-900 text-right">ISO 9001, CE</span>
+                </div>
+                <div className="flex justify-between border-b border-gray-200 pb-2">
+                  <span className="text-gray-600">Maintenance</span>
+                  <span className="font-semibold text-gray-900 text-right">Low</span>
+                </div>
+              </div>
+            </div>
+            <p className="text-gray-600 mt-6 leading-relaxed text-[15px]">
+              Designed for seamless integration into advanced automation systems, this {product.title.toLowerCase()} delivers uncompromising performance and reliability. Every unit undergoes rigorous stress testing to ensure it meets our strict quality control standards before shipment.
+            </p>
           </div>
         </div>
 

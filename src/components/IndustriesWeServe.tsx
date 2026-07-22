@@ -78,8 +78,8 @@ export default function IndustriesWeServe() {
   });
 
   return (
-    // We give the section a larger height (800vh) to make the horizontal scroll slower and smoother
-    <section ref={targetRef} className="relative h-[800vh] bg-white border-y border-gray-200">
+    // We give the section a larger height (500vh) to allow for horizontal scrolling
+    <section ref={targetRef} className="relative h-[500vh] bg-white border-y border-gray-200">
       
       {/* The sticky container holds the content in place while we scroll */}
       <div className="sticky top-[140px] h-[calc(100vh-140px)] flex flex-col justify-center overflow-hidden">
