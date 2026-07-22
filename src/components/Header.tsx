@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 const mainNavigation = [
   { name: "Home", path: "/" },
   { name: "Products", path: "/products" },
-  { name: "Services", path: "#" },
+  { name: "Services", path: "/services" },
   { name: "About Us", path: "#" },
   { name: "Blog", path: "#" },
   { name: "Contact", path: "#contact" },
@@ -19,7 +19,7 @@ export default function Header() {
       <nav className="h-20 flex items-center justify-between px-8 md:px-12 w-full relative bg-white">
         {/* Left: Logo */}
         <Link to="/" className="flex items-center gap-4 group z-10 w-1/4">
-          <LayoutGrid className="w-6 h-6 text-black group-hover:text-blue-900 transition-colors" strokeWidth={2} />
+
           <img 
             src="/Remove background project - July 20, 2026 at 11.47.52.png" 
             alt="Hitech" 
@@ -53,9 +53,7 @@ export default function Header() {
 
         {/* Right: CTA Button */}
         <div className="hidden md:flex items-center justify-end gap-6 z-10 w-1/4">
-          <button className="bg-black text-white px-8 py-3 text-[12px] font-bold tracking-[0.2em] uppercase hover:bg-gray-800 transition-colors">
-            Request Quote
-          </button>
+
         </div>
       </nav>
     </header>
