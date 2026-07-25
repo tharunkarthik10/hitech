@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HITECH ENGINEERING | Kinetic Precision Engineering</title>
+<!-- Google Fonts: Space Grotesk -->
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed": "#e5e2e1",
+                      "primary-fixed": "#ffe16d",
+                      "on-surface": "#1f1b10",
+                      "on-primary": "#ffffff",
+                      "on-background": "#1f1b10",
+                      "surface-bone": "#fff9ef",
+                      "primary-container": "#ffd700",
+                      "inverse-on-surface": "#f9f0dd",
+                      "background": "#fff9ef",
+                      "surface-dim": "#e1d9c7",
+                      "primary": "#705d00",
+                      "on-tertiary-fixed-variant": "#004f54",
+                      "surface": "#fff9ef",
+                      "inverse-surface": "#343024",
+                      "inverse-primary": "#e9c400",
+                      "on-tertiary-fixed": "#002022",
+                      "on-primary-container": "#705e00",
+                      "tertiary-fixed-dim": "#00dbe8",
+                      "tech-gray-dark": "#1a1a1a",
+                      "stark-white": "#ffffff",
+                      "error": "#ba1a1a",
+                      "outline-muted": "#7e775f",
+                      "secondary-fixed-dim": "#c8c6c5",
+                      "industrial-yellow": "#ffd700",
+                      "error-container": "#ffdad6",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-variant": "#eae2cf",
+                      "on-secondary-container": "#636262",
+                      "surface-container-low": "#fbf3e0",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-fixed-variant": "#474746",
+                      "outline": "#7e775f",
+                      "secondary-container": "#e2dfde",
+                      "surface-tint": "#705d00",
+                      "surface-container-high": "#f0e7d5",
+                      "tertiary": "#00696f",
+                      "surface-container": "#f6edda",
+                      "outline-variant": "#d0c6ab",
+                      "on-primary-fixed": "#221b00",
+                      "on-tertiary-container": "#006a70",
+                      "on-error-container": "#93000a",
+                      "on-secondary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "on-primary-fixed-variant": "#544600",
+                      "tertiary-fixed": "#79f5ff",
+                      "hazard-red": "#ff3b30",
+                      "surface-container-highest": "#eae2cf",
+                      "primary-fixed-dim": "#e9c400",
+                      "on-secondary-fixed": "#1c1b1b",
+                      "secondary": "#5f5e5e",
+                      "tertiary-container": "#00f1ff",
+                      "surface-bright": "#fff9ef",
+                      "on-surface-variant": "#4d4732"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "container-max": "1280px",
+                      "section-padding": "80px",
+                      "margin-mobile": "16px",
+                      "unit": "8px"
+              },
+              "fontFamily": {
+                      "headline-xl": ["Space Grotesk"],
+                      "status-code": ["Space Grotesk"],
+                      "body-lg": ["Space Grotesk"],
+                      "label-caps": ["Space Grotesk"],
+                      "headline-lg": ["Space Grotesk"],
+                      "body-md": ["Space Grotesk"],
+                      "headline-lg-mobile": ["Space Grotesk"],
+                      "price-display": ["Space Grotesk"]
+              },
+              "fontSize": {
+                      "headline-xl": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "status-code": ["10px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                      "headline-lg": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                      "price-display": ["24px", {"lineHeight": "1", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #ffffff;
+            color: #1f1b10;
+        }
+        .elegant-grid {
+            background-image: linear-gradient(rgba(126, 119, 95, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(126, 119, 95, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .nav-underline-effect::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #ffd700;
+            transition: width 0.3s ease;
+        }
+        .nav-underline-effect:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-industrial-yellow selection:text-on-surface">
+<!-- Header / TopAppBar -->
+<header class="fixed top-0 w-full bg-stark-white/90 backdrop-blur-md z-50 border-b border-outline-variant transition-all duration-300">
+<nav class="flex justify-between items-center px-gutter h-20 max-w-container-max mx-auto">
+<div class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tighter">
+                HITECH ENGINEERING
+            </div>
+<div class="hidden md:flex items-center gap-8">
+<a class="font-body-md text-body-md text-primary border-b-2 border-industrial-yellow pb-1 transition-all" href="#">Home</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors relative nav-underline-effect" href="#">About</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors relative nav-underline-effect" href="#">Products</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors relative nav-underline-effect" href="#">Our Projects</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors relative nav-underline-effect" href="#">Blog</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors relative nav-underline-effect" href="#">Contact</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors relative nav-underline-effect flex items-center gap-1" href="#"><span class="material-symbols-outlined text-[16px]">person</span> Login</a>
+</div>
+<button class="bg-industrial-yellow text-on-surface px-6 py-2 font-label-caps text-label-caps border-b-4 border-primary hover:translate-y-[-2px] transition-transform duration-200">
+                Request Quote
+            </button>
+</nav>
+</header>
+<main class="elegant-grid pt-10 overflow-x-hidden">
+<!-- 1. Hero Section -->
+<section class="relative max-w-container-max mx-auto overflow-visible">
+<div class="swiper heroSwiper w-full min-h-[calc(100vh-120px)]">
+<div class="swiper-wrapper">
+<!-- Slide 1 -->
+<div class="swiper-slide px-gutter py-section-padding flex flex-col md:flex-row items-center gap-16 min-h-[calc(100vh-120px)]">
+<div class="flex-1 space-y-8">
+<div class="inline-block bg-on-surface text-industrial-yellow px-3 py-1 font-status-code text-status-code uppercase tracking-widest">
+                    DELIVERING :: PROFESSIONAL_EXPERTISE
+                </div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface leading-tight">
+                    Creating <span class="text-primary italic">Sustainable</span> Value
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg">
+                    Providing end-to-end material handling and automation solutions for a more resilient supply chain.
+                </p>
+<div class="flex gap-6 pt-4">
+<button class="bg-industrial-yellow text-on-surface px-8 py-4 font-label-caps text-label-caps border-b-4 border-primary hover:translate-y-[-1px] transition-all">
+                        Request A Quote
+                    </button>
+<button class="border border-outline px-8 py-4 font-label-caps text-label-caps hover:bg-surface-container transition-all flex items-center gap-2">
+                        View Products <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="flex-1 relative flex items-center justify-center py-12">
+<div class="absolute top-0 right-0 w-64 h-64 border-t-2 border-r-2 border-outline-variant opacity-30"></div>
+<div class="absolute bottom-0 left-0 w-64 h-64 border-b-2 border-l-2 border-outline-variant opacity-30"></div>
+
+<div class="relative w-4/5 lg:w-[85%] aspect-square bg-stark-white shadow-[0_20px_60px_rgba(0,0,0,0.06)] flex items-center justify-center p-8 transition-all duration-700">
+<img alt="High-Rise Electric Stacker" class="w-full h-full object-contain mix-blend-multiply scale-125 transition-transform duration-700 hover:scale-[1.35]" src="https://motiequipments.com/assets/images/shop/standard/2.png"/>
+<div class="absolute top-6 right-6 bg-stark-white/85 backdrop-blur-md p-4 border-l-4 border-industrial-yellow shadow-sm">
+<span class="font-status-code text-[10px] uppercase tracking-widest text-outline-muted block mb-1">EQUIPMENT_MODEL</span>
+<span class="font-label-caps text-[14px] text-on-surface">AC-POWER STACKER</span>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Slide 3 -->
+<div class="swiper-slide px-gutter py-section-padding flex flex-col md:flex-row items-center gap-16 min-h-[calc(100vh-120px)]">
+<div class="flex-1 space-y-8">
+<div class="inline-block bg-on-surface text-industrial-yellow px-3 py-1 font-status-code text-status-code uppercase tracking-widest">
+                    WE INNOVATE :: &amp; DESIGN
+                </div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface leading-tight">
+                    One Stop Shop Solutions For All Your <span class="text-primary italic">Material Movement</span>
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg">
+                    Advanced logistics machinery tailored to streamline your operations and maximize productivity.
+                </p>
+<div class="flex gap-6 pt-4">
+<button class="bg-industrial-yellow text-on-surface px-8 py-4 font-label-caps text-label-caps border-b-4 border-primary hover:translate-y-[-1px] transition-all">
+                        Request A Quote
+                    </button>
+<button class="border border-outline px-8 py-4 font-label-caps text-label-caps hover:bg-surface-container transition-all flex items-center gap-2">
+                        View Products <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="flex-1 relative flex items-center justify-center py-12">
+<div class="absolute top-0 right-0 w-64 h-64 border-t-2 border-r-2 border-outline-variant opacity-30"></div>
+<div class="absolute bottom-0 left-0 w-64 h-64 border-b-2 border-l-2 border-outline-variant opacity-30"></div>
+
+<div class="relative w-4/5 lg:w-[85%] aspect-square bg-stark-white shadow-[0_20px_60px_rgba(0,0,0,0.06)] flex items-center justify-center p-8 transition-all duration-700">
+<img alt="Electric Pallet Truck" class="w-full h-full object-contain mix-blend-multiply scale-125 transition-transform duration-700 hover:scale-[1.35]" src="https://motiequipments.com/assets/images/shop/standard/3.png"/>
+<div class="absolute top-6 right-6 bg-stark-white/85 backdrop-blur-md p-4 border-l-4 border-industrial-yellow shadow-sm">
+<span class="font-status-code text-[10px] uppercase tracking-widest text-outline-muted block mb-1">EQUIPMENT_MODEL</span>
+<span class="font-label-caps text-[14px] text-on-surface">15EP ELECTRIC JACK</span>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Slide 3 -->
+<div class="swiper-slide px-gutter py-section-padding flex flex-col md:flex-row items-center gap-16 min-h-[calc(100vh-120px)]">
+<div class="flex-1 space-y-8">
+<div class="inline-block bg-on-surface text-industrial-yellow px-3 py-1 font-status-code text-status-code uppercase tracking-widest">
+                    WE ARE THE :: PIONEERS
+                </div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface leading-tight">
+                    Moving Towards <br> <span class="text-primary italic">"Your Future"</span>
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg">
+                    Innovative material handling solutions engineered to drive efficiency, safety, and growth in your daily operations.
+                </p>
+<div class="flex gap-6 pt-4">
+<button class="bg-industrial-yellow text-on-surface px-8 py-4 font-label-caps text-label-caps border-b-4 border-primary hover:translate-y-[-1px] transition-all">
+                        Request A Quote
+                    </button>
+<button class="border border-outline px-8 py-4 font-label-caps text-label-caps hover:bg-surface-container transition-all flex items-center gap-2">
+                        View Products <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="flex-1 relative flex items-center justify-center py-12">
+<div class="absolute top-0 right-0 w-64 h-64 border-t-2 border-r-2 border-outline-variant opacity-30"></div>
+<div class="absolute bottom-0 left-0 w-64 h-64 border-b-2 border-l-2 border-outline-variant opacity-30"></div>
+
+<div class="relative w-4/5 lg:w-[85%] aspect-square bg-stark-white shadow-[0_20px_60px_rgba(0,0,0,0.06)] flex items-center justify-center p-8 transition-all duration-700">
+<img alt="Hand Pallet Truck" class="w-full h-full object-contain mix-blend-multiply scale-125 transition-transform duration-700 hover:scale-[1.35]" src="https://motiequipments.com/assets/images/shop/standard/1.png"/>
+<div class="absolute top-6 right-6 bg-stark-white/85 backdrop-blur-md p-4 border-l-4 border-industrial-yellow shadow-sm">
+<span class="font-status-code text-[10px] uppercase tracking-widest text-outline-muted block mb-1">EQUIPMENT_MODEL</span>
+<span class="font-label-caps text-[14px] text-on-surface">HAND PALLET TRUCK</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="absolute bottom-12 right-12 flex gap-4 z-10">
+<button class="hero-prev w-14 h-14 border border-outline-variant flex items-center justify-center hover:bg-industrial-yellow hover:border-industrial-yellow transition-all rounded-full bg-stark-white/80 backdrop-blur-sm cursor-pointer shadow-sm">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="hero-next w-14 h-14 border border-outline-variant flex items-center justify-center hover:bg-industrial-yellow hover:border-industrial-yellow transition-all rounded-full bg-stark-white/80 backdrop-blur-sm cursor-pointer shadow-sm">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+<!-- 2. Mission/Vision/Strategy (About) Section -->
+<section class="border-y border-outline-variant bg-surface-container-low">
+<div class="max-w-container-max mx-auto px-gutter py-section-padding">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<div class="space-y-6 group">
+<div class="flex items-center gap-4">
+<span class="w-12 h-[2px] bg-industrial-yellow transition-all group-hover:w-20"></span>
+<h3 class="font-headline-lg text-[28px] text-on-surface">Our Mission</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                            To empower industries with superior material handling equipment that enhances operational efficiency and safety through innovative design and manufacturing excellence.
+                        </p>
+</div>
+<div class="space-y-6 group">
+<div class="flex items-center gap-4">
+<span class="w-12 h-[2px] bg-industrial-yellow transition-all group-hover:w-20"></span>
+<h3 class="font-headline-lg text-[28px] text-on-surface">Our Vision</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                            To be the global leader in kinetic precision engineering, setting the benchmark for quality, reliability, and sustainability in the material handling industry.
+                        </p>
+</div>
+<div class="space-y-6 group">
+<div class="flex items-center gap-4">
+<span class="w-12 h-[2px] bg-industrial-yellow transition-all group-hover:w-20"></span>
+<h3 class="font-headline-lg text-[28px] text-on-surface">Our Strategy</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                            Focusing on R&amp;D, strategic partnerships, and customer-centric solutions to deliver high-impact engineering assets that solve complex logistical challenges.
+                        </p>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. Core Engineering Assets -->
+<section class="bg-surface-container-lowest">
+<div class="max-w-container-max mx-auto px-gutter py-section-padding">
+<div class="flex justify-between items-end mb-12">
+<div class="space-y-2">
+<span class="font-status-code text-status-code text-primary uppercase">CATALOG_01</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Core Engineering Assets</h2>
+</div>
+<div class="flex gap-4 items-center">
+    <button class="swiper-button-prev-custom w-10 h-10 border border-outline-variant flex items-center justify-center hover:bg-industrial-yellow transition-all rounded-full disabled:opacity-50">
+        <span class="material-symbols-outlined text-[20px]">chevron_left</span>
+    </button>
+    <button class="swiper-button-next-custom w-10 h-10 border border-outline-variant flex items-center justify-center hover:bg-industrial-yellow transition-all rounded-full disabled:opacity-50">
+        <span class="material-symbols-outlined text-[20px]">chevron_right</span>
+    </button>
+</div>
+</div>
+<div class="swiper mySwiper overflow-visible">
+<div class="swiper-wrapper">
+<!-- Card 1 -->
+<div class="swiper-slide group border border-outline-variant p-2 hover:border-industrial-yellow transition-all duration-300 h-auto flex flex-col bg-stark-white">
+<div class="overflow-hidden aspect-square flex items-center justify-center p-4 relative">
+<img alt="Pallet Jack" class="w-full h-full object-contain grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500" src="https://motiequipments.com/assets/images/shop/grid/palette-1.jpg"/>
+</div>
+<div class="mt-4 px-2 pb-2 flex-grow">
+<span class="font-status-code text-status-code text-outline-muted">STR-P-01</span>
+<h3 class="font-label-caps text-label-caps mt-1">Manual Pallet Jack</h3>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="swiper-slide group border border-outline-variant p-2 hover:border-industrial-yellow transition-all duration-300 h-auto flex flex-col bg-stark-white">
+<div class="overflow-hidden aspect-square flex items-center justify-center p-4">
+<img alt="Flexible Roller Conveyor" class="w-full h-full object-contain grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500" src="https://motiequipments.com/assets/images/shop/grid/flex-2.jpg"/>
+</div>
+<div class="mt-4 px-2 pb-2 flex-grow">
+<span class="font-status-code text-status-code text-outline-muted">FLX-R-02</span>
+<h3 class="font-label-caps text-label-caps mt-1">Flexible Roller Conveyor</h3>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="swiper-slide group border border-outline-variant p-2 hover:border-industrial-yellow transition-all duration-300 h-auto flex flex-col bg-stark-white">
+<div class="overflow-hidden aspect-square flex items-center justify-center p-4">
+<img alt="Inclined Conveyor Belt" class="w-full h-full object-contain grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500" src="https://motiequipments.com/assets/images/shop/grid/truck-2.jpg"/>
+</div>
+<div class="mt-4 px-2 pb-2 flex-grow">
+<span class="font-status-code text-status-code text-outline-muted">INC-C-04</span>
+<h3 class="font-label-caps text-label-caps mt-1">Inclined Conveyor Belt</h3>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="swiper-slide group border border-outline-variant p-2 hover:border-industrial-yellow transition-all duration-300 h-auto flex flex-col bg-stark-white">
+<div class="overflow-hidden aspect-square flex items-center justify-center p-4">
+<img alt="Accordion Roller" class="w-full h-full object-contain grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500" src="https://motiequipments.com/assets/images/shop/grid/flex-1.jpg"/>
+</div>
+<div class="mt-4 px-2 pb-2 flex-grow">
+<span class="font-status-code text-status-code text-outline-muted">ACR-R-08</span>
+<h3 class="font-label-caps text-label-caps mt-1">Accordion Roller</h3>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="swiper-slide group border border-outline-variant p-2 hover:border-industrial-yellow transition-all duration-300 h-auto flex flex-col bg-stark-white">
+<div class="overflow-hidden aspect-square flex items-center justify-center p-4">
+<img alt="Modular Conveyor System" class="w-full h-full object-contain grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500" src="https://motiequipments.com/assets/images/shop/grid/truck-1.jpg"/>
+</div>
+<div class="mt-4 px-2 pb-2 flex-grow">
+<span class="font-status-code text-status-code text-outline-muted">MOD-C-10</span>
+<h3 class="font-label-caps text-label-caps mt-1">Modular Conveyor System</h3>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="swiper-slide group border border-outline-variant p-2 hover:border-industrial-yellow transition-all duration-300 h-auto flex flex-col bg-stark-white">
+<div class="overflow-hidden aspect-square flex items-center justify-center p-4">
+<img alt="Electric Reach Stacker" class="w-full h-full object-contain grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500" src="https://motiequipments.com/assets/images/shop/grid/palette-3.jpg"/>
+</div>
+<div class="mt-4 px-2 pb-2 flex-grow">
+<span class="font-status-code text-status-code text-outline-muted">ERS-M-03</span>
+<h3 class="font-label-caps text-label-caps mt-1">Electric Reach Stacker</h3>
+</div>
+</div>
+<!-- Card 7 -->
+<div class="swiper-slide group border border-outline-variant p-2 hover:border-industrial-yellow transition-all duration-300 h-auto flex flex-col bg-stark-white">
+<div class="overflow-hidden aspect-square flex items-center justify-center p-4">
+<img alt="Scissor Lift Platform" class="w-full h-full object-contain grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500" src="https://motiequipments.com/assets/images/shop/grid/scissor.jpg"/>
+</div>
+<div class="mt-4 px-2 pb-2 flex-grow">
+<span class="font-status-code text-status-code text-outline-muted">SCL-P-07</span>
+<h3 class="font-label-caps text-label-caps mt-1">Scissor Lift Platform</h3>
+</div>
+</div>
+<!-- Card 8 -->
+<div class="swiper-slide group border border-outline-variant p-2 hover:border-industrial-yellow transition-all duration-300 h-auto flex flex-col bg-stark-white">
+<div class="overflow-hidden aspect-square flex items-center justify-center p-4">
+<img alt="Heavy Manual Stacker" class="w-full h-full object-contain grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500" src="https://motiequipments.com/assets/images/shop/grid/manual-hand-stacker.jpg"/>
+</div>
+<div class="mt-4 px-2 pb-2 flex-grow">
+<span class="font-status-code text-status-code text-outline-muted">HMS-L-12</span>
+<h3 class="font-label-caps text-label-caps mt-1">Heavy Manual Stacker</h3>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. Industrial Solutions (What we are doing?) -->
+<section class="bg-stark-white py-section-padding border-y border-outline-variant">
+<div class="max-w-container-max mx-auto px-gutter">
+<div class="text-center mb-16">
+<h2 class="font-headline-xl text-[36px] md:text-[48px] text-center text-on-surface uppercase mb-4 tracking-wide font-bold">Industrial Material<br>Handling Solutions<span class="text-industrial-yellow">.</span></h2>
+<p class="text-center font-body-md text-[16px] text-on-surface-variant italic max-w-3xl mx-auto">Apart From MHE Manufacturing, HITECH ENGINEERING deals in supply of all kind of conveyor equipment spare sales &amp; services.</p>
+</div>
+
+<div class="swiper servicesSwiper overflow-visible cursor-grab active:cursor-grabbing">
+<div class="swiper-wrapper">
+<!-- Card 1 -->
+<div class="swiper-slide bg-stark-white flex flex-col group overflow-hidden">
+<div class="aspect-[4/3] w-full overflow-hidden rounded-xl">
+<img src="https://motiequipments.com/assets/images/services/motors.jpg" alt="Motor Gear Box" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+</div>
+<div class="pt-6 pb-2 px-2 flex flex-col flex-grow">
+<h3 class="font-label-caps text-[16px] font-bold text-on-surface uppercase mb-3">Motor Gear Box</h3>
+<p class="font-body-md text-[14px] text-on-surface-variant leading-relaxed">HITECH ENGINEERING is a prime dealer of Motor &amp; Gear Boxes. We have a wide range of brands all in ready stock &amp; can be delivered immediately.</p>
+</div>
+</div>
+
+<!-- Card 2 -->
+<div class="swiper-slide bg-stark-white flex flex-col group overflow-hidden">
+<div class="aspect-[4/3] w-full overflow-hidden rounded-xl">
+<img src="https://motiequipments.com/assets/images/services/wheels.jpg" alt="Wheel" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+</div>
+<div class="pt-6 pb-2 px-2 flex flex-col flex-grow">
+<h3 class="font-label-caps text-[16px] font-bold text-on-surface uppercase mb-3">Wheel</h3>
+<p class="font-body-md text-[14px] text-on-surface-variant leading-relaxed">HITECH ENGINEERING deals with all kind of MHE Wheels, all sizes of wheels are readily available at a very affordable price.</p>
+</div>
+</div>
+
+<!-- Card 3 -->
+<div class="swiper-slide bg-stark-white flex flex-col group overflow-hidden">
+<div class="aspect-[4/3] w-full overflow-hidden rounded-xl">
+<img src="https://motiequipments.com/assets/images/services/rollers.jpg" alt="Rollers &amp; Pulleys" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+</div>
+<div class="pt-6 pb-2 px-2 flex flex-col flex-grow">
+<h3 class="font-label-caps text-[16px] font-bold text-on-surface uppercase mb-3">Rollers &amp; Pulleys</h3>
+<p class="font-body-md text-[14px] text-on-surface-variant leading-relaxed">HITECH ENGINEERING have their own in-house team who manufacture Rollers, Pulleys &amp; Idlers for their own equipment purposes &amp; sales as spares. The quality &amp; performance is top notch.</p>
+</div>
+</div>
+
+<!-- Card 4 -->
+<div class="swiper-slide bg-stark-white flex flex-col group overflow-hidden">
+<div class="aspect-[4/3] w-full overflow-hidden rounded-xl">
+<img src="https://motiequipments.com/assets/images/services/conveyor.jpg" alt="Conveyor Belts" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+</div>
+<div class="pt-6 pb-2 px-2 flex flex-col flex-grow">
+<h3 class="font-label-caps text-[16px] font-bold text-on-surface uppercase mb-3">Conveyor Belts</h3>
+<p class="font-body-md text-[14px] text-on-surface-variant leading-relaxed">HITECH ENGINEERING is a major dealer &amp; Stockist of all kinds of conveyor belts. We have ready stock goods available of all standard &amp; non-standard sizes.</p>
+</div>
+</div>
+
+<!-- Card 5 -->
+<div class="swiper-slide bg-stark-white flex flex-col group overflow-hidden">
+<div class="aspect-[4/3] w-full overflow-hidden rounded-xl">
+<img src="https://motiequipments.com/assets/images/services/bearings.jpg" alt="Bearings" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+</div>
+<div class="pt-6 pb-2 px-2 flex flex-col flex-grow">
+<h3 class="font-label-caps text-[16px] font-bold text-on-surface uppercase mb-3">Bearings</h3>
+<p class="font-body-md text-[14px] text-on-surface-variant leading-relaxed">HITECH ENGINEERING is a major dealer &amp; Stockist of all kinds &amp; all brands of bearings. We have ready stock goods available of all standard sizes.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. Quality Commitment -->
+<section class="bg-on-surface text-stark-white py-20 relative overflow-hidden">
+<div class="absolute right-0 top-0 w-1/3 h-full bg-industrial-yellow/5 skew-x-[-20deg] translate-x-20"></div>
+<div class="max-w-container-max mx-auto px-gutter text-center space-y-6">
+<span class="font-status-code text-status-code text-industrial-yellow uppercase tracking-widest">ZERO_DEFECT_POLICY</span>
+<h2 class="font-headline-xl text-[56px] text-stark-white">Quality Comes First</h2>
+<p class="font-body-lg text-outline-variant max-w-3xl mx-auto">
+                    At HITECH ENGINEERING, we believe that precision isn't just a metric—it's a commitment. Every piece of equipment leaving our facility undergoes a 128-point diagnostic check to ensure zero-fault deployment.
+                </p>
+<div class="flex justify-center gap-4 pt-4">
+<span class="px-4 py-2 border border-outline-muted font-status-code text-status-code uppercase">ISO 9001 CERTIFIED</span>
+<span class="px-4 py-2 border border-outline-muted font-status-code text-status-code uppercase">CE COMPLIANT</span>
+</div>
+</div>
+</section>
+<!-- 6. Why HITECH ENGINEERING (Features) -->
+<section class="max-w-container-max mx-auto px-gutter py-section-padding bg-stark-white">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+<!-- Left Column -->
+<div class="space-y-16 text-center md:text-right">
+<!-- Feature 1 -->
+<div class="flex flex-col items-center md:items-end space-y-4">
+<div class="w-16 h-16 bg-[#3a3a3a] text-stark-white flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">calendar_month</span>
+</div>
+<h4 class="font-headline-lg font-bold text-on-surface text-[18px]">ALWAYS AVAILABLE</h4>
+<p class="font-body-md text-on-surface-variant text-[14px] max-w-xs md:ml-auto leading-relaxed">Our customer care support functions 24/7 &amp; your free to contact us anytime of your convince.</p>
+</div>
+<!-- Feature 2 -->
+<div class="flex flex-col items-center md:items-end space-y-4">
+<div class="w-16 h-16 bg-[#3a3a3a] text-stark-white flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">database</span>
+</div>
+<h4 class="font-headline-lg font-bold text-on-surface text-[18px]">FAIR PRICES</h4>
+<p class="font-body-md text-on-surface-variant text-[14px] max-w-xs md:ml-auto leading-relaxed">You can be 100% sure that our product is budget friendly compared with any other competitors of our equal specification.</p>
+</div>
+</div>
+
+<!-- Center Column -->
+<div class="flex justify-center h-full items-end">
+<img alt="HITECH ENGINEERING Expert" class="w-full max-w-sm object-contain" src="https://motiequipments.com/assets/images/features/3.png"/>
+</div>
+
+<!-- Right Column -->
+<div class="space-y-16 text-center md:text-left">
+<!-- Feature 3 -->
+<div class="flex flex-col items-center md:items-start space-y-4">
+<div class="w-16 h-16 bg-[#3a3a3a] text-stark-white flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">work</span>
+</div>
+<h4 class="font-headline-lg font-bold text-on-surface text-[18px]">QUALIFIED AGENTS</h4>
+<p class="font-body-md text-on-surface-variant text-[14px] max-w-xs leading-relaxed">We have a team of specialists capable of maximizing the result and delivering the projects</p>
+</div>
+<!-- Feature 4 -->
+<div class="flex flex-col items-center md:items-start space-y-4">
+<div class="w-16 h-16 bg-[#3a3a3a] text-stark-white flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">shopping_cart</span>
+</div>
+<h4 class="font-headline-lg font-bold text-on-surface text-[18px]">BEST OFFERS</h4>
+<p class="font-body-md text-on-surface-variant text-[14px] max-w-xs leading-relaxed">All aspects of the operations being transparent and clear for clients and partners</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. Testimonials (Expanded) -->
+<section class="bg-surface-bone py-section-padding">
+<div class="max-w-container-max mx-auto px-gutter">
+<div class="text-center mb-16">
+<span class="font-status-code text-status-code text-primary uppercase">FEEDBACK_LOOP</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface uppercase tracking-tight">TESTIMONIALS<span class="text-industrial-yellow">.</span></h2>
+<p class="font-body-md text-on-surface-variant mt-2">What People Say?</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Testimonial 1 -->
+<div class="bg-stark-white p-10 border border-outline-variant relative group hover:border-industrial-yellow transition-colors shadow-sm">
+<div class="absolute -top-6 left-10 w-12 h-12 bg-industrial-yellow flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface text-[24px]">format_quote</span>
+</div>
+<p class="font-body-md text-on-surface-variant mb-8 italic">
+                            "The company's experts have accumulated valuable experience in green development, being savvy to all aspects of the certification process and requirements."
+                        </p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-container-high rounded-full overflow-hidden border border-outline-variant">
+<img alt="S P Mohan Kumar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLs11IZLYLXXVfCVVY7qfvuj_mv0CW2iUrQhvEIx8YwZETQm3P_R9fkP3iwhM_q_H2inycPV4hBqbw47WFqZ9Lpc3J2-eaNrxUPhc0MSFk5G1zCpyJPlqL4ANgeHxgvDUy9j4inWVqwiYdMC4oK2ATz4YjZg0cxzb3qSu2DFFx1jY6YHYDrgNEzi4W2p7VG9Iz4vAu6vjbj5hw0LgTTYd8D-BkezXqAj7vh8AxVTEjj1CKXqaVu39ilUWrg"/>
+</div>
+<div>
+<h4 class="font-label-caps text-on-surface">S P Mohan Kumar</h4>
+<p class="font-status-code text-primary">CEO</p>
+</div>
+</div>
+</div>
+<!-- Testimonial 2 -->
+<div class="bg-stark-white p-10 border border-outline-variant relative group hover:border-industrial-yellow transition-colors shadow-sm">
+<div class="absolute -top-6 left-10 w-12 h-12 bg-industrial-yellow flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface text-[24px]">format_quote</span>
+</div>
+<p class="font-body-md text-on-surface-variant mb-8 italic">
+                            "The skills of our project managers are attested by international certificates from leading overseas professional associations in the realm of construction."
+                        </p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-container-high rounded-full overflow-hidden border border-outline-variant">
+<img alt="Habaza" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLuCRESEs28x_bnEPyAtpBjgesImXU43zahkAA67wVBa3XquHRPhu8UH3ckEixwLfEoAKXvW_AG3IEol3ZUO3h6zEU0wRh910pezZ8feReFDBGvdMcdE4_8pPXkw8sBTY-GxW76T16FeYFBD1_hde9SEOLcDnhwuAxYERhfzgZCF8arHDNGKHPg8WBVq2Nasgw-3AoVh1QJdRdeKQcY5zIdUVvA6SBtEd2fO-E01oP5G4Kl6XQ6K0ICxmw"/>
+</div>
+<div>
+<h4 class="font-label-caps text-on-surface">Habaza</h4>
+<p class="font-status-code text-primary">Civil Engineer</p>
+</div>
+</div>
+</div>
+<!-- Testimonial 3 -->
+<div class="bg-stark-white p-10 border border-outline-variant relative group hover:border-industrial-yellow transition-colors shadow-sm">
+<div class="absolute -top-6 left-10 w-12 h-12 bg-industrial-yellow flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface text-[24px]">format_quote</span>
+</div>
+<p class="font-body-md text-on-surface-variant mb-8 italic">
+                            "Yellow Hats Group carries out full-cycle development, including the attraction of investments, construction and managing premium residential properties."
+                        </p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-container-high rounded-full overflow-hidden border border-outline-variant">
+<img alt="Fouad Badawy" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLuA5yJUcpXhOIvliE_lZHASEfgSiC6xtS5nJhwgVL887wI4QTW0-xszdN60zlfZ93TV5V35KlaVVQPZK7enkZ3erL3ub3FHwb8VBg5L_kWs6_Rp1m29XaDNagcVmEqd1wrp2uaQkHX_XfpYb5CVu5KIV9fDVJ3PqZTf3nTS5o6PKw7NF9PENrgLdUkeJFQ_fvz97mgexODQrP9bMFUJPGA5osEHCsVwKx3-DB4B12QJM1wEIuokI5riSQ"/>
+</div>
+<div>
+<h4 class="font-label-caps text-on-surface">Fouad Badawy</h4>
+<p class="font-status-code text-primary">Investor</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 8. Client Showcase (Logo Strip) -->
+<section class="bg-stark-white py-16 border-t border-outline-variant">
+<div class="max-w-container-max mx-auto px-gutter">
+<div class="text-center mb-10">
+<p class="font-label-caps text-[14px] text-on-surface-variant">They Always Trust Us</p>
+<h3 class="font-headline-lg text-[32px] text-on-surface mt-1">OUR CLIENTS<span class="text-industrial-yellow">.</span></h3>
+</div>
+<div class="swiper clientsSwiper overflow-hidden cursor-grab active:cursor-grabbing pb-6 pt-4 px-4">
+<div class="swiper-wrapper items-center">
+<div class="swiper-slide w-auto"><img alt="Bisleri" class="h-20 md:h-24 w-auto object-contain flex-shrink-0" src="https://motiequipments.com/assets/images/clients/bisleri.png"/></div>
+<div class="swiper-slide w-auto"><img alt="Asian Fabricx" class="h-20 md:h-24 w-auto object-contain flex-shrink-0" src="https://motiequipments.com/assets/images/clients/asian.png"/></div>
+<div class="swiper-slide w-auto"><img alt="Mainetti" class="h-20 md:h-24 w-auto object-contain flex-shrink-0" src="https://motiequipments.com/assets/images/clients/mainetti.png"/></div>
+<div class="swiper-slide w-auto"><img alt="UPS" class="h-20 md:h-24 w-auto object-contain flex-shrink-0" src="https://motiequipments.com/assets/images/clients/ups.png"/></div>
+<div class="swiper-slide w-auto"><img alt="Vaya" class="h-20 md:h-24 w-auto object-contain flex-shrink-0" src="https://motiequipments.com/assets/images/clients/vaya.png"/></div>
+<div class="swiper-slide w-auto"><img alt="Funskool" class="h-20 md:h-24 w-auto object-contain flex-shrink-0" src="https://motiequipments.com/assets/images/clients/funskool.png"/></div>
+<div class="swiper-slide w-auto"><img alt="Tasmac" class="h-20 md:h-24 w-auto object-contain flex-shrink-0" src="https://motiequipments.com/assets/images/clients/tasmac.png"/></div>
+<div class="swiper-slide w-auto"><img alt="SS Quality" class="h-20 md:h-24 w-auto object-contain flex-shrink-0" src="https://motiequipments.com/assets/images/clients/ss.png"/></div>
+<div class="swiper-slide w-auto"><img alt="TGI Packaging" class="h-20 md:h-24 w-auto object-contain flex-shrink-0" src="https://motiequipments.com/assets/images/clients/tgi.png"/></div>
+<div class="swiper-slide w-auto"><img alt="AHT" class="h-20 md:h-24 w-auto object-contain flex-shrink-0" src="https://motiequipments.com/assets/images/clients/aht.png"/></div>
+<div class="swiper-slide w-auto"><img alt="KH Group" class="h-20 md:h-24 w-auto object-contain flex-shrink-0" src="https://motiequipments.com/assets/images/clients/KH.png"/></div>
+<div class="swiper-slide w-auto"><img alt="Spar" class="h-20 md:h-24 w-auto object-contain flex-shrink-0" src="https://motiequipments.com/assets/images/clients/spar.png"/></div>
+<div class="swiper-slide w-auto"><img alt="UAL" class="h-20 md:h-24 w-auto object-contain flex-shrink-0" src="https://motiequipments.com/assets/images/clients/ual.png"/></div>
+<div class="swiper-slide w-auto"><img alt="Sri Krishna Sweets" class="h-20 md:h-24 w-auto object-contain flex-shrink-0" src="https://motiequipments.com/assets/images/clients/sks.png"/></div>
+<div class="swiper-slide w-auto"><img alt="Pachaiyappas" class="h-20 md:h-24 w-auto object-contain flex-shrink-0" src="https://motiequipments.com/assets/images/clients/pachaiyappas-silks.png"/></div>
+<div class="swiper-slide w-auto"><img alt="KUS" class="h-20 md:h-24 w-auto object-contain flex-shrink-0" src="https://motiequipments.com/assets/images/clients/KUS.png"/></div>
+<div class="swiper-slide w-auto"><img alt="Anthocyanin" class="h-20 md:h-24 w-auto object-contain flex-shrink-0" src="https://motiequipments.com/assets/images/clients/anthocyan.png"/></div>
+<div class="swiper-slide w-auto"><img alt="Cape Electric" class="h-20 md:h-24 w-auto object-contain flex-shrink-0" src="https://motiequipments.com/assets/images/clients/cape.png"/></div>
+<div class="swiper-slide w-auto"><img alt="Magikwoods" class="h-20 md:h-24 w-auto object-contain flex-shrink-0" src="https://motiequipments.com/assets/images/clients/magikwoods.png"/></div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="bg-surface-bone py-24 border-t border-outline-variant">
+<div class="max-w-container-max mx-auto px-gutter text-center space-y-8">
+<h2 class="font-headline-xl text-headline-xl text-on-surface">Ready for Kinetic Precision?</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+                    Consult with our engineering team to design a custom logistics framework tailored to your facility's specific demands.
+                </p>
+<button class="bg-on-surface text-stark-white px-12 py-5 font-label-caps text-label-caps hover:bg-primary transition-all duration-300">
+                    Consult Engineering Team
+                </button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t-2 border-on-surface">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-gutter py-section-padding max-w-container-max mx-auto">
+<div class="space-y-6">
+<div class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tighter">
+                    HITECH ENGINEERING
+                </div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                    Precision logistics engineering for the modern industrial age. Built for performance. Sustained by reliability.
+                </p>
+</div>
+<div class="space-y-4">
+<h4 class="font-label-caps text-label-caps text-on-surface">Product Systems</h4>
+<ul class="space-y-2">
+<li><a class="font-label-caps text-label-caps text-outline-muted hover:text-on-surface transition-colors" href="#">Vertical Conveyance</a></li>
+<li><a class="font-label-caps text-label-caps text-outline-muted hover:text-on-surface transition-colors" href="#">Pallet Management</a></li>
+<li><a class="font-label-caps text-label-caps text-outline-muted hover:text-on-surface transition-colors" href="#">Automated Sorting</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h4 class="font-label-caps text-label-caps text-on-surface">Engineering</h4>
+<ul class="space-y-2">
+<li><a class="font-label-caps text-label-caps text-outline-muted hover:text-on-surface transition-colors" href="#">Project Studies</a></li>
+<li><a class="font-label-caps text-label-caps text-outline-muted hover:text-on-surface transition-colors" href="#">Service &amp; Parts</a></li>
+<li><a class="font-label-caps text-label-caps text-outline-muted hover:text-on-surface transition-colors" href="#">Safety Protocols</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h4 class="font-label-caps text-label-caps text-on-surface">Contact &amp; Connect</h4>
+<div class="space-y-2">
+<p class="font-body-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">call</span>
+                        +91-9797975577
+                    </p>
+<p class="font-body-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">mail</span>
+                        sales@motiequipments.com
+                    </p>
+</div>
+<div class="flex gap-4 pt-2">
+<a class="w-10 h-10 border border-outline-variant flex items-center justify-center hover:bg-industrial-yellow transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">language</span>
+</a>
+<a class="w-10 h-10 border border-outline-variant flex items-center justify-center hover:bg-industrial-yellow transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">mail</span>
+</a>
+<a class="w-10 h-10 border border-outline-variant flex items-center justify-center hover:bg-industrial-yellow transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">call</span>
+</a>
+</div>
+<div class="pt-4">
+<div class="font-status-code text-status-code text-outline-muted">LOCATION_HQ</div>
+<div class="font-label-caps text-label-caps text-on-surface">DÜSSELDORF, DE</div>
+</div>
+</div>
+</div>
+<div class="max-w-container-max mx-auto px-gutter py-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
+<span class="font-label-caps text-label-caps text-outline-muted">
+                © 2024 HITECH ENGINEERING. KINETIC PRECISION ENGINEERED.
+            </span>
+<div class="flex gap-8">
+<a class="font-label-caps text-label-caps text-outline-muted hover:text-on-surface" href="#">Privacy</a>
+<a class="font-label-caps text-label-caps text-outline-muted hover:text-on-surface" href="#">Global Terms</a>
+<a class="font-label-caps text-label-caps text-outline-muted hover:text-on-surface" href="#">Security</a>
+</div>
+</div>
+</footer>
+<script>
+        // Subtle scroll reveal for header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-lg', 'h-16');
+                header.classList.remove('h-20');
+            } else {
+                header.classList.remove('shadow-lg', 'h-16');
+                header.classList.add('h-20');
+            }
+        });
+
+        // Hover lift effect for all industrial yellow buttons
+        const buttons = document.querySelectorAll('.bg-industrial-yellow');
+        buttons.forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                btn.style.transform = 'translateY(-2px)';
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var heroSwiper = new Swiper('.heroSwiper', {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: true,
+                speed: 800,
+                effect: 'fade',
+                fadeEffect: {
+                    crossFade: true
+                },
+                navigation: {
+                    nextEl: '.hero-next',
+                    prevEl: '.hero-prev',
+                },
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+            });
+
+            var swiper = new Swiper('.mySwiper', {
+                slidesPerView: 1,
+                spaceBetween: 24,
+                freeMode: true,
+                speed: 800,
+                mousewheel: {
+                    forceToAxis: true,
+                    sensitivity: 1,
+                    releaseOnEdges: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next-custom',
+                    prevEl: '.swiper-button-prev-custom',
+                },
+                breakpoints: {
+                    640: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    1024: {
+                        slidesPerView: 4,
+                    },
+                },
+            });
+
+            var servicesSwiper = new Swiper('.servicesSwiper', {
+                slidesPerView: 1,
+                spaceBetween: 40,
+                freeMode: true,
+                speed: 800,
+                mousewheel: {
+                    forceToAxis: true,
+                    sensitivity: 1,
+                    releaseOnEdges: true,
+                },
+                breakpoints: {
+                    640: {
+                        slidesPerView: 2,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                    },
+                },
+            });
+
+            var clientsSwiper = new Swiper('.clientsSwiper', {
+                slidesPerView: 'auto',
+                spaceBetween: 64,
+                loop: true,
+                freeMode: true,
+                speed: 800,
+                mousewheel: {
+                    forceToAxis: true,
+                    sensitivity: 1,
+                },
+            });
+        });
+    </script>
+</body></html>

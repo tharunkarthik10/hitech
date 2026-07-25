@@ -1,0 +1,61 @@
+import { LayoutGrid } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+
+const mainNavigation = [
+  { name: "Home", path: "/" },
+  { name: "Products", path: "/products" },
+  { name: "Services", path: "/services" },
+  { name: "About Us", path: "/about" },
+  { name: "Blog", path: "#" },
+  { name: "Contact", path: "#contact" },
+];
+
+export default function Header() {
+  const location = useLocation();
+
+  return (
+    <header className="fixed top-0 left-0 right-0 bg-white z-50 border-b border-gray-200 transition-all duration-300">
+      {/* Top Navbar */}
+      <nav className="h-20 flex items-center justify-between px-8 md:px-12 w-full relative bg-white">
+        {/* Left: Logo */}
+        <Link to="/" className="flex items-center gap-4 group z-10 w-1/4">
+
+          <img 
+            src="/Remove background project - July 20, 2026 at 11.47.52.png" 
+            alt="Hitech" 
+            className="h-20 w-auto object-contain scale-125 origin-left translate-y-1 transition-all duration-500"
+          />
+        </Link>
+
+        {/* Center: Main Links */}
+        <div className="hidden md:flex items-center h-full justify-center flex-1 gap-4 lg:gap-10">
+          {mainNavigation.map((item) => {
+            const isActive = item.path !== "#" && (
+              location.pathname === item.path || 
+              (item.path !== "/" && location.pathname.startsWith(`${item.path}/`))
+            );
+            return (
+              <Link
+                key={item.name}
+                to={item.path}
+                className={`relative h-full flex items-center justify-center gap-2 text-[12px] font-bold tracking-[0.15em] uppercase transition-colors duration-300 ${
+                  isActive ? 'text-blue-900' : 'text-gray-900 hover:text-blue-900'
+                }`}
+              >
+                {item.name}
+                {isActive && (
+                  <span className="absolute bottom-0 left-0 w-full h-[3px] bg-blue-900" />
+                )}
+              </Link>
+            );
+          })}
+        </div>
+
+        {/* Right: CTA Button */}
+        <div className="hidden md:flex items-center justify-end gap-6 z-10 w-1/4">
+
+        </div>
+      </nav>
+    </header>
+  );
+}

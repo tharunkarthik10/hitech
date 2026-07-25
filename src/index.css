@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #F1F5F9;
+    color: #003554;
+  }
+}
+
+@layer utilities {
+  .font-heading {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+  }
+  .elegant-grid {
+      background-image: linear-gradient(rgba(126, 119, 95, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(126, 119, 95, 0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+  }
+  .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  .nav-underline-effect::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #00A6FB;
+      transition: width 0.3s ease;
+  }
+  .nav-underline-effect:hover::after {
+      width: 100%;
+  }
+
+  /* Continuous Marquee CSS */
+  .clientsSwiper .swiper-wrapper {
+      transition-timing-function: linear !important;
+  }
+}
