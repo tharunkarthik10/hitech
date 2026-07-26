@@ -1,11 +1,12 @@
 import { useParams, Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { PRODUCTS, CATEGORIES } from '../data/products';
 import { ChevronRight, ChevronDown } from 'lucide-react';
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
   const product = PRODUCTS.find(p => p.id === id);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -22,13 +23,13 @@ export default function ProductDetail() {
     );
   }
 
-  const similarProducts = PRODUCTS.filter(p => p.category === product.category).slice(0, 4);
+  const similarProducts = PRODUCTS.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
 
   return (
     <main className="bg-white min-h-screen pt-20">
       {/* Breadcrumb */}
       <div className="bg-[#f8f9fa] border-b border-gray-200 px-8 md:px-12 py-3">
-        <div className="max-w-7xl mx-auto flex items-center text-sm text-gray-500 font-medium">
+        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto flex items-center text-sm text-gray-500 font-medium">
           <Link to="/" className="hover:text-blue-600 transition-colors">Home</Link>
           <ChevronRight className="w-4 h-4 mx-2 shrink-0" />
           <Link to="/products" className="hover:text-blue-600 transition-colors">Products</Link>
@@ -40,7 +41,7 @@ export default function ProductDetail() {
       </div>
 
       {/* Main Content */}
-      <section className="py-16 px-8 md:px-12 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 items-start">
+      <section className="py-16 px-8 md:px-12 max-w-[96%] 2xl:max-w-[1920px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 items-start">
         
         {/* Left Side - Image */}
         <div className="bg-white p-8">
@@ -78,19 +79,31 @@ export default function ProductDetail() {
             </ul>
           </div>
 
-          {/* Read More Dropdown Placeholder */}
+          {/* Read More Dropdown */}
           <div className="pt-6">
-            <button className="flex items-center text-black font-bold hover:opacity-70 transition-opacity">
-              <span className="border-b-2 border-black pb-0.5 text-[15px]">Read More</span>
-              <ChevronDown className="w-4 h-4 ml-1 mt-0.5" />
+            <button 
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="flex items-center text-black font-bold hover:opacity-70 transition-opacity"
+            >
+              <span className="border-b-2 border-black pb-0.5 text-[15px]">
+                {isExpanded ? 'Read Less' : 'Read More'}
+              </span>
+              <ChevronDown className={`w-4 h-4 ml-1 mt-0.5 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
             </button>
+            
+            {/* Expanded Content */}
+            <div className={`mt-6 overflow-hidden transition-all duration-500 ease-in-out ${isExpanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
+               <p className="text-gray-700 text-[15px] leading-relaxed">
+                 Detailed specifications and additional information about this product will be available soon. Please contact our sales team for detailed technical datasheets.
+               </p>
+            </div>
           </div>
         </div>
 
       </section>
 
       {/* Similar Products Section */}
-      <section className="py-16 px-8 md:px-12 max-w-7xl mx-auto border-t border-gray-100 mt-4">
+      <section className="py-16 px-8 md:px-12 max-w-[96%] 2xl:max-w-[1920px] mx-auto border-t border-gray-100 mt-4">
         <div className="flex flex-wrap items-center gap-4 mb-10">
           <h3 className="text-2xl font-bold text-gray-900">Similar Products</h3>
           <Link to="/products" className="bg-[#00b4ff] hover:bg-[#009ce0] text-white px-4 py-2 text-sm font-semibold transition-colors flex items-center gap-1 rounded-sm shadow-sm">

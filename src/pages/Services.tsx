@@ -54,7 +54,7 @@ export default function Services() {
       {/* 1. Clear Value Proposition (Hero) */}
       <section className="bg-blue-900 text-white py-24 px-8 md:px-12 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white to-transparent"></div>
-        <div className="max-w-6xl mx-auto relative z-10 text-center">
+        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto relative z-10 text-center">
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
             We Streamline Your Manufacturing Process to Cut Costs by 20%
           </h1>
@@ -69,7 +69,7 @@ export default function Services() {
 
       {/* 2. The "Why Us" (Expertise & Trust) */}
       <section className="py-20 px-8 md:px-12 bg-white">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 tracking-[0.1em] uppercase mb-4">Why Choose Us</h2>
             <div className="w-16 h-1 bg-blue-900 mx-auto"></div>
@@ -88,7 +88,7 @@ export default function Services() {
 
       {/* 3. The Process / How it Works */}
       <section className="py-20 px-8 md:px-12 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 tracking-[0.1em] uppercase mb-4">Our Process</h2>
             <p className="text-gray-600">A proven methodology for seamless integration.</p>
@@ -110,7 +110,7 @@ export default function Services() {
 
       {/* 4. Service Breakdown / Scope of Work */}
       <section className="py-20 px-8 md:px-12 bg-white">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 tracking-[0.1em] uppercase mb-4">What We Offer</h2>
             <div className="w-16 h-1 bg-blue-900 mx-auto"></div>
@@ -138,7 +138,7 @@ export default function Services() {
 
       {/* 5. Target Audience */}
       <section className="py-20 px-8 md:px-12 bg-blue-900 text-white">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-white tracking-[0.1em] uppercase mb-4">Who We Serve</h2>
             <p className="text-blue-200">Our services are purpose-built for industrial leaders.</p>
@@ -159,7 +159,7 @@ export default function Services() {
 
       {/* 6. Case Studies & Testimonials */}
       <section className="py-20 px-8 md:px-12 bg-white">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 tracking-[0.1em] uppercase mb-4">Proven Results</h2>
             <div className="w-16 h-1 bg-blue-900 mx-auto"></div>

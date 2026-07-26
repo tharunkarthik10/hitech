@@ -7,7 +7,7 @@ export default function QualityFeatures() {
     <>
       {/* Quality Commitment Redesign */}
       <section className="bg-[#F1F5F9] py-20 relative overflow-hidden">
-        <div className="max-w-container-max mx-auto px-gutter relative z-10">
+        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-gutter relative z-10">
           
           {/* Header Row */}
           <div className="flex flex-col gap-6 mb-16 max-w-3xl">

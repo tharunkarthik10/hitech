@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer className="bg-[#051923] text-white pt-24 pb-8 border-t border-outline-variant">
-      <div className="max-w-container-max mx-auto px-gutter flex flex-col items-center">
+      <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-gutter flex flex-col items-center">
         
         {/* Top Hero Section */}
         <div className="text-center mb-28 w-full">

@@ -11,7 +11,7 @@ export default function MissionVisionValues() {
 
   return (
     <section className="py-24 bg-white border-t border-gray-100">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-6 md:px-12">
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-20">

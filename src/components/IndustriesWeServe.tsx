@@ -85,7 +85,7 @@ export default function IndustriesWeServe() {
       <div className="sticky top-[140px] h-[calc(100vh-140px)] flex flex-col justify-center overflow-hidden">
         
         {/* Header Section */}
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12 w-full mb-12 shrink-0">
+        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-6 md:px-12 w-full mb-12 shrink-0">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
             <div className="max-w-2xl">
               <h2 className="text-[36px] md:text-[48px] font-bold text-[#051923] tracking-tight leading-tight mb-4 uppercase">

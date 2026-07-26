@@ -24,7 +24,7 @@ export default function Partners() {
 
   return (
     <section className="bg-[#051923] pt-12 lg:pt-16 pb-0 relative overflow-hidden flex flex-col justify-center">
-      <div className="max-w-container-max mx-auto px-gutter relative z-10 w-full mb-12 lg:mb-16">
+      <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-gutter relative z-10 w-full mb-12 lg:mb-16">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-12">
           
           {/* Left: Heading */}
@@ -48,7 +48,7 @@ export default function Partners() {
       </div>
 
       {/* Map Below Text */}
-      <div className="w-full max-w-7xl mx-auto px-4 md:px-12 lg:px-24 relative z-10 mb-16">
+      <div className="w-full max-w-[96%] 2xl:max-w-[1920px] mx-auto px-4 md:px-12 lg:px-24 relative z-10 mb-16">
         <WorldMap
           className="w-full"
           animationDuration={25}

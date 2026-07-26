@@ -1,7 +1,7 @@
 export default function WhyMoti() {
   return (
     <section className="bg-[#f8fafc] font-body-md relative overflow-hidden">
-      <div className="max-w-container-max mx-auto px-gutter relative z-10">
+      <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-gutter relative z-10">
         
         {/* Content Layout */}
         <div className="flex flex-col lg:flex-row items-stretch justify-between gap-12 lg:gap-16 pt-0">

@@ -32,7 +32,7 @@ export default function AutomationSolutions() {
 
   return (
     <section className="bg-stark-white pt-20 pb-10 border-t border-outline-variant">
-      <div className="max-w-container-max mx-auto px-gutter">
+      <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-gutter">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
           {solutions.map((solution, idx) => (
             <div key={idx} className="flex flex-col">

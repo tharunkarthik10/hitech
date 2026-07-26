@@ -14,7 +14,7 @@ export default function HeroSlider() {
         style={{ backgroundImage: "url('/hero-bg-2.png')", opacity: 0.25 }}
       ></div>
 
-      <div className="relative max-w-container-max mx-auto">
+      <div className="relative max-w-[96%] 2xl:max-w-[1920px] mx-auto">
         <Swiper
           modules={[Navigation, Autoplay]}
           speed={1000}
