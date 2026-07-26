@@ -5,7 +5,7 @@ const mainNavigation = [
   { name: "Home", path: "/" },
   { name: "Products", path: "/products" },
   { name: "Services", path: "/services" },
-  { name: "About Us", path: "#" },
+  { name: "About Us", path: "/about" },
   { name: "Blog", path: "#" },
   { name: "Contact", path: "#contact" },
 ];

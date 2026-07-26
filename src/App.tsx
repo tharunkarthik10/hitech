@@ -8,6 +8,7 @@ import Storage from './pages/Storage'
 import Products from './pages/Products'
 import ProductDetail from './pages/ProductDetail'
 import Services from './pages/Services'
+import AboutUs from './pages/AboutUs'
 
 function AppContent() {
   const location = useLocation();
@@ -26,6 +27,7 @@ function AppContent() {
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/about" element={<AboutUs />} />
         </Routes>
       </div>
       <Footer />
