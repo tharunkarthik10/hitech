@@ -11,7 +11,7 @@ function SolutionCard({ service, idx }: { service: any; idx: number }) {
 
   return (
     <div 
-      className={`bg-white w-full flex flex-col group overflow-hidden rounded-[24px] border border-gray-200 shadow-sm transition-all duration-500 hover:shadow-2xl hover:shadow-[#006494]/15 hover:-translate-y-2 ${idx === 0 ? 'pb-10' : idx === 1 ? 'pb-0' : 'pb-16'}`}
+      className={`bg-white w-full flex flex-col group overflow-hidden rounded-xl border border-gray-200 shadow-sm transition-all duration-500 hover:shadow-2xl hover:shadow-[#006494]/15 hover:-translate-y-2 ${idx === 0 ? 'pb-10' : idx === 1 ? 'pb-0' : 'pb-16'}`}
       onMouseEnter={() => videoRef.current?.play().catch(() => {})}
       onMouseLeave={() => {
         if (videoRef.current) {
@@ -36,14 +36,14 @@ function SolutionCard({ service, idx }: { service: any; idx: number }) {
         />
         
         {/* Date Tab */}
-        <div className="absolute bottom-0 left-8 bg-white px-5 py-2 rounded-t-[16px] z-20 flex items-center justify-center transition-transform duration-500 group-hover:translate-y-full">
+        <div className="absolute bottom-0 left-8 bg-white px-5 py-2 rounded-t-lg z-20 flex items-center justify-center transition-transform duration-500 group-hover:translate-y-full">
           <span className="text-[13px] text-gray-500 font-medium">
             May {10 + idx}, 2026
           </span>
           {/* Left curve */}
-          <div className="absolute -left-4 bottom-0 w-4 h-4 bg-transparent rounded-br-[16px]" style={{ boxShadow: '5px 5px 0 5px white' }}></div>
+          <div className="absolute -left-4 bottom-0 w-4 h-4 bg-transparent rounded-br-[8px]" style={{ boxShadow: '5px 5px 0 5px white' }}></div>
           {/* Right curve */}
-          <div className="absolute -right-4 bottom-0 w-4 h-4 bg-transparent rounded-bl-[16px]" style={{ boxShadow: '-5px 5px 0 5px white' }}></div>
+          <div className="absolute -right-4 bottom-0 w-4 h-4 bg-transparent rounded-bl-[8px]" style={{ boxShadow: '-5px 5px 0 5px white' }}></div>
         </div>
       </div>
 

@@ -34,7 +34,7 @@ export default function Products() {
   return (
     <main className="bg-white min-h-screen pt-20">
       {/* Main Content Layout with proper spacing matching header */}
-      <section className="py-12 w-full max-w-[96%] 2xl:max-w-[1920px] mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
+      <section className="pt-2 pb-12 w-full max-w-[96%] 2xl:max-w-[1920px] mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
         
         {/* Left Sidebar - Accordion Categories */}
         <aside className="w-full lg:w-[280px] shrink-0 sticky top-32">
@@ -107,7 +107,7 @@ export default function Products() {
         </aside>
 
         {/* Right Content - Hierarchical List */}
-        <div className="w-full flex-1 bg-white p-8 lg:p-10">
+        <div className="w-full flex-1 bg-white px-8 pt-2 pb-8 lg:px-10 lg:pt-2 lg:pb-10">
           {currentCategoryData ? (
             <div>
               {/* Category Header */}

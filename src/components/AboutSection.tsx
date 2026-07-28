@@ -43,7 +43,7 @@ export default function AboutSection() {
     <section className="bg-stark-white relative py-12 md:py-16 lg:py-24">
       <div className="w-full flex justify-center font-body-md group/section">
         {/* Massive Box Wrapper */}
-        <div className="relative w-full max-w-[96%] 2xl:max-w-[1920px] mx-auto bg-[#051923] rounded-[40px] p-6 md:p-8 lg:p-12 shadow-2xl border border-white/10 flex flex-col">
+        <div className="relative w-full max-w-[96%] 2xl:max-w-[1920px] mx-auto bg-[#051923] rounded-2xl p-6 md:p-8 lg:p-12 shadow-2xl border border-white/10 flex flex-col">
         {/* Solid Background (Blobs removed to ensure zero transparency/glow) */}
         <div className="absolute inset-0 z-0 pointer-events-none"></div>
 
@@ -91,7 +91,7 @@ export default function AboutSection() {
 
           {/* Right Side Video Area */}
           <div 
-            className="w-full lg:w-[45%] flex-none rounded-[24px] bg-[#050A10]/50 flex items-center justify-center p-0 overflow-hidden h-[300px] md:h-[400px] lg:h-[500px] xl:h-[550px] relative border border-white/10 backdrop-blur-sm shadow-2xl group"
+            className="w-full lg:w-[45%] flex-none rounded-xl bg-[#050A10]/50 flex items-center justify-center p-0 overflow-hidden h-[300px] md:h-[400px] lg:h-[500px] xl:h-[550px] relative border border-white/10 backdrop-blur-sm shadow-2xl group"
           >
               <video 
                src="/Product_explosion_reassembly_ani…_202607180933.mp4" 

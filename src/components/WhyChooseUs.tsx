@@ -76,7 +76,7 @@ export default function WhyChooseUs() {
             <motion.div 
               key={idx} 
               variants={itemVariants}
-              className="relative flex-1 lg:hover:flex-[2.5] transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] overflow-hidden rounded-[32px] bg-white group/card flex flex-col justify-between p-6 md:p-8 cursor-pointer shadow-lg border border-gray-200 hover:border-[#00A6FB]/30 hover:shadow-[#00A6FB]/20 min-h-[220px]"
+              className="relative flex-1 lg:hover:flex-[2.5] transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] overflow-hidden rounded-xl bg-white group/card flex flex-col justify-between p-6 md:p-8 cursor-pointer shadow-lg border border-gray-200 hover:border-[#00A6FB]/30 hover:shadow-[#00A6FB]/20 min-h-[220px]"
             >
               {/* Background Image */}
               <div className="absolute inset-0 z-0">

@@ -57,7 +57,7 @@ export default function OurPartners() {
         <p className="text-white/80 text-[16px] md:text-[17px] max-w-2xl mb-10 leading-relaxed font-medium">
           From Product support to Exploring New Collaborations, we're here to ensure you get the right answers, quickly and reliably.
         </p>
-        <button className="bg-white text-[#051923] px-10 py-3.5 rounded-[4px] text-[15px] font-bold shadow-lg hover:bg-gray-100 hover:shadow-xl transition-all duration-300">
+        <button className="bg-white text-[#051923] px-10 py-3.5 rounded-full text-[15px] font-bold shadow-lg hover:bg-gray-100 hover:shadow-xl transition-all duration-300">
           Enquiry Now
         </button>
       </div>

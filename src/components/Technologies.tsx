@@ -63,7 +63,7 @@ export default function Technologies() {
     <section className="bg-stark-white relative py-12 md:py-16 lg:py-24">
       <div className="w-full flex justify-center font-body-md group/section">
         {/* Massive Box Wrapper */}
-        <div className="relative w-full max-w-[96%] 2xl:max-w-[1920px] mx-auto bg-[#051923] text-white rounded-[40px] p-6 md:p-8 lg:p-12 shadow-2xl border border-white/10 flex flex-col">
+        <div className="relative w-full max-w-[96%] 2xl:max-w-[1920px] mx-auto bg-[#051923] text-white rounded-2xl p-6 md:p-8 lg:p-12 shadow-2xl border border-white/10 flex flex-col">
           <div className="w-full mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center">
           
@@ -78,7 +78,7 @@ export default function Technologies() {
                     setActiveIndex(idx);
                     setOpenFeatureIndex(null);
                   }}
-                  className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all border ${
+                  className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all border ${
                     activeIndex === idx
                       ? 'bg-white text-black border-white shadow-[0_0_15px_rgba(255,255,255,0.15)]'
                       : 'bg-transparent text-gray-400 border-gray-700 hover:text-white hover:border-gray-400 hover:bg-white/5'
@@ -124,7 +124,7 @@ export default function Technologies() {
 
             {/* Explore More Button */}
             <div>
-              <button className="flex items-center justify-center gap-3 px-6 py-3 rounded-[12px] border border-white/30 text-white hover:bg-white hover:text-black transition-colors font-medium text-sm">
+              <button className="flex items-center justify-center gap-3 px-6 py-3 rounded-full border border-white/30 text-white hover:bg-white hover:text-black transition-colors font-medium text-sm">
                 Explore more 
                 <span className="material-symbols-outlined text-[18px]">north_east</span>
               </button>
@@ -132,7 +132,7 @@ export default function Technologies() {
           </div>
 
           {/* Right Column (Image) */}
-          <div className="lg:col-span-5 relative w-full aspect-square bg-black flex items-center justify-center overflow-hidden rounded-[24px] border border-white/10">
+          <div className="lg:col-span-5 relative w-full aspect-square bg-black flex items-center justify-center overflow-hidden rounded-xl border border-white/10">
             {/* Soft glow effects mimicking the provided image */}
             <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-red-500/10 to-transparent"></div>
             <div className="absolute inset-x-0 top-0 h-[60%] bg-gradient-to-b from-blue-900/10 to-transparent"></div>
