@@ -6,6 +6,8 @@ import FeaturedSolutions from '../components/FeaturedSolutions'
 import Clients from '../components/Clients'
 import OurPartners from '../components/OurPartners'
 import IndustriesWeServe from '../components/IndustriesWeServe'
+import FeaturedVideo from '../components/FeaturedVideo'
+
 export default function Home() {
   return (
     <main className="elegant-grid overflow-x-clip">
@@ -15,6 +17,7 @@ export default function Home() {
       <AboutSection />
       <FeaturedSolutions />
       <Technologies />
+      <FeaturedVideo />
       <IndustriesWeServe />
       <OurPartners />
     </main>

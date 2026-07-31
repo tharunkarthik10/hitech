@@ -17,7 +17,7 @@ export default function Clients() {
   const duplicatedLogos = [...logos, ...logos];
 
   return (
-    <section className="bg-stark-white pt-10 pb-16 border-t border-outline-variant overflow-hidden">
+    <section className="bg-stark-white pt-10 pb-16 overflow-hidden">
       <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-gutter relative flex flex-col items-center">
         <div className="text-center mb-16 z-10 relative bg-stark-white px-8 py-4">
           <p className="font-label-caps text-[14px] text-on-surface-variant">They Always Trust Us</p>

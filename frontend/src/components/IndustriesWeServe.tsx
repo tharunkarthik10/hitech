@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import React from 'react';
+import { ArrowUpRight } from 'lucide-react';
 
 const industries = [
   {
@@ -45,20 +45,11 @@ const industries = [
 ];
 
 export default function IndustriesWeServe() {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-
-  const scroll = (direction: 'left' | 'right') => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = 340;
-      scrollContainerRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth'
-      });
-    }
-  };
+  // Duplicate the array to create a seamless infinite scrolling effect
+  const duplicatedIndustries = [...industries, ...industries];
 
   return (
-    <section className="bg-white border-y border-gray-200 py-20 md:py-28">
+    <section className="bg-white py-20 md:py-28 overflow-hidden">
       <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-6 md:px-12 w-full">
         
         {/* Header Section */}
@@ -72,33 +63,33 @@ export default function IndustriesWeServe() {
               Delivering world-class engineering solutions across diverse sectors. Our commitment to precision and quality ensures optimal performance in every application.
             </p>
           </div>
-          <div className="flex gap-4 items-center">
-            <button 
-              onClick={() => scroll('left')}
-              className="w-10 h-10 border border-gray-200 flex items-center justify-center hover:bg-[#006494] hover:text-white transition-all duration-300 rounded-full text-gray-600 hover:border-[#006494]"
-              aria-label="Scroll left"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button 
-              onClick={() => scroll('right')}
-              className="w-10 h-10 border border-gray-200 flex items-center justify-center hover:bg-[#006494] hover:text-white transition-all duration-300 rounded-full text-gray-600 hover:border-[#006494]"
-              aria-label="Scroll right"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
         </div>
+      </div>
 
-        {/* Horizontal Scrolling Row */}
-        <div 
-          ref={scrollContainerRef}
-          className="flex gap-6 overflow-x-auto no-scrollbar pb-6 w-full snap-x snap-mandatory"
-        >
-          {industries.map((industry, index) => (
+      <style>
+        {`
+          @keyframes industries-marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+          .animate-industries-marquee {
+            animation: industries-marquee 45s linear infinite;
+            display: flex;
+            width: max-content;
+          }
+          .animate-industries-marquee:hover {
+            animation-play-state: paused;
+          }
+        `}
+      </style>
+
+      {/* Horizontal Scrolling Row */}
+      <div className="w-full overflow-hidden pb-6">
+        <div className="animate-industries-marquee">
+          {duplicatedIndustries.map((industry, index) => (
             <div 
               key={index}
-              className="group relative h-[380px] w-[280px] sm:w-[300px] md:w-[320px] lg:w-[310px] xl:w-[320px] rounded-xl overflow-hidden shrink-0 cursor-pointer shadow-sm hover:shadow-lg transition-all duration-300 snap-start"
+              className="group relative h-[380px] w-[280px] sm:w-[300px] md:w-[320px] lg:w-[310px] xl:w-[320px] rounded-xl overflow-hidden shrink-0 cursor-pointer shadow-sm hover:shadow-lg transition-all duration-300 mx-3"
             >
               {/* Background Image */}
               <div className="absolute inset-0">
@@ -129,7 +120,6 @@ export default function IndustriesWeServe() {
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );

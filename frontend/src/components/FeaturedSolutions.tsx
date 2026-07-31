@@ -87,7 +87,7 @@ export default function FeaturedSolutions() {
   ];
 
   return (
-    <section className="bg-stark-white py-section-padding border-y border-outline-variant">
+    <section className="bg-stark-white py-section-padding">
       <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-gutter">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16">
           <div className="space-y-4 max-w-3xl">

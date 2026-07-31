@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import Header from './components/Header'
 import SubNavbar from './components/SubNavbar'
@@ -14,6 +15,10 @@ function AppContent() {
   const location = useLocation();
   const isHome = location.pathname === '/';
   const showSubNavbar = ['/', '/manufacturing', '/storage'].includes(location.pathname);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
     <div className="antialiased selection:bg-blue-900 selection:text-white">

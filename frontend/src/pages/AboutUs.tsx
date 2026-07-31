@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, useInView, animate, AnimatePresence } from 'framer-motion';
-import { ChevronRight, ChevronLeft, Target, Shield, Lightbulb, Users, Package, Settings, Globe, Play } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Target, Shield, Lightbulb, Users, Package, Settings, Globe, Play, ArrowUpRight } from 'lucide-react';
 
 const timelineData = [
   { year: '1977', title: 'Establishment', description: 'Establishment of Hitech by our visionary founders, setting the foundation for excellence in engineering.', image: 'https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?q=80&w=800&auto=format&fit=crop' },
@@ -360,7 +361,7 @@ export default function AboutUs() {
           </div>
           
           {/* Gallery Content */}
-          <div className="min-h-[400px]">
+          <div className="min-h-[400px] flex flex-col gap-6">
             <FadeIn key={activeInfraTab}>
               {activeInfraTab === 'production' && (
                 <div className="w-full">
@@ -384,6 +385,28 @@ export default function AboutUs() {
                 </div>
               )}
             </FadeIn>
+
+            {/* Description & View More CTA */}
+            <div className="flex flex-row justify-between items-center gap-4 w-full mt-6 px-1">
+              <p className="text-gray-700 text-[15px] md:text-[16px] font-medium leading-relaxed max-w-4xl">
+                {activeInfraTab === 'production' && 'High-volume, state-of-the-art assembly lines optimized for zero-defect output.'}
+                {activeInfraTab === 'manufacturing' && 'Advanced CNC machining and fabrication capabilities delivering tight tolerances.'}
+                {activeInfraTab === 'lasercutting' && 'High-speed fiber laser profiling for intricate, high-precision metal sheet fabrication.'}
+              </p>
+              <Link 
+                to={
+                  activeInfraTab === 'production' 
+                    ? '/' 
+                    : activeInfraTab === 'manufacturing' 
+                    ? '/manufacturing' 
+                    : '/services'
+                }
+                className="group inline-flex items-center gap-1.5 text-[#003554] hover:text-[#00A6FB] font-bold text-[14px] uppercase tracking-wider transition-colors duration-300 shrink-0"
+              >
+                <span className="underline underline-offset-4 decoration-2">View More</span>
+                <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
+            </div>
           </div>
         </div>
       </div>
