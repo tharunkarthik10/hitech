@@ -249,10 +249,10 @@ export default function Services() {
       />
 
       {/* 1. HERO SECTION */}
-      <section className="relative bg-[#003554] text-white py-32 px-8 md:px-12 overflow-hidden border-b-4 border-gray-900">
+      <section className="relative bg-[#003554] text-white py-32 px-0 overflow-hidden border-b-4 border-gray-900">
         {/* Subtle grid accent inside hero */}
         <div className="absolute inset-0 opacity-[0.05] bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white to-transparent"></div>
-        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto relative z-10 grid md:grid-cols-12 gap-12 items-center">
+        <div className="w-[calc(100%-2cm)] mx-[1cm] max-w-none relative z-10 grid md:grid-cols-12 gap-12 items-center">
           <div className="md:col-span-8 text-left">
             <span className="inline-block text-sm tracking-[0.2em] font-bold text-[#00A6FB] mb-6 uppercase">
               SERVICES DIVISION
@@ -295,8 +295,8 @@ export default function Services() {
       </section>
 
       {/* 2. INTRODUCTION */}
-      <section className="py-24 px-8 md:px-12 bg-white border-b border-gray-200">
-        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto">
+      <section className="py-24 px-0 bg-white border-b border-gray-200">
+        <div className="w-[calc(100%-2cm)] mx-[1cm] max-w-none">
           <div className="grid md:grid-cols-12 gap-12 items-start">
             <div className="md:col-span-4 sticky top-28">
               <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Introduction</div>
@@ -321,8 +321,8 @@ export default function Services() {
       </section>
 
       {/* 3. CORE SERVICES */}
-      <section id="services-grid" className="py-24 px-8 md:px-12 bg-[#F8FAFC] border-b border-gray-200">
-        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto">
+      <section id="services-grid" className="py-24 px-0 bg-[#F8FAFC] border-b border-gray-200">
+        <div className="w-[calc(100%-2cm)] mx-[1cm] max-w-none">
           <div className="text-center mb-16">
             <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Service Capabilities</div>
             <h2 className="text-3xl md:text-4xl font-bold text-[#003554] uppercase tracking-tight font-heading">Our Core Services</h2>
@@ -355,8 +355,8 @@ export default function Services() {
 
 
       {/* 5. MANUFACTURING CAPABILITIES */}
-      <section id="capabilities" className="py-24 px-8 md:px-12 bg-[#F8FAFC] border-b border-gray-200">
-        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto">
+      <section id="capabilities" className="py-24 px-0 bg-[#F8FAFC] border-b border-gray-200">
+        <div className="w-[calc(100%-2cm)] mx-[1cm] max-w-none">
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             {/* Left: Tab selection & copy */}
             <div className="lg:col-span-5">
@@ -418,8 +418,8 @@ export default function Services() {
       </section>
 
       {/* 6. OUR PROCESS */}
-      <section className="py-24 px-8 md:px-12 bg-white border-b border-gray-200">
-        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto">
+      <section className="py-24 px-0 bg-white border-b border-gray-200">
+        <div className="w-[calc(100%-2cm)] mx-[1cm] max-w-none">
           <div className="text-center mb-16">
             <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Methodology</div>
             <h2 className="text-3xl md:text-4xl font-bold text-[#003554] uppercase tracking-tight font-heading">Our Process</h2>
@@ -446,8 +446,8 @@ export default function Services() {
       </section>
 
       {/* 7. WHY CHOOSE US */}
-      <section className="py-24 px-8 md:px-12 bg-[#F8FAFC] border-b border-gray-200">
-        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto">
+      <section className="py-24 px-0 bg-[#F8FAFC] border-b border-gray-200">
+        <div className="w-[calc(100%-2cm)] mx-[1cm] max-w-none">
           <div className="text-center mb-16">
             <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Trust Elements</div>
             <h2 className="text-3xl md:text-4xl font-bold text-[#003554] uppercase tracking-tight font-heading">Why Choose Us</h2>
@@ -468,8 +468,8 @@ export default function Services() {
       </section>
 
       {/* 8. FEATURED MACHINERY */}
-      <section className="py-24 px-8 md:px-12 bg-white border-b border-gray-200">
-        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto">
+      <section className="py-24 px-0 bg-white border-b border-gray-200">
+        <div className="w-[calc(100%-2cm)] mx-[1cm] max-w-none">
           <div className="text-center mb-16">
             <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Plant Stocks</div>
             <h2 className="text-3xl md:text-4xl font-bold text-[#003554] uppercase tracking-tight font-heading">Featured Machinery</h2>
@@ -497,8 +497,8 @@ export default function Services() {
       </section>
 
       {/* 9. QUALITY ASSURANCE */}
-      <section className="py-24 px-8 md:px-12 bg-[#F8FAFC] border-b border-gray-200">
-        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto grid lg:grid-cols-12 gap-12 items-center">
+      <section className="py-24 px-0 bg-[#F8FAFC] border-b border-gray-200">
+        <div className="w-[calc(100%-2cm)] mx-[1cm] max-w-none grid lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-5">
             <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Standards</div>
             <h2 className="text-3xl md:text-4xl font-bold text-[#003554] uppercase tracking-tight font-heading mb-6 leading-tight">
@@ -550,8 +550,8 @@ export default function Services() {
       </section>
 
       {/* 10. TECHNICAL SPECIFICATIONS */}
-      <section className="py-24 px-8 md:px-12 bg-white border-b border-gray-200">
-        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto">
+      <section className="py-24 px-0 bg-white border-b border-gray-200">
+        <div className="w-[calc(100%-2cm)] mx-[1cm] max-w-none">
           <div className="text-center mb-16">
             <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Data Tables</div>
             <h2 className="text-3xl md:text-4xl font-bold text-[#003554] uppercase tracking-tight font-heading">Technical Specifications</h2>
@@ -581,8 +581,8 @@ export default function Services() {
       </section>
 
       {/* 11. RECENT PROJECTS */}
-      <section className="py-24 px-8 md:px-12 bg-[#F8FAFC] border-b border-gray-200">
-        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto">
+      <section className="py-24 px-0 bg-[#F8FAFC] border-b border-gray-200">
+        <div className="w-[calc(100%-2cm)] mx-[1cm] max-w-none">
           <div className="text-center mb-16">
             <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Projects</div>
             <h2 className="text-3xl md:text-4xl font-bold text-[#003554] uppercase tracking-tight font-heading">Recent Projects</h2>
@@ -620,8 +620,8 @@ export default function Services() {
       </section>
 
       {/* 12. CERTIFICATIONS */}
-      <section className="py-24 px-8 md:px-12 bg-white border-b border-gray-200">
-        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto">
+      <section className="py-24 px-0 bg-white border-b border-gray-200">
+        <div className="w-[calc(100%-2cm)] mx-[1cm] max-w-none">
           <div className="text-center mb-16">
             <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Audits & Licenses</div>
             <h2 className="text-3xl md:text-4xl font-bold text-[#003554] uppercase tracking-tight font-heading">Certifications & Compliance</h2>
@@ -641,8 +641,8 @@ export default function Services() {
       </section>
 
       {/* 13. TESTIMONIALS */}
-      <section className="py-24 px-8 md:px-12 bg-[#F8FAFC] border-b border-gray-200">
-        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto">
+      <section className="py-24 px-0 bg-[#F8FAFC] border-b border-gray-200">
+        <div className="w-[calc(100%-2cm)] mx-[1cm] max-w-none">
           <div className="text-center mb-16">
             <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Testimonials</div>
             <h2 className="text-3xl md:text-4xl font-bold text-[#003554] uppercase tracking-tight font-heading">What Our Clients Say</h2>
@@ -674,8 +674,8 @@ export default function Services() {
       </section>
 
       {/* 14. FAQ ACCORDION */}
-      <section className="py-24 px-8 md:px-12 bg-white border-b border-gray-200">
-        <div className="max-w-3xl mx-auto">
+      <section className="py-24 px-0 bg-white border-b border-gray-200">
+        <div className="max-w-3xl mx-auto px-[1cm] md:px-0">
           <div className="text-center mb-16">
             <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Accordions</div>
             <h2 className="text-3xl md:text-4xl font-bold text-[#003554] uppercase tracking-tight font-heading">Frequently Asked Questions</h2>
@@ -719,8 +719,8 @@ export default function Services() {
       </section>
 
       {/* 15. REQUEST A QUOTE CTA */}
-      <section id="quote" className="py-24 px-8 md:px-12 bg-[#F8FAFC] border-b border-gray-200">
-        <div className="max-w-4xl mx-auto">
+      <section id="quote" className="py-24 px-0 bg-[#F8FAFC] border-b border-gray-200">
+        <div className="max-w-4xl mx-auto px-[1cm] md:px-0">
           <div className="text-center mb-16">
             <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Estimate Form</div>
             <h2 className="text-3xl md:text-4xl font-bold text-[#003554] uppercase tracking-tight font-heading">Request A Custom Quote</h2>

@@ -6,8 +6,8 @@ const mainNavigation = [
   { name: "Products", path: "/products" },
   { name: "Services", path: "/services" },
   { name: "About Us", path: "/about" },
-  { name: "Blog", path: "#" },
-  { name: "Contact", path: "#contact" },
+  { name: "Blog", path: "/blog" },
+  { name: "Contact", path: "/contact" },
 ];
 
 export default function Header() {

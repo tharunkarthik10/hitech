@@ -10,6 +10,8 @@ import Products from './pages/Products'
 import ProductDetail from './pages/ProductDetail'
 import Services from './pages/Services'
 import AboutUs from './pages/AboutUs'
+import Blog from './pages/Blog'
+import Contact from './pages/Contact'
 
 function AppContent() {
   const location = useLocation();
@@ -33,6 +35,8 @@ function AppContent() {
           <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/services" element={<Services />} />
           <Route path="/about" element={<AboutUs />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </div>
       <Footer />

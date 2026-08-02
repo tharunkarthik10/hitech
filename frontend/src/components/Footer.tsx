@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function Footer() {
   return (
     <footer className="bg-[#051923] text-white pt-24 pb-8 border-t border-outline-variant">
@@ -67,11 +69,11 @@ export default function Footer() {
             <h4 className="font-bold text-[18px] text-white mb-6">Quick Links</h4>
             <ul className="space-y-4">
               <li><a href="#" className="text-[14px] font-medium text-gray-400 hover:text-white transition-colors">Industries</a></li>
-              <li><a href="#" className="text-[14px] font-medium text-gray-400 hover:text-white transition-colors">Products</a></li>
+              <li><Link to="/products" className="text-[14px] font-medium text-gray-400 hover:text-white transition-colors">Products</Link></li>
               <li><a href="#" className="text-[14px] font-medium text-gray-400 hover:text-white transition-colors">Careers</a></li>
-              <li><a href="#" className="text-[14px] font-medium text-gray-400 hover:text-white transition-colors">About us</a></li>
-              <li><a href="#" className="text-[14px] font-medium text-gray-400 hover:text-white transition-colors">Blogs</a></li>
-              <li><a href="#" className="text-[14px] font-medium text-gray-400 hover:text-white transition-colors">Contact us</a></li>
+              <li><Link to="/about" className="text-[14px] font-medium text-gray-400 hover:text-white transition-colors">About us</Link></li>
+              <li><Link to="/blog" className="text-[14px] font-medium text-gray-400 hover:text-white transition-colors">Blogs</Link></li>
+              <li><Link to="/contact" className="text-[14px] font-medium text-gray-400 hover:text-white transition-colors">Contact us</Link></li>
             </ul>
           </div>
 

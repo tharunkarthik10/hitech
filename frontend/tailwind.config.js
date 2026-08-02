@@ -63,9 +63,13 @@ export default {
         "on-surface-variant": "#475569"
       },
       "borderRadius": {
-        "DEFAULT": "0.25rem",
-        "lg": "0.5rem",
-        "xl": "0.75rem",
+        "DEFAULT": "2px",
+        "sm": "2px",
+        "md": "2px",
+        "lg": "2px",
+        "xl": "4px",
+        "2xl": "4px",
+        "3xl": "4px",
         "full": "9999px"
       },
       "spacing": {
