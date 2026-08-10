@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="bg-[#051923] text-white pt-24 pb-8 border-t border-outline-variant">
+    <footer className="bg-[#051923] text-white pt-24 pb-8">
       <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-gutter flex flex-col items-center">
         
         {/* Top Hero Section */}

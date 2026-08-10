@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 const navigation = [
   { name: "Production", path: "/" },
   { name: "Manufacturing", path: "/manufacturing" },
-  { name: "Storage", path: "/storage" }
+  { name: "Laser Cutting", path: "/laser-cutting" }
 ];
 
 export default function SubNavbar() {

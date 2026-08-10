@@ -4,9 +4,9 @@ import AboutSection from '../components/AboutSection'
 import Technologies from '../components/Technologies'
 import FeaturedSolutions from '../components/FeaturedSolutions'
 import Clients from '../components/Clients'
-import OurPartners from '../components/OurPartners'
 import IndustriesWeServe from '../components/IndustriesWeServe'
 import FeaturedVideo from '../components/FeaturedVideo'
+import CTA from '../components/CTA'
 
 export default function Home() {
   return (
@@ -19,7 +19,7 @@ export default function Home() {
       <Technologies />
       <FeaturedVideo />
       <IndustriesWeServe />
-      <OurPartners />
+      <CTA />
     </main>
   );
 }
