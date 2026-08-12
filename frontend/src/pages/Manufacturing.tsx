@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import HeroSlider from '../components/HeroSlider';
 import CTA from '../components/CTA';
+import InteractiveManufacturingProcess from '../components/InteractiveManufacturingProcess';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
 
 export default function Manufacturing() {
@@ -133,7 +134,7 @@ export default function Manufacturing() {
   ];
 
   return (
-    <main className="pt-20 bg-[#F1F5F9] text-gray-900 selection:bg-[#003554] selection:text-white">
+    <main className="pt-20 bg-[#F1F5F9] text-gray-900 selection:bg-[#051923] selection:text-white">
       {/* 1. HERO SECTION */}
       <HeroSlider 
         title="Precision Manufacturing Solutions"
@@ -155,8 +156,8 @@ export default function Manufacturing() {
             className="text-center mb-16"
           >
             <div className="text-base md:text-lg font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Capabilities</div>
-            <h2 className="text-4xl md:text-5xl lg:text-[56px] font-bold text-[#003554] font-headline-xl leading-[1.1] tracking-tight mb-2">What We Offer</h2>
-            <div className="w-16 h-1 bg-[#003554] mx-auto mt-4 rounded-full"></div>
+            <h2 className="text-4xl md:text-5xl lg:text-[56px] font-bold text-[#051923] font-headline-xl leading-[1.1] tracking-tight mb-2">What We Offer</h2>
+            <div className="w-16 h-1 bg-[#051923] mx-auto mt-4 rounded-full"></div>
           </motion.div>
           <motion.div 
             variants={containerVariants}
@@ -179,7 +180,7 @@ export default function Manufacturing() {
                     className="w-full h-full object-cover scale-100 group-hover/card:scale-105 transition-transform duration-1000 ease-out" 
                   />
                   {/* Dark overlay over image so text is readable */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#002b45]/90 via-[#003554]/70 to-[#003554]/40"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#002b45]/90 via-[#051923]/70 to-[#051923]/40"></div>
                 </div>
 
                 {/* Default Light Gradient (fades out on hover) */}
@@ -192,14 +193,14 @@ export default function Manufacturing() {
                 />
 
                 {/* Top Icon */}
-                <div className="relative z-10 w-14 h-14 rounded-2xl bg-white border border-gray-200 flex items-center justify-center text-[#003554] group-hover/card:bg-[#00A6FB] group-hover/card:border-[#00A6FB] group-hover/card:text-white group-hover/card:scale-110 transition-all duration-500 shadow-sm">
+                <div className="relative z-10 w-14 h-14 rounded-2xl bg-white border border-gray-200 flex items-center justify-center text-[#051923] group-hover/card:bg-[#00A6FB] group-hover/card:border-[#00A6FB] group-hover/card:text-white group-hover/card:scale-110 transition-all duration-500 shadow-sm">
                   <offer.icon className="w-7 h-7" />
                 </div>
                 
                 {/* Bottom Content */}
                 <div className="relative z-10 mt-12 lg:mt-auto">
                   {/* Title */}
-                  <h3 className="text-[18px] md:text-[20px] font-bold text-[#003554] group-hover/card:text-white mb-2 tracking-tight uppercase whitespace-nowrap overflow-hidden text-ellipsis transition-colors duration-500 drop-shadow-sm">
+                  <h3 className="text-[18px] md:text-[20px] font-bold text-[#051923] group-hover/card:text-white mb-2 tracking-tight uppercase whitespace-nowrap overflow-hidden text-ellipsis transition-colors duration-500 drop-shadow-sm">
                     {offer.title}
                   </h3>
                   
@@ -219,83 +220,7 @@ export default function Manufacturing() {
       </section>
 
       {/* 3. MANUFACTURING PROCESS */}
-      <section className="py-24 px-8 md:px-12 bg-[#003554] text-white relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute top-0 left-0 w-full h-full opacity-[0.03] pointer-events-none bg-[url('/hero-bg.png')] bg-cover bg-center"></div>
-        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto relative z-10">
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16 max-w-4xl mx-auto"
-          >
-            <div className="text-base md:text-lg font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Our Process</div>
-            <h2 className="text-4xl md:text-5xl lg:text-[56px] font-bold text-white font-headline-xl leading-[1.1] tracking-tight mb-6">Manufacturing Process</h2>
-            <p className="text-gray-300 text-lg leading-relaxed mb-8">
-              Our streamlined manufacturing process ensures every component is produced with precision, efficiency, and consistency. From design verification to final inspection, every stage follows strict quality standards to deliver products that exceed customer expectations.
-            </p>
-            <div className="w-16 h-1 bg-[#00A6FB] mx-auto rounded-full"></div>
-          </motion.div>
-          <div className="flex flex-col mt-12">
-            {processSteps.map((process, idx) => {
-              const Icon = process.icon;
-              const isEven = idx % 2 !== 0;
-
-              return (
-                <motion.div 
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
-                  key={idx} 
-                  className={`flex flex-col ${isEven ? 'md:flex-row-reverse' : 'md:flex-row'} bg-[#00253B] rounded-3xl overflow-hidden shadow-2xl mb-8 lg:mb-12 border border-white/5 hover:border-[#00A6FB]/30 group transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,166,251,0.15)] hover:-translate-y-2 cursor-pointer h-auto md:h-[500px]`}
-                >
-                  {/* Content Side */}
-                  <div className="w-full md:w-1/2 p-8 lg:p-16 flex flex-col justify-center relative overflow-hidden h-full">
-                    {/* Giant Number Background */}
-                    <div className={`absolute top-1/2 -translate-y-1/2 ${isEven ? '-left-10' : '-right-10'} text-[180px] font-black text-white/[0.02] group-hover:text-[#00A6FB]/5 transition-colors duration-700 pointer-events-none select-none group-hover:scale-110`}>
-                      {process.step}
-                    </div>
-                    
-                    <div className="relative z-10">
-                      <div className="flex items-center gap-4 mb-6 transform transition-transform duration-500 group-hover:translate-x-2">
-                        <div className="w-14 h-14 lg:w-16 lg:h-16 rounded-2xl bg-[#00A6FB]/10 group-hover:bg-[#00A6FB] flex items-center justify-center border border-[#00A6FB]/30 group-hover:border-[#00A6FB] transition-all duration-500 shadow-lg group-hover:scale-110">
-                          <Icon className="w-7 h-7 lg:w-8 lg:h-8 text-[#00A6FB] group-hover:text-white transition-colors duration-500" />
-                        </div>
-                        <h3 className="text-2xl lg:text-3xl font-bold text-white tracking-tight">{process.title}</h3>
-                      </div>
-                      <p className="text-base lg:text-lg text-gray-400 group-hover:text-gray-200 leading-relaxed transition-colors duration-500 transform transition-transform duration-500 group-hover:translate-x-2 mb-6">
-                        {process.desc}
-                      </p>
-                      
-                      <ul className="space-y-3 transform transition-transform duration-500 group-hover:translate-x-2">
-                        {process.details.map((detail, i) => (
-                          <li key={i} className="flex items-center gap-3 text-gray-300 group-hover:text-white transition-colors duration-500 text-sm lg:text-base">
-                            <div className="w-2 h-2 rounded-full bg-[#00A6FB] shadow-[0_0_8px_rgba(0,166,251,0.8)]"></div>
-                            <span>{detail}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                  
-                  {/* Image Side */}
-                  <div className="w-full md:w-1/2 h-[250px] md:h-full relative overflow-hidden">
-                    <img 
-                      src={process.image} 
-                      alt={process.title}
-                      className="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-[1.5s] ease-[cubic-bezier(0.25,1,0.5,1)]"
-                    />
-                    {/* Gradient Overlay to blend seamlessly with the content side */}
-                    <div className={`absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r ${isEven ? 'md:bg-gradient-to-l' : 'md:bg-gradient-to-r'} from-[#00253B] via-[#00253B]/60 to-transparent pointer-events-none opacity-100 group-hover:opacity-70 transition-opacity duration-500`}></div>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      <InteractiveManufacturingProcess />
 
       {/* 4. QUALITY COMMITMENT */}
       <section className="py-24 px-8 md:px-12 bg-white relative overflow-hidden">
@@ -319,8 +244,8 @@ export default function Manufacturing() {
                 <ShieldCheck className="w-5 h-5 text-[#00A6FB]" />
                 <span className="text-sm font-bold text-[#00A6FB] uppercase tracking-wider">Quality First</span>
               </div>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#003554] font-headline-xl leading-[1.1] tracking-tight mb-6">
-                Quality <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A6FB] to-[#003554]">Commitment</span>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#051923] font-headline-xl leading-[1.1] tracking-tight mb-6">
+                Quality <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A6FB] to-[#051923]">Commitment</span>
               </h2>
               <p className="text-gray-600 text-lg leading-relaxed mb-8 border-l-2 border-[#00A6FB]/30 pl-6">
                 Quality is integrated into every stage of our manufacturing process. From raw material inspection to final product verification, we ensure that every component meets customer specifications and industry standards.
@@ -347,10 +272,10 @@ export default function Manufacturing() {
                     
                     <div className="relative z-10 flex flex-col h-full">
                       <div className="flex items-center gap-4 mb-4">
-                        <div className="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center group-hover:bg-[#003554] group-hover:rotate-[360deg] transition-all duration-700 border border-gray-100 group-hover:border-[#003554] shrink-0">
+                        <div className="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center group-hover:bg-[#051923] group-hover:rotate-[360deg] transition-all duration-700 border border-gray-100 group-hover:border-[#051923] shrink-0">
                           <std.icon className="w-5 h-5 text-[#00A6FB] group-hover:text-white transition-colors duration-300" />
                         </div>
-                        <h3 className="text-[17px] font-bold text-[#003554] leading-tight transition-colors duration-300">
+                        <h3 className="text-[17px] font-bold text-[#051923] leading-tight transition-colors duration-300">
                           {std.title}
                         </h3>
                       </div>
@@ -361,7 +286,7 @@ export default function Manufacturing() {
                     </div>
                     
                     {/* Bottom active line */}
-                    <div className="absolute bottom-0 left-0 w-full h-[3px] bg-gradient-to-r from-[#00A6FB] to-[#003554] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-in-out"></div>
+                    <div className="absolute bottom-0 left-0 w-full h-[3px] bg-gradient-to-r from-[#00A6FB] to-[#051923] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-in-out"></div>
                   </motion.div>
                 ))}
               </motion.div>
@@ -371,7 +296,7 @@ export default function Manufacturing() {
       </section>
 
       {/* 5. MANUFACTURING EXCELLENCE */}
-      <section className="py-24 px-8 md:px-12 bg-[#003554] relative overflow-hidden text-white">
+      <section className="py-24 px-8 md:px-12 bg-[#051923] relative overflow-hidden text-white">
         {/* Abstract background */}
         <div className="absolute inset-0 z-0">
           <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-white/5 to-transparent rounded-bl-full pointer-events-none"></div>
@@ -403,12 +328,12 @@ export default function Manufacturing() {
               <motion.div 
                 variants={itemVariants}
                 key={idx}
-                className="group relative bg-[#00253B] border border-white/5 rounded-2xl p-6 hover:shadow-[0_20px_40px_-15px_rgba(0,166,251,0.2)] hover:border-[#00A6FB]/30 transition-all duration-500 hover:-translate-y-1 overflow-hidden"
+                className="group relative bg-[#0a2738] border border-white/5 rounded-2xl p-6 hover:shadow-[0_20px_40px_-15px_rgba(0,166,251,0.2)] hover:border-[#00A6FB]/30 transition-all duration-500 hover:-translate-y-1 overflow-hidden"
               >
                 <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-[#00A6FB]/10 to-transparent rounded-bl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                 
                 <div className="flex items-start gap-5 relative z-10">
-                  <div className="w-14 h-14 rounded-xl bg-[#001D2E] border border-white/5 flex items-center justify-center shrink-0 group-hover:bg-[#003554] group-hover:border-[#003554] group-hover:scale-110 transition-all duration-500 shadow-md">
+                  <div className="w-14 h-14 rounded-xl bg-[#0c3147] border border-white/5 flex items-center justify-center shrink-0 group-hover:bg-[#051923] group-hover:border-[#051923] group-hover:scale-110 transition-all duration-500 shadow-md">
                     <strength.icon className="w-6 h-6 text-[#00A6FB] group-hover:text-white transition-colors duration-300" />
                   </div>
                   <div>
@@ -442,8 +367,8 @@ export default function Manufacturing() {
             className="text-center mb-16"
           >
             <div className="text-base md:text-lg font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">The HiTech Edge</div>
-            <h2 className="text-4xl md:text-5xl lg:text-[56px] font-bold text-[#003554] font-headline-xl leading-[1.1] tracking-tight mb-2">Why Choose Us</h2>
-            <div className="w-16 h-1 bg-[#003554] mx-auto mt-6 rounded-full"></div>
+            <h2 className="text-4xl md:text-5xl lg:text-[56px] font-bold text-[#051923] font-headline-xl leading-[1.1] tracking-tight mb-2">Why Choose Us</h2>
+            <div className="w-16 h-1 bg-[#051923] mx-auto mt-6 rounded-full"></div>
           </motion.div>
 
           <motion.div 
@@ -470,14 +395,14 @@ export default function Manufacturing() {
                 </div>
 
                 {/* Accent Line */}
-                <div className="absolute top-0 left-0 w-full h-1 z-20 bg-gradient-to-r from-[#00A6FB] to-[#003554] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+                <div className="absolute top-0 left-0 w-full h-1 z-20 bg-gradient-to-r from-[#00A6FB] to-[#051923] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
                 
                 {/* Content Section */}
                 <div className="relative z-10 p-6 flex flex-col items-center text-center h-[55%] justify-end bg-gradient-to-t from-white via-white to-transparent">
-                  <div className="w-12 h-12 rounded-xl bg-white shadow-md border border-gray-100 flex items-center justify-center mb-4 group-hover:bg-[#003554] group-hover:border-[#003554] transition-colors duration-500 absolute top-0 -translate-y-1/2">
+                  <div className="w-12 h-12 rounded-xl bg-white shadow-md border border-gray-100 flex items-center justify-center mb-4 group-hover:bg-[#051923] group-hover:border-[#051923] transition-colors duration-500 absolute top-0 -translate-y-1/2">
                     <CheckCircle2 className="w-6 h-6 text-[#00A6FB] group-hover:text-white transition-colors duration-500" />
                   </div>
-                  <h3 className="font-bold text-[#003554] text-lg leading-snug group-hover:text-[#00A6FB] transition-colors duration-500">
+                  <h3 className="font-bold text-[#051923] text-lg leading-snug group-hover:text-[#00A6FB] transition-colors duration-500">
                     {reason.title}
                   </h3>
                 </div>

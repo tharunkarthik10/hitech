@@ -60,8 +60,8 @@ export default function Technologies() {
   const activeAsset = assets[activeIndex];
 
   return (
-    <section className="bg-stark-white relative py-12 md:py-16 lg:py-24">
-      <div className="w-full flex justify-center font-body-md group/section">
+    <section className="bg-stark-white relative py-4 md:py-6 lg:py-8">
+      <div className="w-full flex justify-center px-4 md:px-8 font-body-md group/section">
         {/* Massive Box Wrapper */}
         <div className="relative w-full max-w-[96%] 2xl:max-w-[1920px] mx-auto bg-[#051923] text-white rounded-2xl p-6 md:p-8 lg:p-12 shadow-2xl border border-white/10 flex flex-col">
           <div className="w-full mx-auto">

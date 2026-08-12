@@ -1,8 +1,8 @@
 export default function ContactBanner() {
   return (
     <section className="bg-stark-white w-full py-10 mt-16 overflow-visible">
-      <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-gutter">
-        <div className="relative bg-[#003554] rounded-sm flex flex-col md:flex-row items-center justify-between px-8 md:px-16 py-10 md:py-12">
+      <div className="w-full 2xl:max-w-[1920px] mx-auto px-gutter">
+        <div className="relative bg-[#051923] rounded-sm flex flex-col md:flex-row items-center justify-between px-8 md:px-16 py-10 md:py-12">
           
           {/* Man Image Overflowing Top */}
           <div className="absolute left-0 bottom-0 hidden md:block w-64 lg:w-80 z-10 pointer-events-none">
@@ -27,7 +27,7 @@ export default function ContactBanner() {
 
           {/* Button */}
           <div className="mt-8 md:mt-0 z-20 shrink-0">
-            <button className="px-8 py-3 border-2 border-stark-white text-stark-white font-label-caps uppercase tracking-wider font-bold hover:bg-stark-white hover:text-[#003554] transition-colors duration-300">
+            <button className="px-8 py-3 border-2 border-stark-white text-stark-white font-label-caps uppercase tracking-wider font-bold hover:bg-stark-white hover:text-[#051923] transition-colors duration-300">
               Contact Us
             </button>
           </div>

@@ -8,7 +8,7 @@ export default function FeaturedVideo() {
         href="https://www.youtube.com/watch?v=y294tIuPzGk" 
         target="_blank" 
         rel="noopener noreferrer"
-        className="group relative w-full h-[400px] sm:h-[460px] md:h-[550px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer block"
+        className="group relative w-full h-[400px] sm:h-[460px] md:h-[550px] overflow-hidden shadow-lg hover: transition-all duration-500 cursor-pointer block"
       >
           {/* Video Background */}
           <video 

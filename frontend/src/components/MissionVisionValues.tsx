@@ -11,7 +11,7 @@ export default function MissionVisionValues() {
 
   return (
     <section className="py-24 bg-white border-t border-gray-100">
-      <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-6 md:px-12">
+      <div className="w-full 2xl:max-w-[1920px] mx-auto px-6 md:px-12">
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-20">
@@ -42,7 +42,7 @@ export default function MissionVisionValues() {
             viewport={{ once: true }}
             className="flex flex-col sm:flex-row gap-6"
           >
-            <div className="flex-shrink-0 w-14 h-14 bg-slate-50 text-[#006494] rounded-2xl flex items-center justify-center border border-slate-100">
+            <div className="flex-shrink-0 w-14 h-14 bg-slate-50 text-[#006494]  flex items-center justify-center border border-slate-100">
               <Target className="w-6 h-6" />
             </div>
             <div>
@@ -60,7 +60,7 @@ export default function MissionVisionValues() {
             transition={{ delay: 0.2 }}
             className="flex flex-col sm:flex-row gap-6"
           >
-            <div className="flex-shrink-0 w-14 h-14 bg-slate-50 text-[#006494] rounded-2xl flex items-center justify-center border border-slate-100">
+            <div className="flex-shrink-0 w-14 h-14 bg-slate-50 text-[#006494]  flex items-center justify-center border border-slate-100">
               <Eye className="w-6 h-6" />
             </div>
             <div>

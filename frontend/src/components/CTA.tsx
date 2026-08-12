@@ -32,7 +32,7 @@ export default function CTA() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button className="group relative px-8 py-4 bg-[#00A6FB] hover:bg-white text-white hover:text-[#00101A] font-bold rounded-xl transition-all duration-500 shadow-[0_0_30px_rgba(0,166,251,0.2)] hover:shadow-[0_20px_40px_-15px_rgba(255,255,255,0.3)] flex items-center justify-center gap-3 w-full sm:w-auto overflow-hidden">
+            <button className="group relative px-8 py-4 bg-[#00A6FB] hover:bg-white text-white hover:text-[#051923] font-bold rounded-xl transition-all duration-500 shadow-[0_0_30px_rgba(0,166,251,0.2)] hover:shadow-[0_20px_40px_-15px_rgba(255,255,255,0.3)] flex items-center justify-center gap-3 w-full sm:w-auto overflow-hidden">
               <span className="relative z-10 text-[15px] tracking-wider">START YOUR PROJECT</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300 relative z-10" />
             </button>

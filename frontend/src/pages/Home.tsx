@@ -10,7 +10,7 @@ import CTA from '../components/CTA'
 
 export default function Home() {
   return (
-    <main className="elegant-grid overflow-x-clip">
+    <main className="overflow-x-clip">
       <HeroSlider />
       <Clients />
       <WhyChooseUs />
