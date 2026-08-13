@@ -40,8 +40,8 @@ export default function AboutSection() {
   };
 
   return (
-    <section className="bg-stark-white relative py-12 md:py-16 lg:py-24">
-      <div className="w-full flex justify-center font-body-md group/section">
+    <section className="bg-stark-white relative py-4 md:py-6 lg:py-8">
+      <div className="w-full flex justify-center px-4 md:px-8 font-body-md group/section">
         {/* Massive Box Wrapper */}
         <div className="relative w-full max-w-[96%] 2xl:max-w-[1920px] mx-auto bg-[#051923] rounded-2xl p-6 md:p-8 lg:p-12 shadow-2xl border border-white/10 flex flex-col">
         {/* Solid Background (Blobs removed to ensure zero transparency/glow) */}
@@ -61,7 +61,7 @@ export default function AboutSection() {
                     onClick={() => setActiveTab(tab)}
                     className={`px-5 py-2.5 rounded-full font-label-caps tracking-widest text-xs font-bold transition-all duration-300 ${
                       activeTab === tab 
-                        ? 'bg-white text-[#003554] shadow-md' 
+                        ? 'bg-white text-[#051923] shadow-md' 
                         : 'bg-white/10 text-white hover:bg-white/20'
                     }`}
                   >
@@ -83,7 +83,7 @@ export default function AboutSection() {
 
             {/* Explore Button */}
             <div className="mt-12 lg:mt-16">
-              <button className="flex items-center gap-2 px-8 py-3.5 rounded-full border border-white text-white hover:bg-white hover:text-[#003554] transition-all duration-300 font-medium text-[16px]">
+              <button className="flex items-center gap-2 px-8 py-3.5 rounded-full border border-white text-white hover:bg-white hover:text-[#051923] transition-all duration-300 font-medium text-[16px]">
                 Explore more <span className="material-symbols-outlined text-sm font-bold">north_east</span>
               </button>
             </div>
@@ -91,7 +91,7 @@ export default function AboutSection() {
 
           {/* Right Side Video Area */}
           <div 
-            className="w-full lg:w-[45%] flex-none rounded-xl bg-[#050A10]/50 flex items-center justify-center p-0 overflow-hidden h-[300px] md:h-[400px] lg:h-[500px] xl:h-[550px] relative border border-white/10 backdrop-blur-sm shadow-2xl group"
+            className="w-full lg:w-[45%] flex-none rounded-xl bg-[#050A10]/50 flex items-center justify-center p-0 overflow-hidden h-[300px] md:h-[400px] lg:h-[500px] xl:h-[550px] relative border border-white/10 backdrop-blur-sm  group"
           >
               <video 
                src="/Product_explosion_reassembly_ani…_202607180933.mp4" 

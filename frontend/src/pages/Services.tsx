@@ -238,7 +238,7 @@ export default function Services() {
   ];
 
   return (
-    <main className="pt-20 bg-[#F1F5F9] text-gray-900 selection:bg-[#003554] selection:text-white">
+    <main className="pt-20 bg-[#F1F5F9] text-gray-900 selection:bg-[#051923] selection:text-white">
       {/* Dynamic Technical Grid background pattern */}
       <div 
         className="absolute inset-0 pointer-events-none opacity-[0.03] z-0"
@@ -249,7 +249,7 @@ export default function Services() {
       />
 
       {/* 1. HERO SECTION */}
-      <section className="relative bg-[#003554] text-white py-32 px-0 overflow-hidden border-b-4 border-gray-900">
+      <section className="relative bg-[#051923] text-white py-32 px-0 overflow-hidden border-b-4 border-gray-900">
         {/* Subtle grid accent inside hero */}
         <div className="absolute inset-0 opacity-[0.05] bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white to-transparent"></div>
         <div className="w-[calc(100%-2cm)] mx-[1cm] max-w-none relative z-10 grid md:grid-cols-12 gap-12 items-center">
@@ -267,13 +267,13 @@ export default function Services() {
             <div className="flex flex-wrap gap-4">
               <a 
                 href="#quote" 
-                className="bg-[#00A6FB] text-white border border-[#00A6FB] px-8 py-4 font-bold tracking-[0.1em] uppercase hover:bg-white hover:text-[#003554] transition-all duration-300 transform hover:-translate-y-1 rounded-full shadow-md"
+                className="bg-[#00A6FB] text-white border border-[#00A6FB] px-8 py-4 font-bold tracking-[0.1em] uppercase hover:bg-white hover:text-[#051923] transition-all duration-300 transform hover:-translate-y-1 rounded-full shadow-md"
               >
                 Request a Quote
               </a>
               <a 
                 href="#services-grid" 
-                className="bg-transparent text-white border-2 border-white/80 px-8 py-4 font-bold tracking-[0.1em] uppercase hover:bg-white hover:text-[#003554] transition-all duration-300 transform hover:-translate-y-1 rounded-full"
+                className="bg-transparent text-white border-2 border-white/80 px-8 py-4 font-bold tracking-[0.1em] uppercase hover:bg-white hover:text-[#051923] transition-all duration-300 transform hover:-translate-y-1 rounded-full"
               >
                 View Capabilities
               </a>
@@ -300,13 +300,13 @@ export default function Services() {
           <div className="grid md:grid-cols-12 gap-12 items-start">
             <div className="md:col-span-4 sticky top-28">
               <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Introduction</div>
-              <h2 className="text-3xl md:text-4xl font-bold text-[#003554] uppercase tracking-tight font-heading leading-tight">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#051923] uppercase tracking-tight font-heading leading-tight">
                 Pioneering The Next Era Of Industrial Output
               </h2>
               <div className="w-12 h-1 bg-[#00A6FB] mt-4 rounded-full"></div>
             </div>
             <div className="md:col-span-8 space-y-6 text-gray-700 leading-relaxed text-lg md:text-xl">
-              <p className="font-bold text-[#003554] text-xl">
+              <p className="font-bold text-[#051923] text-xl">
                 Hitech’s service ecosystem is engineered to support plants, fabricators, and B2B manufacturers seeking robust machinery design and line automation.
               </p>
               <p>
@@ -325,17 +325,17 @@ export default function Services() {
         <div className="w-[calc(100%-2cm)] mx-[1cm] max-w-none">
           <div className="text-center mb-16">
             <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Service Capabilities</div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#003554] uppercase tracking-tight font-heading">Our Core Services</h2>
-            <div className="w-16 h-1 bg-[#003554] mx-auto mt-4 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#051923] uppercase tracking-tight font-heading">Our Core Services</h2>
+            <div className="w-16 h-1 bg-[#051923] mx-auto mt-4 rounded-full"></div>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {services.map((svc, idx) => (
               <div key={idx} className="bg-white border border-gray-200 p-8 hover:border-[#00A6FB] transition-all duration-300 flex flex-col justify-between hover:shadow-lg rounded-2xl group">
                 <div>
-                  <div className="w-14 h-14 bg-[#F1F5F9] text-[#003554] flex items-center justify-center mb-6 group-hover:bg-[#003554] group-hover:text-white transition-colors duration-300 border border-gray-100 rounded-xl">
+                  <div className="w-14 h-14 bg-[#F1F5F9] text-[#051923] flex items-center justify-center mb-6 group-hover:bg-[#051923] group-hover:text-white transition-colors duration-300 border border-gray-100 rounded-xl">
                     <svc.icon className="w-6 h-6" />
                   </div>
-                  <h3 className="text-xl md:text-2xl font-bold text-[#003554] mb-3 uppercase tracking-tight">{svc.title}</h3>
+                  <h3 className="text-xl md:text-2xl font-bold text-[#051923] mb-3 uppercase tracking-tight">{svc.title}</h3>
                   <p className="text-gray-600 mb-6 text-base leading-relaxed">{svc.desc}</p>
                 </div>
                 <div className="space-y-3 border-t border-gray-100 pt-6">
@@ -361,7 +361,7 @@ export default function Services() {
             {/* Left: Tab selection & copy */}
             <div className="lg:col-span-5">
               <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Infrastructure</div>
-              <h2 className="text-3xl font-bold text-[#003554] uppercase tracking-tight mb-8 font-heading">
+              <h2 className="text-3xl font-bold text-[#051923] uppercase tracking-tight mb-8 font-heading">
                 Manufacturing Capabilities
               </h2>
               
@@ -372,7 +372,7 @@ export default function Services() {
                     onClick={() => setActiveCapTab(key)}
                     className={`w-full text-left p-5 border-l-4 transition-all duration-300 font-bold uppercase tracking-tight flex items-center justify-between text-base rounded-xl ${
                       activeCapTab === key 
-                        ? 'border-[#003554] bg-[#003554] text-white pl-6' 
+                        ? 'border-[#051923] bg-[#051923] text-white pl-6' 
                         : 'border-gray-200 bg-white text-gray-700 hover:bg-gray-50'
                     }`}
                   >
@@ -388,7 +388,7 @@ export default function Services() {
               <div className="flex-1 flex flex-col justify-between">
                 <div>
                   <span className="text-xs font-bold text-[#00A6FB] tracking-widest block mb-2">SPECS INFO</span>
-                  <h3 className="text-2xl font-bold text-[#003554] uppercase tracking-tight font-heading mb-4">
+                  <h3 className="text-2xl font-bold text-[#051923] uppercase tracking-tight font-heading mb-4">
                     {capabilities[activeCapTab as keyof typeof capabilities].title}
                   </h3>
                   <p className="text-gray-600 text-base leading-relaxed mb-6">
@@ -422,8 +422,8 @@ export default function Services() {
         <div className="w-[calc(100%-2cm)] mx-[1cm] max-w-none">
           <div className="text-center mb-16">
             <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Methodology</div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#003554] uppercase tracking-tight font-heading">Our Process</h2>
-            <div className="w-16 h-1 bg-[#003554] mx-auto mt-4 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#051923] uppercase tracking-tight font-heading">Our Process</h2>
+            <div className="w-16 h-1 bg-[#051923] mx-auto mt-4 rounded-full"></div>
           </div>
           <div className="grid md:grid-cols-4 gap-8">
             {processSteps.map((step, idx) => (
@@ -433,7 +433,7 @@ export default function Services() {
                     <span className="font-heading text-4xl font-black text-gray-200 group-hover:text-[#00A6FB]/20 transition-colors">{step.num}</span>
                     <step.icon className="w-6 h-6 text-[#00A6FB]" />
                   </div>
-                  <h3 className="text-lg md:text-xl font-bold text-[#003554] mb-3 uppercase tracking-tight">{step.title}</h3>
+                  <h3 className="text-lg md:text-xl font-bold text-[#051923] mb-3 uppercase tracking-tight">{step.title}</h3>
                   <p className="text-gray-600 text-sm leading-relaxed">{step.desc}</p>
                 </div>
                 {idx !== processSteps.length - 1 && (
@@ -450,15 +450,15 @@ export default function Services() {
         <div className="w-[calc(100%-2cm)] mx-[1cm] max-w-none">
           <div className="text-center mb-16">
             <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Trust Elements</div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#003554] uppercase tracking-tight font-heading">Why Choose Us</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#051923] uppercase tracking-tight font-heading">Why Choose Us</h2>
             <div className="w-16 h-1 bg-[#00A6FB] mx-auto mt-4 rounded-full"></div>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {trustPillars.map((pillar, idx) => (
-              <div key={idx} className="bg-white border border-gray-200 p-8 text-center hover:border-[#003554] transition-all duration-300 flex flex-col justify-between min-h-[220px] rounded-2xl">
+              <div key={idx} className="bg-white border border-gray-200 p-8 text-center hover:border-[#051923] transition-all duration-300 flex flex-col justify-between min-h-[220px] rounded-2xl">
                 <div>
                   <pillar.icon className="w-10 h-10 text-[#00A6FB] mx-auto mb-6" />
-                  <h3 className="text-lg md:text-xl font-bold text-[#003554] mb-3 uppercase tracking-tight">{pillar.title}</h3>
+                  <h3 className="text-lg md:text-xl font-bold text-[#051923] mb-3 uppercase tracking-tight">{pillar.title}</h3>
                   <p className="text-gray-600 text-sm leading-relaxed">{pillar.desc}</p>
                 </div>
               </div>
@@ -472,8 +472,8 @@ export default function Services() {
         <div className="w-[calc(100%-2cm)] mx-[1cm] max-w-none">
           <div className="text-center mb-16">
             <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Plant Stocks</div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#003554] uppercase tracking-tight font-heading">Featured Machinery</h2>
-            <div className="w-16 h-1 bg-[#003554] mx-auto mt-4 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#051923] uppercase tracking-tight font-heading">Featured Machinery</h2>
+            <div className="w-16 h-1 bg-[#051923] mx-auto mt-4 rounded-full"></div>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {machinery.map((mach, idx) => (
@@ -487,7 +487,7 @@ export default function Services() {
                 </div>
                 <div className="p-6">
                   <span className="text-xs font-bold text-[#00A6FB] uppercase block mb-1.5 tracking-[0.1em]">{mach.type}</span>
-                  <h3 className="text-xl md:text-2xl font-bold text-[#003554] mb-2 uppercase tracking-tight">{mach.name}</h3>
+                  <h3 className="text-xl md:text-2xl font-bold text-[#051923] mb-2 uppercase tracking-tight">{mach.name}</h3>
                   <p className="text-gray-600 text-sm leading-relaxed">{mach.desc}</p>
                 </div>
               </div>
@@ -501,7 +501,7 @@ export default function Services() {
         <div className="w-[calc(100%-2cm)] mx-[1cm] max-w-none grid lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-5">
             <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Standards</div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#003554] uppercase tracking-tight font-heading mb-6 leading-tight">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#051923] uppercase tracking-tight font-heading mb-6 leading-tight">
               Quality Assurance & Verification
             </h2>
             <p className="text-gray-700 text-base md:text-lg leading-relaxed mb-6">
@@ -511,14 +511,14 @@ export default function Services() {
               <div className="flex gap-3">
                 <CheckCircle2 className="w-5.5 h-5.5 text-[#00A6FB] shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-bold text-[#003554] text-base uppercase">CMM Dimensional Inspections</h4>
+                  <h4 className="font-bold text-[#051923] text-base uppercase">CMM Dimensional Inspections</h4>
                   <p className="text-gray-600 text-sm">Verify exact tolerance criteria down to +/- 0.005mm limit paths.</p>
                 </div>
               </div>
               <div className="flex gap-3">
                 <CheckCircle2 className="w-5.5 h-5.5 text-[#00A6FB] shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-bold text-[#003554] text-base uppercase">NDT (Non-Destructive Testing)</h4>
+                  <h4 className="font-bold text-[#051923] text-base uppercase">NDT (Non-Destructive Testing)</h4>
                   <p className="text-gray-600 text-sm">Radiographic & Dye Penetrant testing on all high-stress welded frames.</p>
                 </div>
               </div>
@@ -526,22 +526,22 @@ export default function Services() {
           </div>
           <div className="lg:col-span-7 bg-white border border-gray-200 p-8 grid grid-cols-2 gap-4 rounded-2xl">
             <div className="border border-gray-100 p-6 text-center bg-[#F8FAFC] rounded-xl">
-              <span className="font-heading text-3xl font-black text-[#003554]">100%</span>
+              <span className="font-heading text-3xl font-black text-[#051923]">100%</span>
               <h5 className="font-bold text-sm uppercase text-gray-500 mt-2">Material Traceability</h5>
               <p className="text-gray-500 text-xs mt-1">Full documentation trace from raw billet to finished component.</p>
             </div>
             <div className="border border-gray-100 p-6 text-center bg-[#F8FAFC] rounded-xl">
-              <span className="font-heading text-3xl font-black text-[#003554]">0.005mm</span>
+              <span className="font-heading text-3xl font-black text-[#051923]">0.005mm</span>
               <h5 className="font-bold text-sm uppercase text-gray-500 mt-2">Tolerance Lock</h5>
               <p className="text-gray-500 text-xs mt-1">Repeatable CNC micro-positioning accuracy guaranteed.</p>
             </div>
             <div className="border border-gray-100 p-6 text-center bg-[#F8FAFC] rounded-xl">
-              <span className="font-heading text-3xl font-black text-[#003554]">FAT & SAT</span>
+              <span className="font-heading text-3xl font-black text-[#051923]">FAT & SAT</span>
               <h5 className="font-bold text-sm uppercase text-gray-500 mt-2">Rigorous Testing</h5>
               <p className="text-gray-500 text-xs mt-1">Factory and Site Acceptance protocols run with full logs.</p>
             </div>
             <div className="border border-gray-100 p-6 text-center bg-[#F8FAFC] rounded-xl">
-              <span className="font-heading text-3xl font-black text-[#003554]">20+ Years</span>
+              <span className="font-heading text-3xl font-black text-[#051923]">20+ Years</span>
               <h5 className="font-bold text-sm uppercase text-gray-500 mt-2">Verified Track Record</h5>
               <p className="text-gray-500 text-xs mt-1">A reliable history of B2B production engineering.</p>
             </div>
@@ -554,13 +554,13 @@ export default function Services() {
         <div className="w-[calc(100%-2cm)] mx-[1cm] max-w-none">
           <div className="text-center mb-16">
             <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Data Tables</div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#003554] uppercase tracking-tight font-heading">Technical Specifications</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#051923] uppercase tracking-tight font-heading">Technical Specifications</h2>
             <div className="w-16 h-1 bg-[#00A6FB] mx-auto mt-4 rounded-full"></div>
           </div>
           <div className="overflow-x-auto border border-gray-200 rounded-2xl">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-[#003554] text-white uppercase font-heading text-sm border-b border-gray-200">
+                <tr className="bg-[#051923] text-white uppercase font-heading text-sm border-b border-gray-200">
                   <th className="p-5 pl-6">Parameter Name</th>
                   <th className="p-5">Operational Range</th>
                   <th className="p-5">Validation Method</th>
@@ -569,7 +569,7 @@ export default function Services() {
               <tbody className="divide-y divide-gray-200 text-sm">
                 {technicalSpecsTable.map((spec, i) => (
                   <tr key={i} className="hover:bg-gray-50 transition-colors">
-                    <td className="p-5 pl-6 font-bold text-[#003554] uppercase">{spec.parameter}</td>
+                    <td className="p-5 pl-6 font-bold text-[#051923] uppercase">{spec.parameter}</td>
                     <td className="p-5 font-heading text-gray-900 font-semibold">{spec.range}</td>
                     <td className="p-5 text-gray-600 font-medium">{spec.testMethod}</td>
                   </tr>
@@ -585,8 +585,8 @@ export default function Services() {
         <div className="w-[calc(100%-2cm)] mx-[1cm] max-w-none">
           <div className="text-center mb-16">
             <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Projects</div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#003554] uppercase tracking-tight font-heading">Recent Projects</h2>
-            <div className="w-16 h-1 bg-[#003554] mx-auto mt-4 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#051923] uppercase tracking-tight font-heading">Recent Projects</h2>
+            <div className="w-16 h-1 bg-[#051923] mx-auto mt-4 rounded-full"></div>
           </div>
           <div className="grid md:grid-cols-2 gap-8">
             {projects.map((proj, idx) => (
@@ -594,14 +594,14 @@ export default function Services() {
                 <div className="flex-1 flex flex-col justify-between">
                   <div>
                     <div className="flex gap-3 items-center mb-4">
-                      <span className="bg-[#003554] text-white px-2.5 py-1 text-xs font-bold uppercase tracking-[0.1em] rounded-md">{proj.tag}</span>
+                      <span className="bg-[#051923] text-white px-2.5 py-1 text-xs font-bold uppercase tracking-[0.1em] rounded-md">{proj.tag}</span>
                       <span className="bg-green-100 text-green-800 px-2.5 py-1 text-xs font-bold uppercase rounded-md">{proj.metric}</span>
                     </div>
-                    <h3 className="text-xl md:text-2xl font-bold text-[#003554] mb-3 uppercase tracking-tight">{proj.title}</h3>
+                    <h3 className="text-xl md:text-2xl font-bold text-[#051923] mb-3 uppercase tracking-tight">{proj.title}</h3>
                     <p className="text-gray-600 text-sm leading-relaxed">{proj.desc}</p>
                   </div>
                   <div className="mt-6 border-t border-gray-100 pt-4">
-                    <a href="#quote" className="inline-flex items-center gap-1 text-sm font-bold text-[#00A6FB] hover:text-[#003554] transition-colors uppercase">
+                    <a href="#quote" className="inline-flex items-center gap-1 text-sm font-bold text-[#00A6FB] hover:text-[#051923] transition-colors uppercase">
                       Inquire About Similar setup <ArrowUpRight className="w-3.5 h-3.5" />
                     </a>
                   </div>
@@ -624,15 +624,15 @@ export default function Services() {
         <div className="w-[calc(100%-2cm)] mx-[1cm] max-w-none">
           <div className="text-center mb-16">
             <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Audits & Licenses</div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#003554] uppercase tracking-tight font-heading">Certifications & Compliance</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#051923] uppercase tracking-tight font-heading">Certifications & Compliance</h2>
             <div className="w-16 h-1 bg-[#00A6FB] mx-auto mt-4 rounded-full"></div>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {certifications.map((cert, idx) => (
               <div key={idx} className="border border-gray-200 p-6 bg-[#F8FAFC] text-center flex flex-col justify-between items-center hover:border-[#00A6FB] transition-all duration-300 min-h-[160px] rounded-2xl">
                 <span className="text-xs font-bold text-[#00A6FB] block mb-2 tracking-[0.1em]">{cert.code}</span>
-                <Award className="w-8 h-8 text-[#003554] mb-3" />
-                <h3 className="font-bold text-base uppercase text-[#003554]">{cert.name}</h3>
+                <Award className="w-8 h-8 text-[#051923] mb-3" />
+                <h3 className="font-bold text-base uppercase text-[#051923]">{cert.name}</h3>
                 <p className="text-gray-500 text-xs mt-1.5 font-medium">{cert.subtitle}</p>
               </div>
             ))}
@@ -645,8 +645,8 @@ export default function Services() {
         <div className="w-[calc(100%-2cm)] mx-[1cm] max-w-none">
           <div className="text-center mb-16">
             <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Testimonials</div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#003554] uppercase tracking-tight font-heading">What Our Clients Say</h2>
-            <div className="w-16 h-1 bg-[#003554] mx-auto mt-4 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#051923] uppercase tracking-tight font-heading">What Our Clients Say</h2>
+            <div className="w-16 h-1 bg-[#051923] mx-auto mt-4 rounded-full"></div>
           </div>
           <div className="relative w-full overflow-hidden py-4 mask-gradient">
             <div className="flex animate-marquee gap-8 hover:[animation-play-state:paused] w-max">
@@ -661,7 +661,7 @@ export default function Services() {
                   </p>
                   <div className="border-t border-gray-100 pt-6 flex items-center justify-between">
                     <div>
-                      <h4 className="font-bold text-sm uppercase text-[#003554]">{test.author}</h4>
+                      <h4 className="font-bold text-sm uppercase text-[#051923]">{test.author}</h4>
                       <span className="text-xs text-gray-500 font-medium">{test.role}</span>
                     </div>
                     <span className="text-xs text-[#00A6FB] uppercase font-bold tracking-[0.1em]">{test.company}</span>
@@ -678,7 +678,7 @@ export default function Services() {
         <div className="max-w-3xl mx-auto px-[1cm] md:px-0">
           <div className="text-center mb-16">
             <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Accordions</div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#003554] uppercase tracking-tight font-heading">Frequently Asked Questions</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#051923] uppercase tracking-tight font-heading">Frequently Asked Questions</h2>
             <div className="w-16 h-1 bg-[#00A6FB] mx-auto mt-4 rounded-full"></div>
           </div>
           <div className="space-y-4">
@@ -688,7 +688,7 @@ export default function Services() {
                   onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
                   className="w-full text-left p-6 flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors"
                 >
-                  <span className="font-bold uppercase tracking-tight text-base text-[#003554]">
+                  <span className="font-bold uppercase tracking-tight text-base text-[#051923]">
                     {faq.q}
                   </span>
                   {activeFaq === idx ? (
@@ -723,9 +723,9 @@ export default function Services() {
         <div className="max-w-4xl mx-auto px-[1cm] md:px-0">
           <div className="text-center mb-16">
             <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Estimate Form</div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#003554] uppercase tracking-tight font-heading">Request A Custom Quote</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#051923] uppercase tracking-tight font-heading">Request A Custom Quote</h2>
             <p className="text-gray-500 text-sm mt-2 uppercase tracking-widest font-bold tracking-[0.1em]">ESTIMATED REPLY TIME: &lt; 24 HOURS</p>
-            <div className="w-16 h-1 bg-[#003554] mx-auto mt-4 rounded-full"></div>
+            <div className="w-16 h-1 bg-[#051923] mx-auto mt-4 rounded-full"></div>
           </div>
           
           <div className="bg-white border border-gray-200 p-8 shadow-sm rounded-3xl">
@@ -748,7 +748,7 @@ export default function Services() {
                         value={formState.name}
                         onChange={(e) => setFormState({...formState, name: e.target.value})}
                         placeholder="John Doe" 
-                        className="w-full p-4 border border-gray-200 focus:outline-none focus:border-[#003554] text-sm rounded-xl"
+                        className="w-full p-4 border border-gray-200 focus:outline-none focus:border-[#051923] text-sm rounded-xl"
                       />
                     </div>
                     <div>
@@ -759,7 +759,7 @@ export default function Services() {
                         value={formState.email}
                         onChange={(e) => setFormState({...formState, email: e.target.value})}
                         placeholder="j.doe@company.com" 
-                        className="w-full p-4 border border-gray-200 focus:outline-none focus:border-[#003554] text-sm rounded-xl"
+                        className="w-full p-4 border border-gray-200 focus:outline-none focus:border-[#051923] text-sm rounded-xl"
                       />
                     </div>
                   </div>
@@ -773,7 +773,7 @@ export default function Services() {
                         value={formState.company}
                         onChange={(e) => setFormState({...formState, company: e.target.value})}
                         placeholder="Industrial Solutions Inc." 
-                        className="w-full p-4 border border-gray-200 focus:outline-none focus:border-[#003554] text-sm rounded-xl"
+                        className="w-full p-4 border border-gray-200 focus:outline-none focus:border-[#051923] text-sm rounded-xl"
                       />
                     </div>
                     <div>
@@ -781,7 +781,7 @@ export default function Services() {
                       <select 
                         value={formState.service}
                         onChange={(e) => setFormState({...formState, service: e.target.value})}
-                        className="w-full p-4 border border-gray-200 focus:outline-none focus:border-[#003554] text-sm bg-white rounded-xl"
+                        className="w-full p-4 border border-gray-200 focus:outline-none focus:border-[#051923] text-sm bg-white rounded-xl"
                       >
                         <option value="machining">Precision CNC Machining</option>
                         <option value="fabrication">Heavy Fabrication</option>
@@ -801,7 +801,7 @@ export default function Services() {
                           onClick={() => setFormState({...formState, budget: bracket})}
                           className={`p-3.5 border text-xs font-bold text-center uppercase transition-colors rounded-xl ${
                             formState.budget === bracket 
-                              ? 'border-[#003554] bg-[#003554] text-white' 
+                              ? 'border-[#051923] bg-[#051923] text-white' 
                               : 'border-gray-200 hover:bg-gray-50 text-gray-600'
                           }`}
                         >
@@ -818,13 +818,13 @@ export default function Services() {
                       value={formState.details}
                       onChange={(e) => setFormState({...formState, details: e.target.value})}
                       placeholder="Outline tolerances, materials, quantities, or physical plant issues..." 
-                      className="w-full p-4 border border-gray-200 focus:outline-none focus:border-[#003554] text-sm rounded-xl"
+                      className="w-full p-4 border border-gray-200 focus:outline-none focus:border-[#051923] text-sm rounded-xl"
                     ></textarea>
                   </div>
 
                   <button 
                     type="submit" 
-                    className="w-full bg-[#003554] text-white p-4 font-bold tracking-[0.2em] uppercase hover:bg-[#006494] transition-colors rounded-full"
+                    className="w-full bg-[#051923] text-white p-4 font-bold tracking-[0.2em] uppercase hover:bg-[#006494] transition-colors rounded-full"
                   >
                     Submit Quotation Request
                   </button>
@@ -840,7 +840,7 @@ export default function Services() {
                   <div className="w-16 h-16 bg-green-100 text-green-700 rounded-full flex items-center justify-center mx-auto">
                     <CheckCircle2 className="w-8 h-8" />
                   </div>
-                  <h3 className="text-2xl font-bold text-[#003554] uppercase font-heading">ESTIMATE REQUEST DISPATCHED</h3>
+                  <h3 className="text-2xl font-bold text-[#051923] uppercase font-heading">ESTIMATE REQUEST DISPATCHED</h3>
                   <p className="text-gray-600 text-base max-w-md mx-auto">
                     Your specifications have been logged in our estimator pipeline. A sales engineer will follow up with standard drafting plans within 24 operational hours.
                   </p>

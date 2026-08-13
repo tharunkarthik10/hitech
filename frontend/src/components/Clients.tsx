@@ -18,11 +18,11 @@ export default function Clients() {
 
   return (
     <section className="bg-stark-white pt-10 pb-16 overflow-hidden">
-      <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-gutter relative flex flex-col items-center">
+      <div className="w-full 2xl:max-w-[1920px] mx-auto px-gutter relative flex flex-col items-center">
         <div className="text-center mb-16 z-10 relative bg-stark-white px-8 py-4">
           <p className="font-label-caps text-[14px] text-on-surface-variant">They Always Trust Us</p>
           <h3 className="font-headline-lg text-[32px] text-on-surface mt-1">
-            OUR CLIENTS<span className="text-[#003554]">.</span>
+            OUR CLIENTS<span className="text-[#051923]">.</span>
           </h3>
         </div>
       </div>

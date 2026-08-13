@@ -126,7 +126,7 @@ export default function AboutUs() {
               <div className="w-16 h-16 rounded-full bg-[#00A6FB]/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 border border-[#00A6FB]/20 shadow-sm">
                 <stat.icon className="w-8 h-8 text-[#00A6FB]" strokeWidth={2} />
               </div>
-              <div className="text-4xl md:text-5xl font-bold text-[#003554] mb-2 font-heading tracking-tight">
+              <div className="text-4xl md:text-5xl font-bold text-[#051923] mb-2 font-heading tracking-tight">
                 <AnimatedCounter value={stat.count} suffix={stat.suffix} />
               </div>
               <div className="text-gray-500 text-sm md:text-base font-bold tracking-widest uppercase">
@@ -204,21 +204,21 @@ export default function AboutUs() {
                     <div className="h-[2px] w-12 bg-[#00A6FB]"></div>
                     <span className="text-[#00A6FB] font-bold uppercase tracking-widest text-sm">The Hitech Story</span>
                   </div>
-                  <h2 className="text-4xl lg:text-5xl font-bold text-[#003554] mb-6 font-heading leading-tight">
-                    Pioneering the future of <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A6FB] to-[#003554]">automation.</span>
+                  <h2 className="text-4xl lg:text-5xl font-bold text-[#051923] mb-6 font-heading leading-tight">
+                    Pioneering the future of <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A6FB] to-[#051923]">automation.</span>
                   </h2>
                 </div>
 
                 <div className="space-y-8">
                   <div className="border-l-4 border-[#00A6FB]/20 pl-6 hover:border-[#00A6FB] transition-colors duration-300">
-                    <h3 className="text-xl font-bold text-[#003554] mb-3 font-heading">Who We Are</h3>
+                    <h3 className="text-xl font-bold text-[#051923] mb-3 font-heading">Who We Are</h3>
                     <p className="text-gray-600 leading-relaxed text-[15px]">
                       Hitech stands today as one of the foremost names in engineering, trusted for quality, reliability, and innovation. We empower industries and simplify automation.
                     </p>
                   </div>
                   
                   <div className="border-l-4 border-[#00A6FB]/20 pl-6 hover:border-[#00A6FB] transition-colors duration-300">
-                    <h3 className="text-xl font-bold text-[#003554] mb-3 font-heading">Our Journey</h3>
+                    <h3 className="text-xl font-bold text-[#051923] mb-3 font-heading">Our Journey</h3>
                     <p className="text-gray-600 leading-relaxed text-[15px]">
                       What started as a humble workshop years ago has grown into a sophisticated organization serving global clients. Over decades, we have adapted to ever-changing technologies, always placing the customer at the heart of our journey.
                     </p>
@@ -246,21 +246,21 @@ export default function AboutUs() {
                     <div className="h-[2px] w-12 bg-[#00A6FB]"></div>
                     <span className="text-[#00A6FB] font-bold uppercase tracking-widest text-sm">Leadership</span>
                   </div>
-                  <h2 className="text-4xl lg:text-5xl font-bold text-[#003554] mb-6 font-heading leading-tight">
-                    From the <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A6FB] to-[#003554]">MD's Desk.</span>
+                  <h2 className="text-4xl lg:text-5xl font-bold text-[#051923] mb-6 font-heading leading-tight">
+                    From the <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A6FB] to-[#051923]">MD's Desk.</span>
                   </h2>
                 </div>
 
                 <div className="space-y-8">
                   <div className="border-l-4 border-[#00A6FB]/20 pl-6 hover:border-[#00A6FB] transition-colors duration-300">
-                    <h3 className="text-xl font-bold text-[#003554] mb-3 font-heading">Our Commitment</h3>
+                    <h3 className="text-xl font-bold text-[#051923] mb-3 font-heading">Our Commitment</h3>
                     <p className="text-gray-600 leading-relaxed text-[15px]">
                       At Hitech, we believe that innovation is a continuous journey. Our commitment to excellence drives us to constantly push boundaries and redefine what is possible in the engineering and automation sectors.
                     </p>
                   </div>
                   
                   <div className="border-l-4 border-[#00A6FB]/20 pl-6 hover:border-[#00A6FB] transition-colors duration-300">
-                    <h3 className="text-xl font-bold text-[#003554] mb-3 font-heading">Looking Ahead</h3>
+                    <h3 className="text-xl font-bold text-[#051923] mb-3 font-heading">Looking Ahead</h3>
                     <p className="text-gray-600 leading-relaxed text-[15px]">
                       As we look to the future, we remain dedicated to our core values. We will continue to invest in our people, our technologies, and our partnerships to ensure we deliver unmatched value to our clients worldwide.
                     </p>
@@ -322,7 +322,7 @@ export default function AboutUs() {
         <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-4 md:px-8">
           
           <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#003554] font-heading mb-4">Our Infrastructure</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#051923] font-heading mb-4">Our Infrastructure</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">Explore our state-of-the-art facilities powering our engineering excellence.</p>
           </div>
 
@@ -401,7 +401,7 @@ export default function AboutUs() {
                     ? '/manufacturing' 
                     : '/services'
                 }
-                className="group inline-flex items-center gap-1.5 text-[#003554] hover:text-[#00A6FB] font-bold text-[14px] uppercase tracking-wider transition-colors duration-300 shrink-0"
+                className="group inline-flex items-center gap-1.5 text-[#051923] hover:text-[#00A6FB] font-bold text-[14px] uppercase tracking-wider transition-colors duration-300 shrink-0"
               >
                 <span className="underline underline-offset-4 decoration-2">View More</span>
                 <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -417,8 +417,8 @@ export default function AboutUs() {
         <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-8 lg:px-16 relative z-10">
           <FadeIn className="text-center mb-16">
             <h2 className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Core Principles</h2>
-            <h3 className="text-4xl md:text-5xl font-bold text-[#003554] font-heading">
-              What Drives <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A6FB] to-[#003554]">Us Forward.</span>
+            <h3 className="text-4xl md:text-5xl font-bold text-[#051923] font-heading">
+              What Drives <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A6FB] to-[#051923]">Us Forward.</span>
             </h3>
           </FadeIn>
 
@@ -429,9 +429,9 @@ export default function AboutUs() {
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#00A6FB] to-[#0073A8] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 
                 <div className="w-16 h-16 rounded-2xl bg-[#f8fbfe] border border-gray-100 flex items-center justify-center mb-8 group-hover:bg-[#00A6FB]/10 group-hover:border-[#00A6FB]/20 group-hover:scale-110 transition-all duration-500">
-                  <Lightbulb className="w-8 h-8 text-[#003554] group-hover:text-[#00A6FB] transition-colors duration-500" strokeWidth={1.5} />
+                  <Lightbulb className="w-8 h-8 text-[#051923] group-hover:text-[#00A6FB] transition-colors duration-500" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-2xl font-bold text-[#003554] mb-4 font-heading group-hover:text-[#00A6FB] transition-colors duration-300">Our Mission</h3>
+                <h3 className="text-2xl font-bold text-[#051923] mb-4 font-heading group-hover:text-[#00A6FB] transition-colors duration-300">Our Mission</h3>
                 <p className="text-gray-600 leading-relaxed text-[15px]">
                   Our mission is simple but powerful: To deliver world-class pneumatic solutions that drive productivity, efficiency and reliability for our customers.
                 </p>
@@ -443,9 +443,9 @@ export default function AboutUs() {
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#00A6FB] to-[#0073A8] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 
                 <div className="w-16 h-16 rounded-2xl bg-[#f8fbfe] border border-gray-100 flex items-center justify-center mb-8 group-hover:bg-[#00A6FB]/10 group-hover:border-[#00A6FB]/20 group-hover:scale-110 transition-all duration-500">
-                  <Shield className="w-8 h-8 text-[#003554] group-hover:text-[#00A6FB] transition-colors duration-500" strokeWidth={1.5} />
+                  <Shield className="w-8 h-8 text-[#051923] group-hover:text-[#00A6FB] transition-colors duration-500" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-2xl font-bold text-[#003554] mb-4 font-heading group-hover:text-[#00A6FB] transition-colors duration-300">Our Vision</h3>
+                <h3 className="text-2xl font-bold text-[#051923] mb-4 font-heading group-hover:text-[#00A6FB] transition-colors duration-300">Our Vision</h3>
                 <p className="text-gray-600 leading-relaxed text-[15px]">
                   We envision Hitech as the brand of choice for customers seeking dependable, innovative and sustainable pneumatic systems worldwide.
                 </p>
@@ -457,9 +457,9 @@ export default function AboutUs() {
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#00A6FB] to-[#0073A8] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 
                 <div className="w-16 h-16 rounded-2xl bg-[#f8fbfe] border border-gray-100 flex items-center justify-center mb-8 group-hover:bg-[#00A6FB]/10 group-hover:border-[#00A6FB]/20 group-hover:scale-110 transition-all duration-500">
-                  <Target className="w-8 h-8 text-[#003554] group-hover:text-[#00A6FB] transition-colors duration-500" strokeWidth={1.5} />
+                  <Target className="w-8 h-8 text-[#051923] group-hover:text-[#00A6FB] transition-colors duration-500" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-2xl font-bold text-[#003554] mb-4 font-heading group-hover:text-[#00A6FB] transition-colors duration-300">Our Values</h3>
+                <h3 className="text-2xl font-bold text-[#051923] mb-4 font-heading group-hover:text-[#00A6FB] transition-colors duration-300">Our Values</h3>
                 <p className="text-gray-600 leading-relaxed text-[15px]">
                   Innovation: We believe in nurturing creativity and translating ideas into practical industrial solutions.
                 </p>
@@ -477,8 +477,8 @@ export default function AboutUs() {
         <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-8 lg:px-16 relative z-10">
           <FadeIn className="text-center mb-16">
             <h2 className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Our Heritage</h2>
-            <h3 className="text-4xl md:text-5xl font-bold text-[#003554] font-heading">
-              A Journey of <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A6FB] to-[#003554]">Excellence.</span>
+            <h3 className="text-4xl md:text-5xl font-bold text-[#051923] font-heading">
+              A Journey of <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A6FB] to-[#051923]">Excellence.</span>
             </h3>
           </FadeIn>
 
@@ -488,7 +488,7 @@ export default function AboutUs() {
               {/* Animated Gradient Line */}
               <div className="absolute top-1/2 left-10 right-10 h-[2px] bg-gray-200 -translate-y-1/2 hidden md:block rounded-full">
                 <div 
-                  className="absolute top-0 left-0 h-full bg-gradient-to-r from-[#00A6FB] to-[#003554] transition-all duration-500 rounded-full"
+                  className="absolute top-0 left-0 h-full bg-gradient-to-r from-[#00A6FB] to-[#051923] transition-all duration-500 rounded-full"
                   style={{ width: `${(activeTimeline / (timelineData.length - 1)) * 100}%` }}
                 ></div>
               </div>
@@ -496,7 +496,7 @@ export default function AboutUs() {
               <ChevronLeft 
                 onClick={handlePrevTimeline}
                 className={`hidden md:block w-8 h-8 z-10 bg-white rounded-full shadow-md p-1 transition-all cursor-pointer ${
-                  activeTimeline === 0 ? 'text-gray-300 shadow-none cursor-not-allowed' : 'text-[#003554] hover:text-[#00A6FB] hover:scale-110'
+                  activeTimeline === 0 ? 'text-gray-300 shadow-none cursor-not-allowed' : 'text-[#051923] hover:text-[#00A6FB] hover:scale-110'
                 }`} 
                 strokeWidth={2} 
               />
@@ -519,7 +519,7 @@ export default function AboutUs() {
                         activeTimeline === index 
                           ? 'bg-[#00A6FB] scale-150 shadow-[0_0_10px_rgba(0,166,251,0.5)]' 
                           : activeTimeline > index 
-                            ? 'bg-[#003554]'
+                            ? 'bg-[#051923]'
                             : 'bg-gray-300 group-hover:bg-gray-400 group-hover:scale-125'
                       }`} />
                     </div>
@@ -538,7 +538,7 @@ export default function AboutUs() {
               <ChevronRight 
                 onClick={handleNextTimeline}
                 className={`hidden md:block w-8 h-8 z-10 bg-white rounded-full shadow-md p-1 transition-all cursor-pointer ${
-                  activeTimeline === timelineData.length - 1 ? 'text-gray-300 shadow-none cursor-not-allowed' : 'text-[#003554] hover:text-[#00A6FB] hover:scale-110'
+                  activeTimeline === timelineData.length - 1 ? 'text-gray-300 shadow-none cursor-not-allowed' : 'text-[#051923] hover:text-[#00A6FB] hover:scale-110'
                 }`} 
                 strokeWidth={2} 
               />
@@ -562,7 +562,7 @@ export default function AboutUs() {
                 >
                   {/* Left: Image */}
                   <div className="w-full md:w-[60%] h-[350px] md:h-[450px] rounded-2xl overflow-hidden shadow-2xl relative group">
-                    <div className="absolute inset-0 bg-[#003554]/10 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
+                    <div className="absolute inset-0 bg-[#051923]/10 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
                     <img 
                       src={timelineData[activeTimeline].image} 
                       alt={timelineData[activeTimeline].year} 
@@ -576,7 +576,7 @@ export default function AboutUs() {
                       <div className="h-[2px] w-8 bg-[#00A6FB]"></div>
                       <span className="text-[#00A6FB] font-bold text-2xl font-heading">{timelineData[activeTimeline].year}</span>
                     </div>
-                    <h3 className="text-2xl md:text-3xl font-bold text-[#003554] mb-4 font-heading leading-tight">
+                    <h3 className="text-2xl md:text-3xl font-bold text-[#051923] mb-4 font-heading leading-tight">
                       {timelineData[activeTimeline].year === "1977" ? "The Foundation" : 
                        timelineData[activeTimeline].year === "1987" ? "Global Expansion" :
                        timelineData[activeTimeline].year === "1995" ? "Technological Leap" :

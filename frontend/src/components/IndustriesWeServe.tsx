@@ -50,7 +50,7 @@ export default function IndustriesWeServe() {
 
   return (
     <section className="bg-white py-20 md:py-28 overflow-hidden">
-      <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-6 md:px-12 w-full">
+      <div className="w-full 2xl:max-w-[1920px] mx-auto px-6 md:px-12 w-full">
         
         {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-16">

@@ -49,7 +49,7 @@ export default function WhyChooseUs() {
       {/* Background AI Glow Effects (Light Theme) */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] md:w-[1000px] h-[600px] md:h-[1000px] bg-[#006494] opacity-[0.04] rounded-full blur-[100px] md:blur-[150px] pointer-events-none"></div>
       
-      <div className="relative z-10 w-full max-w-[96%] 2xl:max-w-[1920px] mx-auto px-2 lg:px-4">
+      <div className="relative z-10 w-full 2xl:max-w-[1920px] mx-auto px-2 lg:px-4">
         {/* Heading */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
@@ -58,7 +58,7 @@ export default function WhyChooseUs() {
           transition={{ duration: 0.8 }}
           className="mb-20 text-center max-w-3xl mx-auto"
         >
-          <h2 className="text-4xl md:text-5xl lg:text-[56px] text-[#003554] font-headline-xl font-bold leading-[1.1] tracking-tight">
+          <h2 className="text-4xl md:text-5xl lg:text-[56px] text-[#051923] font-headline-xl font-bold leading-[1.1] tracking-tight">
             Why Manufacturers <br className="hidden md:block" />
             Choose <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#006494] to-[#006494]">Hitech Engineering</span>
           </h2>

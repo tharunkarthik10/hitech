@@ -11,7 +11,7 @@ function SolutionCard({ service, idx }: { service: any; idx: number }) {
 
   return (
     <div 
-      className={`bg-white w-full flex flex-col group overflow-hidden rounded-xl border border-gray-200 shadow-sm transition-all duration-500 hover:shadow-2xl hover:shadow-[#006494]/15 hover:-translate-y-2 ${idx === 0 ? 'pb-10' : idx === 1 ? 'pb-0' : 'pb-16'}`}
+      className={`bg-white w-full flex flex-col group overflow-hidden rounded-xl border border-gray-200 shadow-sm transition-all duration-500 hover: hover:shadow-[#006494]/15 hover:-translate-y-2 ${idx === 0 ? 'pb-10' : idx === 1 ? 'pb-0' : 'pb-16'}`}
       onMouseEnter={() => videoRef.current?.play().catch(() => {})}
       onMouseLeave={() => {
         if (videoRef.current) {
@@ -88,11 +88,11 @@ export default function FeaturedSolutions() {
 
   return (
     <section className="bg-stark-white py-section-padding">
-      <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-gutter">
+      <div className="w-full 2xl:max-w-[1920px] mx-auto px-gutter">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16">
           <div className="space-y-4 max-w-3xl">
             <h2 className="font-headline-xl text-[36px] md:text-[48px] text-on-surface uppercase tracking-wide font-bold leading-tight">
-              Visit our specialised<br />industries<span className="text-[#003554]">.</span>
+              Visit our specialised<br />industries<span className="text-[#051923]">.</span>
             </h2>
             <p className="font-body-md text-[16px] text-on-surface-variant italic">
               Discover the core sectors where Hitech Engineering drives innovation, precision, and world-class capabilities.

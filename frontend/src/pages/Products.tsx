@@ -48,12 +48,12 @@ export default function Products() {
                   {/* Department Header */}
                   <button
                     onClick={() => toggleDepartment(dept.name)}
-                    className={`w-full text-left px-6 py-4 flex items-center justify-between transition-all duration-300 ${
+                    className={`w-full text-left px-6 py-4 flex items-center justify-between group transition-all duration-300 ${
                       isDeptActive ? 'text-[#00A6FB] font-bold' : 'text-gray-700 font-semibold hover:text-[#00A6FB]'
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <DeptIcon className={`w-5 h-5 ${isDeptActive ? 'text-[#00A6FB]' : 'text-gray-400'}`} strokeWidth={2} />
+                      <DeptIcon className={`w-5 h-5 transition-all duration-700 group-hover:rotate-[360deg] group-hover:scale-110 ${isDeptActive ? 'text-[#00A6FB]' : 'text-gray-400'}`} strokeWidth={2} />
                       <span className="text-[16px] tracking-wide">{dept.name}</span>
                     </div>
                     {isDeptActive ? (
@@ -76,8 +76,8 @@ export default function Products() {
                             onClick={() => setActiveCategory(cat.name)}
                             className={`w-full text-left pl-12 pr-6 py-3 text-[15px] transition-all duration-300 flex items-center gap-3 relative group ${
                               isCatActive
-                                ? 'font-bold text-[#003554] bg-[#f0f9ff]'
-                                : 'font-medium text-gray-500 hover:text-[#003554] hover:bg-gray-50'
+                                ? 'font-bold text-[#051923] bg-[#f0f9ff]'
+                                : 'font-medium text-gray-500 hover:text-[#051923] hover:bg-gray-50'
                             }`}
                           >
                             {/* Animated Left Border Indicator */}
@@ -85,8 +85,8 @@ export default function Products() {
                               isCatActive ? 'w-1 bg-[#00A6FB] opacity-100' : 'w-0 bg-gray-200 opacity-0 group-hover:w-1 group-hover:opacity-100'
                             }`}></div>
                             
-                            <CatIcon className={`w-4 h-4 transition-colors duration-300 ${
-                              isCatActive ? 'text-[#00A6FB]' : 'text-gray-400 group-hover:text-[#003554]'
+                            <CatIcon className={`w-4 h-4 transition-all duration-700 group-hover:rotate-[360deg] group-hover:scale-110 ${
+                              isCatActive ? 'text-[#00A6FB]' : 'text-gray-400 group-hover:text-[#051923]'
                             }`} strokeWidth={isCatActive ? 2 : 1.5} />
                             
                             <span className="relative z-10 tracking-wide">{cat.name}</span>
