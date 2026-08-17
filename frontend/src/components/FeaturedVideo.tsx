@@ -3,13 +3,27 @@ import { Play } from 'lucide-react';
 
 export default function FeaturedVideo() {
   return (
-    <section className="bg-white w-full overflow-hidden py-0">
-      <a 
-        href="https://www.youtube.com/watch?v=y294tIuPzGk" 
-        target="_blank" 
-        rel="noopener noreferrer"
-        className="group relative w-full h-[400px] sm:h-[460px] md:h-[550px] overflow-hidden shadow-lg hover: transition-all duration-500 cursor-pointer block"
-      >
+    <section className="bg-white w-full overflow-hidden py-20">
+      <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12">
+        
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-16">
+          <div className="max-w-2xl">
+            <h2 className="font-headline-xl text-[36px] md:text-[48px] font-bold text-[#051923] tracking-tight leading-tight mb-4 uppercase">
+              Take a Virtual Tour of Our Facility
+              <span className="text-[#00A6FB]">.</span>
+            </h2>
+            <p className="text-[16px] md:text-[18px] text-gray-600 font-light leading-relaxed">
+              Step inside our state-of-the-art manufacturing plant. Watch this comprehensive tour to see our advanced precision machinery, automated workflows, and the innovative infrastructure that powers our engineering excellence.
+            </p>
+          </div>
+        </div>
+
+        <a 
+          href="https://www.youtube.com/watch?v=y294tIuPzGk" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="group relative w-full rounded-2xl h-[400px] sm:h-[500px] md:h-[650px] overflow-hidden shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)] transition-all duration-500 cursor-pointer block"
+        >
           {/* Video Background */}
           <video 
             autoPlay 
@@ -38,6 +52,7 @@ export default function FeaturedVideo() {
             </p>
           </div>
         </a>
+      </div>
     </section>
   );
 }

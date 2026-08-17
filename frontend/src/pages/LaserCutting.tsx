@@ -80,11 +80,9 @@ export default function LaserCutting() {
         buttonText="Get a Quote"
       />
 
-      {/* 2. WHAT WE OFFER */}
-      <section className="py-12 md:py-16 lg:py-24 relative">
-        <div className="w-full flex justify-center group/section ">
-          <div className="relative w-full 2xl:max-w-[1920px] mx-auto bg-white  p-8 md:p-12 lg:p-16  border border-gray-200 overflow-hidden">
-            <div className="w-full mx-auto relative z-10">
+      {/* 2. LASER CUTTING CAPABILITIES */}
+      <section className="py-24 relative w-full bg-white border-b border-gray-200 overflow-hidden">
+        <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
               <motion.div 
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -114,19 +112,14 @@ export default function LaserCutting() {
                 ))}
               </div>
             </div>
-          </div>
-        </div>
       </section>
 
       {/* 3. LASER CUTTING PROCESS */}
       <InteractiveLaserProcess />
 
       {/* 4. MATERIALS WE CUT - SCROLLING IMAGE CARDS */}
-      {/* 4. MATERIALS WE CUT - SCROLLING IMAGE CARDS */}
-      <section className="py-12 md:py-16 lg:py-24 relative">
-        <div className="w-full flex justify-center group/section ">
-          <div className="relative w-full 2xl:max-w-[1920px] mx-auto bg-white  py-12 md:py-16  border border-gray-200 overflow-hidden">
-            <div className="w-full mx-auto px-6 md:px-12 mb-16 relative z-10">
+      <section className="py-24 relative w-full bg-white border-b border-gray-200 overflow-hidden">
+        <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 mb-16 relative z-10">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
                 <div className="max-w-2xl">
                   <h2 className="text-[36px] md:text-[48px] font-bold text-[#051923] tracking-tight leading-tight mb-4 uppercase font-headline-xl">
@@ -193,8 +186,6 @@ export default function LaserCutting() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
       </section>
 
       {/* 5. INDUSTRIAL APPLICATIONS - BENTO BOX */}
@@ -246,10 +237,9 @@ export default function LaserCutting() {
       </section>
 
       {/* 6. TECHNOLOGY & EQUIPMENT */}
-      <section className="py-4 md:py-6 lg:py-8 relative">
-        <div className="w-full flex justify-center px-4 md:px-8 group/section ">
-          <div className="relative w-full max-w-[96%] 2xl:max-w-[1920px] mx-auto bg-[#051923] text-white rounded-2xl shadow-2xl p-8 md:p-12 lg:p-16  border border-white/10 overflow-hidden">
-            <div className="absolute right-0 top-0 w-1/2 h-full bg-[url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80')] bg-cover bg-center opacity-10 pointer-events-none mix-blend-overlay"></div>
+      <section className="py-24 relative w-full bg-[#051923] text-white shadow-2xl border-y border-white/10 overflow-hidden">
+        <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
+          <div className="absolute right-0 top-0 w-1/2 h-full bg-[url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80')] bg-cover bg-center opacity-10 pointer-events-none mix-blend-overlay z-[-1]"></div>
             <div className="absolute inset-0 bg-gradient-to-r from-[#051923] via-[#051923]/90 to-transparent pointer-events-none"></div>
 
             <div className="w-full mx-auto relative z-10">
@@ -278,14 +268,11 @@ export default function LaserCutting() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* 7. OUR COMMITMENT TO PRECISION */}
-      <section className="py-12 md:py-16 lg:py-24 relative">
-        <div className="w-full flex justify-center group/section ">
-          <div className="relative w-full 2xl:max-w-[1920px] mx-auto bg-[#F8FAFC]  p-8 md:p-12 lg:p-16  border border-gray-200 overflow-hidden">
-            <div className="w-full mx-auto relative z-10">
+      <section className="py-24 relative w-full bg-[#F8FAFC] border-b border-gray-200 overflow-hidden">
+        <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
               <div className="text-center mb-20">
                 <h2 className="text-4xl md:text-5xl font-bold text-[#051923] font-headline-xl mb-6">Our Commitment to <span className="text-[#00A6FB]">Precision</span></h2>
                 <p className="text-gray-600 max-w-2xl mx-auto text-lg leading-relaxed">
@@ -309,8 +296,6 @@ export default function LaserCutting() {
                 ))}
               </div>
             </div>
-          </div>
-        </div>
       </section>
 
       {/* 8. CTA SECTION */}

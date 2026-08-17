@@ -18,7 +18,7 @@ export default function Clients() {
 
   return (
     <section className="bg-stark-white pt-10 pb-16 overflow-hidden">
-      <div className="w-full 2xl:max-w-[1920px] mx-auto px-gutter relative flex flex-col items-center">
+      <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 relative flex flex-col items-center">
         <div className="text-center mb-16 z-10 relative bg-stark-white px-8 py-4">
           <p className="font-label-caps text-[14px] text-on-surface-variant">They Always Trust Us</p>
           <h3 className="font-headline-lg text-[32px] text-on-surface mt-1">

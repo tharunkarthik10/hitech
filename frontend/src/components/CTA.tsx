@@ -1,47 +1,59 @@
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
 
 export default function CTA() {
+
   return (
-    <section className="py-24 px-8 md:px-12 bg-[#051923] relative overflow-hidden text-white w-full">
-      {/* Abstract animated background */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-[#00A6FB]/10 blur-[120px] rounded-full mix-blend-screen pointer-events-none"></div>
-        <div className="absolute bottom-0 left-1/4 w-[600px] h-[600px] bg-[#00A6FB]/5 blur-[120px] rounded-full mix-blend-screen pointer-events-none"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#051923] via-transparent to-transparent opacity-80 pointer-events-none z-0"></div>
+    <section className="py-24 w-full bg-white relative overflow-hidden border-t border-gray-100">
+      {/* Background Dotted Map */}
+      <div className="absolute inset-0 z-0 flex items-center justify-end pointer-events-none opacity-[0.35]">
+        <div 
+          className="w-full h-full max-w-[1200px] scale-[1.2] md:scale-100"
+          style={{
+            maskImage: 'url("/world-map.svg")',
+            maskSize: 'contain',
+            maskRepeat: 'no-repeat',
+            maskPosition: 'right center',
+            WebkitMaskImage: 'url("/world-map.svg")',
+            WebkitMaskSize: 'contain',
+            WebkitMaskRepeat: 'no-repeat',
+            WebkitMaskPosition: 'right center',
+            backgroundImage: 'radial-gradient(circle, #003554 1px, transparent 1.5px)',
+            backgroundSize: '8px 8px'
+          }}
+        />
       </div>
 
-      <div className="max-w-4xl mx-auto relative z-10 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="inline-flex items-center justify-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-sm">
-            <span className="w-2 h-2 rounded-full bg-[#00A6FB] animate-pulse"></span>
-            <span className="text-sm font-bold text-gray-300 uppercase tracking-wider">Available for New Projects</span>
+      <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 relative z-10 flex flex-col">
+        {/* Top Section */}
+        <div className="flex flex-col xl:flex-row justify-between items-center xl:items-start gap-12 mb-24">
+          
+          {/* Left: Heading */}
+          <div className="w-full xl:w-auto flex-shrink-0 text-center xl:text-left">
+            <h2 className="text-[40px] md:text-[56px] lg:text-[64px] font-medium text-gray-900 leading-tight mb-2 tracking-tight">
+              Our Partners
+            </h2>
+            <p className="text-xl md:text-[28px] text-gray-800 font-medium leading-snug">
+              Hitech Operates in following<br className="hidden md:block" />countries
+            </p>
           </div>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-headline-xl leading-[1.1] tracking-tight mb-6">
-            Ready to <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A6FB] to-white">Elevate</span> Your Manufacturing?
-          </h2>
-          
-          <p className="text-gray-400 text-lg md:text-xl leading-relaxed mb-10 max-w-2xl mx-auto">
-            Partner with HiTech Engineering to bring your concepts to reality with unparalleled precision, scale, and uncompromising quality. Let's build the future together.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button className="group relative px-8 py-4 bg-[#00A6FB] hover:bg-white text-white hover:text-[#051923] font-bold rounded-xl transition-all duration-500 shadow-[0_0_30px_rgba(0,166,251,0.2)] hover:shadow-[0_20px_40px_-15px_rgba(255,255,255,0.3)] flex items-center justify-center gap-3 w-full sm:w-auto overflow-hidden">
-              <span className="relative z-10 text-[15px] tracking-wider">START YOUR PROJECT</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300 relative z-10" />
-            </button>
-            
-            <button className="group px-8 py-4 bg-transparent border-2 border-white/20 hover:border-white hover:bg-white/5 text-white font-bold rounded-xl transition-all duration-300 text-[15px] tracking-wider w-full sm:w-auto flex items-center justify-center gap-2">
-              CONTACT ENGINEERING
-            </button>
+
+
+          {/* Right: Counter */}
+          <div className="w-full xl:w-auto flex-shrink-0 flex justify-center xl:justify-end items-center gap-4">
+            <div className="relative">
+              <span className="text-[100px] md:text-[140px] font-bold text-[#e0e7ff]">
+                07+
+              </span>
+            </div>
+            <span className="text-gray-900 font-bold text-sm md:text-base uppercase tracking-widest pt-4" style={{ writingMode: 'vertical-rl', textOrientation: 'mixed', transform: 'rotate(180deg)' }}>
+              Countries
+            </span>
           </div>
-        </motion.div>
+        </div>
+
+
+
       </div>
     </section>
   );

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 export default function Footer() {
   return (
     <footer className="bg-[#051923] text-white pt-24 pb-8">
-      <div className="w-full 2xl:max-w-[1920px] mx-auto px-gutter flex flex-col items-center">
+      <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 flex flex-col items-center">
         
         {/* Top Hero Section */}
         <div className="text-center mb-28 w-full">

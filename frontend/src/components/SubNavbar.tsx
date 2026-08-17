@@ -37,7 +37,7 @@ export default function SubNavbar() {
       }`}
       onMouseLeave={() => setActiveMenu(null)}
     >
-      <nav className="h-12 flex items-center justify-center px-8 md:px-12 w-full relative">
+      <nav className="h-12 flex items-center justify-center w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 relative">
         <div className="flex items-center h-full">
           {navigation.map((item, index) => {
             const isActive = location.pathname === item.path || activeMenu === item.name;

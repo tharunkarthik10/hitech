@@ -16,7 +16,7 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 bg-white z-50 border-b border-gray-200 transition-all duration-300">
       {/* Top Navbar */}
-      <nav className="h-20 flex items-center justify-between px-8 md:px-12 w-full relative bg-white">
+      <nav className="h-20 flex items-center justify-between w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 relative bg-white">
         {/* Left: Logo */}
         <Link to="/" className="flex items-center gap-4 group z-10 w-1/4">
 

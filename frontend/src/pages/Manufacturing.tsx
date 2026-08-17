@@ -144,10 +144,10 @@ export default function Manufacturing() {
       />
 
       {/* 2. WHAT WE OFFER */}
-      <section className="py-24 px-8 md:px-12 bg-gradient-to-b from-[#F4F9FD] to-white border-b border-gray-100 relative overflow-hidden">
+      <section className="py-24 bg-gradient-to-b from-[#F4F9FD] to-white border-b border-gray-100 relative overflow-hidden w-full">
         {/* Decorative background element to add a bit more color depth */}
         <div className="absolute top-0 left-0 w-full h-[500px] bg-[#00A6FB] opacity-[0.02] blur-[100px] pointer-events-none rounded-full transform -translate-y-1/2"></div>
-        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto">
+        <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -223,14 +223,14 @@ export default function Manufacturing() {
       <InteractiveManufacturingProcess />
 
       {/* 4. QUALITY COMMITMENT */}
-      <section className="py-24 px-8 md:px-12 bg-white relative overflow-hidden">
+      <section className="py-24 bg-white relative overflow-hidden w-full">
         {/* Abstract animated background */}
         <div className="absolute inset-0 z-0">
           <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#00A6FB]/5 blur-[120px] rounded-full pointer-events-none"></div>
           <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[#00A6FB]/5 blur-[120px] rounded-full pointer-events-none"></div>
         </div>
 
-        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto relative z-10">
+        <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
           <div className="flex flex-col lg:flex-row gap-16 items-center">
             {/* Left side text */}
             <motion.div 
@@ -296,14 +296,14 @@ export default function Manufacturing() {
       </section>
 
       {/* 5. MANUFACTURING EXCELLENCE */}
-      <section className="py-24 px-8 md:px-12 bg-[#051923] relative overflow-hidden text-white">
+      <section className="py-24 bg-[#051923] relative overflow-hidden text-white w-full">
         {/* Abstract background */}
         <div className="absolute inset-0 z-0">
           <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-white/5 to-transparent rounded-bl-full pointer-events-none"></div>
           <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-white/5 to-transparent rounded-tr-full pointer-events-none"></div>
         </div>
         
-        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto relative z-10">
+        <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 shadow-sm border border-white/10 mb-6">
               <Award className="w-5 h-5 text-[#00A6FB]" />
@@ -352,13 +352,13 @@ export default function Manufacturing() {
       </section>
 
       {/* 6. WHY CHOOSE US */}
-      <section className="py-24 px-8 md:px-12 bg-white relative overflow-hidden">
+      <section className="py-24 bg-white relative overflow-hidden w-full">
         {/* Subtle background decoration */}
         <div className="absolute inset-0 z-0">
           <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-[#00A6FB]/5 blur-[120px] rounded-full pointer-events-none"></div>
           <div className="absolute bottom-0 left-1/4 w-[600px] h-[600px] bg-[#00A6FB]/5 blur-[120px] rounded-full pointer-events-none"></div>
         </div>
-        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto relative z-10">
+        <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
