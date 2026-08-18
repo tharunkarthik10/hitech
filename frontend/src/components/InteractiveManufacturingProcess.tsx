@@ -1,5 +1,6 @@
-import { useRef, useState } from 'react';
-import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Target, CalendarCheck, Settings2, ShieldCheck, Truck } from 'lucide-react';
 
 const stages = [
   {
@@ -8,6 +9,7 @@ const stages = [
     title: "Requirement Analysis",
     desc: "Understanding customer drawings, specifications, dimensions, tolerances, and production requirements before manufacturing begins.",
     status: "REQUIREMENT VERIFIED",
+    icon: Target,
     image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80"
   },
   {
@@ -16,6 +18,7 @@ const stages = [
     title: "Production Planning",
     desc: "Materials, machinery, resources, and production sequences are carefully planned to ensure efficient and consistent manufacturing.",
     status: "PRODUCTION PLAN READY",
+    icon: CalendarCheck,
     image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80" 
   },
   {
@@ -23,7 +26,8 @@ const stages = [
     shortTitle: "MANUFACTURING",
     title: "Precision Manufacturing",
     desc: "Advanced machinery and skilled engineering expertise transform raw materials into accurate, high-quality components built to meet demanding specifications.",
-    status: "COMPONENT COMPLETE ✓",
+    status: "COMPONENT COMPLETE",
+    icon: Settings2,
     image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80"
   },
   {
@@ -32,6 +36,7 @@ const stages = [
     title: "Quality Inspection",
     desc: "Every component undergoes dimensional measurement, surface inspection, and quality verification to ensure compliance with required specifications.",
     status: "QUALITY VERIFIED",
+    icon: ShieldCheck,
     image: "https://images.unsplash.com/photo-1581092335397-9583eb92d232?auto=format&fit=crop&q=80"
   },
   {
@@ -40,188 +45,141 @@ const stages = [
     title: "Final Delivery",
     desc: "Completed components are carefully handled, securely packaged, and prepared for reliable and timely delivery.",
     status: "READY FOR DELIVERY",
+    icon: Truck,
     image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80"
   }
 ];
 
 export default function InteractiveManufacturingProcess() {
-  const containerRef = useRef<HTMLDivElement>(null);
   const [activeStage, setActiveStage] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
-
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    // 5 stages mapping
-    // 0-0.2: 0
-    // 0.2-0.4: 1
-    // 0.4-0.65: 2
-    // 0.65-0.82: 3
-    // 0.82-1.0: 4
-    let stage = 0;
-    if (latest >= 0.82) stage = 4;
-    else if (latest >= 0.65) stage = 3;
-    else if (latest >= 0.40) stage = 2;
-    else if (latest >= 0.20) stage = 1;
-    
-    setActiveStage(stage);
-  });
-
-  // Image transitions - smooth crossfades and scales based on scroll
-  // Instead of a strict cut, we fade them in and out
-  const opacity1 = useTransform(scrollYProgress, [0, 0.15, 0.25], [1, 1, 0]);
-  const opacity2 = useTransform(scrollYProgress, [0.15, 0.25, 0.35, 0.45], [0, 1, 1, 0]);
-  const opacity3 = useTransform(scrollYProgress, [0.35, 0.45, 0.60, 0.70], [0, 1, 1, 0]);
-  const opacity4 = useTransform(scrollYProgress, [0.60, 0.70, 0.80, 0.88], [0, 1, 1, 0]);
-  const opacity5 = useTransform(scrollYProgress, [0.80, 0.88, 1], [0, 1, 1]);
-
-  const scale1 = useTransform(scrollYProgress, [0, 0.25], [1, 1.1]);
-  const scale2 = useTransform(scrollYProgress, [0.15, 0.45], [0.95, 1.05]);
-  const scale3 = useTransform(scrollYProgress, [0.35, 0.70], [0.95, 1.05]);
-  const scale4 = useTransform(scrollYProgress, [0.60, 0.88], [0.95, 1.05]);
-  const scale5 = useTransform(scrollYProgress, [0.80, 1], [0.95, 1.05]);
-
-  const opacities = [opacity1, opacity2, opacity3, opacity4, opacity5];
-  const scales = [scale1, scale2, scale3, scale4, scale5];
-
-  // Specific overlays
-  const scanLineY = useTransform(scrollYProgress, [0.65, 0.82], ["0%", "100%"]);
+  // Autoplay functionality
+  useEffect(() => {
+    if (isHovered) return;
+    const interval = setInterval(() => {
+      setActiveStage((prev) => (prev + 1) % stages.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [isHovered]);
 
   return (
-    <div ref={containerRef} className="relative h-[500vh] bg-[#051923]">
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col md:flex-row bg-[#051923] text-white">
-        
-        {/* PROGRESS INDICATOR (Side) */}
-        <div className="hidden md:flex flex-col justify-center items-center w-32 h-full relative z-50 border-r border-white/5 bg-[#051923]/80 backdrop-blur-md">
-          <div className="absolute top-0 bottom-0 w-[1px] bg-white/10 right-4"></div>
-          
-          <div className="flex flex-col gap-10 relative z-20 w-full pr-4">
-            {stages.map((stage, idx) => (
-              <div key={idx} className="flex flex-col items-end w-full relative">
-                {/* Connector line */}
-                <div className={`absolute -right-4 w-4 h-[2px] transition-colors duration-500 top-1/2 -translate-y-1/2 ${
-                  activeStage === idx ? 'bg-[#00A6FB]' : 'bg-transparent'
-                }`}></div>
-                
-                <span className={`text-xl font-mono font-bold transition-all duration-500 ${
-                  activeStage === idx ? 'text-[#00A6FB]' : 'text-gray-600'
-                }`}>
-                  {stage.id}
-                </span>
-                <span className={`text-[10px] uppercase tracking-wider mt-1 transition-all duration-500 text-right ${
-                  activeStage === idx ? 'text-white' : 'text-gray-600'
-                }`}>
-                  {stage.shortTitle}
-                </span>
-              </div>
-            ))}
+    <section className="py-24 px-8 md:px-12 bg-[#051923] relative overflow-hidden">
+      {/* Background ambient light */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#00A6FB]/5 blur-[150px] rounded-full pointer-events-none z-0"></div>
+      
+      <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto relative z-10">
+        <div className="mb-12 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div>
+            <div className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-3">Our Process</div>
+            <h2 className="text-4xl md:text-5xl font-bold text-white font-headline-xl leading-[1.1] tracking-tight">
+              How We <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A6FB] to-[#00A6FB]">Manufacture</span>
+            </h2>
           </div>
+          <p className="text-gray-400 max-w-md text-sm md:text-base leading-relaxed">
+            A streamlined, five-step methodology ensuring precision, efficiency, and uncompromising quality from initial concept to final delivery.
+          </p>
         </div>
 
-        {/* IMMERSIVE VISUAL AREA (Left / Top) */}
-        <div className="w-full h-[50vh] md:w-3/5 md:h-full relative overflow-hidden bg-[#00080f]">
-          
+        {/* Interactive Horizontal Accordion */}
+        <div 
+          className="flex flex-col lg:flex-row gap-4 h-[70vh] min-h-[600px] w-full"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           {stages.map((stage, idx) => {
+            const isActive = activeStage === idx;
+            const Icon = stage.icon;
+
             return (
-              <motion.div 
-                key={idx} 
-                className="absolute inset-0 z-10 flex items-center justify-center"
-                style={{ opacity: opacities[idx], scale: scales[idx] }}
+              <div
+                key={stage.id}
+                onClick={() => setActiveStage(idx)}
+                className={`relative overflow-hidden rounded-3xl cursor-pointer transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] ${
+                  isActive ? 'flex-[4] lg:flex-[5] shadow-2xl shadow-[#00A6FB]/20' : 'flex-[1] lg:flex-[1] opacity-70 hover:opacity-100 hover:bg-white/5'
+                }`}
               >
-                <img src={stage.image} alt={stage.title} className="w-full h-full object-cover opacity-70" />
+                {/* Background Image */}
+                <img 
+                  src={stage.image} 
+                  alt={stage.title} 
+                  className={`absolute inset-0 w-full h-full object-cover transition-transform duration-1000 ${isActive ? 'scale-100' : 'scale-110 grayscale-[50%]'}`}
+                />
                 
                 {/* Overlays */}
-                {idx === 0 && (
-                  <div className="absolute inset-0 bg-[linear-gradient(rgba(0,166,251,0.15)_1px,transparent_1px),linear-gradient(90deg,rgba(0,166,251,0.15)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none mix-blend-screen"></div>
-                )}
-                {idx === 1 && (
-                  <div className="absolute inset-0 bg-[#051923]/30 mix-blend-overlay"></div>
-                )}
-                {idx === 2 && (
-                  <div className="absolute inset-0 bg-[#051923]/20"></div>
-                )}
-                {idx === 3 && (
-                  <>
-                    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none mix-blend-overlay"></div>
+                <div className={`absolute inset-0 transition-opacity duration-700 ${
+                  isActive 
+                    ? 'bg-gradient-to-t from-[#051923] via-[#051923]/60 to-transparent' 
+                    : 'bg-[#051923]/80'
+                }`}></div>
+
+
+
+                {/* Inactive State - Vertical Title */}
+                <AnimatePresence>
+                  {!isActive && (
                     <motion.div 
-                      className="absolute left-0 w-full h-[2px] bg-[#00A6FB] shadow-[0_0_15px_rgba(0,166,251,0.8)] z-50 pointer-events-none"
-                      style={{ top: scanLineY }}
-                    ></motion.div>
-                  </>
-                )}
-                
-                <div className="absolute inset-0 bg-gradient-to-r from-[#051923]/80 via-[#051923]/20 to-transparent"></div>
-              </motion.div>
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0, transition: { duration: 0.2 } }}
+                      transition={{ duration: 0.4, delay: 0.5 }}
+                      className="absolute inset-0 flex flex-col items-center justify-center"
+                    >
+                      <div className="absolute top-8 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm flex items-center justify-center">
+                        <span className="text-[#00A6FB] font-bold font-mono">{stage.id}</span>
+                      </div>
+                      <span className="text-white font-bold tracking-[0.2em] uppercase whitespace-nowrap transform -rotate-90 origin-center absolute top-1/2 -translate-y-1/2">
+                        {stage.shortTitle}
+                      </span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* Active State - Full Content */}
+                <AnimatePresence>
+                  {isActive && (
+                    <motion.div 
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10, transition: { duration: 0.2 } }}
+                      transition={{ duration: 0.5, delay: 0.3 }}
+                      className="absolute inset-0 p-8 md:p-12 flex flex-col justify-between"
+                    >
+                      {/* Top Bar */}
+                      <div className="flex items-center justify-end">
+                        <div className="text-white/20 font-headline-xl text-6xl font-bold">
+                          {stage.id}
+                        </div>
+                      </div>
+
+                      {/* Bottom Content */}
+                      <div className="relative z-10 max-w-2xl">
+                        <div className="w-14 h-14 rounded-2xl bg-[#00A6FB] flex items-center justify-center shadow-lg shadow-[#00A6FB]/30 mb-6">
+                          <Icon className="w-7 h-7 text-white" />
+                        </div>
+                        
+                        <h3 className="text-3xl md:text-5xl font-bold text-white font-headline-xl leading-[1.1] mb-4">
+                          {stage.title}
+                        </h3>
+                        
+                        <p className="text-gray-300 text-lg md:text-xl leading-relaxed mb-8 max-w-lg">
+                          {stage.desc}
+                        </p>
+
+                        <div className="inline-flex items-center gap-3 border-l-2 border-[#00A6FB] pl-4">
+                          <span className="text-[#00A6FB] font-mono text-sm tracking-wider font-bold">STATUS:</span>
+                          <span className="text-white font-mono text-sm tracking-widest">{stage.status}</span>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             );
           })}
-          
-          <div className="absolute top-0 bottom-0 right-0 w-32 bg-gradient-to-l from-[#051923] to-transparent z-40 hidden md:block"></div>
-          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#051923] to-transparent z-40 md:hidden"></div>
         </div>
-
-        {/* TEXT CONTENT AREA (Right / Bottom) */}
-        <div className="w-full h-[50vh] md:w-2/5 md:h-full flex flex-col justify-center p-8 md:p-16 lg:p-20 relative z-40">
-           
-           <div className="md:hidden flex gap-2 mb-8">
-              {stages.map((_, idx) => (
-                <div key={idx} className={`h-1 flex-1 rounded-full transition-colors duration-500 ${activeStage === idx ? 'bg-[#00A6FB]' : 'bg-white/10'}`}></div>
-              ))}
-           </div>
-
-           <div className="relative w-full h-[300px] md:h-[400px]">
-             {stages.map((stage, idx) => (
-               <div 
-                 key={idx} 
-                 className={`absolute inset-0 transition-all duration-700 transform flex flex-col justify-center ${
-                   activeStage === idx 
-                     ? 'opacity-100 translate-y-0' 
-                     : activeStage < idx 
-                       ? 'opacity-0 translate-y-12 pointer-events-none'
-                       : 'opacity-0 -translate-y-12 pointer-events-none'
-                 }`}
-               >
-                 <div className="inline-flex items-center gap-4 mb-6">
-                   <span className="text-white/40 font-mono text-lg font-bold tracking-widest">{stage.id}</span>
-                   <div className="h-[1px] w-12 bg-white/20"></div>
-                   <span className="text-[#00A6FB] text-xs font-bold tracking-widest uppercase">{stage.shortTitle}</span>
-                 </div>
-                 
-                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white font-headline-xl leading-[1.1] tracking-tight mb-8">
-                   {stage.title}
-                 </h2>
-                 
-                 <p className="text-gray-400 text-lg md:text-xl leading-relaxed max-w-md mb-10">
-                   {stage.desc}
-                 </p>
-                 
-                 <div className="inline-flex items-center gap-3 px-4 py-2 rounded-lg bg-white/5 border border-white/10 self-start">
-                   {idx === 0 && <span className="w-2 h-2 rounded-full bg-[#00A6FB] animate-pulse"></span>}
-                   {idx === 2 && activeStage === 2 ? (
-                     <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
-                   ) : idx === 4 ? (
-                     <span className="w-2 h-2 rounded-full bg-green-500"></span>
-                   ) : idx !== 0 && (
-                     <span className="w-2 h-2 rounded-full bg-[#00A6FB]"></span>
-                   )}
-                   <span className="text-xs font-mono font-semibold tracking-wider text-white">{stage.status}</span>
-                 </div>
-                 
-                 {/* Special Final Delivery Message */}
-                 {idx === 4 && (
-                   <div className="mt-8 flex flex-col gap-2">
-                     <span className="text-[10px] text-gray-500 tracking-widest font-mono uppercase">PRECISION MANUFACTURED</span>
-                     <span className="text-[10px] text-gray-500 tracking-widest font-mono uppercase">QUALITY ASSURED</span>
-                     <span className="text-[10px] text-[#00A6FB] tracking-widest font-mono uppercase">READY TO PERFORM</span>
-                   </div>
-                 )}
-               </div>
-             ))}
-           </div>
-        </div>
-
       </div>
-    </div>
+    </section>
   );
 }
+

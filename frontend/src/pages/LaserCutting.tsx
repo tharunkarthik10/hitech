@@ -105,7 +105,7 @@ export default function LaserCutting() {
                     transition={{ delay: idx * 0.1 }}
                     className="bg-[#F8FAFC] border border-gray-100 p-8 hover:-translate-y-1 transition-all duration-300 group"
                   >
-                    <div className="w-14 h-14 bg-white rounded-xl flex items-center justify-center shadow-sm mb-6 text-[#00A6FB] group-hover:bg-[#00A6FB] group-hover:text-white group-hover:rotate-[360deg] group-hover:scale-110 transition-all duration-700 border border-transparent group-hover:border-[#00A6FB]">
+                    <div className="w-14 h-14 bg-white rounded-xl flex items-center justify-center shadow-sm mb-6 text-[#006494] group-hover:bg-[#006494] group-hover:text-white group-hover:scale-110 transition-all duration-700 border border-transparent group-hover:border-[#006494]">
                       <item.icon className="w-7 h-7" />
                     </div>
                     <h3 className="text-xl font-bold text-[#051923] mb-3">{item.title}</h3>
@@ -284,11 +284,16 @@ export default function LaserCutting() {
       {/* 7. OUR COMMITMENT TO PRECISION */}
       <section className="py-12 md:py-16 lg:py-24 relative">
         <div className="w-full flex justify-center group/section ">
-          <div className="relative w-full 2xl:max-w-[1920px] mx-auto bg-[#F8FAFC]  p-8 md:p-12 lg:p-16  border border-gray-200 overflow-hidden">
+          <div className="relative w-full 2xl:max-w-[1920px] mx-auto bg-[#051923] p-8 md:p-12 lg:p-16 border border-white/10 overflow-hidden text-white">
+            <div className="absolute inset-0 z-0">
+              <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-[#00A6FB]/5 to-transparent rounded-bl-full pointer-events-none"></div>
+              <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-[#00A6FB]/5 to-transparent rounded-tr-full pointer-events-none"></div>
+            </div>
+
             <div className="w-full mx-auto relative z-10">
               <div className="text-center mb-20">
-                <h2 className="text-4xl md:text-5xl font-bold text-[#051923] font-headline-xl mb-6">Our Commitment to <span className="text-[#00A6FB]">Precision</span></h2>
-                <p className="text-gray-600 max-w-2xl mx-auto text-lg leading-relaxed">
+                <h2 className="text-4xl md:text-5xl font-bold text-white font-headline-xl mb-6">Our Commitment to <span className="text-[#00A6FB]">Precision</span></h2>
+                <p className="text-gray-300 max-w-2xl mx-auto text-lg leading-relaxed">
                   Precision is the foundation of every laser cutting project we undertake. From design verification to final inspection, we maintain strict quality standards to ensure every component meets customer expectations.
                 </p>
                 <div className="w-16 h-1 bg-[#00A6FB] mx-auto rounded-full mt-8"></div>
@@ -296,14 +301,14 @@ export default function LaserCutting() {
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {["Accurate Dimensions", "Superior Edge Finish", "Reliable Performance", "Process Consistency", "Customer Satisfaction", "Continuous Improvement"].map((item, idx) => (
-                  <div key={idx} className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover: hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-[#00A6FB]/5 rounded-bl-full -mr-4 -mt-4 transition-transform duration-500 group-hover:scale-150"></div>
+                  <div key={idx} className="bg-white/5 rounded-3xl p-8 border border-white/10 shadow-sm hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-[#00A6FB]/10 rounded-bl-full -mr-4 -mt-4 transition-transform duration-500 group-hover:scale-150"></div>
                     
                     <div className="flex items-center gap-6 relative z-10">
-                      <div className="w-16 h-16 bg-[#F8FAFC] text-[#00A6FB] flex items-center justify-center shrink-0 border border-gray-100 group-hover:bg-[#00A6FB] group-hover:text-white transition-colors duration-300 group-hover:rotate-[360deg] group-hover:scale-110 transition-all duration-700">
+                      <div className="w-16 h-16 bg-white/5 text-[#00A6FB] flex items-center justify-center shrink-0 border border-white/10 group-hover:bg-[#00A6FB] group-hover:text-white transition-colors duration-300 group-hover:rotate-[360deg] group-hover:scale-110 transition-all duration-700 rounded-2xl">
                         <Target className="w-8 h-8" />
                       </div>
-                      <h3 className="text-xl font-bold text-[#051923]">{item}</h3>
+                      <h3 className="text-xl font-bold text-white">{item}</h3>
                     </div>
                   </div>
                 ))}

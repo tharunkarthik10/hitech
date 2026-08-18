@@ -18,13 +18,9 @@ export default function CTA() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <div className="inline-flex items-center justify-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-sm">
-            <span className="w-2 h-2 rounded-full bg-[#00A6FB] animate-pulse"></span>
-            <span className="text-sm font-bold text-gray-300 uppercase tracking-wider">Available for New Projects</span>
-          </div>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-headline-xl leading-[1.1] tracking-tight mb-6">
-            Ready to <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A6FB] to-white">Elevate</span> Your Manufacturing?
+            Ready to <span className="text-[#006494]">Elevate</span> Your Manufacturing?
           </h2>
           
           <p className="text-gray-400 text-lg md:text-xl leading-relaxed mb-10 max-w-2xl mx-auto">
