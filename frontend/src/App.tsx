@@ -6,6 +6,7 @@ import Footer from './components/Footer'
 import Home from './pages/Home'
 import Manufacturing from './pages/Manufacturing'
 import LaserCutting from './pages/LaserCutting'
+import Production from './pages/Production'
 import Products from './pages/Products'
 import ProductDetail from './pages/ProductDetail'
 import Services from './pages/Services'
@@ -16,7 +17,7 @@ import Contact from './pages/Contact'
 function AppContent() {
   const location = useLocation();
   const isHome = location.pathname === '/';
-  const showSubNavbar = ['/', '/manufacturing', '/laser-cutting'].includes(location.pathname);
+  const showSubNavbar = ['/', '/manufacturing', '/laser-cutting', '/production'].includes(location.pathname);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -29,6 +30,7 @@ function AppContent() {
       <div className={showSubNavbar ? "pt-12" : ""}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/production" element={<Production />} />
           <Route path="/manufacturing" element={<Manufacturing />} />
           <Route path="/laser-cutting" element={<LaserCutting />} />
           <Route path="/products" element={<Products />} />

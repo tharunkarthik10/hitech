@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 const navigation = [
-  { name: "Production", path: "/" },
+  { name: "Production", path: "/production" },
   { name: "Manufacturing", path: "/manufacturing" },
   { name: "Laser Cutting", path: "/laser-cutting" }
 ];

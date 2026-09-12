@@ -198,27 +198,6 @@ export default function Services() {
     { param: "Quality Standards & Certs", details: "ISO 9001:2015 Registered, CE Conformity, UL Panel Shop, Mill Test Reports (MTRs)" }
   ];
 
-  // 08. Applications & Projects
-  const projects = [
-    {
-      title: "Industrial Electrical Components",
-      application: "High-Temperature Electrical Systems",
-      desc: "Custom ceramic and copper components manufactured for high-temperature electrical applications requiring IP-rated safety.",
-      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-      title: "Automotive Assembly Line Optimization",
-      application: "Robotic Assembly Lines",
-      desc: "Redesigned pneumatic feed loops and integrated 3 KUKA robotic welding cells, dropping assembly cycle time from 84s to 46s.",
-      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-      title: "Titanium Structural Flight Components",
-      application: "Aerospace Structural Parts",
-      desc: "Machined flight-critical titanium brackets on 5-axis CNC equipment, achieving 100% radiography NDT pass rate.",
-      image: "https://images.unsplash.com/photo-1540962351504-03099e0a754b?auto=format&fit=crop&q=80&w=800"
-    }
-  ];
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -330,7 +309,7 @@ export default function Services() {
                 </div>
               </div>
 
-              <div className="lg:w-80 shrink-0 bg-white/5 border border-white/10 p-5 rounded-2xl space-y-3 font-mono text-xs">
+              <div className="lg:w-80 shrink-0 bg-white/5 border border-white/10 p-5 rounded-2xl space-y-3 text-xs">
                 <div className="flex justify-between border-b border-white/10 pb-2">
                   <span className="text-gray-400">QUALITY STANDARD</span>
                   <span className="text-[#00A6FB] font-bold">ISO 9001:2015</span>
@@ -343,7 +322,7 @@ export default function Services() {
                   <span className="text-gray-400">CNC AXES</span>
                   <span className="text-white font-bold">5-AXIS CONT.</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between border-b border-white/10 pb-2">
                   <span className="text-gray-400">LINE UPTIME</span>
                   <span className="text-emerald-400 font-bold">99.9%</span>
                 </div>
@@ -515,7 +494,7 @@ export default function Services() {
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent p-4 flex flex-col justify-end">
-                  <span className="text-white text-xs font-mono font-semibold tracking-wider">
+                  <span className="text-white text-xs font-semibold tracking-wider">
                     ISO 9001:2015 QUALITY PROTOCOL VERIFIED
                   </span>
                 </div>
@@ -576,120 +555,95 @@ export default function Services() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 06. WHY CHOOSE US (CREATIVE HIGH-TECH ADVANTAGES SHOWCASE) */}
+      {/* 06. WHY CHOOSE US (CLEAN MODERN ADVANTAGES GRID) */}
       {/* ========================================================================= */}
-      <section className="relative bg-gradient-to-b from-slate-50 via-sky-50/30 to-slate-50 py-16 md:py-24 overflow-hidden border-t border-b border-gray-200">
+      <section className="py-20 md:py-28 bg-[#F8FAFC] relative overflow-hidden border-t border-b border-gray-200">
         
-        {/* Subtle Background Glow Elements */}
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#00A6FB]/5 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[#006494]/5 rounded-full blur-[120px] pointer-events-none" />
+        {/* Subtle Background Accent Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#006494]/5 rounded-full blur-[160px] pointer-events-none" />
 
-        <div className="relative z-10 w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12">
+        <div className="relative z-10 w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12">
           
           {/* Header */}
-          <div className="mb-14 text-center max-w-3xl mx-auto space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#00A6FB]/10 text-[#006494] text-xs font-bold uppercase tracking-[0.2em] border border-[#00A6FB]/20">
+          <div className="mb-16 text-center max-w-3xl mx-auto space-y-4">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#006494]/10 text-[#006494] text-xs font-bold uppercase tracking-widest border border-[#006494]/20">
               <Sparkles className="w-3.5 h-3.5 text-[#00A6FB]" />
-              <span>06 — WHY CHOOSE US</span>
+              <span>06 — Why Choose Us</span>
             </div>
             
-            <h2 className="text-3xl md:text-5xl text-[#051923] font-headline-xl font-bold leading-tight tracking-tight uppercase">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl text-[#051923] font-headline-xl font-bold leading-tight tracking-tight uppercase">
               Measurable Advantages of <span className="text-[#006494]">HiTech Engineering</span>
+              <span className="text-[#00A6FB]">.</span>
             </h2>
 
-            <p className="text-gray-600 text-sm md:text-base font-normal max-w-2xl mx-auto">
+            <p className="text-gray-600 text-base md:text-lg font-light leading-relaxed max-w-2xl mx-auto">
               Industrial-grade capabilities engineered for extreme tolerances, high-duty cycles, and guaranteed operational performance.
             </p>
           </div>
 
-          {/* Dynamic Horizontal Split Bento Cards Grid */}
+          {/* Clean 3-Column Bento Cards Grid */}
           <motion.div 
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
-            className="grid lg:grid-cols-2 gap-6 md:gap-8"
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
           >
-            {advantages.map((adv, idx) => (
-              <motion.div 
-                key={idx}
-                variants={itemVariants}
-                whileHover={{ y: -5 }}
-                className={`group relative bg-white rounded-3xl p-6 sm:p-7 border transition-all duration-500 flex flex-col sm:flex-row gap-6 overflow-hidden shadow-sm hover:shadow-2xl ${
-                  adv.featured 
-                    ? 'border-[#00A6FB] ring-2 ring-[#00A6FB]/20 shadow-lg shadow-[#00A6FB]/10' 
-                    : 'border-gray-200 hover:border-[#00A6FB]/60'
-                }`}
-              >
-                {/* Full Background Image Overlay on Hover (Bright White Overlay) */}
-                <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-3xl overflow-hidden">
-                  <img src={adv.image} alt={adv.title} className="w-full h-full object-cover opacity-20 scale-105 group-hover:scale-100 transition-transform duration-1000" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/85 to-white/70" />
-                </div>
+            {advantages.map((adv, idx) => {
+              const IconComp = adv.icon;
+              return (
+                <motion.div 
+                  key={idx}
+                  variants={itemVariants}
+                  whileHover={{ y: -6 }}
+                  className="group relative p-8 rounded-2xl bg-white border border-gray-200 shadow-sm hover:shadow-2xl hover:border-[#006494]/40 transition-all duration-500 flex flex-col justify-between overflow-hidden"
+                >
+                  {/* Top Highlight Accent Line on Hover */}
+                  <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#00A6FB] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                {/* Left Column: Permanent Image Thumbnail & Icon Stage */}
-                <div className="relative z-10 w-full sm:w-44 h-48 sm:h-auto rounded-2xl overflow-hidden shrink-0 bg-slate-900 border border-gray-200 group-hover:border-[#00A6FB]/40 transition-colors flex flex-col justify-between p-4">
-                  <img src={adv.image} alt={adv.title} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-90 group-hover:scale-110 transition-all duration-700" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
-                  
-                  {/* Icon Container */}
-                  <div className="relative z-10 w-11 h-11 rounded-xl bg-white/90 group-hover:bg-[#00A6FB] text-[#051923] group-hover:text-white flex items-center justify-center shadow-md backdrop-blur-md transition-all duration-300">
-                    <adv.icon className="w-5 h-5" />
-                  </div>
+                  <div>
+                    {/* Top Row: Icon Container & Stat Callout Badge */}
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="w-13 h-13 w-12 h-12 rounded-xl bg-sky-50 text-[#006494] border border-sky-100/80 flex items-center justify-center group-hover:bg-[#006494] group-hover:text-white transition-all duration-500 shadow-sm">
+                        <IconComp className="w-6 h-6" />
+                      </div>
 
-                  {/* Number & Advantage Label */}
-                  <div className="relative z-10 flex items-center justify-between text-white">
-                    <span className="text-[10px] font-mono font-bold tracking-widest text-white/75">ADVANTAGE</span>
-                    <span className="font-heading font-black text-2xl text-white">{adv.num}</span>
-                  </div>
-                </div>
+                      <span className="px-3 py-1 rounded-full bg-slate-100 text-[#006494] text-xs font-bold border border-slate-200/80 group-hover:bg-[#00A6FB]/10 group-hover:border-[#00A6FB]/30 transition-colors duration-300">
+                        {adv.stat}
+                      </span>
+                    </div>
 
-                {/* Right Column: Title, Badges & Highlights */}
-                <div className="relative z-10 flex-1 flex flex-col justify-between space-y-4">
-                  
-                  {/* Top Badges (No Clipping) */}
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#006494] transition-colors flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-[#00A6FB] animate-pulse" />
-                      {adv.badge}
-                    </span>
-
-                    <span className="px-3 py-1 rounded-full bg-sky-50 text-[#006494] text-xs font-bold border border-sky-100 group-hover:bg-[#00A6FB] group-hover:text-white group-hover:border-[#00A6FB] transition-all duration-300 shadow-sm whitespace-nowrap">
-                      {adv.stat}
-                    </span>
-                  </div>
-
-                  {/* Title & Description */}
-                  <div className="space-y-2">
-                    <h3 className="font-heading font-bold text-lg md:text-xl text-[#051923] group-hover:text-[#006494] uppercase tracking-tight leading-snug transition-colors">
-                      {adv.title}
-                    </h3>
-
-                    <p className="text-gray-600 group-hover:text-gray-900 text-xs md:text-sm leading-relaxed font-normal transition-colors">
-                      {adv.desc}
-                    </p>
-                  </div>
-
-                  {/* Bullet Chips & Arrow */}
-                  <div className="pt-3 border-t border-gray-100 group-hover:border-sky-100 space-y-3 transition-colors">
-                    <div className="flex flex-wrap gap-1.5">
-                      {adv.bullets.map((b, bIdx) => (
-                        <span key={bIdx} className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-slate-100 text-gray-700 group-hover:bg-sky-100/70 group-hover:text-[#006494] text-[11px] font-medium transition-colors">
-                          <CheckCircle2 className="w-3 h-3 text-[#00A6FB]" />
-                          {b}
+                    {/* Advantage Tag & Title */}
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#00A6FB]" />
+                        <span className="text-xs font-bold uppercase tracking-wider text-[#006494]">
+                          Advantage {adv.num} — {adv.badge}
                         </span>
-                      ))}
-                    </div>
+                      </div>
 
-                    <div className="flex items-center justify-between text-xs font-mono font-bold text-gray-400 group-hover:text-[#00A6FB] pt-0.5">
-                      <span>EXPLORE CAPABILITY</span>
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      <h3 className="text-xl font-bold text-[#051923] group-hover:text-[#006494] transition-colors leading-snug">
+                        {adv.title}
+                      </h3>
+
+                      <p className="text-gray-600 text-sm leading-relaxed font-light pt-1">
+                        {adv.desc}
+                      </p>
                     </div>
                   </div>
 
-                </div>
-              </motion.div>
-            ))}
+                  {/* Bullet Highlights Footer */}
+                  <div className="pt-5 mt-6 border-t border-gray-100 space-y-2 text-xs text-gray-700 font-medium">
+                    {adv.bullets.map((b, bIdx) => (
+                      <div key={bIdx} className="flex items-center gap-2">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#00A6FB] flex-shrink-0" />
+                        <span>{b}</span>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              );
+            })}
           </motion.div>
 
         </div>
@@ -726,53 +680,6 @@ export default function Services() {
                 
                 <div className="md:col-span-8 text-xs md:text-sm text-gray-700 font-medium leading-relaxed">
                   {row.details}
-                </div>
-              </div>
-            ))}
-          </div>
-
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 08. APPLICATIONS & PROJECTS */}
-      {/* ========================================================================= */}
-      <section className="py-12 md:py-16 bg-[#F8FAFC] border-b border-gray-200">
-        <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12">
-          
-          <div className="text-center max-w-3xl mx-auto mb-10 space-y-2">
-            <span className="text-xs font-bold text-[#006494] uppercase tracking-[0.2em]">08 — APPLICATIONS</span>
-            <h2 className="text-2xl md:text-4xl font-bold font-heading text-[#051923] uppercase tracking-tight">
-              Real-World Applications &amp; Projects
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {projects.map((proj, idx) => (
-              <div key={idx} className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
-                <div>
-                  <div className="relative aspect-[16/9] overflow-hidden bg-black">
-                    <img src={proj.image} alt={proj.title} className="w-full h-full object-cover" />
-                    <span className="absolute top-3 left-3 bg-[#051923] text-white text-[11px] font-bold uppercase px-2.5 py-0.5 rounded-full">
-                      {proj.application}
-                    </span>
-                  </div>
-
-                  <div className="p-5 md:p-6 space-y-2.5">
-                    <h3 className="text-xl font-bold font-heading text-[#051923] uppercase tracking-tight">
-                      {proj.title}
-                    </h3>
-                    <p className="text-gray-600 text-xs md:text-sm leading-relaxed">
-                      {proj.desc}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="p-5 md:p-6 pt-0">
-                  <a href="#quote-form" className="inline-flex items-center gap-2 text-xs font-bold text-[#006494] uppercase tracking-wider pt-3 border-t border-gray-100 w-full justify-between">
-                    <span>Inquire Project Scope</span>
-                    <ArrowUpRight className="w-4 h-4" />
-                  </a>
                 </div>
               </div>
             ))}
