@@ -13,6 +13,7 @@ import Services from './pages/Services'
 import AboutUs from './pages/AboutUs'
 import Blog from './pages/Blog'
 import Contact from './pages/Contact'
+import Career from './pages/Career'
 
 function AppContent() {
   const location = useLocation();
@@ -39,6 +40,7 @@ function AppContent() {
           <Route path="/about" element={<AboutUs />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/career" element={<Career />} />
         </Routes>
       </div>
       <Footer />

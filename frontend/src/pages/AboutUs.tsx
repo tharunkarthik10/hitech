@@ -68,7 +68,7 @@ export default function AboutUs() {
   return (
     <div className="w-full bg-[#f4f7f9]">
       {/* Hero Section */}
-      <div className="relative h-screen min-h-[700px] w-full flex items-center justify-center overflow-hidden text-center">
+      <div className="relative h-[85vh] min-h-[640px] w-full flex items-center justify-center overflow-hidden text-center">
         <div className="absolute inset-0 z-0">
           <img 
             src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop" 
@@ -78,7 +78,7 @@ export default function AboutUs() {
           <div className="absolute inset-0 bg-black/60"></div>
         </div>
         
-        <div className="relative z-10 px-8 md:px-16 max-w-4xl mx-auto w-full">
+        <div className="relative z-10 px-8 md:px-16 max-w-4xl mx-auto w-full mt-16">
           <motion.h1 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -232,36 +232,37 @@ export default function AboutUs() {
         </div>
       </div>
 
-      {/* MD Desk Section */}
-      <div className="w-full bg-white relative py-32 overflow-hidden">
-        {/* Background Accent removed for full white background */}
-        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-8 lg:px-16 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+      {/* 3 MD Desk Sections for Leadership */}
+      <div className="w-full bg-white relative py-16 space-y-16 divide-y divide-gray-100 overflow-hidden">
+        
+        {/* ==================== MD 1: Strategic Vision & Leadership ==================== */}
+        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-8 lg:px-16 relative z-10 pt-4">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            {/* Left Column: Content (7 columns / 60%) */}
-            <div className="lg:col-span-7 relative z-10 order-2 lg:order-1">
-              <FadeIn className="space-y-12">
+            {/* Left Column: Content (7 columns) */}
+            <div className="lg:col-span-7 space-y-6">
+              <FadeIn className="space-y-6">
                 <div>
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="h-[2px] w-12 bg-[#00A6FB]"></div>
-                    <span className="text-[#00A6FB] font-bold uppercase tracking-widest text-sm">Leadership</span>
+                  <div className="flex items-center gap-4 mb-3">
+                    <div className="h-[2px] w-12 bg-[#00A6FB]" />
+                    <span className="text-[#00A6FB] font-bold uppercase tracking-widest text-xs">Leadership — Strategic Vision</span>
                   </div>
-                  <h2 className="text-4xl lg:text-5xl font-bold text-[#051923] mb-6 font-heading leading-tight">
+                  <h2 className="text-3xl lg:text-4xl font-bold text-[#051923] font-heading leading-tight">
                     From the <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A6FB] to-[#051923]">MD's Desk.</span>
                   </h2>
                 </div>
 
-                <div className="space-y-8">
-                  <div className="border-l-4 border-[#00A6FB]/20 pl-6 hover:border-[#00A6FB] transition-colors duration-300">
-                    <h3 className="text-xl font-bold text-[#051923] mb-3 font-heading">Our Commitment</h3>
-                    <p className="text-gray-600 leading-relaxed text-[15px]">
+                <div className="space-y-4">
+                  <div className="border-l-4 border-[#00A6FB] pl-5 py-1">
+                    <h3 className="text-lg font-bold text-[#051923] mb-1.5 font-heading">Our Commitment</h3>
+                    <p className="text-gray-600 leading-relaxed text-sm">
                       At Hitech, we believe that innovation is a continuous journey. Our commitment to excellence drives us to constantly push boundaries and redefine what is possible in the engineering and automation sectors.
                     </p>
                   </div>
                   
-                  <div className="border-l-4 border-[#00A6FB]/20 pl-6 hover:border-[#00A6FB] transition-colors duration-300">
-                    <h3 className="text-xl font-bold text-[#051923] mb-3 font-heading">Looking Ahead</h3>
-                    <p className="text-gray-600 leading-relaxed text-[15px]">
+                  <div className="border-l-4 border-[#00A6FB]/30 pl-5 py-1">
+                    <h3 className="text-lg font-bold text-[#051923] mb-1.5 font-heading">Looking Ahead</h3>
+                    <p className="text-gray-600 leading-relaxed text-sm">
                       As we look to the future, we remain dedicated to our core values. We will continue to invest in our people, our technologies, and our partnerships to ensure we deliver unmatched value to our clients worldwide.
                     </p>
                   </div>
@@ -269,52 +270,130 @@ export default function AboutUs() {
               </FadeIn>
             </div>
 
-            {/* Right Column: Imagery (5 columns / 40%) */}
-            <div className="lg:col-span-5 relative order-1 lg:order-2">
-              {/* Massive subtle background text */}
-              <div className="absolute -top-16 -right-12 text-[120px] font-black text-gray-100/80 leading-none z-0 select-none hidden md:block">
-                VISION
-              </div>
-
-              <div className="grid grid-cols-2 gap-6 relative z-10">
-                {/* Secondary Images Column (swapped position) */}
-                <div className="col-span-2 md:col-span-1 flex flex-col gap-6 mt-0 md:mt-12">
-                  <div className="rounded-2xl overflow-hidden shadow-lg h-[213px] relative group">
-                    <img 
-                      src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=400&auto=format&fit=crop" 
-                      alt="Office" 
-                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-                    />
-                  </div>
-                  
-                  <div className="rounded-2xl overflow-hidden shadow-lg h-[213px] relative group">
-                    <img 
-                      src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=400&auto=format&fit=crop" 
-                      alt="Meeting" 
-                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-                    />
-                  </div>
+            {/* Right Column: Single Portrait Image (5 columns) */}
+            <div className="lg:col-span-5 relative">
+              <div className="rounded-2xl overflow-hidden shadow-xl h-[340px] border border-gray-100 relative group max-w-md mx-auto">
+                <img 
+                  src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop" 
+                  alt="Managing Director - Strategic Vision" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                />
+                <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md p-3 rounded-xl border border-white shadow-lg text-center">
+                  <span className="block text-[#00A6FB] font-black text-xs uppercase tracking-wider">Strategic Vision</span>
+                  <span className="text-gray-600 font-medium text-[11px]">Managing Director</span>
                 </div>
-
-                {/* Main Image */}
-                <div className="col-span-2 md:col-span-1 rounded-2xl overflow-hidden shadow-2xl h-[450px]">
-                  <img 
-                    src="https://images.unsplash.com/photo-1556761175-5973dc0f32b7?q=80&w=1200&auto=format&fit=crop" 
-                    alt="Managing Director" 
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" 
-                  />
-                </div>
-              </div>
-
-              {/* Experience Badge */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-sm p-6 rounded-2xl shadow-2xl border border-white z-20 flex flex-col items-center justify-center transform md:translate-x-[20%]">
-                <span className="text-[#00A6FB] font-black text-3xl mb-1">Vision</span>
-                <span className="text-gray-800 font-bold text-xs uppercase tracking-widest text-center">Driven</span>
               </div>
             </div>
-            
+
           </div>
         </div>
+
+        {/* ==================== MD 2: Technology & R&D ==================== */}
+        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-8 lg:px-16 relative z-10 pt-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            {/* Left Column: Single Portrait Image (5 columns - Alternating Layout) */}
+            <div className="lg:col-span-5 relative order-2 lg:order-1">
+              <div className="rounded-2xl overflow-hidden shadow-xl h-[340px] border border-gray-100 relative group max-w-md mx-auto">
+                <img 
+                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop" 
+                  alt="Managing Director - Technology & R&D" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                />
+                <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md p-3 rounded-xl border border-white shadow-lg text-center">
+                  <span className="block text-[#00A6FB] font-black text-xs uppercase tracking-wider">Technology &amp; R&amp;D</span>
+                  <span className="text-gray-600 font-medium text-[11px]">Managing Director</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Content (7 columns) */}
+            <div className="lg:col-span-7 space-y-6 order-1 lg:order-2">
+              <FadeIn className="space-y-6">
+                <div>
+                  <div className="flex items-center gap-4 mb-3">
+                    <div className="h-[2px] w-12 bg-[#00A6FB]" />
+                    <span className="text-[#00A6FB] font-bold uppercase tracking-widest text-xs">Leadership — Technology &amp; Innovation</span>
+                  </div>
+                  <h2 className="text-3xl lg:text-4xl font-bold text-[#051923] font-heading leading-tight">
+                    From the <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A6FB] to-[#051923]">MD's Desk.</span>
+                  </h2>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="border-l-4 border-[#00A6FB] pl-5 py-1">
+                    <h3 className="text-lg font-bold text-[#051923] mb-1.5 font-heading">Technological Innovation</h3>
+                    <p className="text-gray-600 leading-relaxed text-sm">
+                      Integrating 12kW fiber laser technology, continuous 5-axis CNC machining, and automated robotic MIG/TIG cells enables us to offer micron-level accuracy and rapid prototype-to-production turnaround times.
+                    </p>
+                  </div>
+                  
+                  <div className="border-l-4 border-[#00A6FB]/30 pl-5 py-1">
+                    <h3 className="text-lg font-bold text-[#051923] mb-1.5 font-heading">Engineering Precision</h3>
+                    <p className="text-gray-600 leading-relaxed text-sm">
+                      Our dedicated R&amp;D team works closely with OEMs to optimize Design for Manufacturability (DFM), reducing material waste, extending part lifespans, and guaranteeing exact CAD compliance.
+                    </p>
+                  </div>
+                </div>
+              </FadeIn>
+            </div>
+
+          </div>
+        </div>
+
+        {/* ==================== MD 3: Operations & Quality ==================== */}
+        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-8 lg:px-16 relative z-10 pt-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            {/* Left Column: Content (7 columns) */}
+            <div className="lg:col-span-7 space-y-6">
+              <FadeIn className="space-y-6">
+                <div>
+                  <div className="flex items-center gap-4 mb-3">
+                    <div className="h-[2px] w-12 bg-[#00A6FB]" />
+                    <span className="text-[#00A6FB] font-bold uppercase tracking-widest text-xs">Leadership — Operations &amp; Quality Control</span>
+                  </div>
+                  <h2 className="text-3xl lg:text-4xl font-bold text-[#051923] font-heading leading-tight">
+                    From the <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A6FB] to-[#051923]">MD's Desk.</span>
+                  </h2>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="border-l-4 border-[#00A6FB] pl-5 py-1">
+                    <h3 className="text-lg font-bold text-[#051923] mb-1.5 font-heading">Operational Excellence</h3>
+                    <p className="text-gray-600 leading-relaxed text-sm">
+                      Streamlined production scheduling, real-time shop floor telemetry, and robust supply chain logistics ensure that our manufacturing lines operate at peak efficiency with zero delays.
+                    </p>
+                  </div>
+                  
+                  <div className="border-l-4 border-[#00A6FB]/30 pl-5 py-1">
+                    <h3 className="text-lg font-bold text-[#051923] mb-1.5 font-heading">Quality Assurance &amp; Metrology</h3>
+                    <p className="text-gray-600 leading-relaxed text-sm">
+                      With ISO 9001:2015 certification, 3D CMM metrology coordinate inspection, and comprehensive Mill Test Reports (MTRs), we ensure 100% defect-free delivery for every batch.
+                    </p>
+                  </div>
+                </div>
+              </FadeIn>
+            </div>
+
+            {/* Right Column: Single Portrait Image (5 columns) */}
+            <div className="lg:col-span-5 relative">
+              <div className="rounded-2xl overflow-hidden shadow-xl h-[340px] border border-gray-100 relative group max-w-md mx-auto">
+                <img 
+                  src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=800&auto=format&fit=crop" 
+                  alt="Managing Director - Operations & Quality" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                />
+                <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md p-3 rounded-xl border border-white shadow-lg text-center">
+                  <span className="block text-[#00A6FB] font-black text-xs uppercase tracking-wider">Operations &amp; Quality</span>
+                  <span className="text-gray-600 font-medium text-[11px]">Managing Director</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
       </div>
 
       {/* Infrastructure Gallery Section */}

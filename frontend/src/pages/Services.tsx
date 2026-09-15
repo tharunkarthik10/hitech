@@ -4,7 +4,7 @@ import {
   ArrowRight, CheckCircle2, Factory, Settings, Users, LineChart, 
   Shield, Wrench, ChevronDown, ChevronUp, FileText, Award, Cpu, 
   Compass, Hammer, ClipboardCheck, ArrowUpRight, Sparkles, PhoneCall, 
-  Send, Check, Layers, Zap, Package, Search, Target, Activity, 
+  Layers, Zap, Package, Search, Target, Activity, 
   Building2, Car, Plane, Stethoscope, Sliders, CheckSquare, ShieldCheck,
   Tractor, HardHat, ChevronLeft, Clock
 } from 'lucide-react';
@@ -13,24 +13,6 @@ export default function Services() {
   // 04. Active Process Step State
   const [activeProcessStep, setActiveProcessStep] = useState(0);
 
-  // 07. Spec View State ('grid' | 'table')
-  const [specView, setSpecView] = useState<'grid' | 'table'>('grid');
-
-  // 11. Proposal Form State
-  const [quoteForm, setQuoteForm] = useState({
-    name: '',
-    email: '',
-    company: '',
-    service: 'Precision Machining',
-    quantity: '100 - 1,000 units',
-    details: ''
-  });
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const handleFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitted(true);
-  };
 
   // 03. What We Offer Capabilities Data
   const capabilities = [
@@ -187,16 +169,6 @@ export default function Services() {
     }
   ];
 
-  // 07. Technical Specifications Table
-  const specificationsTable = [
-    { param: "Materials Supported", details: "Stainless Steel (304, 316, 410, 17-4PH), Titanium Grade 5, Aluminum (6061, 7075), Mild Steel, Brass, Copper, Delrin, PEEK" },
-    { param: "Machining Tolerances", details: "Positioning Accuracy ± 0.005 mm (Verified by 3D CMM Metrology)" },
-    { param: "CNC Spindle Speed & Axes", details: "Up to 20,000 RPM (3-Axis, 4-Axis, and continuous 5-Axis milling/turning)" },
-    { param: "Laser Cutting Capacity", details: "12kW Fiber Laser cutting up to 25mm Mild Steel / 16mm Stainless Steel" },
-    { param: "Bending Capacity", details: "220-Ton CNC Hydraulic Press Brake with Multi-V precision dies" },
-    { param: "Welding Standards", details: "AWS D1.1 Structural Welding & ISO 3834 Compliant Robotic MIG/TIG Cells" },
-    { param: "Quality Standards & Certs", details: "ISO 9001:2015 Registered, CE Conformity, UL Panel Shop, Mill Test Reports (MTRs)" }
-  ];
 
 
   const containerVariants: Variants = {
@@ -649,215 +621,7 @@ export default function Services() {
         </div>
       </section>
 
-      {/* ========================================================================= */}
-      {/* 07. TECHNICAL SPECIFICATIONS (MINIMALIST ELEGANT SHEET) */}
-      {/* ========================================================================= */}
-      <section className="py-20 md:py-28 bg-white border-t border-b border-gray-100">
-        <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12">
-          
-          {/* Minimal Header */}
-          <div className="mb-14 text-center max-w-3xl mx-auto space-y-2">
-            <span className="text-xs font-bold text-[#006494] uppercase tracking-[0.25em]">07 — SPECIFICATIONS</span>
-            <h2 className="text-3xl md:text-5xl font-bold font-heading text-[#051923] uppercase tracking-tight">
-              Technical Specifications
-            </h2>
-            <p className="text-gray-500 text-sm md:text-base font-light">
-              Equipment capabilities, positioning tolerances, material matrices, and certified quality standards.
-            </p>
-          </div>
 
-          {/* Clean Minimal Matrix List */}
-          <div className="max-w-5xl mx-auto border-t border-b border-gray-200 divide-y divide-gray-100">
-            {specificationsTable.map((row, idx) => (
-              <div 
-                key={idx} 
-                className="py-6 md:py-7 grid md:grid-cols-12 gap-4 md:gap-8 items-start hover:bg-slate-50/70 transition-colors duration-200 px-4 md:px-6 rounded-xl group"
-              >
-                <div className="md:col-span-4 font-heading font-bold text-sm md:text-base text-[#051923] uppercase tracking-wide group-hover:text-[#006494] transition-colors flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#00A6FB] opacity-0 group-hover:opacity-100 transition-opacity" />
-                  {row.param}
-                </div>
-                
-                <div className="md:col-span-8 text-xs md:text-sm text-gray-700 font-medium leading-relaxed">
-                  {row.details}
-                </div>
-              </div>
-            ))}
-          </div>
-
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 11. CONVERSION CTA & PROPOSAL FORM */}
-      {/* ========================================================================= */}
-      <section id="quote-form" className="py-16 md:py-20 bg-[#051923] text-white relative overflow-hidden border-t border-white/10">
-        
-        {/* Background Dotted Map */}
-        <div className="absolute inset-0 z-0 flex items-center justify-end pointer-events-none opacity-[0.25]">
-          <div 
-            className="w-full h-full max-w-[1200px] scale-[1.2] md:scale-100"
-            style={{
-              maskImage: 'url("/world-map.svg")',
-              maskSize: 'contain',
-              maskRepeat: 'no-repeat',
-              maskPosition: 'right center',
-              WebkitMaskImage: 'url("/world-map.svg")',
-              WebkitMaskSize: 'contain',
-              WebkitMaskRepeat: 'no-repeat',
-              WebkitMaskPosition: 'right center',
-              backgroundImage: 'radial-gradient(circle, #00A6FB 1px, transparent 1.5px)',
-              backgroundSize: '10px 10px'
-            }}
-          />
-        </div>
-
-        <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
-          
-          <div className="grid lg:grid-cols-12 gap-10 items-center">
-            
-            <div className="lg:col-span-5 space-y-5">
-              <span className="text-xs font-bold text-[#00A6FB] uppercase tracking-[0.2em]">11 — GET STARTED</span>
-              <h2 className="text-3xl md:text-5xl font-bold font-heading uppercase tracking-tight leading-tight">
-                Have a requirement? <br />
-                <span className="text-[#00A6FB]">Let's build it.</span>
-              </h2>
-              <p className="text-gray-300 text-base md:text-lg font-light leading-relaxed">
-                Tell us what you need and our engineering team will help you find the exact solution.
-              </p>
-
-              <div className="space-y-3 pt-4 border-t border-white/10">
-                <div className="flex items-center gap-3.5 text-gray-300">
-                  <div className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-[#00A6FB]">
-                    <PhoneCall className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs text-gray-400 uppercase">Direct Line</div>
-                    <div className="text-base font-bold text-white">+91 (0422) 264-8800</div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3.5 text-gray-300">
-                  <div className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-[#00A6FB]">
-                    <Send className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs text-gray-400 uppercase">Proposal Email</div>
-                    <div className="text-base font-bold text-white">services@hitechengineering.com</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="lg:col-span-7 bg-white/10 backdrop-blur-xl border border-white/20 p-6 md:p-10 rounded-2xl">
-              {isSubmitted ? (
-                <div className="py-10 text-center space-y-4">
-                  <div className="w-12 h-12 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto">
-                    <Check className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-2xl font-bold font-heading uppercase text-white">Requirement Submitted!</h3>
-                  <p className="text-gray-300 text-sm max-w-md mx-auto">
-                    Thank you, {quoteForm.name}. Our lead application engineer will review your project details and respond within 24 hours.
-                  </p>
-                  <button
-                    onClick={() => setIsSubmitted(false)}
-                    className="px-6 py-2.5 bg-[#00A6FB] text-white font-bold rounded-full text-xs uppercase tracking-widest hover:bg-white hover:text-[#051923] transition-colors"
-                  >
-                    Submit Another Requirement
-                  </button>
-                </div>
-              ) : (
-                <form onSubmit={handleFormSubmit} className="space-y-5">
-                  
-                  <div className="grid md:grid-cols-2 gap-5">
-                    <div>
-                      <label className="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1.5">Full Name *</label>
-                      <input 
-                        type="text" 
-                        required
-                        value={quoteForm.name}
-                        onChange={(e) => setQuoteForm({...quoteForm, name: e.target.value})}
-                        placeholder="John Doe"
-                        className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[#00A6FB]"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1.5">Corporate Email *</label>
-                      <input 
-                        type="email" 
-                        required
-                        value={quoteForm.email}
-                        onChange={(e) => setQuoteForm({...quoteForm, email: e.target.value})}
-                        placeholder="john@company.com"
-                        className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[#00A6FB]"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-5">
-                    <div>
-                      <label className="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1.5">Capability Target</label>
-                      <select
-                        value={quoteForm.service}
-                        onChange={(e) => setQuoteForm({...quoteForm, service: e.target.value})}
-                        className="w-full bg-[#051923] border border-white/20 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[#00A6FB]"
-                      >
-                        <option value="Precision Machining">Custom Manufacturing &amp; 5-Axis CNC</option>
-                        <option value="Fiber Laser Cutting">12kW Fiber Laser Cutting</option>
-                        <option value="Line Automation">Robotic Line Automation</option>
-                        <option value="Process Optimization">Process Optimization</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1.5">Estimated Quantity</label>
-                      <select
-                        value={quoteForm.quantity}
-                        onChange={(e) => setQuoteForm({...quoteForm, quantity: e.target.value})}
-                        className="w-full bg-[#051923] border border-white/20 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[#00A6FB]"
-                      >
-                        <option value="Prototype / Sample">Prototype Run (1 - 50 units)</option>
-                        <option value="100 - 1,000 units">Medium Batch (100 - 1,000 units)</option>
-                        <option value="1,000+ units">High Volume (1,000+ units / month)</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1.5">Requirement Details &amp; CAD Specs</label>
-                    <textarea 
-                      rows={3}
-                      value={quoteForm.details}
-                      onChange={(e) => setQuoteForm({...quoteForm, details: e.target.value})}
-                      placeholder="Workpiece dimensions, material grades, tolerance specs, or target lead time..."
-                      className="w-full bg-white/10 border border-white/20 rounded-xl p-3.5 text-white text-sm focus:outline-none focus:border-[#00A6FB]"
-                    />
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row gap-4 pt-1">
-                    <button 
-                      type="submit" 
-                      className="flex-1 py-3.5 bg-[#00A6FB] text-white font-bold rounded-xl uppercase tracking-widest text-xs hover:bg-white hover:text-[#051923] transition-all duration-300 shadow-lg"
-                    >
-                      Request a Quote
-                    </button>
-                    <a
-                      href="tel:+914222648800"
-                      className="inline-flex items-center justify-center px-8 py-3.5 border border-white/40 text-white font-bold rounded-xl uppercase tracking-widest text-xs hover:bg-white hover:text-[#051923] transition-colors"
-                    >
-                      Contact Us
-                    </a>
-                  </div>
-
-                </form>
-              )}
-            </div>
-
-          </div>
-
-        </div>
-      </section>
 
     </main>
   );
