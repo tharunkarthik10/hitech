@@ -8,10 +8,13 @@ import {
   Building2, Car, Plane, Stethoscope, Sliders, CheckSquare, ShieldCheck,
   Tractor, HardHat, ChevronLeft, Clock
 } from 'lucide-react';
+import LaserCuttingVideoCard from '../components/LaserCuttingVideoCard';
 
 export default function Services() {
   // 04. Active Process Step State
   const [activeProcessStep, setActiveProcessStep] = useState(0);
+  // 06. Active Advantage Pillar State
+  const [activeAdvantage, setActiveAdvantage] = useState(0);
 
 
   // 03. What We Offer Capabilities Data
@@ -104,70 +107,102 @@ export default function Services() {
     { title: "Industrial Manufacturing", desc: "Turnkey SPM machines, conveyor feed assemblies, and automated line cells.", icon: Factory, image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800" }
   ];
 
-  // 06. Why Choose Us Differentiators (With Dedicated Custom Icons, Stats & Images)
-  const advantages = [
+  // 06. Why Industry Leaders Choose HiTech (Interactive Feature Showcase Data)
+  const advantagePillars = [
     { 
-      num: "01", 
-      title: "Advanced Manufacturing Capabilities", 
-      desc: "5-axis continuous CNC milling, 12kW fiber laser profiling, and robotic MIG/TIG welding cells.",
+      id: "01",
+      category: "Fleet Capability",
+      title: "Advanced Manufacturing Fleet",
+      shortBadge: "12kW Laser & 5-Axis",
+      headline: "5-Axis CNC & 12kW Laser Fleet",
+      desc: "Sub-micron milling and high-speed fiber cutting up to 32mm structural steel.",
       icon: Cpu,
-      stat: "12kW Laser & 5-Axis",
+      image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=1200&auto=format&fit=crop",
       badge: "High-Tech Fleet",
-      image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=800&auto=format&fit=crop",
-      bullets: ["5-Axis CNC Milling", "12kW Fiber Profiling", "Robotic MIG/TIG Cells"]
+      stat: "12kW Laser & 5-Axis",
+      metrics: [
+        { label: "Laser Power", value: "12,000 W" },
+        { label: "Continuous Axes", value: "5-Axis CNC" },
+        { label: "Repeatability", value: "±0.005 mm" },
+        { label: "Max Work Area", value: "3,000 × 1,500 mm" }
+      ],
+      bullets: [
+        "Continuous 5-axis high-speed simultaneous contour milling",
+        "12kW fiber laser with clean nitrogen cutting edge for dross-free finishes",
+        "Multi-head robotic MIG/TIG welding workstations for heavy fabrication"
+      ]
     },
     { 
-      num: "02", 
-      title: "Consistent Quality", 
-      desc: "Micron-level positioning accuracy (±0.005mm) verified by 3D CMM coordinate metrology.",
+      id: "02",
+      category: "Metrology & QA",
+      title: "Consistent Micron Quality",
+      shortBadge: "±0.005mm Metrology",
+      headline: "3D CMM Metrology & Certified NDT",
+      desc: "Climate-regulated coordinate inspection with certified digital reporting.",
       icon: ShieldCheck,
+      image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=1200&auto=format&fit=crop",
+      badge: "Zero-Defect QA",
       stat: "±0.005mm Metrology",
-      badge: "3D CMM Verified",
-      featured: true,
-      image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=800&auto=format&fit=crop",
-      bullets: ["±0.005mm Accuracy", "Dye Penetrant NDT", "100% CMM Verified"]
+      metrics: [
+        { label: "Metrology Accuracy", value: "±0.005 mm" },
+        { label: "Inspection System", value: "3D Laser CMM" },
+        { label: "Surface Roughness", value: "Ra < 0.2 µm" },
+        { label: "Standard", value: "ISO 9001:2015" }
+      ],
+      bullets: [
+        "100% full-dimension CMM digital inspection reports with every batch",
+        "Certified dye penetrant & ultrasonic NDT non-destructive testing",
+        "Complete raw material mill test report (MTR) heat number traceability"
+      ]
     },
     { 
-      num: "03", 
-      title: "Custom Engineering Solutions", 
-      desc: "Tailored component prototyping and digital twin simulation built around your unique CAD drawings.",
-      icon: Target,
-      stat: "CAD Digital Twin",
-      badge: "Turnkey Design",
-      image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=800&auto=format&fit=crop",
-      bullets: ["CAD File Parsing", "Kinematic FEA Stress", "Custom Prototyping"]
-    },
-    { 
-      num: "04", 
-      title: "High-Volume Production", 
-      desc: "Scalable automated manufacturing capable of producing 50,000+ defect-free units per month.",
+      id: "03",
+      category: "Scale & Throughput",
+      title: "High-Volume Production",
+      shortBadge: "50,000+ Units/Mo",
+      headline: "High-Volume Automated Production",
+      desc: "Multi-shift automated manufacturing cells delivering at scale with zero backlog.",
       icon: Factory,
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1200&auto=format&fit=crop",
+      badge: "High Throughput",
       stat: "50,000+ Units/Mo",
-      badge: "Zero-Defect Rate",
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop",
-      bullets: ["Automated Cells", "Kanban Logistics", "Zero-Defect Standard"]
+      metrics: [
+        { label: "Monthly Output", value: "50,000+ Parts" },
+        { label: "Defect PPM", value: "< 50 PPM" },
+        { label: "Shift Schedule", value: "24/7 Operations" },
+        { label: "Logistics Model", value: "Kanban / JIT" }
+      ],
+      bullets: [
+        "Automated robotic pick-and-place & conveyor indexing cells",
+        "Tier-1 automotive supplier qualification protocols and audits",
+        "Buffer warehouse staging for immediate emergency stock calls"
+      ]
     },
     { 
-      num: "05", 
-      title: "Experienced Engineering Team", 
-      desc: "20+ years of kinetic engineering, control panel wiring, and line automation expertise.",
-      icon: Users,
-      stat: "20+ Yrs Expertise",
-      badge: "Certified Team",
-      image: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=800&auto=format&fit=crop",
-      bullets: ["Kinetic Engineering", "Panel Wiring & PLC", "Dedicated Support"]
-    },
-    { 
-      num: "06", 
-      title: "Reliable On-Time Delivery", 
-      desc: "Structured project timelines, complete FAT sign-off, and guaranteed factory delivery windows.",
+      id: "04",
+      category: "Turnkey Project Delivery",
+      title: "Turnkey Design & Delivery",
+      shortBadge: "99.9% On-Time & FAT",
+      headline: "Digital Twin, FEA & FAT Sign-Off",
+      desc: "Full 3D CAD simulation, stress testing, and factory acceptance verification.",
       icon: Clock,
+      image: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=1200&auto=format&fit=crop",
+      badge: "Turnkey Delivery",
       stat: "99.9% On-Time",
-      badge: "FAT Sign-Off",
-      image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=800&auto=format&fit=crop",
-      bullets: ["Strict Timelines", "FAT Inspection", "Guaranteed Delivery"]
+      metrics: [
+        { label: "On-Time Dispatch", value: "99.9% Record" },
+        { label: "Stress Testing", value: "Kinematic FEA" },
+        { label: "Validation", value: "100% FAT Protocol" },
+        { label: "Accountability", value: "Dedicated Lead" }
+      ],
+      bullets: [
+        "Complete CAD digital twin & kinematic reach modeling before tooling",
+        "Pre-shipment Factory Acceptance Testing (FAT) under full operational load",
+        "Turnkey on-site installation, commissioning, and continuous support"
+      ]
     }
   ];
+
 
 
 
@@ -257,48 +292,59 @@ export default function Services() {
       </section>
 
       {/* ========================================================================= */}
+      {/* ========================================================================= */}
       {/* 02. SERVICE OVERVIEW */}
       {/* ========================================================================= */}
       <section className="bg-stark-white relative py-12 md:py-16 border-b border-gray-100">
         <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12">
           
-          <div className="relative w-full bg-[#051923] rounded-3xl p-6 md:p-10 lg:p-12 shadow-2xl border border-white/10 text-white">
-            <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
+          <div className="relative w-full bg-[#051923] rounded-3xl p-8 md:p-12 lg:p-14 shadow-2xl border border-white/10 text-white overflow-hidden">
+            {/* Ambient Background Glows */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#00A6FB]/10 rounded-full blur-3xl pointer-events-none -mr-48 -mt-48" />
+            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#006494]/10 rounded-full blur-3xl pointer-events-none -ml-36 -mb-36" />
+
+            <div className="relative z-10 flex flex-col lg:flex-row gap-10 lg:gap-14 items-center justify-between">
               
-              <div className="flex-1 space-y-4">
-                <span className="text-xs font-bold text-[#00A6FB] uppercase tracking-[0.2em]">02 — SERVICE OVERVIEW</span>
-                <h2 className="font-heading text-2xl md:text-4xl font-bold uppercase tracking-tight leading-tight">
-                  Integrated Precision Engineering &amp; Automated Systems
+              {/* Left Column: Heading & Value Proposition */}
+              <div className="flex-1 space-y-6">
+                <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#00A6FB]/15 border border-[#00A6FB]/30 text-[#00A6FB] text-xs font-semibold tracking-wider uppercase">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00A6FB]" />
+                  <span>Service Overview</span>
+                </div>
+
+                <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-bold text-white tracking-tight leading-[1.2]">
+                  Integrated Precision Engineering &amp; <br className="hidden sm:inline" />
+                  <span className="text-[#00A6FB]">Automated Systems</span>
                 </h2>
                 
-                <div className="space-y-3 text-gray-300 text-sm md:text-base leading-relaxed font-light">
+                <div className="space-y-4 text-gray-300 text-sm md:text-base leading-relaxed font-light max-w-2xl">
                   <p>
-                    HiTech Engineering’s service ecosystem provides custom precision manufacturing, 12kW fiber laser cutting, 5-axis CNC machining, and automated line integration for B2B industrial leaders and tier-1 suppliers.
+                    HiTech Engineering’s service ecosystem provides custom precision manufacturing, 12kW fiber laser cutting, 5-axis CNC machining, and automated line integration for industrial leaders and tier-1 suppliers worldwide.
                   </p>
                   <p>
                     We combine heavy mechanical custom tooling, electronic pneumatic controls, and 24/7 predictive IoT sensor monitoring under one unified plant roof — guaranteeing complete structural integrity, rapid turnaround, and zero unplanned downtime.
                   </p>
                 </div>
+
+                {/* Trust & Capability Badges */}
+                <div className="pt-2 flex flex-wrap gap-y-2.5 gap-x-6 text-xs sm:text-sm text-gray-300 font-medium">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#00A6FB] flex-shrink-0" />
+                    <span>Turnkey Single-Roof Facility</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#00A6FB] flex-shrink-0" />
+                    <span>Prototypes to High-Volume Runs</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#00A6FB] flex-shrink-0" />
+                    <span>100% CMM Metrology Traceable</span>
+                  </div>
+                </div>
               </div>
 
-              <div className="lg:w-80 shrink-0 bg-white/5 border border-white/10 p-5 rounded-2xl space-y-3 text-xs">
-                <div className="flex justify-between border-b border-white/10 pb-2">
-                  <span className="text-gray-400">QUALITY STANDARD</span>
-                  <span className="text-[#00A6FB] font-bold">ISO 9001:2015</span>
-                </div>
-                <div className="flex justify-between border-b border-white/10 pb-2">
-                  <span className="text-gray-400">TOLERANCE PASSED</span>
-                  <span className="text-white font-bold">±0.005 mm</span>
-                </div>
-                <div className="flex justify-between border-b border-white/10 pb-2">
-                  <span className="text-gray-400">CNC AXES</span>
-                  <span className="text-white font-bold">5-AXIS CONT.</span>
-                </div>
-                <div className="flex justify-between border-b border-white/10 pb-2">
-                  <span className="text-gray-400">LINE UPTIME</span>
-                  <span className="text-emerald-400 font-bold">99.9%</span>
-                </div>
-              </div>
+              {/* Right Column: High-Definition Bright Laser Cutting Animation Video */}
+              <LaserCuttingVideoCard />
 
             </div>
           </div>
@@ -313,10 +359,12 @@ export default function Services() {
         <div className="relative z-10 w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12">
           
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-10 gap-4">
-            <div className="space-y-2 max-w-3xl">
-              <span className="text-xs font-bold text-[#006494] uppercase tracking-[0.2em]">03 — WHAT WE OFFER</span>
-              <h2 className="font-headline-xl text-[30px] md:text-[42px] text-[#051923] uppercase tracking-wide font-bold leading-tight">
-                OUR INDIVIDUAL CAPABILITIES<span className="text-[#00A6FB]">.</span>
+            <div className="space-y-3 max-w-3xl">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#006494]/10 text-[#006494] border border-[#006494]/20 text-xs font-bold uppercase tracking-wider">
+                What We Offer
+              </div>
+              <h2 className="font-headline-xl text-[28px] sm:text-[34px] md:text-[42px] text-[#051923] uppercase tracking-wide font-bold leading-tight">
+                Our Individual Capabilities<span className="text-[#00A6FB]">.</span>
               </h2>
               <p className="font-body-md text-[15px] text-gray-600 italic">
                 Showcasing individual manufacturing capabilities built for industrial scale.
@@ -377,8 +425,10 @@ export default function Services() {
       <section className="py-12 md:py-16 bg-slate-50/80 border-t border-b border-gray-200">
         <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12">
           
-          <div className="text-center max-w-3xl mx-auto mb-10 space-y-2">
-            <span className="text-xs font-bold text-[#006494] uppercase tracking-[0.25em]">04 — OUR METHODOLOGY</span>
+          <div className="text-center max-w-3xl mx-auto mb-10 space-y-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#006494]/10 text-[#006494] border border-[#006494]/20 text-xs font-bold uppercase tracking-wider">
+              Our Methodology
+            </div>
             <h2 className="text-3xl md:text-4xl font-bold font-heading text-[#051923] uppercase tracking-tight">
               Manufacturing Process Pipeline
             </h2>
@@ -484,9 +534,11 @@ export default function Services() {
         <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12">
           
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-10">
-            <div className="max-w-2xl">
-              <span className="text-xs font-bold text-[#006494] uppercase tracking-[0.2em]">05 — SECTORS</span>
-              <h2 className="text-[28px] md:text-[40px] font-bold text-[#051923] tracking-tight leading-tight mb-2 uppercase">
+            <div className="max-w-2xl space-y-3">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#006494]/10 text-[#006494] border border-[#006494]/20 text-xs font-bold uppercase tracking-wider">
+                Industries Served
+              </div>
+              <h2 className="text-[28px] md:text-[40px] font-bold text-[#051923] tracking-tight leading-tight uppercase">
                 Industries We Serve<span className="text-[#00A6FB]">.</span>
               </h2>
               <p className="text-[15px] md:text-[16px] text-gray-600 font-light leading-relaxed">
@@ -527,20 +579,21 @@ export default function Services() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 06. WHY CHOOSE US (CLEAN MODERN ADVANTAGES GRID) */}
+      {/* 06. WHY INDUSTRY LEADERS CHOOSE HITECH (INTERACTIVE FEATURE SHOWCASE) */}
       {/* ========================================================================= */}
-      <section className="py-20 md:py-28 bg-[#F8FAFC] relative overflow-hidden border-t border-b border-gray-200">
+      <section className="py-20 md:py-24 bg-gradient-to-b from-white via-slate-50 to-white relative overflow-hidden border-t border-b border-gray-200/70">
         
-        {/* Subtle Background Accent Glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#006494]/5 rounded-full blur-[160px] pointer-events-none" />
+        {/* Subtle Background Ambient Accents */}
+        <div className="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#00A6FB]/10 rounded-full blur-[160px] pointer-events-none" />
+        <div className="absolute bottom-10 right-10 w-[600px] h-[600px] bg-[#006494]/10 rounded-full blur-[140px] pointer-events-none" />
 
-        <div className="relative z-10 w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12">
+        <div className="relative z-10 w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Header */}
-          <div className="mb-16 text-center max-w-3xl mx-auto space-y-4">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#006494]/10 text-[#006494] text-xs font-bold uppercase tracking-widest border border-[#006494]/20">
+          <div className="mb-10 text-center max-w-3xl mx-auto space-y-3">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#006494]/10 text-[#006494] text-xs font-bold uppercase tracking-widest border border-[#006494]/20 shadow-sm">
               <Sparkles className="w-3.5 h-3.5 text-[#00A6FB]" />
-              <span>06 — Why Choose Us</span>
+              <span>Why Choose HiTech</span>
             </div>
             
             <h2 className="text-3xl sm:text-4xl md:text-5xl text-[#051923] font-headline-xl font-bold leading-tight tracking-tight uppercase">
@@ -548,78 +601,240 @@ export default function Services() {
               <span className="text-[#00A6FB]">.</span>
             </h2>
 
-            <p className="text-gray-600 text-base md:text-lg font-light leading-relaxed max-w-2xl mx-auto">
-              Industrial-grade capabilities engineered for extreme tolerances, high-duty cycles, and guaranteed operational performance.
+            <p className="text-gray-600 text-sm md:text-base font-normal leading-relaxed max-w-2xl mx-auto">
+              Engineered for extreme tolerances and guaranteed operational performance.
             </p>
           </div>
 
-          {/* Clean 3-Column Bento Cards Grid */}
-          <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
-          >
-            {advantages.map((adv, idx) => {
-              const IconComp = adv.icon;
-              return (
-                <motion.div 
-                  key={idx}
-                  variants={itemVariants}
-                  whileHover={{ y: -6 }}
-                  className="group relative p-8 rounded-2xl bg-white border border-gray-200 shadow-sm hover:shadow-2xl hover:border-[#006494]/40 transition-all duration-500 flex flex-col justify-between overflow-hidden"
-                >
-                  {/* Top Highlight Accent Line on Hover */}
-                  <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#00A6FB] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          {/* Asymmetric 4-Card Bento Grid Forming a Wide Rectangle */}
+          <div className="w-full max-w-[1440px] mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 md:grid-rows-2 gap-4 md:gap-5 md:h-[580px]">
+              {/* Card 1: Left Column (5 cols x 2 rows - Large Tall Anchor) - Flagship Machine Fleet */}
+              <div 
+                className="md:col-span-5 md:row-span-2 group relative rounded-3xl overflow-hidden border border-slate-200/90 bg-slate-900 shadow-md hover:shadow-2xl hover:border-[#00A6FB] hover:-translate-y-1.5 transition-all duration-500 ease-out flex flex-col justify-between p-5 sm:p-6 text-[#051923] cursor-pointer min-h-[340px] md:min-h-0"
+              >
+                {/* Full-Bleed Clear Background Image */}
+                <div className="absolute inset-0 z-0 overflow-hidden">
+                  <img
+                    src={advantagePillars[0].image}
+                    alt={advantagePillars[0].title}
+                    className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
+                </div>
 
-                  <div>
-                    {/* Top Row: Icon Container & Stat Callout Badge */}
-                    <div className="flex items-center justify-between mb-6">
-                      <div className="w-13 h-13 w-12 h-12 rounded-xl bg-sky-50 text-[#006494] border border-sky-100/80 flex items-center justify-center group-hover:bg-[#006494] group-hover:text-white transition-all duration-500 shadow-sm">
-                        <IconComp className="w-6 h-6" />
-                      </div>
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00A6FB] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                      <span className="px-3 py-1 rounded-full bg-slate-100 text-[#006494] text-xs font-bold border border-slate-200/80 group-hover:bg-[#00A6FB]/10 group-hover:border-[#00A6FB]/30 transition-colors duration-300">
-                        {adv.stat}
-                      </span>
-                    </div>
+                {/* Top Row */}
+                <div className="relative z-10 flex items-center justify-between gap-3">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md border border-white/40 shadow-sm text-[11px] font-bold text-[#006494] uppercase tracking-wider">
+                    <span className="w-2 h-2 rounded-full bg-[#00A6FB] animate-pulse" />
+                    <span>{advantagePillars[0].category}</span>
+                  </div>
+                  <span className="px-3.5 py-1 rounded-full bg-[#00A6FB] text-white text-xs font-bold shadow-md shadow-[#00A6FB]/25">
+                    {advantagePillars[0].stat}
+                  </span>
+                </div>
 
-                    {/* Advantage Tag & Title */}
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#00A6FB]" />
-                        <span className="text-xs font-bold uppercase tracking-wider text-[#006494]">
-                          Advantage {adv.num} — {adv.badge}
-                        </span>
-                      </div>
-
-                      <h3 className="text-xl font-bold text-[#051923] group-hover:text-[#006494] transition-colors leading-snug">
-                        {adv.title}
+                {/* Minimalist Floating White Dock for Maximum Visibility */}
+                <div className="relative z-10 mt-auto bg-white/95 backdrop-blur-md rounded-xl sm:rounded-2xl py-2.5 px-4 sm:py-3 sm:px-4.5 border border-slate-200/80 shadow-md group-hover:border-[#00A6FB]/60 transition-all duration-300">
+                  <div className="flex items-center justify-between gap-3">
+                    <div>
+                      <h3 className="text-base sm:text-lg md:text-xl font-bold font-heading text-[#051923] tracking-tight leading-snug">
+                        {advantagePillars[0].headline}
                       </h3>
-
-                      <p className="text-gray-600 text-sm leading-relaxed font-light pt-1">
-                        {adv.desc}
+                      <p className="text-[11px] sm:text-xs text-[#006494] font-semibold mt-0.5 flex items-center gap-1.5">
+                        <span>12,000 W • ±0.005 mm Repeatability</span>
                       </p>
                     </div>
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-100 flex items-center justify-center text-[#006494] group-hover:bg-[#00A6FB] group-hover:text-white transition-all flex-shrink-0 shadow-sm">
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                    </div>
                   </div>
+                </div>
+              </div>
 
-                  {/* Bullet Highlights Footer */}
-                  <div className="pt-5 mt-6 border-t border-gray-100 space-y-2 text-xs text-gray-700 font-medium">
-                    {adv.bullets.map((b, bIdx) => (
-                      <div key={bIdx} className="flex items-center gap-2">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-[#00A6FB] flex-shrink-0" />
-                        <span>{b}</span>
-                      </div>
-                    ))}
+              {/* Card 2: Top-Right (7 cols x 1 row - Wide Panoramic Banner) - Metrology & QA */}
+              <div 
+                className="md:col-span-7 md:row-span-1 group relative rounded-3xl overflow-hidden border border-slate-200/90 bg-slate-900 shadow-md hover:shadow-2xl hover:border-[#00A6FB] hover:-translate-y-1.5 transition-all duration-500 ease-out flex flex-col justify-between p-5 sm:p-6 text-[#051923] cursor-pointer min-h-[260px] md:min-h-0"
+              >
+                {/* Full-Bleed Clear Background Image */}
+                <div className="absolute inset-0 z-0 overflow-hidden">
+                  <img
+                    src={advantagePillars[1].image}
+                    alt={advantagePillars[1].title}
+                    className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
+                </div>
+
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00A6FB] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                {/* Top Row */}
+                <div className="relative z-10 flex items-center justify-between gap-3">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md border border-white/40 shadow-sm text-[11px] font-bold text-[#006494] uppercase tracking-wider">
+                    <span className="w-2 h-2 rounded-full bg-[#00A6FB] animate-pulse" />
+                    <span>{advantagePillars[1].category}</span>
                   </div>
-                </motion.div>
-              );
-            })}
-          </motion.div>
+                  <span className="px-3.5 py-1 rounded-full bg-[#00A6FB] text-white text-xs font-bold shadow-md shadow-[#00A6FB]/25">
+                    {advantagePillars[1].stat}
+                  </span>
+                </div>
+
+                {/* Minimalist Floating White Dock for Maximum Visibility */}
+                <div className="relative z-10 mt-auto bg-white/95 backdrop-blur-md rounded-xl sm:rounded-2xl py-2 px-3.5 sm:py-2.5 sm:px-4.5 border border-slate-200/80 shadow-md group-hover:border-[#00A6FB]/60 transition-all duration-300">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-3">
+                      <h3 className="text-sm sm:text-base md:text-lg font-bold font-heading text-[#051923] tracking-tight leading-snug">
+                        {advantagePillars[1].headline}
+                      </h3>
+                      <span className="hidden sm:inline text-slate-300 text-xs">•</span>
+                      <p className="text-[11px] sm:text-xs text-[#006494] font-semibold">
+                        Ra &lt; 0.2 µm • ISO 9001:2015 Traceability
+                      </p>
+                    </div>
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-100 flex items-center justify-center text-[#006494] group-hover:bg-[#00A6FB] group-hover:text-white transition-all flex-shrink-0 shadow-sm">
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 3: Bottom-Center (4 cols x 1 row - Medium Proportional Card) - High-Volume Scale */}
+              <div 
+                className="md:col-span-4 md:row-span-1 group relative rounded-3xl overflow-hidden border border-slate-200/90 bg-slate-900 shadow-md hover:shadow-2xl hover:border-[#00A6FB] hover:-translate-y-1.5 transition-all duration-500 ease-out flex flex-col justify-between p-4 sm:p-5 text-[#051923] cursor-pointer min-h-[260px] md:min-h-0"
+              >
+                {/* Full-Bleed Clear Background Image */}
+                <div className="absolute inset-0 z-0 overflow-hidden">
+                  <img
+                    src={advantagePillars[2].image}
+                    alt={advantagePillars[2].title}
+                    className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
+                </div>
+
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00A6FB] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                {/* Top Row */}
+                <div className="relative z-10 flex items-center justify-between gap-2">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-md border border-white/40 shadow-sm text-[10px] font-bold text-[#006494] uppercase tracking-wider">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#00A6FB] animate-pulse" />
+                    <span>Scale</span>
+                  </div>
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#00A6FB] text-white text-[11px] font-bold shadow-md shadow-[#00A6FB]/25">
+                    {advantagePillars[2].stat}
+                  </span>
+                </div>
+
+                {/* Minimalist Floating White Dock for Maximum Visibility */}
+                <div className="relative z-10 mt-auto bg-white/95 backdrop-blur-md rounded-xl sm:rounded-2xl py-2 px-3 sm:py-2.5 sm:px-3.5 border border-slate-200/80 shadow-md group-hover:border-[#00A6FB]/60 transition-all duration-300">
+                  <div className="flex items-center justify-between gap-2">
+                    <div>
+                      <h3 className="text-xs sm:text-sm font-bold font-heading text-[#051923] tracking-tight leading-snug">
+                        {advantagePillars[2].headline}
+                      </h3>
+                      <p className="text-[10px] sm:text-[11px] text-[#006494] font-semibold mt-0.5">
+                        24/7 Operations • Kanban JIT
+                      </p>
+                    </div>
+                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-100 flex items-center justify-center text-[#006494] group-hover:bg-[#00A6FB] group-hover:text-white transition-all flex-shrink-0 shadow-sm">
+                      <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 4: Bottom-Right (3 cols x 1 row - Compact Asymmetric Card) - Turnkey Delivery & FAT */}
+              <div 
+                className="md:col-span-3 md:row-span-1 group relative rounded-3xl overflow-hidden border border-slate-200/90 bg-slate-900 shadow-md hover:shadow-2xl hover:border-[#00A6FB] hover:-translate-y-1.5 transition-all duration-500 ease-out flex flex-col justify-between p-4 sm:p-5 text-[#051923] cursor-pointer min-h-[260px] md:min-h-0"
+              >
+                {/* Full-Bleed Clear Background Image */}
+                <div className="absolute inset-0 z-0 overflow-hidden">
+                  <img
+                    src={advantagePillars[3].image}
+                    alt={advantagePillars[3].title}
+                    className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
+                </div>
+
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00A6FB] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                {/* Top Row */}
+                <div className="relative z-10 flex items-center justify-between gap-2">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-md border border-white/40 shadow-sm text-[10px] font-bold text-[#006494] uppercase tracking-wider">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#00A6FB] animate-pulse" />
+                    <span>Turnkey</span>
+                  </div>
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#00A6FB] text-white text-[11px] font-bold shadow-md shadow-[#00A6FB]/25">
+                    {advantagePillars[3].stat}
+                  </span>
+                </div>
+
+                {/* Minimalist Floating White Dock for Maximum Visibility */}
+                <div className="relative z-10 mt-auto bg-white/95 backdrop-blur-md rounded-xl sm:rounded-2xl py-2 px-3 sm:py-2.5 sm:px-3.5 border border-slate-200/80 shadow-md group-hover:border-[#00A6FB]/60 transition-all duration-300">
+                  <div className="flex items-center justify-between gap-2">
+                    <div>
+                      <h3 className="text-xs sm:text-sm font-bold font-heading text-[#051923] tracking-tight leading-snug">
+                        {advantagePillars[3].headline}
+                      </h3>
+                      <p className="text-[10px] sm:text-[11px] text-[#006494] font-semibold mt-0.5">
+                        100% FAT • 99.9% On-Time
+                      </p>
+                    </div>
+                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-100 flex items-center justify-center text-[#006494] group-hover:bg-[#00A6FB] group-hover:text-white transition-all flex-shrink-0 shadow-sm">
+                      <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          {/* Unified Bottom Performance Metrics Ribbon */}
+          <div className="mt-16 pt-10 border-t border-gray-200/80 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div className="space-y-1">
+              <div className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#051923] font-heading">
+                ±0.005<span className="text-[#00A6FB]">mm</span>
+              </div>
+              <div className="text-xs text-gray-600 font-medium uppercase tracking-wider">
+                Precision Positioning Accuracy
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <div className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#051923] font-heading">
+                12,000<span className="text-[#00A6FB]">W</span>
+              </div>
+              <div className="text-xs text-gray-600 font-medium uppercase tracking-wider">
+                Fiber Laser Cutting Fleet
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <div className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#051923] font-heading">
+                50,000<span className="text-[#00A6FB]">+</span>
+              </div>
+              <div className="text-xs text-gray-600 font-medium uppercase tracking-wider">
+                Monthly Production Capacity
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <div className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#051923] font-heading">
+                99.9<span className="text-[#00A6FB]">%</span>
+              </div>
+              <div className="text-xs text-gray-600 font-medium uppercase tracking-wider">
+                Guaranteed On-Time Delivery
+              </div>
+            </div>
+          </div>
 
         </div>
       </section>
+
 
 
 

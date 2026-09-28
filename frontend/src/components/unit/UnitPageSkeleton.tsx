@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { 
   ChevronRight, ArrowRight, CheckCircle2, ShieldCheck, 
-  Sparkles, Layers, Cpu, Award, Zap, PhoneCall, Mail, MapPin
+  Sparkles, Layers, Award, Zap, Phone, Mail, MapPin, Factory
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import type { UnitData, GalleryItem } from '../../data/unitsData';
@@ -28,15 +28,15 @@ export default function UnitPageSkeleton({ data }: UnitPageSkeletonProps) {
   const timelineRef = useRef<HTMLDivElement>(null);
   const isTimelineInView = useInView(timelineRef, { once: true, margin: '-100px' });
 
-  const { theme, breadcrumb, unitName, tagline, heroImage, heroBadge, overview, capabilities, process, machinery, whyChooseUs, gallery, cta } = data;
+  const { theme, breadcrumb, unitName, tagline, heroImage, heroBadge, overview, process, machinery, whyChooseUs, gallery, cta } = data;
 
   return (
     <main className="w-full bg-[#F8FAFC] text-[#051923] overflow-x-clip font-sans selection:bg-[#051923] selection:text-white">
       {/* ========================================================================= */}
-      {/* 1. HERO SECTION (HOME PAGE HERO SLIDER PALETTE & STYLING) */}
+      {/* 1. HERO SECTION (HOME PAGE HERO SLIDER PALETTE & DOCKED FACILITY BAR) */}
       {/* ========================================================================= */}
-      <section ref={heroRef} className="relative min-h-[85vh] flex items-center justify-center pt-28 pb-20 px-4 md:px-8 lg:px-12 overflow-hidden border-b border-gray-200">
-        {/* Parallax Background Image with Home Page Dark Scrim Overlay */}
+      <section ref={heroRef} className="relative w-full min-h-[90vh] flex flex-col justify-between overflow-hidden border-b border-gray-200">
+        {/* Parallax Background Image with Home Page Overlay */}
         <motion.div 
           style={{ y: heroImageY }}
           className="absolute inset-0 z-0 overflow-hidden"
@@ -44,125 +44,91 @@ export default function UnitPageSkeleton({ data }: UnitPageSkeletonProps) {
           <img
             src={heroImage}
             alt={unitName}
-            className="w-full h-full object-cover scale-110 filter brightness-[0.45] contrast-125"
+            className="w-full h-full object-cover scale-110 filter brightness-[0.80] contrast-105 saturate-[1.05]"
           />
-          {/* Home Page Gradient Scrim */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#051923]/95 via-[#051923]/80 to-[#051923]/60" />
-          
-          {/* Subtle Home Page Grid Overlay */}
-          <div 
-            className="absolute inset-0 opacity-[0.1] pointer-events-none"
-            style={{
-              backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.4) 1px, transparent 0)`,
-              backgroundSize: '32px 32px'
-            }}
-          />
-
-          {/* Dynamic Ambient Glow */}
-          <div 
-            className={`absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#006494] rounded-full blur-[160px] pointer-events-none opacity-25`}
-          />
+          {/* Overlay - Darker on the left for crisp text contrast, brighter on the right to let machinery shine */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/20 z-10" />
         </motion.div>
 
-        {/* Hero Main Content Container (2-Column Layout with Address on the Right) */}
-        <div className="relative z-10 w-full max-w-[1400px] mx-auto mt-6 grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          
-          {/* Left Column: Title, Tagline & Single CTA */}
-          <div className="lg:col-span-7 flex flex-col items-start text-left">
-            {/* Headline Unit Name */}
-            <motion.h1 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.1, delay: 0.1 }}
-              className="text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-bold text-white tracking-tight uppercase leading-[1.05] mb-6 max-w-4xl font-headline-xl"
-            >
+        {/* Hero Content - Clean, spacious left-aligned layout matching Home Page HeroSlider */}
+        <div className="relative z-20 w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 pt-28 pb-16 my-auto">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9 }}
+            className="max-w-3xl text-left text-white space-y-6"
+          >
+            <h1 className="font-heading text-[38px] sm:text-[48px] md:text-[56px] lg:text-[64px] leading-tight text-white uppercase tracking-wide">
               {unitName}
-              <span style={{ color: theme.accentHex }}>.</span>
-            </motion.h1>
+            </h1>
+            
+            {/* 3-dash accent divider matching Home Page HeroSlider */}
+            <div className="flex items-center gap-2">
+              <div className="w-16 h-1 rounded-full" style={{ backgroundColor: theme.accentHex }} />
+              <div className="w-4 h-1 rounded-full opacity-75" style={{ backgroundColor: theme.accentHex }} />
+              <div className="w-1.5 h-1.5 rounded-full opacity-50" style={{ backgroundColor: theme.accentHex }} />
+            </div>
 
-            {/* Decorative Accent Bar */}
-            <motion.div 
-              initial={{ opacity: 0, width: 0 }}
-              animate={{ opacity: 1, width: '120px' }}
-              transition={{ duration: 1.0, delay: 0.2 }}
-              className="h-1.5 rounded-full mb-8"
-              style={{ backgroundColor: theme.accentHex }}
-            />
-
-            {/* One-Line Tagline */}
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.1, delay: 0.3 }}
-              className="text-lg md:text-2xl text-gray-200 max-w-2xl font-light leading-relaxed mb-10 text-balance"
-            >
+            <p className="font-body-lg text-lg md:text-[20px] leading-relaxed text-gray-200 font-light">
               {tagline}
-            </motion.p>
+            </p>
 
-            {/* Single CTA Button */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.1, delay: 0.4 }}
-            >
+            <div className="pt-6 md:pt-8">
               <Link
                 to="/contact"
-                className={`px-8 py-4 rounded-full font-bold text-sm tracking-wider uppercase flex items-center gap-3 transition-all duration-300 shadow-xl ${theme.buttonBg} hover:scale-[1.03] active:scale-[0.98]`}
+                className="inline-flex items-center gap-3 px-8 py-3.5 rounded-full border-[1.5px] border-white/80 text-white font-body-md font-medium text-[17px] hover:bg-white hover:text-black transition-all duration-300 group"
               >
                 <span>Get a Quote for {unitName.replace(' Division', '')}</span>
-                <ArrowRight className="w-4 h-4" />
+                <span className="material-symbols-outlined text-[20px] font-bold group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" style={{ fontVariationSettings: "'wght' 600" }}>north_east</span>
               </Link>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
+        </div>
 
-          {/* Right Column: Clean Unboxed Floating Facility Address Block */}
-          <motion.div 
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.1, delay: 0.5 }}
-            className="lg:col-span-5 flex justify-start lg:justify-end items-center"
-          >
-            <div className="w-full max-w-sm sm:max-w-md border-l-2 border-[#00A6FB] pl-5 sm:pl-6 py-1 space-y-5 text-white">
-              {/* Facility Title & Active Status */}
-              <div className="space-y-1.5">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-xs font-bold uppercase tracking-widest text-[#00A6FB]">
-                    Coimbatore Facility Hub
-                  </span>
-                </div>
-                <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight font-headline-xl">
+        {/* Docked Facility Bar - Grounded along the bottom edge of the hero banner */}
+        <div className="relative z-20 w-full border-t border-white/10 bg-black/75 backdrop-blur-xl py-2.5 lg:py-3 px-4 md:px-8 lg:px-12">
+          <div className="w-full max-w-[1920px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            
+            {/* Left End: Facility Hub & Name */}
+            <div className="flex items-center gap-3">
+              <div 
+                className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 bg-[#00A6FB]/15 border border-[#00A6FB]/30 text-[#00A6FB] shadow-sm transition-colors hover:bg-[#00A6FB]/25"
+              >
+                <Factory className="w-4 h-4" />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-[#00A6FB] font-sans leading-tight">
+                  Coimbatore Facility Hub
+                </span>
+                <div className="font-sans font-bold text-sm sm:text-[15px] text-white leading-tight">
                   Hitech Engineering Works
-                </h3>
-              </div>
-
-              {/* Location Address */}
-              <div className="space-y-1 text-sm text-gray-200 leading-relaxed">
-                <p className="text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">
-                  Main Manufacturing & Plant Location
-                </p>
-                <p className="font-normal text-white/90">
-                  SF No. 428/2, Industrial Estate Road, Peelamedu,
-                </p>
-                <p className="font-normal text-white/90">
-                  Coimbatore, Tamil Nadu – 641004, India
-                </p>
-              </div>
-
-              {/* Thin Divider Line & Contact Lines */}
-              <div className="border-t border-white/15 pt-4 space-y-2.5">
-                <div className="flex items-center gap-3 text-sm text-gray-200">
-                  <PhoneCall className="w-4 h-4 text-[#00A6FB] flex-shrink-0" />
-                  <span className="font-medium text-white/90">+91 (422) 298-7654 / +91 98422 12345</span>
-                </div>
-                <div className="flex items-center gap-3 text-sm text-gray-200">
-                  <Mail className="w-4 h-4 text-[#00A6FB] flex-shrink-0" />
-                  <span className="font-medium text-white/90">info@hitechengineering.com</span>
                 </div>
               </div>
             </div>
-          </motion.div>
 
+            {/* Right End: Main Plant Address */}
+            <div className="flex items-center gap-3">
+              <div 
+                className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 bg-[#00A6FB]/15 border border-[#00A6FB]/30 text-[#00A6FB] shadow-sm transition-colors hover:bg-[#00A6FB]/25"
+              >
+                <MapPin className="w-4 h-4" />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-[#00A6FB] font-sans leading-tight">
+                  Main Manufacturing & Plant Location
+                </span>
+                <div className="text-xs text-gray-200 leading-snug font-sans">
+                  <span className="text-white font-normal block sm:inline">
+                    SF No. 428/2, Industrial Estate Road, Peelamedu,
+                  </span>{' '}
+                  <span className="text-gray-300 block sm:inline">
+                    Coimbatore, Tamil Nadu – 641004, India
+                  </span>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
       </section>
 
@@ -248,88 +214,74 @@ export default function UnitPageSkeleton({ data }: UnitPageSkeletonProps) {
       </section>
 
       {/* ========================================================================= */}
-      {/* 3. KEY CAPABILITIES / WHAT WE DO SECTION (WHITE BACKDROP & CRISP CARDS) */}
+      {/* 3. GALLERY / SNAPSHOT SECTION (LIGHT BACKDROP WITH LIGHTBOX) */}
       {/* ========================================================================= */}
-      <section id="capabilities" className="py-24 px-4 md:px-8 lg:px-12 bg-white relative border-b border-gray-200">
+      <section id="gallery" className="py-24 px-4 md:px-8 lg:px-12 bg-white relative border-b border-gray-200">
         <div className="w-full max-w-[1400px] mx-auto">
           
-          {/* Section Header */}
+          {/* Header */}
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
             <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#006494]/10 text-[#006494] border border-[#006494]/20 text-xs font-bold uppercase tracking-widest">
-              <span className="w-2 h-2 rounded-full" style={{ backgroundColor: theme.accentHex }} />
-              Key Capabilities
+              {gallery.subtitle}
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#051923] tracking-tight font-headline-xl">
-              What We Do Best
+              {gallery.title}
               <span style={{ color: theme.accentHex }}>.</span>
             </h2>
-            <p className="text-gray-600 text-base md:text-lg font-light">
-              State-of-the-art engineering capabilities tailored specifically to the operational requirements of our {unitName.toLowerCase()}.
+            <p className="text-gray-600 text-base font-light">
+              Click any snapshot to inspect high-resolution details of our finished work.
             </p>
           </div>
 
-          {/* 4 Cards Grid (Home Page FeaturedSolutions Style) */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {capabilities.map((cap, idx) => {
-              const IconComp = cap.icon;
-              return (
-                <motion.div
-                  key={cap.id}
-                  initial={{ opacity: 0, y: 35 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 1.0, delay: idx * 0.2 }}
-                  className="group relative p-8 rounded-2xl bg-[#F8FAFC] border border-gray-200 hover:border-[#006494]/40 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl flex flex-col justify-between overflow-hidden"
-                >
-                  {/* Hover Background Image at 9% Opacity */}
-                  {cap.image && (
-                    <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-[0.09] transition-opacity duration-700 overflow-hidden pointer-events-none">
-                      <img
-                        src={cap.image}
-                        alt={cap.title}
-                        className="w-full h-full object-cover scale-100 group-hover:scale-105 transition-transform duration-1000"
-                      />
-                    </div>
-                  )}
+          {/* 6 Image Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {gallery.items.map((item, idx) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.9, delay: idx * 0.12 }}
+                onClick={() => setSelectedGalleryItem(item)}
+                className="group relative rounded-2xl overflow-hidden aspect-[4/3] bg-gray-100 border border-gray-200 cursor-pointer shadow-md hover:shadow-2xl transition-all duration-500"
+              >
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
+                />
+                
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#051923]/90 via-[#051923]/40 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-500" />
 
-                  {/* Subtle top accent line on hover */}
-                  <div 
-                    className="absolute top-0 left-8 right-8 h-[3px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"
-                    style={{ backgroundColor: theme.accentHex }}
-                  />
-
-                  <div className="relative z-10">
-                    {/* Icon Box */}
-                    <div 
-                      className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 bg-white border border-gray-200 shadow-sm group-hover:scale-110 group-hover:shadow-md transition-all duration-500`}
-                    >
-                      <IconComp className="w-7 h-7" style={{ color: theme.accentHex }} />
-                    </div>
-
-                    <h3 className="text-xl font-bold text-[#051923] mb-3 group-hover:text-[#006494] transition-colors duration-500">
-                      {cap.title}
-                    </h3>
-                    
-                    <p className="text-gray-600 text-sm leading-relaxed mb-6 font-light">
-                      {cap.desc}
-                    </p>
+                {/* Info Text & Category */}
+                <div className="absolute inset-0 p-6 flex flex-col justify-end text-white">
+                  <span 
+                    className="text-xs font-extrabold uppercase tracking-wider mb-1"
+                    style={{ color: theme.accentHex }}
+                  >
+                    {item.category}
+                  </span>
+                  <h4 className="text-lg font-bold text-white group-hover:text-white transition-colors duration-500">
+                    {item.title}
+                  </h4>
+                  <div className="mt-3 flex items-center gap-2 text-xs font-semibold text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <span>Click to expand image</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </div>
-
-                  {/* Spec Bullets */}
-                  <div className="relative z-10 pt-4 border-t border-gray-200/80 space-y-2">
-                    {cap.specs.map((spec, sIdx) => (
-                      <div key={sIdx} className="flex items-center gap-2 text-xs text-gray-700 font-medium">
-                        <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: theme.accentHex }} />
-                        <span>{spec}</span>
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
-              );
-            })}
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
+
+      {/* Lightbox Pop-up Modal */}
+      <GalleryLightbox
+        selectedItem={selectedGalleryItem}
+        onClose={() => setSelectedGalleryItem(null)}
+        accentHex={theme.accentHex}
+      />
 
       {/* ========================================================================= */}
       {/* 4. PROCESS / WORKFLOW SECTION (DEEP NAVY WRAPPER LIKE HOME ABOUTSECTION) */}
@@ -387,7 +339,7 @@ export default function UnitPageSkeleton({ data }: UnitPageSkeletonProps) {
                         {step.desc}
                       </p>
 
-                      <div className="mt-auto pt-3 border-t border-white/10 w-full text-xs text-gray-400 italic font-mono">
+                      <div className="mt-auto pt-3 border-t border-white/10 w-full text-xs text-gray-400 italic font-sans">
                         "{step.detail}"
                       </div>
                     </motion.div>
@@ -523,79 +475,9 @@ export default function UnitPageSkeleton({ data }: UnitPageSkeletonProps) {
       </section>
 
       {/* ========================================================================= */}
-      {/* 7. GALLERY / SNAPSHOT SECTION (LIGHT BACKDROP WITH LIGHTBOX) */}
+      {/* 7. CTA (CALL TO ACTION) SECTION (MATCHING HOME PAGE CTA BANNER) */}
       {/* ========================================================================= */}
-      <section className="py-24 px-4 md:px-8 lg:px-12 bg-white relative border-b border-gray-200">
-        <div className="w-full max-w-[1400px] mx-auto">
-          
-          {/* Header */}
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#006494]/10 text-[#006494] border border-[#006494]/20 text-xs font-bold uppercase tracking-widest">
-              {gallery.subtitle}
-            </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#051923] tracking-tight font-headline-xl">
-              {gallery.title}
-              <span style={{ color: theme.accentHex }}>.</span>
-            </h2>
-            <p className="text-gray-600 text-base font-light">
-              Click any snapshot to inspect high-resolution details of our finished work.
-            </p>
-          </div>
-
-          {/* 6 Image Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {gallery.items.map((item, idx) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.9, delay: idx * 0.12 }}
-                onClick={() => setSelectedGalleryItem(item)}
-                className="group relative rounded-2xl overflow-hidden aspect-[4/3] bg-gray-100 border border-gray-200 cursor-pointer shadow-md hover:shadow-2xl transition-all duration-500"
-              >
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
-                />
-                
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#051923]/90 via-[#051923]/40 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-500" />
-
-                {/* Info Text & Category */}
-                <div className="absolute inset-0 p-6 flex flex-col justify-end text-white">
-                  <span 
-                    className="text-xs font-extrabold uppercase tracking-wider mb-1"
-                    style={{ color: theme.accentHex }}
-                  >
-                    {item.category}
-                  </span>
-                  <h4 className="text-lg font-bold text-white group-hover:text-white transition-colors duration-500">
-                    {item.title}
-                  </h4>
-                  <div className="mt-3 flex items-center gap-2 text-xs font-semibold text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <span>Click to expand image</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Lightbox Pop-up Modal */}
-      <GalleryLightbox
-        selectedItem={selectedGalleryItem}
-        onClose={() => setSelectedGalleryItem(null)}
-        accentHex={theme.accentHex}
-      />
-
-      {/* ========================================================================= */}
-      {/* 8. CTA (CALL TO ACTION) SECTION (MATCHING HOME PAGE CTA BANNER) */}
-      {/* ========================================================================= */}
-      <section className="py-24 px-4 md:px-8 lg:px-12 bg-[#F8FAFC] relative overflow-hidden">
+      <section className="py-24 px-4 md:px-8 lg:px-12 bg-white relative overflow-hidden">
         <div className="w-full max-w-[1200px] mx-auto relative z-10">
           <div className="p-8 sm:p-12 md:p-16 rounded-3xl bg-[#051923] text-white border border-white/10 shadow-2xl text-center space-y-8 backdrop-blur-xl relative overflow-hidden">
             
@@ -634,7 +516,7 @@ export default function UnitPageSkeleton({ data }: UnitPageSkeletonProps) {
             {/* Quick Contact Snippet */}
             <div className="pt-8 border-t border-white/15 flex flex-wrap items-center justify-center gap-8 text-xs text-gray-300 font-medium relative z-10">
               <div className="flex items-center gap-2">
-                <PhoneCall className="w-4 h-4 text-gray-400" />
+                <Phone className="w-4 h-4 text-gray-400" />
                 <span>24/7 Technical Inquiry Line</span>
               </div>
               <div className="flex items-center gap-2">

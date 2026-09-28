@@ -419,7 +419,7 @@ export const manufacturingData: UnitData = {
         title: 'Material Procurement',
         desc: 'Certified raw alloy billets and stock materials are prepped and fixture mounted.',
         detail: 'Includes chemical composition and mill test certificate verification.',
-        icon: Cpu
+        icon: Boxes
       },
       {
         number: '03',
