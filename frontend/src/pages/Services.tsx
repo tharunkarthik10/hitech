@@ -670,6 +670,92 @@ export default function Services() {
         </section>
 
         {/* ========================================================================= */}
+        {/* 05. EDITORIAL METRIC SHOWCASE (Grid Section matching user reference) */}
+        {/* ========================================================================= */}
+        <motion.section
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="w-full border border-gray-300 bg-white"
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-12">
+            
+            {/* Left Column: Bold Typography & Narrative */}
+            <div className="lg:col-span-5 p-8 sm:p-12 lg:p-14 border-b lg:border-b-0 lg:border-r border-gray-300 flex flex-col justify-between">
+              <div>
+                <h2 className="text-3xl sm:text-5xl lg:text-[54px] font-bold tracking-tight text-[#121212] leading-[1.04] uppercase">
+                  From first<br />
+                  idea to a<br />
+                  place that<br />
+                  breathes.
+                </h2>
+              </div>
+
+              <div className="pt-12 lg:pt-20">
+                <p className="text-xs sm:text-sm text-[#475569] font-normal leading-relaxed max-w-sm">
+                  We believe that precision engineering is measured not only in microns — but in meaning and reliability. These numbers reflect the care, consistency, and vision we bring into every project.
+                </p>
+              </div>
+            </div>
+
+            {/* Right Column: 4-Quadrant Metric Grid */}
+            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2">
+              
+              {/* Quadrant 1: Top-Left */}
+              <div className="p-8 sm:p-10 lg:p-12 border-b border-r-0 sm:border-r border-gray-300 flex flex-col justify-end min-h-[200px] sm:min-h-[240px]">
+                <div className="flex items-end justify-between gap-4 w-full">
+                  <span className="text-xs sm:text-sm text-[#475569] font-normal leading-snug max-w-[150px]">
+                    Completed residential and commercial projects
+                  </span>
+                  <span className="text-5xl sm:text-6xl lg:text-7xl font-normal text-[#121212] tracking-tighter leading-none">
+                    28
+                  </span>
+                </div>
+              </div>
+
+              {/* Quadrant 2: Top-Right */}
+              <div className="p-8 sm:p-10 lg:p-12 border-b border-gray-300 flex flex-col justify-end min-h-[200px] sm:min-h-[240px]">
+                <div className="flex items-end justify-between gap-4 w-full">
+                  <span className="text-xs sm:text-sm text-[#475569] font-normal leading-snug max-w-[150px]">
+                    Years of architectural practice
+                  </span>
+                  <span className="text-5xl sm:text-6xl lg:text-7xl font-normal text-[#121212] tracking-tighter leading-none">
+                    12
+                  </span>
+                </div>
+              </div>
+
+              {/* Quadrant 3: Bottom-Left */}
+              <div className="p-8 sm:p-10 lg:p-12 border-b sm:border-b-0 border-r-0 sm:border-r border-gray-300 flex flex-col justify-end min-h-[200px] sm:min-h-[240px]">
+                <div className="flex items-end justify-between gap-4 w-full">
+                  <span className="text-xs sm:text-sm text-[#475569] font-normal leading-snug max-w-[150px]">
+                    Countries with built spaces
+                  </span>
+                  <span className="text-5xl sm:text-6xl lg:text-7xl font-normal text-[#121212] tracking-tighter leading-none">
+                    6
+                  </span>
+                </div>
+              </div>
+
+              {/* Quadrant 4: Bottom-Right */}
+              <div className="p-8 sm:p-10 lg:p-12 flex flex-col justify-end min-h-[200px] sm:min-h-[240px]">
+                <div className="flex items-end justify-between gap-4 w-full">
+                  <span className="text-xs sm:text-sm text-[#475569] font-normal leading-snug max-w-[150px]">
+                    Custom concepts for every client
+                  </span>
+                  <span className="text-5xl sm:text-6xl lg:text-7xl font-normal text-[#121212] tracking-tighter leading-none">
+                    100
+                  </span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </motion.section>
+
+        {/* ========================================================================= */}
         {/* 06. ENGINEERING SOLUTIONS & CAPABILITIES TABLE (Staggered Row Reveals) */}
         {/* ========================================================================= */}
         <motion.section 
@@ -761,151 +847,6 @@ export default function Services() {
             </table>
           </div>
 
-        </motion.section>
-
-        {/* ========================================================================= */}
-        {/* 06. PRECISION ENGINEERING & AUTOMATION DUAL SPOTLIGHT CARD (Bottom Section) */}
-        {/* ========================================================================= */}
-        <motion.section
-          initial={{ opacity: 0, y: 35 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full rounded-[32px] sm:rounded-[44px] bg-[#f2f4f7] p-3 sm:p-5 lg:p-6 border border-gray-200/90 shadow-xs mb-16 sm:mb-20"
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-stretch">
-            
-            {/* Left Card: Light Editorial Focus */}
-            <div className="lg:col-span-5 bg-[#fbfcfd] rounded-[24px] sm:rounded-[32px] p-7 sm:p-9 lg:p-10 flex flex-col justify-between border border-white shadow-2xs relative">
-              <div className="space-y-4">
-                <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-bold tracking-tight text-[#121212] leading-[1.2]">
-                  <span className="text-[#94a3b8] font-normal block text-xl sm:text-2xl lg:text-[26px] mb-1">
-                    How Precision
-                  </span>
-                  Engineering is reshaping industrial solutions
-                </h2>
-                <p className="text-xs sm:text-sm text-[#64748b] font-normal leading-relaxed max-w-md">
-                  From advanced automation to cutting-edge materials, precision engineering is driving a new era of efficiency, reliability, and scalability.
-                </p>
-              </div>
-
-              {/* Tag Pills */}
-              <div className="space-y-2.5 my-8">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="px-4 py-1.5 rounded-full bg-white text-xs sm:text-sm font-medium text-gray-700 border border-gray-200/90 shadow-2xs">
-                    Performance
-                  </span>
-                  <span className="px-4 py-1.5 rounded-full bg-white text-xs sm:text-sm font-medium text-gray-700 border border-gray-200/90 shadow-2xs">
-                    Availability
-                  </span>
-                </div>
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="px-4 py-1.5 rounded-full bg-white text-xs sm:text-sm font-medium text-gray-700 border border-gray-200/90 shadow-2xs">
-                    Cost
-                  </span>
-                  <span className="px-4 py-1.5 rounded-full bg-white text-xs sm:text-sm font-medium text-gray-700 border border-gray-200/90 shadow-2xs">
-                    CNC
-                  </span>
-                  <span className="px-4 py-1.5 rounded-full bg-white text-xs sm:text-sm font-medium text-gray-700 border border-gray-200/90 shadow-2xs">
-                    Robotics Integration
-                  </span>
-                </div>
-              </div>
-
-              {/* Start Automation Button */}
-              <div className="pt-2">
-                <button
-                  onClick={() => openQuoteModal("Precision Automation Consultation")}
-                  className="px-5 py-2.5 rounded-full bg-[#121212] hover:bg-black text-white text-xs sm:text-sm font-medium tracking-tight transition-all shadow-md flex items-center gap-2.5 group cursor-pointer active:scale-95"
-                >
-                  <span className="relative flex h-3.5 w-3.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-60" />
-                    <span className="relative inline-flex rounded-full h-3.5 w-3.5 border-2 border-lime-400 border-t-transparent animate-spin" />
-                  </span>
-                  <span>Start Automation</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Right Card: Dark Futuristic Engineering Diagram */}
-            <div className="lg:col-span-7 bg-[#141517] rounded-[24px] sm:rounded-[32px] p-7 sm:p-9 lg:p-10 flex flex-col justify-between border border-neutral-800 shadow-xl relative text-white overflow-hidden">
-              
-              <div className="space-y-3 max-w-xl">
-                <h3 className="text-2xl sm:text-3xl lg:text-[32px] font-bold tracking-tight text-white leading-[1.2]">
-                  The Future Forged in Precision.
-                </h3>
-                <p className="text-xs sm:text-sm text-gray-400 font-normal leading-relaxed">
-                  By merging technology with innovation, industries are unlocking smarter solutions that reduce costs, enhance performance, and shape the future of manufacturing.
-                </p>
-              </div>
-
-              {/* Concentric Node Network Diagram */}
-              <div className="border border-white/10 rounded-2xl bg-black/40 overflow-hidden relative my-6 p-2 sm:p-4 flex items-center justify-center">
-                <svg
-                  viewBox="0 0 520 160"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-full h-auto max-h-[170px]"
-                >
-                  {/* Subtle outer wireframe boundary */}
-                  <rect x="4" y="4" width="512" height="152" rx="12" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
-
-                  {/* Concentric waves and arcs */}
-                  <circle cx="85" cy="80" r="110" stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
-                  <circle cx="85" cy="80" r="85" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-                  <circle cx="205" cy="80" r="85" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-                  <circle cx="315" cy="80" r="85" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-                  <circle cx="425" cy="80" r="85" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-
-                  {/* Main Node Rings */}
-                  {/* Node 1: Automation with dotted green radar border */}
-                  <circle cx="85" cy="80" r="48" stroke="#a3e635" strokeWidth="1.75" strokeDasharray="3 3" opacity="0.9" />
-                  <circle cx="85" cy="80" r="48" fill="#a3e635" fillOpacity="0.04" />
-                  
-                  {/* Node 2: Efficiency */}
-                  <circle cx="205" cy="80" r="48" stroke="rgba(255,255,255,0.18)" strokeWidth="1" />
-                  
-                  {/* Node 3: Data */}
-                  <circle cx="315" cy="80" r="48" stroke="rgba(255,255,255,0.18)" strokeWidth="1" />
-                  
-                  {/* Node 4: Innovation */}
-                  <circle cx="425" cy="80" r="48" stroke="rgba(255,255,255,0.18)" strokeWidth="1" />
-
-                  {/* Node Labels */}
-                  <text x="85" y="85" fill="#a3e635" fontSize="13" fontWeight="500" textAnchor="middle" dominantBaseline="middle" letterSpacing="0.02em">
-                    Automation
-                  </text>
-                  <text x="205" y="85" fill="#94a3b8" fontSize="13" fontWeight="400" textAnchor="middle" dominantBaseline="middle" letterSpacing="0.02em">
-                    Efficiency
-                  </text>
-                  <text x="315" y="85" fill="#94a3b8" fontSize="13" fontWeight="400" textAnchor="middle" dominantBaseline="middle" letterSpacing="0.02em">
-                    Data
-                  </text>
-                  <text x="425" y="85" fill="#94a3b8" fontSize="13" fontWeight="400" textAnchor="middle" dominantBaseline="middle" letterSpacing="0.02em">
-                    Innovation
-                  </text>
-                </svg>
-              </div>
-
-              {/* Bottom Actions Bar */}
-              <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/10 mt-auto">
-                <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-lime-950/40 border border-lime-500/30 text-lime-400 text-xs sm:text-sm font-medium shadow-xs">
-                  <ShieldCheck className="w-4 h-4 fill-lime-400/20 text-lime-400" />
-                  <span>Certified Secured</span>
-                </div>
-
-                <button
-                  onClick={() => openQuoteModal("Advanced Materials & Precision Solutions")}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white hover:bg-gray-100 text-black text-xs sm:text-sm font-medium tracking-tight transition-all shadow-md active:scale-95 cursor-pointer"
-                >
-                  <span>Advanced Materials</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-
-            </div>
-
-          </div>
         </motion.section>
 
       </div>
