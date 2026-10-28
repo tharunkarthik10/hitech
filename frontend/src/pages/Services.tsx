@@ -1,842 +1,953 @@
 import { useState, useRef } from 'react';
-import { motion, AnimatePresence, type Variants } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  ArrowRight, CheckCircle2, Factory, Settings, Users, LineChart, 
-  Shield, Wrench, ChevronDown, ChevronUp, FileText, Award, Cpu, 
-  Compass, Hammer, ClipboardCheck, ArrowUpRight, Sparkles, PhoneCall, 
-  Layers, Zap, Package, Search, Target, Activity, 
-  Building2, Car, Plane, Stethoscope, Sliders, CheckSquare, ShieldCheck,
-  Tractor, HardHat, ChevronLeft, Clock
+  Play, ArrowUpRight, ArrowRight, X, PhoneCall, Mail, 
+  CheckCircle2, Clock, ShieldCheck, Factory, Sparkles, 
+  Sliders, Cpu, Layers, MessageSquare, Zap, Target, Box
 } from 'lucide-react';
-import LaserCuttingVideoCard from '../components/LaserCuttingVideoCard';
 
 export default function Services() {
-  // 04. Active Process Step State
-  const [activeProcessStep, setActiveProcessStep] = useState(0);
-  // 06. Active Advantage Pillar State
-  const [activeAdvantage, setActiveAdvantage] = useState(0);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
+  const [quoteSubject, setQuoteSubject] = useState("");
+  
+  // Slider state for "What We Do" section
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeftState, setScrollLeftState] = useState(0);
 
-
-  // 03. What We Offer Capabilities Data
-  const capabilities = [
-    {
-      title: "Custom Manufacturing",
-      desc: "Products designed & manufactured strictly to your exact CAD specifications and tolerances.",
-      icon: Target,
-      image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=800&auto=format&fit=crop"
-    },
-    {
-      title: "Precision Processing",
-      desc: "5-axis milling and turning delivering consistent dimensions, micron accuracy, and ultra-smooth finishes.",
-      icon: Settings,
-      image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=800&auto=format&fit=crop"
-    },
-    {
-      title: "Bulk Production",
-      desc: "Scalable manufacturing optimized for large industrial production runs with zero defect tolerance.",
-      icon: Factory,
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop"
-    },
-    {
-      title: "Quality Testing",
-      desc: "Comprehensive CMM metrology, dye penetrant, and radiography inspection at every production stage.",
-      icon: ShieldCheck,
-      image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=800&auto=format&fit=crop"
+  const scrollSlider = (direction: 'left' | 'right') => {
+    if (sliderRef.current) {
+      const cardWidth = 360;
+      sliderRef.current.scrollBy({
+        left: direction === 'left' ? -cardWidth : cardWidth,
+        behavior: 'smooth'
+      });
     }
-  ];
+  };
 
-  // 04. Manufacturing Process Steps
-  const processSteps = [
-    { 
-      step: "01", 
-      name: "Requirement", 
-      desc: "Detailed CAD drawing audit, specification feasibility review, and cost/ROI calculation prior to tooling.", 
-      deliverable: "CAD Specification & ROI Audit Dossier",
-      icon: Search,
-      image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=800&auto=format&fit=crop"
-    },
-    { 
-      step: "02", 
-      name: "Design", 
-      desc: "Digital twin modeling, kinematic reach simulations, and finite element stress load (FEA) testing.", 
-      deliverable: "3D CAD Model & FEA Stress Load Report",
-      icon: FileText,
-      image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=800&auto=format&fit=crop"
-    },
-    { 
-      step: "03", 
-      name: "Material Selection", 
-      desc: "Strict sourcing of certified high-grade alloys, titanium blocks, stainless steel, and engineering polymers.", 
-      deliverable: "Certified Mill Test Report (MTR)",
-      icon: Layers,
-      image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=800&auto=format&fit=crop"
-    },
-    { 
-      step: "04", 
-      name: "Manufacturing", 
-      desc: "5-axis CNC machining, 12kW fiber laser sheet cutting, hydraulic bending, and robotic MIG/TIG welding.", 
-      deliverable: "5-Axis CNC & Fiber Laser Production Run",
-      icon: Hammer,
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop"
-    },
-    { 
-      step: "05", 
-      name: "Quality Check", 
-      desc: "100% 3D CMM metrology coordinate inspection, dye penetrant weld testing, and surface finish validation.", 
-      deliverable: "100% 3D CMM Metrology Certificate",
-      icon: CheckSquare,
-      image: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=800&auto=format&fit=crop"
-    },
-    { 
-      step: "06", 
-      name: "Delivery", 
-      desc: "ESD-safe protective packaging, scheduled factory logistics, and Factory Acceptance Test (FAT) sign-off.", 
-      deliverable: "FAT Sign-Off & Scheduled Factory Delivery",
-      icon: Package,
-      image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=800&auto=format&fit=crop"
+  const handleSliderScroll = () => {
+    if (sliderRef.current) {
+      const scrollPos = sliderRef.current.scrollLeft;
+      const cardWidth = 360;
+      const index = Math.round(scrollPos / cardWidth);
+      setCurrentSlide(Math.min(Math.max(index, 0), 4));
     }
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!sliderRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - sliderRef.current.offsetLeft);
+    setScrollLeftState(sliderRef.current.scrollLeft);
+  };
+
+  const handleMouseLeaveOrUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !sliderRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - sliderRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    sliderRef.current.scrollLeft = scrollLeftState - walk;
+  };
+
+  const openQuoteModal = (subject: string) => {
+    setQuoteSubject(subject);
+    setIsQuoteModalOpen(true);
+  };
+
+  // 4 Key Statistics Ribbon (Section 2)
+  const stats = [
+    { value: "150+", label: "Certified Basic Models", sublabel: "Engineering CAD Specs" },
+    { value: "50+", label: "Tons Monthly Capacity", sublabel: "Industrial Plate & Structural" },
+    { value: "10+", label: "Automated Work Cells", sublabel: "Continuous 5-Axis & Laser" },
+    { value: "24/7", label: "IoT Telemetry Uptime", sublabel: "Predictive Monitoring" }
   ];
 
-  // 05. Industries We Serve
-  const industries = [
-    { title: "Construction", desc: "Heavy-duty structural components, plate fabrications, and hydraulic beams.", icon: HardHat, image: "https://images.unsplash.com/photo-1541888081622-19e34ff614e8?auto=format&fit=crop&q=80&w=800" },
-    { title: "Electrical", desc: "Custom copper busbars, electrical enclosures, and high-temp insulating housings.", icon: Zap, image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800" },
-    { title: "Automotive", desc: "Robotic welding line fixtures, engine mounts, and high-strength chassis parts.", icon: Car, image: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80&w=800" },
-    { title: "Agriculture", desc: "Durable tractor machinery parts, heavy shafts, and wear-resistant implements.", icon: Tractor, image: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&q=80&w=800" },
-    { title: "Infrastructure", desc: "Bridge structural brackets, heavy load-bearing assemblies, and power grid parts.", icon: Building2, image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=800" },
-    { title: "Industrial Manufacturing", desc: "Turnkey SPM machines, conveyor feed assemblies, and automated line cells.", icon: Factory, image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800" }
-  ];
-
-  // 06. Why Industry Leaders Choose HiTech (Interactive Feature Showcase Data)
-  const advantagePillars = [
-    { 
+  // Engineering Solutions Table Data (Section 5)
+  const capabilitiesSchedule = [
+    {
       id: "01",
-      category: "Fleet Capability",
-      title: "Advanced Manufacturing Fleet",
-      shortBadge: "12kW Laser & 5-Axis",
-      headline: "5-Axis CNC & 12kW Laser Fleet",
-      desc: "Sub-micron milling and high-speed fiber cutting up to 32mm structural steel.",
-      icon: Cpu,
-      image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=1200&auto=format&fit=crop",
-      badge: "High-Tech Fleet",
-      stat: "12kW Laser & 5-Axis",
-      metrics: [
-        { label: "Laser Power", value: "12,000 W" },
-        { label: "Continuous Axes", value: "5-Axis CNC" },
-        { label: "Repeatability", value: "±0.005 mm" },
-        { label: "Max Work Area", value: "3,000 × 1,500 mm" }
-      ],
-      bullets: [
-        "Continuous 5-axis high-speed simultaneous contour milling",
-        "12kW fiber laser with clean nitrogen cutting edge for dross-free finishes",
-        "Multi-head robotic MIG/TIG welding workstations for heavy fabrication"
-      ]
+      title: "12kW High-Speed Fiber Laser",
+      description: "Clean nitrogen cutting of mild steel, stainless, and aluminum up to 32mm with zero dross and sub-millimeter kerf accuracy.",
+      turnaround: "Same-Day Dispatch",
+      category: "Laser Processing"
     },
-    { 
+    {
       id: "02",
-      category: "Metrology & QA",
-      title: "Consistent Micron Quality",
-      shortBadge: "±0.005mm Metrology",
-      headline: "3D CMM Metrology & Certified NDT",
-      desc: "Climate-regulated coordinate inspection with certified digital reporting.",
-      icon: ShieldCheck,
-      image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=1200&auto=format&fit=crop",
-      badge: "Zero-Defect QA",
-      stat: "±0.005mm Metrology",
-      metrics: [
-        { label: "Metrology Accuracy", value: "±0.005 mm" },
-        { label: "Inspection System", value: "3D Laser CMM" },
-        { label: "Surface Roughness", value: "Ra < 0.2 µm" },
-        { label: "Standard", value: "ISO 9001:2015" }
-      ],
-      bullets: [
-        "100% full-dimension CMM digital inspection reports with every batch",
-        "Certified dye penetrant & ultrasonic NDT non-destructive testing",
-        "Complete raw material mill test report (MTR) heat number traceability"
-      ]
+      title: "5-Axis Simultaneous CNC Milling",
+      description: "Sub-micron continuous 5-axis turning and milling for complex aerospace housings, automotive dies, and turbine contours (Ra < 0.2µm).",
+      turnaround: "2 - 4 Days",
+      category: "Precision Machining"
     },
-    { 
+    {
       id: "03",
-      category: "Scale & Throughput",
-      title: "High-Volume Production",
-      shortBadge: "50,000+ Units/Mo",
-      headline: "High-Volume Automated Production",
-      desc: "Multi-shift automated manufacturing cells delivering at scale with zero backlog.",
-      icon: Factory,
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1200&auto=format&fit=crop",
-      badge: "High Throughput",
-      stat: "50,000+ Units/Mo",
-      metrics: [
-        { label: "Monthly Output", value: "50,000+ Parts" },
-        { label: "Defect PPM", value: "< 50 PPM" },
-        { label: "Shift Schedule", value: "24/7 Operations" },
-        { label: "Logistics Model", value: "Kanban / JIT" }
-      ],
-      bullets: [
-        "Automated robotic pick-and-place & conveyor indexing cells",
-        "Tier-1 automotive supplier qualification protocols and audits",
-        "Buffer warehouse staging for immediate emergency stock calls"
-      ]
+      title: "Turnkey SPM Automation Lines",
+      description: "Custom-built special purpose machinery, conveyor feed assemblies, and automated line fixtures engineered from 3D digital twins.",
+      turnaround: "Scheduled FAT",
+      category: "SPM & Automation"
     },
-    { 
+    {
       id: "04",
-      category: "Turnkey Project Delivery",
-      title: "Turnkey Design & Delivery",
-      shortBadge: "99.9% On-Time & FAT",
-      headline: "Digital Twin, FEA & FAT Sign-Off",
-      desc: "Full 3D CAD simulation, stress testing, and factory acceptance verification.",
-      icon: Clock,
-      image: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=1200&auto=format&fit=crop",
-      badge: "Turnkey Delivery",
-      stat: "99.9% On-Time",
-      metrics: [
-        { label: "On-Time Dispatch", value: "99.9% Record" },
-        { label: "Stress Testing", value: "Kinematic FEA" },
-        { label: "Validation", value: "100% FAT Protocol" },
-        { label: "Accountability", value: "Dedicated Lead" }
-      ],
-      bullets: [
-        "Complete CAD digital twin & kinematic reach modeling before tooling",
-        "Pre-shipment Factory Acceptance Testing (FAT) under full operational load",
-        "Turnkey on-site installation, commissioning, and continuous support"
-      ]
+      title: "Robotic MIG / TIG Structural Welding",
+      description: "Heavy plate fabrication and load-bearing chassis assemblies up to 50 tons, verified with ultrasonic NDT and weld penetration tests.",
+      turnaround: "Batch Delivery",
+      category: "Heavy Fabrication"
+    },
+    {
+      id: "05",
+      title: "3D CMM Metrology & Quality Audit",
+      description: "Climate-regulated coordinate inspection verifying 100% CAD compliance with certified digital MTR mill dossiers and heat traceability.",
+      turnaround: "24-Hour Protocol",
+      category: "Quality Assurance"
     }
   ];
-
-
-
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.12 }
-    }
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 25 },
-    visible: {
-      opacity: 1, y: 0,
-      transition: { duration: 0.5, ease: "easeOut" }
-    }
-  };
 
   return (
-    <main className="bg-white text-gray-900 selection:bg-[#051923] selection:text-white font-body overflow-x-clip">
+    <main className="w-full min-h-screen bg-[#fafafa] text-[#121212] font-sans pt-20 sm:pt-24 pb-20 selection:bg-[#121212] selection:text-white overflow-x-hidden">
+      
+      {/* Site-wide Container Matching All Sections */}
+      <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 space-y-12 lg:space-y-16">
 
-      {/* ========================================================================= */}
-      {/* 01. HERO SECTION */}
-      {/* ========================================================================= */}
-      <section className="relative w-full h-[85vh] min-h-[640px] flex items-center overflow-hidden">
-        {/* Video Background */}
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
-          className="absolute inset-0 w-full h-full object-cover z-0"
+        {/* ========================================================================= */}
+        {/* 01. HERO SECTION (Compact Height with Horizontal Video) */}
+        {/* ========================================================================= */}
+        <motion.section 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="relative w-full overflow-hidden pt-1 pb-6 sm:pb-8 border-b border-gray-200/90"
         >
-          <source src="/hero_boomerang.mp4" type="video/mp4" />
-        </video>
-        
-        {/* Dark Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/65 to-black/35 z-10" />
-
-        <div className="relative z-20 w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 mt-16">
-          <div className="max-w-3xl text-left text-white space-y-5">
-            
-            {/* Service Name */}
-            <span className="inline-block text-xs md:text-sm font-bold tracking-[0.25em] text-[#00A6FB] uppercase">
-              PRECISION INDUSTRIAL SERVICES
-            </span>
-
-            <h1 className="font-heading text-[36px] md:text-[52px] leading-tight text-white uppercase tracking-wide font-bold">
-              Precision Engineering &amp; <br />
-              <span className="text-[#00A6FB]">Line Automation</span>
-            </h1>
-
-            {/* Accent Line */}
-            <div className="flex items-center gap-2">
-              <div className="w-16 h-1 bg-[#00A6FB] rounded-full" />
-              <div className="w-4 h-1 bg-[#00A6FB] rounded-full opacity-75" />
-              <div className="w-1.5 h-1.5 bg-[#00A6FB] rounded-full opacity-50" />
-            </div>
-
-            {/* Value Proposition & 1-2 Line Description */}
-            <p className="font-body-lg text-base md:text-[19px] leading-relaxed text-gray-200 font-light">
-              High-quality engineering &amp; manufacturing solutions engineered for demanding industrial applications. We combine 5-axis CNC machining, 12kW fiber laser cutting, and 24/7 predictive IoT monitoring.
-            </p>
-
-            {/* CTAs */}
-            <div className="pt-4 flex flex-wrap gap-4">
-              <a 
-                href="#quote-form"
-                className="inline-flex items-center gap-3 px-8 py-3.5 rounded-full bg-[#00A6FB] text-white font-body-md font-semibold text-[15px] uppercase tracking-wide hover:bg-white hover:text-[#051923] transition-all duration-300 shadow-lg"
-              >
-                <span>Get a Quote</span>
-                <span className="material-symbols-outlined text-[18px] font-bold">north_east</span>
-              </a>
-
-              <a 
-                href="tel:+914222648800"
-                className="inline-flex items-center gap-3 px-8 py-3.5 rounded-full border border-white/80 text-white font-body-md font-semibold text-[15px] uppercase tracking-wide hover:bg-white hover:text-[#051923] transition-all duration-300"
-              >
-                <PhoneCall className="w-4 h-4 text-[#00A6FB]" />
-                <span>Talk to Our Team</span>
-              </a>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* ========================================================================= */}
-      {/* 02. SERVICE OVERVIEW */}
-      {/* ========================================================================= */}
-      <section className="bg-stark-white relative py-12 md:py-16 border-b border-gray-100">
-        <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12">
           
-          <div className="relative w-full bg-[#051923] rounded-3xl p-8 md:p-12 lg:p-14 shadow-2xl border border-white/10 text-white overflow-hidden">
-            {/* Ambient Background Glows */}
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#00A6FB]/10 rounded-full blur-3xl pointer-events-none -mr-48 -mt-48" />
-            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#006494]/10 rounded-full blur-3xl pointer-events-none -ml-36 -mb-36" />
-
-            <div className="relative z-10 flex flex-col lg:flex-row gap-10 lg:gap-14 items-center justify-between">
-              
-              {/* Left Column: Heading & Value Proposition */}
-              <div className="flex-1 space-y-6">
-                <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#00A6FB]/15 border border-[#00A6FB]/30 text-[#00A6FB] text-xs font-semibold tracking-wider uppercase">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#00A6FB]" />
-                  <span>Service Overview</span>
-                </div>
-
-                <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-bold text-white tracking-tight leading-[1.2]">
-                  Integrated Precision Engineering &amp; <br className="hidden sm:inline" />
-                  <span className="text-[#00A6FB]">Automated Systems</span>
-                </h2>
-                
-                <div className="space-y-4 text-gray-300 text-sm md:text-base leading-relaxed font-light max-w-2xl">
-                  <p>
-                    HiTech Engineering’s service ecosystem provides custom precision manufacturing, 12kW fiber laser cutting, 5-axis CNC machining, and automated line integration for industrial leaders and tier-1 suppliers worldwide.
-                  </p>
-                  <p>
-                    We combine heavy mechanical custom tooling, electronic pneumatic controls, and 24/7 predictive IoT sensor monitoring under one unified plant roof — guaranteeing complete structural integrity, rapid turnaround, and zero unplanned downtime.
-                  </p>
-                </div>
-
-                {/* Trust & Capability Badges */}
-                <div className="pt-2 flex flex-wrap gap-y-2.5 gap-x-6 text-xs sm:text-sm text-gray-300 font-medium">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-[#00A6FB] flex-shrink-0" />
-                    <span>Turnkey Single-Roof Facility</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-[#00A6FB] flex-shrink-0" />
-                    <span>Prototypes to High-Volume Runs</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-[#00A6FB] flex-shrink-0" />
-                    <span>100% CMM Metrology Traceable</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Column: High-Definition Bright Laser Cutting Animation Video */}
-              <LaserCuttingVideoCard />
-
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 03. WHAT WE OFFER */}
-      {/* ========================================================================= */}
-      <section className="relative bg-stark-white py-12 md:py-16 overflow-hidden border-t border-gray-100">
-        <div className="relative z-10 w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12">
-          
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-10 gap-4">
-            <div className="space-y-3 max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#006494]/10 text-[#006494] border border-[#006494]/20 text-xs font-bold uppercase tracking-wider">
-                What We Offer
-              </div>
-              <h2 className="font-headline-xl text-[28px] sm:text-[34px] md:text-[42px] text-[#051923] uppercase tracking-wide font-bold leading-tight">
-                Our Individual Capabilities<span className="text-[#00A6FB]">.</span>
-              </h2>
-              <p className="font-body-md text-[15px] text-gray-600 italic">
-                Showcasing individual manufacturing capabilities built for industrial scale.
-              </p>
-            </div>
-          </div>
-
-          <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            className="flex flex-col lg:flex-row gap-4 h-auto lg:h-[480px] w-full"
-          >
-            {capabilities.map((cap, idx) => (
-              <motion.div 
-                key={idx} 
-                variants={itemVariants}
-                className="relative flex-1 lg:hover:flex-[2.4] transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] overflow-hidden rounded-2xl bg-white group/card flex flex-col justify-between p-6 md:p-8 cursor-pointer shadow-lg border border-gray-200 hover:border-[#00A6FB]/40 hover:shadow-[#00A6FB]/20 min-h-[260px]"
-              >
-                <div className="absolute inset-0 z-0">
-                  <img 
-                    src={cap.image} 
-                    alt={cap.title} 
-                    className="w-full h-full object-cover opacity-90 group-hover/card:opacity-100 group-hover/card:scale-105 transition-all duration-1000 ease-out" 
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-black/20 group-hover/card:via-black/60 transition-all duration-700" />
-                </div>
-
-                <div className="relative z-10 flex justify-between items-center">
-                  <div className="w-12 h-12 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white backdrop-blur-md group-hover/card:bg-[#00A6FB] group-hover/card:border-[#00A6FB] group-hover/card:scale-110 transition-all duration-500 shadow-md">
-                    <cap.icon className="w-5 h-5 text-white" />
-                  </div>
-                  <span className="bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold text-white uppercase tracking-wider border border-white/10">
-                    CAPABILITY 0{idx + 1}
-                  </span>
-                </div>
-                
-                <div className="relative z-10 mt-8 lg:mt-auto space-y-2">
-                  <h3 className="text-xl md:text-2xl font-bold font-heading uppercase text-white tracking-tight leading-snug drop-shadow-md">
-                    {cap.title}
-                  </h3>
-                  
-                  <p className="text-white/90 text-sm md:text-[15px] leading-relaxed font-normal max-w-[340px] drop-shadow-sm">
-                    {cap.desc}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 04. MANUFACTURING PROCESS */}
-      {/* ========================================================================= */}
-      <section className="py-12 md:py-16 bg-slate-50/80 border-t border-b border-gray-200">
-        <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12">
-          
-          <div className="text-center max-w-3xl mx-auto mb-10 space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#006494]/10 text-[#006494] border border-[#006494]/20 text-xs font-bold uppercase tracking-wider">
-              Our Methodology
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold font-heading text-[#051923] uppercase tracking-tight">
-              Manufacturing Process Pipeline
-            </h2>
-            <p className="text-gray-600 text-sm md:text-base font-normal">
-              Select any stage below to inspect production protocols, deliverables, and engineering standards.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 mb-8">
-            {processSteps.map((step, idx) => (
-              <button
-                key={idx}
-                onClick={() => setActiveProcessStep(idx)}
-                className={`p-4 rounded-xl text-left border transition-all duration-300 flex flex-col justify-between group ${
-                  activeProcessStep === idx
-                    ? 'bg-[#00A6FB] text-white border-[#00A6FB] shadow-md shadow-[#00A6FB]/20 scale-[1.02]'
-                    : 'bg-white text-gray-800 border-gray-200 hover:border-[#00A6FB] hover:bg-sky-50/50'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <span className={`font-heading text-xl font-bold ${activeProcessStep === idx ? 'text-white' : 'text-[#006494]'}`}>
-                    {step.step}
-                  </span>
-                  <step.icon className={`w-4 h-4 ${activeProcessStep === idx ? 'text-white' : 'text-gray-400'}`} />
-                </div>
-                
-                <div className="font-heading font-bold text-xs uppercase tracking-tight truncate">
-                  {step.name}
-                </div>
-              </button>
-            ))}
-          </div>
-
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeProcessStep}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.3 }}
-              className="bg-white rounded-3xl border border-gray-200 p-6 md:p-10 shadow-xl grid lg:grid-cols-12 gap-8 items-center"
-            >
-              <div className="lg:col-span-6 space-y-5">
-                <div className="flex items-center justify-between">
-                  <span className="px-3.5 py-1 rounded-full bg-sky-50 text-[#006494] text-xs font-bold uppercase tracking-wider border border-sky-100">
-                    STAGE {processSteps[activeProcessStep].step} OF 06
-                  </span>
-
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => setActiveProcessStep((prev) => (prev > 0 ? prev - 1 : processSteps.length - 1))}
-                      className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-[#051923] hover:text-white transition-colors"
-                      title="Previous Stage"
-                    >
-                      <ChevronLeft className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={() => setActiveProcessStep((prev) => (prev < processSteps.length - 1 ? prev + 1 : 0))}
-                      className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-[#051923] hover:text-white transition-colors"
-                      title="Next Stage"
-                    >
-                      <ArrowRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-
-                <h3 className="text-2xl md:text-4xl font-bold font-heading uppercase text-[#051923] tracking-tight">
-                  {processSteps[activeProcessStep].name}
-                </h3>
-
-                <p className="text-gray-600 text-base md:text-lg leading-relaxed font-normal">
-                  {processSteps[activeProcessStep].desc}
-                </p>
-
-                <div className="p-4 rounded-2xl bg-sky-50/70 border border-sky-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs md:text-sm">
-                  <span className="text-gray-500 font-semibold uppercase tracking-wider">STAGE DELIVERABLE:</span>
-                  <span className="text-[#006494] font-bold">{processSteps[activeProcessStep].deliverable}</span>
-                </div>
-              </div>
-
-              <div className="lg:col-span-6 aspect-[16/10] rounded-2xl overflow-hidden border border-gray-200 shadow-md relative bg-black">
-                <img 
-                  src={processSteps[activeProcessStep].image} 
-                  alt={processSteps[activeProcessStep].name}
-                  className="w-full h-full object-cover"
+          {/* Subtle Background Geometric Wireframe Watermark (Matching Section 03) */}
+          <div className="absolute top-0 right-0 w-[420px] h-[420px] pointer-events-none opacity-15 -mr-16 -mt-16">
+            <svg viewBox="0 0 400 400" className="w-full h-full stroke-gray-900" fill="none">
+              {Array.from({ length: 20 }).map((_, i) => (
+                <ellipse
+                  key={i}
+                  cx="200"
+                  cy="200"
+                  rx={26 + i * 8}
+                  ry={13 + i * 4.4}
+                  strokeDasharray="2 4"
+                  strokeWidth="0.85"
+                  transform={`rotate(${i * 8} 200 200)`}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent p-4 flex flex-col justify-end">
-                  <span className="text-white text-xs font-semibold tracking-wider">
-                    ISO 9001:2015 QUALITY PROTOCOL VERIFIED
-                  </span>
+              ))}
+            </svg>
+          </div>
+
+          {/* Top Breadcrumb */}
+          <div className="mb-4 sm:mb-5">
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-gray-400"
+            >
+              <a href="/" className="hover:text-black transition-colors">Home</a>
+              <span className="text-gray-300">/</span>
+              <span className="text-[#121212]">Our Services</span>
+            </motion.div>
+          </div>
+
+          {/* Hero Main Content Row with Widened Horizontal Video & Right-to-Left Fade */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-10 items-center">
+            
+            {/* Left Column (5 cols): Display Typography, Sub-headline & Clean Pill CTAs */}
+            <div className="lg:col-span-5 space-y-4 sm:space-y-5">
+              <motion.h1 
+                initial={{ opacity: 0, y: 25 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-[66px] font-extrabold tracking-tight text-[#121212] leading-[1.06] font-heading"
+              >
+                Our Services <span className="text-gray-400 font-light select-none">↴</span>
+              </motion.h1>
+
+              <motion.p 
+                initial={{ opacity: 0, y: 25 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                className="text-base sm:text-lg text-gray-500 font-light max-w-xl leading-relaxed"
+              >
+                Pioneering engineering excellence, 12kW fiber laser cutting, 5-axis CNC machining, and automated SPM production lines engineered for micron tolerances and industrial scale.
+              </motion.p>
+
+              {/* Signature Pill CTAs */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                className="flex flex-wrap items-center gap-4 pt-1"
+              >
+                <button 
+                  onClick={() => openQuoteModal("Services Hero RFQ")}
+                  className="px-7 py-3 rounded-full bg-[#121212] hover:bg-black text-white font-bold text-xs uppercase tracking-wider transition-all shadow-sm flex items-center gap-2 group cursor-pointer active:scale-95"
+                >
+                  <span>Request a Quote</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                </button>
+
+                <button 
+                  onClick={() => setIsVideoModalOpen(true)}
+                  className="px-7 py-3 rounded-full bg-white border border-gray-300 hover:bg-black hover:text-white hover:border-black text-gray-800 font-bold text-xs uppercase tracking-wider transition-all shadow-2xs flex items-center gap-2 group cursor-pointer active:scale-95"
+                >
+                  <div className="w-5 h-5 rounded-full bg-gray-100 group-hover:bg-white/20 flex items-center justify-center transition-colors">
+                    <Play className="w-2.5 h-2.5 fill-current ml-0.5 text-gray-800 group-hover:text-white" />
+                  </div>
+                  <span>Watch Facility Reel</span>
+                </button>
+              </motion.div>
+            </div>
+
+            {/* Right Column (7 cols): Horizontal Video widened by 3cm (~114px) and fading out from right to left */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-7 flex justify-center lg:justify-end"
+            >
+              <div 
+                onClick={() => setIsVideoModalOpen(true)}
+                className="relative w-full max-w-[794px] xl:max-w-[854px] aspect-[16/9] sm:aspect-[18/10] rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer group [mask-image:linear-gradient(to_right,transparent_0%,rgba(0,0,0,0.3)_15%,rgba(0,0,0,0.85)_30%,black_45%,black_100%)] [-webkit-mask-image:linear-gradient(to_right,transparent_0%,rgba(0,0,0,0.3)_15%,rgba(0,0,0,0.85)_30%,black_45%,black_100%)]"
+                title="Click to Watch Full Screen Reel"
+              >
+                <video 
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline 
+                  poster="/industrial_monument.jpg"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                >
+                  <source src="/boomerang_laser.mp4" type="video/mp4" />
+                  <source src="/boomerang_production.mp4" type="video/mp4" />
+                  <source src="/hero_boomerang.mp4" type="video/mp4" />
+                </video>
+
+                {/* Soft gradient edge overlay for seamless left fade into page background */}
+                <div className="absolute inset-y-0 left-0 w-1/3 pointer-events-none bg-gradient-to-r from-white via-white/30 to-transparent z-10" />
+
+                {/* Subtle dark overlay and frosted play button on hover */}
+                <div className="absolute inset-0 bg-black/5 group-hover:bg-black/20 transition-colors flex items-center justify-center pl-8 sm:pl-14">
+                  <div className="w-16 h-16 rounded-full bg-white/25 backdrop-blur-md border border-white/40 text-white flex items-center justify-center shadow-xl group-hover:scale-110 group-hover:bg-white group-hover:text-[#121212] transition-all duration-300">
+                    <Play className="w-6 h-6 fill-current ml-0.5" />
+                  </div>
                 </div>
               </div>
             </motion.div>
-          </AnimatePresence>
 
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 05. INDUSTRIES WE SERVE */}
-      {/* ========================================================================= */}
-      <section className="bg-white py-12 md:py-16 overflow-hidden">
-        <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12">
-          
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-10">
-            <div className="max-w-2xl space-y-3">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#006494]/10 text-[#006494] border border-[#006494]/20 text-xs font-bold uppercase tracking-wider">
-                Industries Served
-              </div>
-              <h2 className="text-[28px] md:text-[40px] font-bold text-[#051923] tracking-tight leading-tight uppercase">
-                Industries We Serve<span className="text-[#00A6FB]">.</span>
-              </h2>
-              <p className="text-[15px] md:text-[16px] text-gray-600 font-light leading-relaxed">
-                Our precision components and automation lines power critical applications across major global industries.
-              </p>
-            </div>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {industries.map((ind, idx) => (
-              <div 
-                key={idx}
-                className="bg-slate-50 rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-lg hover:border-[#00A6FB] transition-all duration-300 flex flex-col justify-between group"
+        </motion.section>
+
+        {/* ========================================================================= */}
+        {/* 02. KEY STATISTICS RIBBON (Scroll Viewport Triggered Reveal) */}
+        {/* ========================================================================= */}
+        <motion.section 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.25 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="py-4 border-b border-gray-200"
+        >
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+            {stats.map((stat, i) => (
+              <motion.div 
+                key={i} 
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.3 }}
+                transition={{ duration: 0.6, delay: i * 0.1, ease: "easeOut" }}
+                whileHover={{ y: -3, transition: { duration: 0.2 } }}
+                className="space-y-1.5 text-center lg:text-left group cursor-default"
               >
-                <div>
-                  <div className="relative aspect-[16/9] overflow-hidden bg-black">
-                    <img 
-                      src={ind.image} 
-                      alt={ind.title} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="p-5 md:p-6 space-y-2.5">
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-white text-[#051923] flex items-center justify-center border border-gray-200 group-hover:bg-[#051923] group-hover:text-[#00A6FB] transition-colors">
-                        <ind.icon className="w-4 h-4" />
-                      </div>
-                      <h3 className="text-lg font-bold font-heading text-[#051923] uppercase tracking-tight">{ind.title}</h3>
-                    </div>
-                    <p className="text-gray-600 text-xs md:text-sm leading-relaxed">{ind.desc}</p>
-                  </div>
+                <div className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#121212] font-heading tracking-tight group-hover:text-blue-900 transition-colors">
+                  {stat.value}
                 </div>
-              </div>
+                <div className="text-sm font-bold text-gray-900 tracking-wide">
+                  {stat.label}
+                </div>
+                <div className="text-xs text-gray-500 font-light">
+                  {stat.sublabel}
+                </div>
+              </motion.div>
             ))}
           </div>
+        </motion.section>
 
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 06. WHY INDUSTRY LEADERS CHOOSE HITECH (INTERACTIVE FEATURE SHOWCASE) */}
-      {/* ========================================================================= */}
-      <section className="py-20 md:py-24 bg-gradient-to-b from-white via-slate-50 to-white relative overflow-hidden border-t border-b border-gray-200/70">
-        
-        {/* Subtle Background Ambient Accents */}
-        <div className="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#00A6FB]/10 rounded-full blur-[160px] pointer-events-none" />
-        <div className="absolute bottom-10 right-10 w-[600px] h-[600px] bg-[#006494]/10 rounded-full blur-[140px] pointer-events-none" />
-
-        <div className="relative z-10 w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+        {/* ========================================================================= */}
+        {/* 03. "WHAT WE DO ↴" CAROUSEL SECTION (Swipeable with Scroll In-View Fade) */}
+        {/* ========================================================================= */}
+        <motion.section 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.15 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="relative w-full overflow-hidden pt-4 pb-8 border-b border-gray-200/90"
+        >
           
-          {/* Header */}
-          <div className="mb-10 text-center max-w-3xl mx-auto space-y-3">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#006494]/10 text-[#006494] text-xs font-bold uppercase tracking-widest border border-[#006494]/20 shadow-sm">
-              <Sparkles className="w-3.5 h-3.5 text-[#00A6FB]" />
-              <span>Why Choose HiTech</span>
-            </div>
+          {/* Subtle Background Wireframe Dot Vortex Watermark (Top Right) */}
+          <div className="absolute top-0 right-0 w-[440px] h-[440px] pointer-events-none opacity-20 -mr-16 -mt-16">
+            <svg viewBox="0 0 400 400" className="w-full h-full stroke-gray-900" fill="none">
+              {Array.from({ length: 20 }).map((_, i) => (
+                <ellipse
+                  key={i}
+                  cx="200"
+                  cy="200"
+                  rx={25 + i * 8.5}
+                  ry={12 + i * 4.8}
+                  strokeDasharray="2 4"
+                  strokeWidth="0.85"
+                  transform={`rotate(${i * 9} 200 200)`}
+                />
+              ))}
+            </svg>
+          </div>
+
+          {/* Section Header Row */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start mb-8">
+            {/* Left: Title & About Us Pill Button */}
+            <motion.div 
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.3 }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-5 space-y-4"
+            >
+              <h2 className="text-4xl sm:text-5xl lg:text-[56px] font-extrabold tracking-tight text-[#121212] leading-[1.08] font-heading flex items-center gap-2">
+                <span>What We Do</span>
+                <span className="text-3xl sm:text-4xl font-normal select-none">↴</span>
+              </h2>
+
+              <div>
+                <button
+                  onClick={() => openQuoteModal("What We Do Inquiry")}
+                  className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-gray-300 text-xs font-semibold text-gray-800 hover:bg-black hover:text-white hover:border-black transition-all shadow-2xs active:scale-95"
+                >
+                  <span>About Us</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </motion.div>
+
+            {/* Right: Subtitle Line */}
+            <motion.div 
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-7 flex lg:justify-end items-end"
+            >
+              <p className="text-xs sm:text-sm text-gray-400 font-light max-w-xs leading-relaxed">
+                Design, Develop And Run Any Precision Engineering / Manufacturing Systems You Need.
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Horizontal Scrollable Cards Carousel with Interactive Drag/Swipe Ability */}
+          <div 
+            ref={sliderRef}
+            onScroll={handleSliderScroll}
+            onMouseDown={handleMouseDown}
+            onMouseLeave={handleMouseLeaveOrUp}
+            onMouseUp={handleMouseLeaveOrUp}
+            onMouseMove={handleMouseMove}
+            className={`flex items-stretch gap-5 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth pb-6 pt-2 snap-x snap-mandatory select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+          >
             
-            <h2 className="text-3xl sm:text-4xl md:text-5xl text-[#051923] font-headline-xl font-bold leading-tight tracking-tight uppercase">
-              Measurable Advantages of <span className="text-[#006494]">HiTech Engineering</span>
-              <span className="text-[#00A6FB]">.</span>
+            {/* Card 1: Featured Card with Blue 3D Blocks Graphic */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: false, amount: 0.2 }}
+              whileHover={{ y: isDragging ? 0 : -8, transition: { duration: 0.3 } }}
+              transition={{ duration: 0.6, delay: 0.05, ease: "easeOut" }}
+              className="w-[310px] sm:w-[350px] shrink-0 snap-start rounded-3xl bg-white border border-gray-200/90 p-6 sm:p-7 shadow-xs hover:shadow-xl transition-all flex flex-col justify-between group"
+            >
+              <div className="space-y-5">
+                {/* Top Custom Notched Graphic Card */}
+                <div className="relative w-full h-44 rounded-2xl overflow-hidden bg-gradient-to-br from-blue-600 to-indigo-800 shadow-inner p-4 flex flex-col justify-end">
+                  <img 
+                    src="/isometric_blue_blocks.jpg" 
+                    alt="Building Your Hardware Your Way" 
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 opacity-90 pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-blue-950/80 via-blue-900/30 to-transparent pointer-events-none" />
+                  
+                  <div className="relative z-10">
+                    <h3 className="text-lg sm:text-xl font-bold font-heading text-white leading-snug drop-shadow-sm">
+                      Building Your Hardware Your Way
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="w-8 h-0.5 bg-gray-300" />
+
+                <p className="text-xs sm:text-[13px] text-gray-600 font-light leading-relaxed">
+                  A comprehensive suite of capabilities that helps industrial leaders fabricate and scale by delivering sub-micron precision, 12kW fiber cutting, and seamless assembly integration.
+                </p>
+              </div>
+
+              <div className="pt-6 flex justify-end">
+                <div className="w-8 h-8 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-600 group-hover:bg-[#121212] group-hover:text-white transition-colors">
+                  <Box className="w-3.5 h-3.5" />
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Card 2: Optimize Production Throughput */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: false, amount: 0.2 }}
+              whileHover={{ y: isDragging ? 0 : -8, transition: { duration: 0.3 } }}
+              transition={{ duration: 0.6, delay: 0.12, ease: "easeOut" }}
+              className="w-[310px] sm:w-[350px] shrink-0 snap-start rounded-3xl bg-white border border-gray-200/90 p-6 sm:p-7 shadow-xs hover:shadow-xl transition-all flex flex-col justify-between group"
+            >
+              <div className="space-y-5">
+                <h3 className="text-xl sm:text-2xl font-bold font-heading text-[#121212] leading-snug">
+                  Optimize <br />
+                  Manufacturing Lines
+                </h3>
+
+                <div className="w-8 h-0.5 bg-gray-300" />
+
+                <p className="text-xs sm:text-[13px] text-gray-600 font-light leading-relaxed">
+                  Streamline multi-axis CNC milling, eliminate cycle time bottlenecks, and improve structural component quality for high-volume automotive and aerospace runs.
+                </p>
+              </div>
+
+              <div className="pt-8 flex justify-end">
+                <div className="w-8 h-8 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-600 group-hover:bg-[#121212] group-hover:text-white transition-colors">
+                  <Sliders className="w-3.5 h-3.5" />
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Card 3: Turn Complex CAD Into Hardware */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: false, amount: 0.2 }}
+              whileHover={{ y: isDragging ? 0 : -8, transition: { duration: 0.3 } }}
+              transition={{ duration: 0.6, delay: 0.19, ease: "easeOut" }}
+              className="w-[310px] sm:w-[350px] shrink-0 snap-start rounded-3xl bg-white border border-gray-200/90 p-6 sm:p-7 shadow-xs hover:shadow-xl transition-all flex flex-col justify-between group"
+            >
+              <div className="space-y-5">
+                <h3 className="text-xl sm:text-2xl font-bold font-heading text-[#121212] leading-snug">
+                  Turn Complex CAD <br />
+                  Into Hardware Visually
+                </h3>
+
+                <div className="w-8 h-0.5 bg-gray-300" />
+
+                <p className="text-xs sm:text-[13px] text-gray-600 font-light leading-relaxed">
+                  Directly import CAD models into our 5-axis CAM tooling pipelines with automated toolpath optimization and finite element load verification.
+                </p>
+              </div>
+
+              <div className="pt-8 flex justify-end">
+                <div className="w-8 h-8 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-600 group-hover:bg-[#121212] group-hover:text-white transition-colors">
+                  <Layers className="w-3.5 h-3.5" />
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Card 4: Turnkey SPM Machinery */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: false, amount: 0.2 }}
+              whileHover={{ y: isDragging ? 0 : -8, transition: { duration: 0.3 } }}
+              transition={{ duration: 0.6, delay: 0.26, ease: "easeOut" }}
+              className="w-[310px] sm:w-[350px] shrink-0 snap-start rounded-3xl bg-white border border-gray-200/90 p-6 sm:p-7 shadow-xs hover:shadow-xl transition-all flex flex-col justify-between group"
+            >
+              <div className="space-y-5">
+                <h3 className="text-xl sm:text-2xl font-bold font-heading text-[#121212] leading-snug">
+                  Custom Turnkey <br />
+                  SPM Machinery Cells
+                </h3>
+
+                <div className="w-8 h-0.5 bg-gray-300" />
+
+                <p className="text-xs sm:text-[13px] text-gray-600 font-light leading-relaxed">
+                  Custom-built automated SPM workstations, indexing conveyors, and robotic handling cells delivering 24/7 reliability with 100% FAT sign-off.
+                </p>
+              </div>
+
+              <div className="pt-8 flex justify-end">
+                <div className="w-8 h-8 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-600 group-hover:bg-[#121212] group-hover:text-white transition-colors">
+                  <Cpu className="w-3.5 h-3.5" />
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Card 5: Zero-Defect 3D Metrology */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: false, amount: 0.2 }}
+              whileHover={{ y: isDragging ? 0 : -8, transition: { duration: 0.3 } }}
+              transition={{ duration: 0.6, delay: 0.33, ease: "easeOut" }}
+              className="w-[310px] sm:w-[350px] shrink-0 snap-start rounded-3xl bg-white border border-gray-200/90 p-6 sm:p-7 shadow-xs hover:shadow-xl transition-all flex flex-col justify-between group"
+            >
+              <div className="space-y-5">
+                <h3 className="text-xl sm:text-2xl font-bold font-heading text-[#121212] leading-snug">
+                  Zero-Defect 3D <br />
+                  CMM Metrology Lab
+                </h3>
+
+                <div className="w-8 h-0.5 bg-gray-300" />
+
+                <p className="text-xs sm:text-[13px] text-gray-600 font-light leading-relaxed">
+                  Climate-regulated coordinate inspection verifying 100% CAD compliance with certified digital MTR mill dossiers and heat traceability.
+                </p>
+              </div>
+
+              <div className="pt-8 flex justify-end">
+                <div className="w-8 h-8 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-600 group-hover:bg-[#121212] group-hover:text-white transition-colors">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                </div>
+              </div>
+            </motion.div>
+
+          </div>
+
+          {/* Bottom Slider Navigation */}
+          <div className="flex items-center justify-between pt-4">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => scrollSlider('left')}
+                className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-gray-700 hover:bg-black hover:text-white hover:border-black transition-all shadow-2xs active:scale-95"
+                title="Previous Slide"
+              >
+                <ArrowRight className="w-4 h-4 rotate-180" />
+              </button>
+
+              <button
+                onClick={() => scrollSlider('right')}
+                className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-gray-700 hover:bg-black hover:text-white hover:border-black transition-all shadow-2xs active:scale-95"
+                title="Next Slide"
+              >
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Slide Progress Dash Indicators */}
+            <div className="flex items-center gap-2">
+              {[0, 1, 2, 3, 4].map((i) => (
+                <div
+                  key={i}
+                  className={`h-0.5 rounded-full transition-all duration-300 ${
+                    currentSlide === i ? 'w-8 bg-gray-900' : 'w-4 bg-gray-300'
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+
+        </motion.section>
+
+        {/* ========================================================================= */}
+        {/* 04. "ABOUT HITECH ECOSYSTEM" (Scroll Slide-in From Left & Right) */}
+        {/* ========================================================================= */}
+        <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start overflow-hidden">
+          
+          {/* Left: Huge Editorial Heading */}
+          <motion.div 
+            initial={{ opacity: 0, x: -35 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-6"
+          >
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-extrabold text-[#121212] tracking-tight leading-[1.12] font-heading">
+              About HiTech <br className="hidden sm:inline" />
+              Ecosystem
             </h2>
+          </motion.div>
 
-            <p className="text-gray-600 text-sm md:text-base font-normal leading-relaxed max-w-2xl mx-auto">
-              Engineered for extreme tolerances and guaranteed operational performance.
+          {/* Right: Descriptive Dual Paragraphs & Black Pill Button */}
+          <motion.div 
+            initial={{ opacity: 0, x: 35 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-6 space-y-6"
+          >
+            <p className="text-sm sm:text-base text-gray-600 leading-relaxed font-light">
+              HiTech is an integrated precision engineering and contract manufacturing powerhouse engineered for industrial innovators. We unite high-precision mechanical fabrication, 12kW fiber laser cutting, and continuous 5-axis CNC machining under one single-roof plant.
             </p>
+
+            <p className="text-sm sm:text-base text-gray-600 leading-relaxed font-light">
+              Our infrastructure operates as a unified collaborative facility with zero defect tolerance, comprehensive 3D CMM metrology inspection, and dedicated technical leadership for every mission-critical project.
+            </p>
+
+            <div className="pt-2">
+              <button
+                onClick={() => openQuoteModal("Ecosystem Capabilities")}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#121212] hover:bg-black text-white text-xs font-semibold uppercase tracking-wider transition-all shadow-sm active:scale-95"
+              >
+                <span>More Details +</span>
+              </button>
+            </div>
+          </motion.div>
+
+        </section>
+
+        {/* ========================================================================= */}
+        {/* 05. ASYMMETRIC BENTO GRID (Modern Minimalist Showcase with Fluid In-View Reveal) */}
+        {/* ========================================================================= */}
+        <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          
+          {/* Left Column (7 cols): Main Visual & "Modern Minimalist" Title */}
+          <motion.div 
+            initial={{ opacity: 0, y: 35, scale: 0.98 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: false, amount: 0.25 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-7 flex flex-col justify-between gap-5 sm:gap-6"
+          >
+            
+            {/* Top Media Container - Balanced Height */}
+            <div className="w-full h-[280px] sm:h-[340px] lg:h-[380px] rounded-[28px] overflow-hidden bg-[#e5e5e5] border border-gray-200 shadow-2xs relative group">
+              <img 
+                src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=1400&auto=format&fit=crop" 
+                alt="Modern Industrial Laser & CNC"
+                className="w-full h-full object-cover group-hover:scale-106 transition-transform duration-700"
+              />
+            </div>
+
+            {/* Bottom Title with Pill Badge */}
+            <div className="space-y-2 pt-1">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-gray-200 text-xs font-semibold text-gray-700 shadow-2xs">
+                <span>Stylized Engineering</span>
+              </div>
+
+              <h3 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#121212] tracking-tight leading-[1.08] font-heading">
+                Modern <br />
+                Minimalist
+              </h3>
+            </div>
+
+          </motion.div>
+
+          {/* Right Column (5 cols): Stacked 2 Cards with Balanced Heights & Staggered In-View Animation */}
+          <div className="lg:col-span-5 flex flex-col gap-5 sm:gap-6">
+            
+            {/* Top Card: Light Card (Pristine Standards) */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.3 }}
+              whileHover={{ y: -5, transition: { duration: 0.25 } }}
+              transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="flex-1 rounded-[28px] bg-[#f2f2f2] border border-gray-200/80 p-6 sm:p-8 flex flex-col justify-between hover:shadow-md transition-shadow"
+            >
+              
+              <div className="space-y-3">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-gray-200 text-xs font-semibold text-gray-700">
+                  <span>Comfort & Efficiency</span>
+                </div>
+
+                <p className="text-xs sm:text-sm text-gray-600 font-light leading-relaxed">
+                  Pristine cleanliness, rigorous order, and micron-level accuracy engineered for demanding production schedules.
+                </p>
+              </div>
+
+              <div className="pt-4">
+                <h4 className="text-2xl sm:text-3xl font-extrabold text-[#121212] font-heading tracking-tight">
+                  Pristine Standards
+                </h4>
+              </div>
+
+            </motion.div>
+
+            {/* Bottom Card: Premium Dark/Charcoal Card */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.3 }}
+              whileHover={{ y: -5, transition: { duration: 0.25 } }}
+              transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="flex-1 rounded-[28px] bg-[#1e1e1e] text-white p-6 sm:p-8 flex flex-col justify-between relative shadow-sm hover:shadow-xl transition-shadow"
+            >
+              
+              <div className="space-y-3">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 border border-white/20 text-xs font-semibold text-white/90">
+                  <span>Premium Fleet Infrastructure</span>
+                </div>
+
+                <p className="text-xs sm:text-sm text-gray-300 font-light leading-relaxed max-w-sm">
+                  Every mechanical component is verified through coordinate metrology to guarantee structural integrity, long service life, and effortless assembly fit.
+                </p>
+              </div>
+
+              <div className="flex items-center justify-between pt-5 border-t border-white/10">
+                <span className="text-xs uppercase tracking-widest text-gray-400 font-mono">
+                  ISO 9001:2015 Traceability
+                </span>
+
+                <button
+                  onClick={() => openQuoteModal("Premium Fleet Consultation")}
+                  className="w-10 h-10 rounded-full bg-white text-[#121212] flex items-center justify-center hover:scale-110 transition-transform shadow-md shrink-0 active:scale-95"
+                  title="Explore Specifications"
+                >
+                  <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
+                </button>
+              </div>
+
+            </motion.div>
+
           </div>
 
-          {/* Asymmetric 4-Card Bento Grid Forming a Wide Rectangle */}
-          <div className="w-full max-w-[1440px] mx-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 md:grid-rows-2 gap-4 md:gap-5 md:h-[580px]">
-              {/* Card 1: Left Column (5 cols x 2 rows - Large Tall Anchor) - Flagship Machine Fleet */}
-              <div 
-                className="md:col-span-5 md:row-span-2 group relative rounded-3xl overflow-hidden border border-slate-200/90 bg-slate-900 shadow-md hover:shadow-2xl hover:border-[#00A6FB] hover:-translate-y-1.5 transition-all duration-500 ease-out flex flex-col justify-between p-5 sm:p-6 text-[#051923] cursor-pointer min-h-[340px] md:min-h-0"
-              >
-                {/* Full-Bleed Clear Background Image */}
-                <div className="absolute inset-0 z-0 overflow-hidden">
-                  <img
-                    src={advantagePillars[0].image}
-                    alt={advantagePillars[0].title}
-                    className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
-                </div>
+        </section>
 
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00A6FB] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                {/* Top Row */}
-                <div className="relative z-10 flex items-center justify-between gap-3">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md border border-white/40 shadow-sm text-[11px] font-bold text-[#006494] uppercase tracking-wider">
-                    <span className="w-2 h-2 rounded-full bg-[#00A6FB] animate-pulse" />
-                    <span>{advantagePillars[0].category}</span>
-                  </div>
-                  <span className="px-3.5 py-1 rounded-full bg-[#00A6FB] text-white text-xs font-bold shadow-md shadow-[#00A6FB]/25">
-                    {advantagePillars[0].stat}
-                  </span>
-                </div>
-
-                {/* Minimalist Floating White Dock for Maximum Visibility */}
-                <div className="relative z-10 mt-auto bg-white/95 backdrop-blur-md rounded-xl sm:rounded-2xl py-2.5 px-4 sm:py-3 sm:px-4.5 border border-slate-200/80 shadow-md group-hover:border-[#00A6FB]/60 transition-all duration-300">
-                  <div className="flex items-center justify-between gap-3">
-                    <div>
-                      <h3 className="text-base sm:text-lg md:text-xl font-bold font-heading text-[#051923] tracking-tight leading-snug">
-                        {advantagePillars[0].headline}
-                      </h3>
-                      <p className="text-[11px] sm:text-xs text-[#006494] font-semibold mt-0.5 flex items-center gap-1.5">
-                        <span>12,000 W • ±0.005 mm Repeatability</span>
-                      </p>
-                    </div>
-                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-100 flex items-center justify-center text-[#006494] group-hover:bg-[#00A6FB] group-hover:text-white transition-all flex-shrink-0 shadow-sm">
-                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Card 2: Top-Right (7 cols x 1 row - Wide Panoramic Banner) - Metrology & QA */}
-              <div 
-                className="md:col-span-7 md:row-span-1 group relative rounded-3xl overflow-hidden border border-slate-200/90 bg-slate-900 shadow-md hover:shadow-2xl hover:border-[#00A6FB] hover:-translate-y-1.5 transition-all duration-500 ease-out flex flex-col justify-between p-5 sm:p-6 text-[#051923] cursor-pointer min-h-[260px] md:min-h-0"
-              >
-                {/* Full-Bleed Clear Background Image */}
-                <div className="absolute inset-0 z-0 overflow-hidden">
-                  <img
-                    src={advantagePillars[1].image}
-                    alt={advantagePillars[1].title}
-                    className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
-                </div>
-
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00A6FB] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                {/* Top Row */}
-                <div className="relative z-10 flex items-center justify-between gap-3">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md border border-white/40 shadow-sm text-[11px] font-bold text-[#006494] uppercase tracking-wider">
-                    <span className="w-2 h-2 rounded-full bg-[#00A6FB] animate-pulse" />
-                    <span>{advantagePillars[1].category}</span>
-                  </div>
-                  <span className="px-3.5 py-1 rounded-full bg-[#00A6FB] text-white text-xs font-bold shadow-md shadow-[#00A6FB]/25">
-                    {advantagePillars[1].stat}
-                  </span>
-                </div>
-
-                {/* Minimalist Floating White Dock for Maximum Visibility */}
-                <div className="relative z-10 mt-auto bg-white/95 backdrop-blur-md rounded-xl sm:rounded-2xl py-2 px-3.5 sm:py-2.5 sm:px-4.5 border border-slate-200/80 shadow-md group-hover:border-[#00A6FB]/60 transition-all duration-300">
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-3">
-                      <h3 className="text-sm sm:text-base md:text-lg font-bold font-heading text-[#051923] tracking-tight leading-snug">
-                        {advantagePillars[1].headline}
-                      </h3>
-                      <span className="hidden sm:inline text-slate-300 text-xs">•</span>
-                      <p className="text-[11px] sm:text-xs text-[#006494] font-semibold">
-                        Ra &lt; 0.2 µm • ISO 9001:2015 Traceability
-                      </p>
-                    </div>
-                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-100 flex items-center justify-center text-[#006494] group-hover:bg-[#00A6FB] group-hover:text-white transition-all flex-shrink-0 shadow-sm">
-                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Card 3: Bottom-Center (4 cols x 1 row - Medium Proportional Card) - High-Volume Scale */}
-              <div 
-                className="md:col-span-4 md:row-span-1 group relative rounded-3xl overflow-hidden border border-slate-200/90 bg-slate-900 shadow-md hover:shadow-2xl hover:border-[#00A6FB] hover:-translate-y-1.5 transition-all duration-500 ease-out flex flex-col justify-between p-4 sm:p-5 text-[#051923] cursor-pointer min-h-[260px] md:min-h-0"
-              >
-                {/* Full-Bleed Clear Background Image */}
-                <div className="absolute inset-0 z-0 overflow-hidden">
-                  <img
-                    src={advantagePillars[2].image}
-                    alt={advantagePillars[2].title}
-                    className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
-                </div>
-
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00A6FB] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                {/* Top Row */}
-                <div className="relative z-10 flex items-center justify-between gap-2">
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-md border border-white/40 shadow-sm text-[10px] font-bold text-[#006494] uppercase tracking-wider">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#00A6FB] animate-pulse" />
-                    <span>Scale</span>
-                  </div>
-                  <span className="px-2.5 py-0.5 rounded-full bg-[#00A6FB] text-white text-[11px] font-bold shadow-md shadow-[#00A6FB]/25">
-                    {advantagePillars[2].stat}
-                  </span>
-                </div>
-
-                {/* Minimalist Floating White Dock for Maximum Visibility */}
-                <div className="relative z-10 mt-auto bg-white/95 backdrop-blur-md rounded-xl sm:rounded-2xl py-2 px-3 sm:py-2.5 sm:px-3.5 border border-slate-200/80 shadow-md group-hover:border-[#00A6FB]/60 transition-all duration-300">
-                  <div className="flex items-center justify-between gap-2">
-                    <div>
-                      <h3 className="text-xs sm:text-sm font-bold font-heading text-[#051923] tracking-tight leading-snug">
-                        {advantagePillars[2].headline}
-                      </h3>
-                      <p className="text-[10px] sm:text-[11px] text-[#006494] font-semibold mt-0.5">
-                        24/7 Operations • Kanban JIT
-                      </p>
-                    </div>
-                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-100 flex items-center justify-center text-[#006494] group-hover:bg-[#00A6FB] group-hover:text-white transition-all flex-shrink-0 shadow-sm">
-                      <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Card 4: Bottom-Right (3 cols x 1 row - Compact Asymmetric Card) - Turnkey Delivery & FAT */}
-              <div 
-                className="md:col-span-3 md:row-span-1 group relative rounded-3xl overflow-hidden border border-slate-200/90 bg-slate-900 shadow-md hover:shadow-2xl hover:border-[#00A6FB] hover:-translate-y-1.5 transition-all duration-500 ease-out flex flex-col justify-between p-4 sm:p-5 text-[#051923] cursor-pointer min-h-[260px] md:min-h-0"
-              >
-                {/* Full-Bleed Clear Background Image */}
-                <div className="absolute inset-0 z-0 overflow-hidden">
-                  <img
-                    src={advantagePillars[3].image}
-                    alt={advantagePillars[3].title}
-                    className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
-                </div>
-
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00A6FB] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                {/* Top Row */}
-                <div className="relative z-10 flex items-center justify-between gap-2">
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-md border border-white/40 shadow-sm text-[10px] font-bold text-[#006494] uppercase tracking-wider">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#00A6FB] animate-pulse" />
-                    <span>Turnkey</span>
-                  </div>
-                  <span className="px-2.5 py-0.5 rounded-full bg-[#00A6FB] text-white text-[11px] font-bold shadow-md shadow-[#00A6FB]/25">
-                    {advantagePillars[3].stat}
-                  </span>
-                </div>
-
-                {/* Minimalist Floating White Dock for Maximum Visibility */}
-                <div className="relative z-10 mt-auto bg-white/95 backdrop-blur-md rounded-xl sm:rounded-2xl py-2 px-3 sm:py-2.5 sm:px-3.5 border border-slate-200/80 shadow-md group-hover:border-[#00A6FB]/60 transition-all duration-300">
-                  <div className="flex items-center justify-between gap-2">
-                    <div>
-                      <h3 className="text-xs sm:text-sm font-bold font-heading text-[#051923] tracking-tight leading-snug">
-                        {advantagePillars[3].headline}
-                      </h3>
-                      <p className="text-[10px] sm:text-[11px] text-[#006494] font-semibold mt-0.5">
-                        100% FAT • 99.9% On-Time
-                      </p>
-                    </div>
-                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-100 flex items-center justify-center text-[#006494] group-hover:bg-[#00A6FB] group-hover:text-white transition-all flex-shrink-0 shadow-sm">
-                      <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
+        {/* ========================================================================= */}
+        {/* 06. ENGINEERING SOLUTIONS & CAPABILITIES TABLE (Staggered Row Reveals) */}
+        {/* ========================================================================= */}
+        <motion.section 
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.15 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="space-y-10 pt-8 border-t border-gray-200"
+        >
+          
+          {/* Header Row */}
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+            
+            <div className="space-y-2">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#121212] tracking-tight leading-tight font-heading">
+                Engineering Solutions <br />
+                for 2026
+              </h2>
             </div>
+
+            <div className="max-w-md space-y-4">
+              <p className="text-xs sm:text-sm text-gray-600 font-light leading-relaxed">
+                Schedule of specialized machining capabilities, delivery turnaround times, and certified quality protocols across our industrial manufacturing plant.
+              </p>
+
+              <div>
+                <button
+                  onClick={() => openQuoteModal("All Engineering Solutions")}
+                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#121212] hover:bg-black text-white text-xs font-semibold tracking-wide transition-all shadow-sm active:scale-95"
+                >
+                  <span>Explore All Capabilities →</span>
+                </button>
+              </div>
+            </div>
+
           </div>
 
-          {/* Unified Bottom Performance Metrics Ribbon */}
-          <div className="mt-16 pt-10 border-t border-gray-200/80 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div className="space-y-1">
-              <div className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#051923] font-heading">
-                ±0.005<span className="text-[#00A6FB]">mm</span>
-              </div>
-              <div className="text-xs text-gray-600 font-medium uppercase tracking-wider">
-                Precision Positioning Accuracy
-              </div>
-            </div>
+          {/* Minimalist Data Table (Row-by-Row Smooth Entrance) */}
+          <div className="w-full overflow-x-auto">
+            <table className="w-full text-left border-collapse min-w-[700px]">
+              <thead>
+                <tr className="border-b border-gray-300 text-[11px] font-bold text-gray-400 uppercase tracking-wider">
+                  <th className="py-4 pr-6">Service & Fleet</th>
+                  <th className="py-4 px-6">Technical Capabilities & Scope</th>
+                  <th className="py-4 px-6 text-center">Turnaround</th>
+                  <th className="py-4 pl-6 text-right">Inquiry</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {capabilitiesSchedule.map((row, idx) => (
+                  <motion.tr 
+                    key={row.id}
+                    initial={{ opacity: 0, x: -15 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: false, amount: 0.25 }}
+                    transition={{ duration: 0.5, delay: idx * 0.07, ease: "easeOut" }}
+                    onClick={() => openQuoteModal(row.title)}
+                    className="hover:bg-gray-100/70 transition-colors cursor-pointer group"
+                  >
+                    <td className="py-5 pr-6">
+                      <div className="text-base sm:text-lg font-bold text-[#121212] font-heading group-hover:text-blue-900 transition-colors">
+                        {row.title}
+                      </div>
+                      <span className="text-[11px] text-gray-500 font-medium">
+                        {row.category}
+                      </span>
+                    </td>
 
-            <div className="space-y-1">
-              <div className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#051923] font-heading">
-                12,000<span className="text-[#00A6FB]">W</span>
-              </div>
-              <div className="text-xs text-gray-600 font-medium uppercase tracking-wider">
-                Fiber Laser Cutting Fleet
-              </div>
-            </div>
+                    <td className="py-5 px-6 max-w-md">
+                      <p className="text-xs sm:text-sm text-gray-600 font-light leading-relaxed">
+                        {row.description}
+                      </p>
+                    </td>
 
-            <div className="space-y-1">
-              <div className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#051923] font-heading">
-                50,000<span className="text-[#00A6FB]">+</span>
-              </div>
-              <div className="text-xs text-gray-600 font-medium uppercase tracking-wider">
-                Monthly Production Capacity
-              </div>
-            </div>
+                    <td className="py-5 px-6 text-center whitespace-nowrap">
+                      <span className="px-3.5 py-1 rounded-full bg-gray-100 border border-gray-200 text-xs font-mono font-medium text-gray-800">
+                        {row.turnaround}
+                      </span>
+                    </td>
 
-            <div className="space-y-1">
-              <div className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#051923] font-heading">
-                99.9<span className="text-[#00A6FB]">%</span>
-              </div>
-              <div className="text-xs text-gray-600 font-medium uppercase tracking-wider">
-                Guaranteed On-Time Delivery
-              </div>
-            </div>
+                    <td className="py-5 pl-6 text-right whitespace-nowrap">
+                      <div className="inline-flex w-8 h-8 rounded-full bg-gray-200 group-hover:bg-[#121212] group-hover:text-white items-center justify-center transition-all">
+                        <ArrowUpRight className="w-4 h-4" />
+                      </div>
+                    </td>
+                  </motion.tr>
+                ))}
+              </tbody>
+            </table>
           </div>
 
-        </div>
-      </section>
+        </motion.section>
 
+      </div>
 
+      {/* ========================================================================= */}
+      {/* VIDEO PREVIEW MODAL */}
+      {/* ========================================================================= */}
+      <AnimatePresence>
+        {isVideoModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="relative w-full max-w-4xl bg-black rounded-3xl overflow-hidden shadow-2xl border border-white/20 aspect-video flex items-center justify-center"
+            >
+              <button
+                onClick={() => setIsVideoModalOpen(false)}
+                className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-white hover:text-black transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
 
+              <video 
+                autoPlay 
+                loop 
+                controls 
+                className="w-full h-full object-cover"
+              >
+                <source src="/hero_boomerang.mp4" type="video/mp4" />
+                <source src="/boomerang_laser.mp4" type="video/mp4" />
+              </video>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* ========================================================================= */}
+      {/* FAST RFQ / INQUIRY MODAL */}
+      {/* ========================================================================= */}
+      <AnimatePresence>
+        {isQuoteModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/70 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 15 }}
+              className="bg-white rounded-[32px] p-6 sm:p-8 max-w-lg w-full text-gray-900 shadow-2xl relative border border-gray-200"
+            >
+              <button
+                onClick={() => setIsQuoteModalOpen(false)}
+                className="absolute top-5 right-5 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 hover:text-gray-900 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="space-y-1">
+                <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">
+                  Direct Engineering RFQ
+                </span>
+                <h3 className="text-2xl font-bold font-heading text-[#121212]">
+                  Request Project Consultation
+                </h3>
+                <p className="text-xs text-gray-500">
+                  {quoteSubject ? `Subject: ${quoteSubject}` : "Fast-track technical response within 2 business hours"}
+                </p>
+              </div>
+
+              <form 
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  alert("Thank you! Your engineering request has been received. Our chief engineer will get in touch shortly.");
+                  setIsQuoteModalOpen(false);
+                }}
+                className="mt-6 space-y-4 text-sm"
+              >
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">
+                    Your Name / Company
+                  </label>
+                  <input
+                    required
+                    type="text"
+                    placeholder="e.g. John Doe - TechCorp Industries"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-[#121212] text-gray-900 placeholder-gray-400"
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">
+                      Email Address
+                    </label>
+                    <input
+                      required
+                      type="email"
+                      placeholder="engineer@company.com"
+                      className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-[#121212] text-gray-900 placeholder-gray-400"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      placeholder="+91 98765 43210"
+                      className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-[#121212] text-gray-900 placeholder-gray-400"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">
+                    Service of Interest
+                  </label>
+                  <input
+                    type="text"
+                    defaultValue={quoteSubject || "General Precision Engineering"}
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-[#121212] text-gray-900 bg-gray-50"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">
+                    CAD Notes & Specifications
+                  </label>
+                  <textarea
+                    rows={3}
+                    placeholder="Provide details on materials, tolerances, quantities, and delivery schedules..."
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-[#121212] text-gray-900 placeholder-gray-400 resize-none"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full py-3.5 rounded-full bg-[#121212] hover:bg-black text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md mt-2"
+                >
+                  Submit Inquiry
+                </button>
+              </form>
+
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
     </main>
   );

@@ -32,21 +32,23 @@ export default function HeroSlider({
       {/* Content on the left */}
       <div className="relative z-20 w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 mt-24">
         <div className="max-w-3xl text-left text-white space-y-6">
-          <h2 className="font-heading text-[38px] md:text-[52px] leading-tight text-white uppercase tracking-wide">
-            {title}
-          </h2>
-          <div className="flex items-center gap-2">
-            <div className="w-16 h-1 bg-black rounded-full"></div>
-            <div className="w-4 h-1 bg-black rounded-full opacity-75"></div>
-            <div className="w-1.5 h-1.5 bg-black rounded-full opacity-50"></div>
+          <div className="space-y-2.5">
+            <span className="text-sm font-medium tracking-tight text-white/80 block">
+              Established 1999 — Coimbatore, India
+            </span>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-bold tracking-tight text-white leading-[1.12]">
+              {title}
+            </h1>
           </div>
-          <p className="font-body-lg text-lg md:text-[20px] leading-relaxed text-gray-200">
+          
+          <p className="font-normal text-sm sm:text-base md:text-[17px] text-white/90 leading-relaxed max-w-2xl">
             {description}
           </p>
-          <div className="pt-8">
-            <button className="inline-flex items-center gap-3 px-8 py-3.5 rounded-full border-[1.5px] border-white/80 text-white font-body-md font-medium text-[17px] hover:bg-white hover:text-black transition-all duration-300">
-              {buttonText}
-              <span className="material-symbols-outlined text-[20px] font-bold" style={{ fontVariationSettings: "'wght' 600" }}>north_east</span>
+
+          <div className="pt-4">
+            <button className="inline-flex items-center gap-2.5 px-7 py-3 rounded-full border border-white/80 bg-white/10 hover:bg-white hover:text-black text-white font-medium text-sm tracking-tight backdrop-blur-xs transition-all duration-300 cursor-pointer active:scale-95">
+              <span>{buttonText}</span>
+              <span className="material-symbols-outlined text-[18px]">north_east</span>
             </button>
           </div>
         </div>

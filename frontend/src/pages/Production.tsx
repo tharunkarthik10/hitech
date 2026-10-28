@@ -1,6 +1,1346 @@
-import UnitPageSkeleton from '../components/unit/UnitPageSkeleton';
-import { productionData } from '../data/unitsData';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  ArrowRight, ArrowUpRight, ShieldCheck, 
+  Settings, X, Send, Briefcase, Play, Sparkles,
+  ChevronLeft, ChevronRight
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+
+/**
+ * THREE UNIFIED TYPOGRAPHIC STYLES (MATCHING USER'S EXACT REFERENCE):
+ * 1. Bold Headline: font-bold tracking-tight text-[#121212] (or text-white on dark)
+ * 2. Muted Sub-headline: font-normal tracking-tight text-[#64748b] (or text-white/70 on dark)
+ * 3. Body / Paragraph: font-normal text-sm sm:text-base text-[#475569] leading-relaxed (or text-white/80 on dark)
+ */
 
 export default function Production() {
-  return <UnitPageSkeleton data={productionData} />;
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
+  const [quoteSubject, setQuoteSubject] = useState("");
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  
+  // Section 4 Step State with Swipe Support
+  const [activeStep, setActiveStep] = useState(0);
+  const [stepDirection, setStepDirection] = useState(0);
+
+  const handleStepChange = (newStep: number) => {
+    setStepDirection(newStep > activeStep ? 1 : -1);
+    setActiveStep(newStep);
+  };
+
+  const handleSwipePrev = () => {
+    if (activeStep > 0) {
+      setStepDirection(-1);
+      setActiveStep(prev => prev - 1);
+    }
+  };
+
+  const handleSwipeNext = () => {
+    if (activeStep < steps.length - 1) {
+      setStepDirection(1);
+      setActiveStep(prev => prev + 1);
+    }
+  };
+
+  // Section 3 Interactive Showcase Slider with Swipe Support
+  const showcaseSlides = [
+    {
+      id: 1,
+      image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=1200",
+      quote: "Total supply chain certainty and certified repeatability engineered to protect your brand reputation worldwide.",
+      tag: "Conveyor Line Integration"
+    },
+    {
+      id: 2,
+      image: "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?auto=format&fit=crop&q=80&w=1200",
+      quote: "6-axis articulated robotic cells performing torque-verified fastening and adhesive dispensing with 1.2s cycles.",
+      tag: "Robotic Fastening Cells"
+    },
+    {
+      id: 3,
+      image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=1200",
+      quote: "Continuous lean Kanban supply staging and 100% FAT verification ensuring zero defect escapes.",
+      tag: "Zero-Defect FAT Staging"
+    }
+  ];
+  const [activeShowcase, setActiveShowcase] = useState(0);
+  const [showcaseDirection, setShowcaseDirection] = useState(0);
+
+  const handleShowcaseSwipe = (dir: number) => {
+    const next = activeShowcase + dir;
+    if (next >= 0 && next < showcaseSlides.length) {
+      setShowcaseDirection(dir);
+      setActiveShowcase(next);
+    }
+  };
+
+  const openQuoteModal = (subject: string) => {
+    setQuoteSubject(subject);
+    setIsQuoteModalOpen(true);
+  };
+
+  // Section 4 Step Data for Production & Assembly
+  const steps = [
+    {
+      number: "01",
+      title: "Consultation & Line Balancing",
+      desc: "We analyze your Bill of Materials (BOM), 3D CAD assemblies, cycle times, and volume targets. Our manufacturing engineers simulate reach envelopes, design lean takt-time workflows, and balance operator workstations to maximize throughput and minimize handling bottlenecks.",
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+      number: "02",
+      title: "Tooling Setup & Poka-Yoke Proofing",
+      desc: "Custom ergonomic assembly jigs, automated pneumatic clamps, and optical sensor barriers are integrated into the cell. Digital torque drivers and automatic screw feeders are calibrated to store tightening data for every critical fastener.",
+      image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+      number: "03",
+      title: "Pilot Run & First Article Inspection (FAI)",
+      desc: "Initial pilot batches undergo full First Article Inspection (FAI). We conduct optical dimensional validation, electrical continuity checks, and mechanical stress verification to benchmark repeatability before serial production approval.",
+      image: "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+      number: "04",
+      title: "Multi-Shift Serial Assembly & Dispatch",
+      desc: "High-speed conveyor cells and articulated robotic arms run continuous shifts under lean Kanban parts replenishment. Every finished product undergoes 100% functional load testing, barcode labeling, protective packaging, and global export crating.",
+      image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800"
+    }
+  ];
+
+  return (
+    <main className="w-full min-h-screen bg-white text-[#121212] font-sans pt-20 sm:pt-24 pb-20 selection:bg-[#121212] selection:text-white overflow-x-hidden">
+      
+      {/* Site-wide Container Matching Manufacturing and Home Page */}
+      <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 space-y-12 lg:space-y-16">
+
+        {/* ========================================================================= */}
+        {/* 01. HERO SECTION (Giant Soltera-Style Watermark & Floating Metric Dock) */}
+        {/* ========================================================================= */}
+        <section className="relative -mx-[0.5cm]" style={{ marginLeft: '-0.5cm', marginRight: '-0.5cm' }}>
+          <motion.div 
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="rounded-2xl sm:rounded-[22px] overflow-hidden relative shadow-xl min-h-[640px] sm:min-h-[720px] lg:min-h-[760px] flex flex-col justify-between p-6 sm:p-10 lg:p-12 text-white bg-black border border-gray-900"
+          >
+            {/* Background Looping Production Video */}
+            <div className="absolute inset-0 z-0">
+              <video 
+                autoPlay 
+                loop 
+                muted 
+                playsInline 
+                poster="/hero_precision_bloom.jpg"
+                className="w-full h-full object-cover"
+              >
+                <source src="/boomerang_production.mp4" type="video/mp4" />
+                <source src="/boomerang_laser.mp4" type="video/mp4" />
+                <source src="/hero_boomerang.mp4" type="video/mp4" />
+              </video>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/60 pointer-events-none" />
+            </div>
+
+            {/* Top Navigation Row Inside Hero */}
+            <div className="relative z-20 flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-4">
+                <Link to="/" className="flex items-center gap-2 group">
+                  <span className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse" />
+                  <span className="font-bold text-sm tracking-tight text-white group-hover:text-blue-400 transition-colors">
+                    HITECH
+                  </span>
+                </Link>
+                <span className="text-white/40 text-xs hidden sm:inline">|</span>
+                <div className="hidden sm:flex items-center gap-2 text-xs text-white/70 font-normal">
+                  <span className="text-white font-bold">EN</span>
+                  <span>/</span>
+                  <span className="hover:text-white cursor-pointer transition-colors">IN</span>
+                </div>
+              </div>
+
+              {/* Action Buttons: Video Reel + Careers + Get in touch */}
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setIsVideoModalOpen(true)}
+                  className="px-4 py-2.5 rounded-full bg-white/10 hover:bg-white hover:text-black backdrop-blur-md border border-white/25 text-white text-xs sm:text-sm font-medium tracking-tight transition-all shadow-md flex items-center gap-2 group cursor-pointer"
+                >
+                  <Play className="w-3.5 h-3.5 fill-current text-[#00A6FB] group-hover:text-black transition-colors" />
+                  <span className="hidden sm:inline">Watch Facility Reel</span>
+                  <span className="sm:hidden">Reel</span>
+                </button>
+
+                <Link 
+                  to="/career"
+                  className="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white hover:text-black backdrop-blur-md border border-white/25 text-white text-xs sm:text-sm font-medium tracking-tight transition-all shadow-md flex items-center gap-2 group"
+                >
+                  <Briefcase className="w-3.5 h-3.5 text-[#00A6FB] group-hover:text-black transition-colors" />
+                  <span>Careers</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </Link>
+
+                <button
+                  onClick={() => openQuoteModal("Production Division Quote")}
+                  className="px-5 py-2.5 rounded-full bg-white hover:bg-gray-100 text-black font-normal text-xs sm:text-sm tracking-tight transition-all shadow-md flex items-center gap-2 cursor-pointer active:scale-95"
+                >
+                  <span>Get in touch</span>
+                  <div className="w-5 h-5 rounded-full bg-black text-white flex items-center justify-center">
+                    <ArrowRight className="w-3 h-3" />
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            {/* Giant "A S S E M B L Y" Background Watermark Typography */}
+            <div className="absolute top-1/4 sm:top-1/5 left-0 right-0 z-10 pointer-events-none select-none flex justify-center overflow-hidden">
+              <span className="text-[17vw] sm:text-[15vw] font-bold tracking-tight text-white/15 uppercase leading-none">
+                ASSEMBLY
+              </span>
+            </div>
+
+            {/* Bottom Hero Area: Left Headline + Right Floating Metric Card & Breadcrumbs */}
+            <div className="relative z-20 flex flex-col lg:flex-row lg:items-end justify-between gap-8 pt-32 sm:pt-48">
+              
+              {/* Left Headline & Intro Statement */}
+              <div className="max-w-xl space-y-3">
+                <div className="flex items-center gap-2 text-white/90">
+                  <Sparkles className="w-4 h-4 text-[#00A6FB]" />
+                  <span className="text-sm font-medium tracking-tight text-white/80">Turnkey Contract Manufacturing</span>
+                </div>
+
+                <p className="text-sm sm:text-base text-white/85 font-normal leading-relaxed max-w-lg">
+                  Conveyor-driven assembly lines, articulated robotic fastening cells, and synchronized Kanban supply staging engineered for zero-defect OEM reliability.
+                </p>
+
+                <div className="flex items-center gap-3">
+                  <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-bold tracking-tight text-white leading-tight">
+                    Scale Your Production
+                  </h1>
+                  <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full border border-white/40 flex items-center justify-center shrink-0">
+                    <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Floating Metric Card: 100k+ Units */}
+              <div className="shrink-0 self-start lg:self-end">
+                <div className="bg-white/95 text-gray-900 rounded-2xl p-5 sm:p-6 shadow-xl backdrop-blur-md min-w-[170px] sm:min-w-[220px] max-w-[260px] space-y-1.5 border border-white">
+                  <div className="text-2xl sm:text-3xl font-bold tracking-tight text-[#121212] leading-none">
+                    100k+ Units
+                  </div>
+                  <p className="text-sm text-[#64748b] font-normal leading-relaxed">
+                    Monthly turnkey contract manufacturing throughput across 3 certified units.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </motion.div>
+        </section>
+
+        {/* ========================================================================= */}
+        {/* 02. "THE BENEFITS OF TURNKEY ASSEMBLY" (Value Statement & 2 Cards) */}
+        {/* ========================================================================= */}
+        <section id="benefits" className="space-y-8 sm:space-y-10">
+          
+          {/* Header Row: Left Kicker, Right Editorial Title, Subtitle & Button */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start">
+            
+            {/* Left Kicker */}
+            <div className="lg:col-span-4">
+              <span className="text-sm font-medium tracking-tight text-[#64748b]">
+                ✦ The Benefits of Turnkey Assembly
+              </span>
+            </div>
+
+            {/* Right Editorial Block */}
+            <div className="lg:col-span-8 space-y-4">
+              <div>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#121212] leading-[1.18]">
+                  Eliminate production bottlenecks and secure stable assembly throughput.
+                </h2>
+                <div className="text-2xl sm:text-3xl md:text-4xl font-normal tracking-tight text-[#64748b] leading-[1.18] mt-1">
+                  Trust an integrated partner to deliver zero-defect sub-assemblies and complete boxed units.
+                </div>
+              </div>
+
+              <p className="text-sm sm:text-base text-[#475569] font-normal leading-relaxed max-w-2xl">
+                Turnkey contract manufacturing eliminates capital expenditure risks, operator line balancing hurdles, and staging overhead. HiTech provides dedicated workstations, automated torque logging, and continuous Kanban replenishment backed by 100% FAT verification.
+              </p>
+
+              <div className="pt-2">
+                <button
+                  onClick={() => openQuoteModal("Turnkey Assembly Consultation")}
+                  className="px-6 py-3 rounded-full bg-[#121212] hover:bg-black text-white font-medium text-sm tracking-tight transition-all shadow-xs flex items-center gap-2.5 cursor-pointer active:scale-95"
+                >
+                  <span>Get in touch</span>
+                  <div className="w-5 h-5 rounded-full bg-white text-black flex items-center justify-center">
+                    <ArrowRight className="w-3 h-3" />
+                  </div>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Bottom Row: 2 Asymmetrical Cards */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
+            
+            {/* Card 1: 100% FAT Verification Metric Card */}
+            <div className="lg:col-span-5 rounded-3xl bg-[#f0f2f5] border border-gray-200/80 p-5 sm:p-6 flex items-center gap-5 shadow-2xs">
+              <div className="w-24 sm:w-28 h-28 sm:h-32 rounded-2xl overflow-hidden shrink-0 bg-gray-200">
+                <img 
+                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=400" 
+                  alt="Automated Torque Verification" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <div className="text-2xl sm:text-3xl font-bold tracking-tight text-[#121212]">
+                  100% FAT
+                </div>
+                <div className="text-sm font-medium tracking-tight text-[#64748b]">
+                  Factory Acceptance Testing
+                </div>
+                <p className="text-sm text-[#475569] font-normal leading-relaxed">
+                  Every assembled sub-system undergoes complete functional testing and digital torque logging before dispatch.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 2: 60% CapEx Savings Card */}
+            <div className="lg:col-span-7 rounded-3xl bg-[#f0f2f5] border border-gray-200/80 p-5 sm:p-6 flex items-center gap-6 shadow-2xs">
+              <div className="w-36 sm:w-52 h-28 sm:h-32 rounded-2xl overflow-hidden shrink-0 bg-gray-200">
+                <img 
+                  src="https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?auto=format&fit=crop&q=80&w=600" 
+                  alt="Robotic Workstation Cell" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <div className="text-2xl sm:text-3xl font-bold tracking-tight text-[#121212]">
+                  60%
+                </div>
+                <div className="text-sm font-medium tracking-tight text-[#64748b]">
+                  CapEx Overhead Savings
+                </div>
+                <p className="text-sm text-[#475569] font-normal leading-relaxed">
+                  Scale production volumes from prototype pilot runs to 100,000+ units monthly without upfront tooling capital.
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Thin Slider Pagination Line */}
+          <div className="flex items-center justify-between text-sm text-[#64748b] font-medium pt-1">
+            <span>02</span>
+            <div className="w-full mx-4 h-[1px] bg-gray-200 relative">
+              <div className="absolute left-0 top-0 h-full w-1/4 bg-gray-800" />
+            </div>
+            <span>08</span>
+          </div>
+
+        </section>
+
+        {/* ========================================================================= */}
+        {/* 03. "ENGINEERED FOR PERFORMANCE" (Feature Split & Large Media Card) */}
+        {/* ========================================================================= */}
+        <section id="performance" className="space-y-8 sm:space-y-10">
+          
+          {/* Header Row */}
+          <div className="space-y-3">
+            <span className="text-sm font-medium tracking-tight text-[#64748b]">
+              ✦ Engineered for Performance
+            </span>
+            <div>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#121212] leading-[1.18] max-w-4xl">
+                Synchronized lines engineered for speed, accuracy, and full accountability.
+              </h2>
+              <div className="text-2xl sm:text-3xl md:text-4xl font-normal tracking-tight text-[#64748b] leading-[1.18] max-w-4xl mt-1">
+                Our facilities unite robotic screw fastening, automated fluid dispensing, and digital quality gates.
+              </div>
+            </div>
+
+            <div className="pt-2">
+              <button
+                onClick={() => openQuoteModal("Assembly Performance Inquiry")}
+                className="px-6 py-3 rounded-full bg-[#121212] hover:bg-black text-white font-medium text-sm tracking-tight transition-all shadow-xs flex items-center gap-2.5 cursor-pointer active:scale-95"
+              >
+                <span>Get in touch</span>
+                <div className="w-5 h-5 rounded-full bg-white text-black flex items-center justify-center">
+                  <ArrowRight className="w-3 h-3" />
+                </div>
+              </button>
+            </div>
+          </div>
+
+          {/* Bottom Grid: Left 2 Cards + Right Large Media Visual */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch">
+            
+            {/* Left Column (5 cols): Two Stacked Rounded Cards */}
+            <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 sm:gap-5">
+              
+              {/* Card 1: Poka-Yoke Error Proofing */}
+              <div className="rounded-3xl bg-[#f0f2f5] border border-gray-200/80 p-6 sm:p-7 flex flex-col justify-between shadow-2xs">
+                <div className="w-10 h-10 rounded-full bg-white shadow-xs flex items-center justify-center text-gray-900 mb-6">
+                  <ShieldCheck className="w-5 h-5 text-gray-800" />
+                </div>
+                <div className="space-y-1.5">
+                  <h3 className="text-base sm:text-lg font-bold tracking-tight text-[#121212]">
+                    Poka-Yoke Vision Systems
+                  </h3>
+                  <p className="text-sm text-[#475569] font-normal leading-relaxed">
+                    Digital vision cameras and sensory barriers ensure every part is correctly seated and orientated before robotic torque fastening.
+                  </p>
+                </div>
+              </div>
+
+              {/* Card 2: Calibrated Torque Logging */}
+              <div className="rounded-3xl bg-[#f0f2f5] border border-gray-200/80 p-6 sm:p-7 flex flex-col justify-between shadow-2xs">
+                <div className="w-10 h-10 rounded-full bg-white shadow-xs flex items-center justify-center text-gray-900 mb-6">
+                  <Settings className="w-5 h-5 text-gray-800" />
+                </div>
+                <div className="space-y-1.5">
+                  <h3 className="text-base sm:text-lg font-bold tracking-tight text-[#121212]">
+                    Continuous Lean Kanban
+                  </h3>
+                  <p className="text-sm text-[#475569] font-normal leading-relaxed">
+                    Sensor-monitored bin logistics and barcode tracking eliminate line starvation and support rapid batch changeovers across shifts.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Right Column (7 cols): Swipeable Showcase Media Visual with Cool Animations */}
+            <div className="lg:col-span-7 rounded-3xl overflow-hidden relative shadow-md min-h-[380px] sm:min-h-[440px] flex flex-col justify-end p-6 sm:p-8 bg-gray-900 group select-none [perspective:1000px]">
+              <AnimatePresence mode="wait" custom={showcaseDirection}>
+                <motion.div
+                  key={activeShowcase}
+                  custom={showcaseDirection}
+                  initial={{ 
+                    opacity: 0, 
+                    x: showcaseDirection >= 0 ? 80 : -80, 
+                    rotateY: showcaseDirection >= 0 ? 12 : -12,
+                    scale: 0.94,
+                    filter: 'blur(4px)'
+                  }}
+                  animate={{ 
+                    opacity: 1, 
+                    x: 0, 
+                    rotateY: 0,
+                    scale: 1,
+                    filter: 'blur(0px)'
+                  }}
+                  exit={{ 
+                    opacity: 0, 
+                    x: showcaseDirection >= 0 ? -80 : 80, 
+                    rotateY: showcaseDirection >= 0 ? -12 : 12,
+                    scale: 0.94,
+                    filter: 'blur(4px)'
+                  }}
+                  transition={{ 
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 26,
+                    mass: 0.8
+                  }}
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.28}
+                  whileDrag={{ scale: 0.97, rotateZ: showcaseDirection >= 0 ? -1 : 1, cursor: "grabbing" }}
+                  onDragEnd={(_, info) => {
+                    if (info.offset.x < -35 || info.velocity.x < -250) {
+                      handleShowcaseSwipe(1);
+                    } else if (info.offset.x > 35 || info.velocity.x > 250) {
+                      handleShowcaseSwipe(-1);
+                    }
+                  }}
+                  className="absolute inset-0 cursor-grab active:cursor-grabbing touch-pan-y"
+                >
+                  <motion.img 
+                    initial={{ scale: 1.12 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                    src={showcaseSlides[activeShowcase].image} 
+                    alt={showcaseSlides[activeShowcase].tag} 
+                    className="w-full h-full object-cover opacity-90 pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent pointer-events-none" />
+
+                  {/* Subtle dynamic sheen swipe feedback overlay */}
+                  <motion.div 
+                    key={`showcase-sheen-${activeShowcase}`}
+                    initial={{ opacity: 0.35, x: showcaseDirection >= 0 ? '-100%' : '100%' }}
+                    animate={{ opacity: 0, x: showcaseDirection >= 0 ? '100%' : '-100%' }}
+                    transition={{ duration: 0.55, ease: "easeOut" }}
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none"
+                  />
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Top Tag & Swipe Cue */}
+              <div className="relative z-10 flex items-center justify-between mb-auto pb-4">
+                <span className="px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-xs font-medium text-white/90">
+                  {showcaseSlides[activeShowcase].tag}
+                </span>
+                <span className="text-xs text-white/70 bg-black/40 backdrop-blur-sm px-3 py-1 rounded-full hidden sm:inline-block">
+                  Swipe or drag to explore
+                </span>
+              </div>
+
+              {/* Bottom Content & Navigation */}
+              <div className="relative z-10 space-y-3 pointer-events-auto">
+                <p className="text-sm sm:text-base text-white/95 font-normal leading-relaxed max-w-lg min-h-[48px]">
+                  "{showcaseSlides[activeShowcase].quote}"
+                </p>
+
+                {/* Slider Pagination Inside Card */}
+                <div className="flex items-center justify-between text-sm text-white/70 font-medium pt-2">
+                  <div className="flex items-center gap-2">
+                    <span>0{activeShowcase + 1}</span>
+                    <div className="flex items-center gap-1">
+                      <button
+                        onClick={() => handleShowcaseSwipe(-1)}
+                        disabled={activeShowcase === 0}
+                        aria-label="Previous slide"
+                        className="w-6 h-6 rounded-full bg-white/20 hover:bg-white hover:text-black flex items-center justify-center text-white disabled:opacity-25 transition-all cursor-pointer"
+                      >
+                        <ChevronLeft className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        onClick={() => handleShowcaseSwipe(1)}
+                        disabled={activeShowcase === showcaseSlides.length - 1}
+                        aria-label="Next slide"
+                        className="w-6 h-6 rounded-full bg-white/20 hover:bg-white hover:text-black flex items-center justify-center text-white disabled:opacity-25 transition-all cursor-pointer"
+                      >
+                        <ChevronRight className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="w-full mx-4 h-[1px] bg-white/20 relative">
+                    <div 
+                      className="absolute left-0 top-0 h-full bg-white transition-all duration-300"
+                      style={{ width: `${((activeShowcase + 1) / showcaseSlides.length) * 100}%` }}
+                    />
+                  </div>
+                  <span>0{showcaseSlides.length}</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+        {/* ========================================================================= */}
+        {/* 04. "HOW IT WORKS (STEP BY STEP)" (Large Process Card Container) */}
+        {/* ========================================================================= */}
+        <motion.section 
+          id="process"
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="rounded-[32px] sm:rounded-[40px] bg-[#f0f2f5] border border-gray-200/80 p-6 sm:p-10 lg:p-12 space-y-8"
+        >
+          {/* Header Row */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start">
+            <div className="lg:col-span-4">
+              <span className="text-sm font-medium tracking-tight text-[#64748b]">
+                ✦ How it Works (Step by Step)
+              </span>
+            </div>
+
+            <div className="lg:col-span-8 space-y-1">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#121212] leading-[1.18]">
+                We deliver an integrated assembly process from feasibility to serial launch.
+              </h2>
+              <div className="text-2xl sm:text-3xl md:text-4xl font-normal tracking-tight text-[#64748b] leading-[1.18]">
+                Each workstation is designed for ergonomic efficiency and verified zero-defect quality.
+              </div>
+            </div>
+          </div>
+
+          {/* Process Step Card with Swipe Gestures & Cool Animations */}
+          <div className="relative overflow-hidden select-none [perspective:1200px]">
+            <AnimatePresence mode="wait" custom={stepDirection}>
+              <motion.div
+                key={activeStep}
+                custom={stepDirection}
+                initial={{ 
+                  opacity: 0, 
+                  x: stepDirection >= 0 ? 100 : -100, 
+                  rotateY: stepDirection >= 0 ? 14 : -14,
+                  rotateZ: stepDirection >= 0 ? 1.5 : -1.5,
+                  scale: 0.93,
+                  filter: 'blur(5px)'
+                }}
+                animate={{ 
+                  opacity: 1, 
+                  x: 0, 
+                  rotateY: 0,
+                  rotateZ: 0,
+                  scale: 1,
+                  filter: 'blur(0px)'
+                }}
+                exit={{ 
+                  opacity: 0, 
+                  x: stepDirection >= 0 ? -100 : 100, 
+                  rotateY: stepDirection >= 0 ? -14 : 14,
+                  rotateZ: stepDirection >= 0 ? -1.5 : 1.5,
+                  scale: 0.93,
+                  filter: 'blur(5px)'
+                }}
+                transition={{ 
+                  type: "spring",
+                  stiffness: 280,
+                  damping: 25,
+                  mass: 0.8
+                }}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.28}
+                whileDrag={{ scale: 0.97, rotateZ: stepDirection >= 0 ? -1.5 : 1.5, cursor: "grabbing" }}
+                onDragEnd={(_, info) => {
+                  if (info.offset.x < -35 || info.velocity.x < -250) {
+                    handleSwipeNext();
+                  } else if (info.offset.x > 35 || info.velocity.x > 250) {
+                    handleSwipePrev();
+                  }
+                }}
+                className="rounded-3xl bg-white border border-gray-200/70 p-6 sm:p-8 lg:p-10 shadow-xs grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-10 items-center cursor-grab active:cursor-grabbing touch-pan-y relative overflow-hidden"
+              >
+                {/* Subtle dynamic sheen swipe feedback overlay */}
+                <motion.div 
+                  key={`step-sheen-${activeStep}`}
+                  initial={{ opacity: 0.35, x: stepDirection >= 0 ? '-100%' : '100%' }}
+                  animate={{ opacity: 0, x: stepDirection >= 0 ? '100%' : '-100%' }}
+                  transition={{ duration: 0.55, ease: "easeOut" }}
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none z-20"
+                />
+
+                {/* Step Left: Photo with Zoom & Badge */}
+                <div className="md:col-span-6 rounded-2xl overflow-hidden aspect-[4/3] bg-gray-100 border border-gray-100 relative group">
+                  <motion.img 
+                    initial={{ scale: 1.12, opacity: 0.8 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                    src={steps[activeStep].image} 
+                    alt={steps[activeStep].title} 
+                    className="w-full h-full object-cover pointer-events-none"
+                  />
+                  <motion.div 
+                    initial={{ opacity: 0, y: -10, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ delay: 0.1, duration: 0.35, type: "spring", stiffness: 350 }}
+                    className="absolute top-4 left-4 bg-black/75 backdrop-blur-md text-white px-3.5 py-1.5 rounded-full text-xs font-medium tracking-tight shadow-md"
+                  >
+                    Step {steps[activeStep].number} of 0{steps.length}
+                  </motion.div>
+                </div>
+
+                {/* Step Right: Number & Description with Staggered Entrance */}
+                <div className="md:col-span-6 space-y-3 pointer-events-auto">
+                  <div className="flex items-center justify-between">
+                    <motion.span 
+                      initial={{ opacity: 0, scale: 0.85 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.05, duration: 0.35 }}
+                      className="text-3xl sm:text-4xl font-bold tracking-tight text-[#121212]"
+                    >
+                      {steps[activeStep].number}
+                    </motion.span>
+                    <span className="text-xs font-medium text-[#64748b] bg-gray-100 px-3 py-1 rounded-full hidden sm:inline-block">
+                      Swipe left / right to navigate
+                    </span>
+                  </div>
+
+                  <motion.h3 
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1, duration: 0.4 }}
+                    className="text-lg sm:text-xl font-medium tracking-tight text-[#64748b]"
+                  >
+                    {steps[activeStep].title}
+                  </motion.h3>
+
+                  <motion.p 
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.15, duration: 0.45 }}
+                    className="text-sm sm:text-base text-[#475569] font-normal leading-relaxed"
+                  >
+                    {steps[activeStep].desc}
+                  </motion.p>
+
+                  <div className="pt-3 flex flex-wrap items-center gap-3">
+                    <button
+                      onClick={() => openQuoteModal(`Assembly Process Consultation: ${steps[activeStep].title}`)}
+                      className="px-5 py-2.5 rounded-full bg-[#121212] hover:bg-black text-white font-medium text-sm tracking-tight transition-all shadow-xs flex items-center gap-2 cursor-pointer active:scale-95"
+                    >
+                      <span>Initiate This Step</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+
+                    {/* Step Navigation Controls (Prev/Next Arrows + Dots) */}
+                    <div className="flex items-center gap-2 ml-auto">
+                      <button
+                        onClick={handleSwipePrev}
+                        disabled={activeStep === 0}
+                        aria-label="Previous step"
+                        className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-700 hover:bg-black hover:text-white hover:border-black disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                      </button>
+
+                      {steps.map((_, i) => (
+                        <button
+                          key={i}
+                          onClick={() => handleStepChange(i)}
+                          className={`h-3 rounded-full transition-all duration-300 cursor-pointer ${
+                            activeStep === i ? 'bg-black w-7' : 'bg-gray-300 hover:bg-gray-400 w-3'
+                          }`}
+                          title={`Step ${i + 1}`}
+                        />
+                      ))}
+
+                      <button
+                        onClick={handleSwipeNext}
+                        disabled={activeStep === steps.length - 1}
+                        aria-label="Next step"
+                        className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-700 hover:bg-black hover:text-white hover:border-black disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer"
+                      >
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Step Pagination Line */}
+          <div className="flex items-center justify-between text-sm text-[#64748b] font-medium pt-2">
+            <span>01</span>
+            <div className="w-full mx-4 h-[1px] bg-gray-300 relative">
+              <div 
+                className="absolute left-0 top-0 h-full bg-gray-800 transition-all duration-300"
+                style={{ width: `${((activeStep + 1) / steps.length) * 100}%` }}
+              />
+            </div>
+            <span>04</span>
+          </div>
+
+        </motion.section>
+
+        {/* ========================================================================= */}
+        {/* 05. EDITORIAL ASYMMETRIC GALLERY (NOIR ARCHIVE TEMPLATE) */}
+        {/* ========================================================================= */}
+        <motion.section 
+          id="gallery"
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="pt-6 sm:pt-10 border-t border-gray-200/80"
+        >
+          {/* Asymmetric 5-Column Collage Grid with Uneven Heights & Baseline Alignment */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-5 lg:gap-6 items-stretch">
+            
+            {/* COLUMN 1: Editorial Header Block + Uneven Bottom Landscape Card */}
+            <div className="flex flex-col justify-between gap-6 sm:gap-8">
+              <div className="space-y-4 pt-1">
+                <span className="text-sm font-medium tracking-tight text-[#64748b]">
+                  Section 05 — Facility Archive
+                </span>
+                <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-[#121212] leading-[1.08]">
+                  Beyond Limits.<br />
+                  <span className="font-normal text-[#64748b]">Pure Precision.</span>
+                </h2>
+                <p className="text-sm sm:text-base text-[#475569] font-normal leading-relaxed max-w-sm">
+                  Vibrant factory snapshots capturing micron machining, robotic welding, and high-speed laser profiling in full color.
+                </p>
+                <div className="pt-2">
+                  <button
+                    onClick={() => openQuoteModal("Gallery Program Inquiries & Facility Tours")}
+                    className="px-6 py-2.5 rounded-full bg-[#121212] hover:bg-black text-white font-medium text-sm tracking-tight transition-all shadow-xs flex items-center gap-2 cursor-pointer active:scale-95"
+                  >
+                    <span>See the Stories</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Bottom Card: Landscape (aspect-[4/3]) */}
+              <div
+                onClick={() => openQuoteModal("Program Inquiry: Heavy Structural Gantry Milling")}
+                className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[4/3] relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?auto=format&fit=crop&q=80&w=800"
+                  alt="Heavy Structural Gantry Milling"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-3.5 left-4 right-4 space-y-0.5 text-white">
+                  <div className="text-[10px] font-normal tracking-tight text-white/70">
+                    Structural Bed
+                  </div>
+                  <div className="text-xs sm:text-sm font-bold tracking-tight text-white line-clamp-1">
+                    Heavy Machine Base Milling
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* COLUMN 2: 2 Uneven Cards (Tall Portrait on Top, Landscape on Bottom) */}
+            <div className="flex flex-col justify-end gap-4 sm:gap-5">
+              {/* Card 2: Tall Portrait (aspect-[3/4]) */}
+              <div
+                onClick={() => openQuoteModal("Program Inquiry: 5-Axis Aerospace Spindle Milling")}
+                className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[3/4] relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=800"
+                  alt="5-Axis Aerospace Spindle Milling"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-3.5 left-4 right-4 space-y-0.5 text-white">
+                  <div className="text-[10px] font-normal tracking-tight text-white/70">
+                    5-Axis Machining
+                  </div>
+                  <div className="text-xs sm:text-sm font-bold tracking-tight text-white line-clamp-1">
+                    Aerospace Impeller Spindle
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 3: Landscape (aspect-[4/3]) */}
+              <div
+                onClick={() => openQuoteModal("Program Inquiry: Precision CNC Lathe Turning")}
+                className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[4/3] relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1616401784845-180882ba9ba8?auto=format&fit=crop&q=80&w=800"
+                  alt="Precision CNC Lathe Turning"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-3.5 left-4 right-4 space-y-0.5 text-white">
+                  <div className="text-[10px] font-normal tracking-tight text-white/70">
+                    Live Tooling Lathe
+                  </div>
+                  <div className="text-xs sm:text-sm font-bold tracking-tight text-white line-clamp-1">
+                    Sub-Micron Shaft Turning
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* COLUMN 3: 2 Uneven Cards (Square on Top, Tall Portrait on Bottom) */}
+            <div className="flex flex-col justify-end gap-4 sm:gap-5">
+              {/* Card 4: Square (aspect-square) */}
+              <div
+                onClick={() => openQuoteModal("Program Inquiry: High-Power Fiber Laser Cutting")}
+                className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-square relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=800"
+                  alt="High-Power Fiber Laser Cutting"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-3.5 left-4 right-4 space-y-0.5 text-white">
+                  <div className="text-[10px] font-normal tracking-tight text-white/70">
+                    Fiber Laser Profiling
+                  </div>
+                  <div className="text-xs sm:text-sm font-bold tracking-tight text-white line-clamp-1">
+                    12kW Clean Kerf Cutting
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 5: Tall Portrait (aspect-[3/4]) */}
+              <div
+                onClick={() => openQuoteModal("Program Inquiry: 5-Axis Spiral Impeller Sculpting")}
+                className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[3/4] relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
+              >
+                <img
+                  src="/gear_flower_bloom.jpg"
+                  alt="5-Axis Spiral Impeller Sculpting"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-3.5 left-4 right-4 space-y-0.5 text-white">
+                  <div className="text-[10px] font-normal tracking-tight text-white/70">
+                    Sculpted Geometry
+                  </div>
+                  <div className="text-xs sm:text-sm font-bold tracking-tight text-white line-clamp-1">
+                    Continuous 5-Axis Impeller
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* COLUMN 4: Arrow Highlights List + 1 Tall Portrait Card at Bottom */}
+            <div className="flex flex-col justify-between gap-6 sm:gap-8">
+              {/* Arrow Feature Highlight List */}
+              <div className="space-y-3.5 pt-6 lg:pt-14">
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-normal tracking-tight text-[#121212]">
+                  <ArrowUpRight className="w-4 h-4 text-[#64748b] shrink-0" />
+                  <span>Silent precision.</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-normal tracking-tight text-[#121212]">
+                  <ArrowUpRight className="w-4 h-4 text-[#64748b] shrink-0" />
+                  <span>Honest tolerances.</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-normal tracking-tight text-[#121212]">
+                  <ArrowUpRight className="w-4 h-4 text-[#64748b] shrink-0" />
+                  <span>Pure metallurgy.</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-normal tracking-tight text-[#121212]">
+                  <ArrowUpRight className="w-4 h-4 text-[#64748b] shrink-0" />
+                  <span>Zero-defect depth.</span>
+                </div>
+              </div>
+
+              {/* Card 6: Tall Portrait (aspect-[3/4]) */}
+              <div
+                onClick={() => openQuoteModal("Program Inquiry: Zeiss Bridge CMM Metrology Lab")}
+                className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[3/4] relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&q=80&w=800"
+                  alt="Zeiss Bridge CMM Metrology Lab"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-3.5 left-4 right-4 space-y-0.5 text-white">
+                  <div className="text-[10px] font-normal tracking-tight text-white/70">
+                    Quality Metrology
+                  </div>
+                  <div className="text-xs sm:text-sm font-bold tracking-tight text-white line-clamp-1">
+                    Zeiss Bridge CMM Probe
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* COLUMN 5: 3 Uneven Cards (Landscape on Top, Very Tall Portrait in Middle, Wide Landscape on Bottom) */}
+            <div className="flex flex-col justify-end gap-4 sm:gap-5">
+              {/* Card 7: Landscape (aspect-[4/3]) */}
+              <div
+                onClick={() => openQuoteModal("Program Inquiry: Hydraulic Press Brake Bending")}
+                className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[4/3] relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&q=80&w=800"
+                  alt="Hydraulic Press Brake Bending"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-3.5 left-4 right-4 space-y-0.5 text-white">
+                  <div className="text-[10px] font-normal tracking-tight text-white/70">
+                    CNC Forming
+                  </div>
+                  <div className="text-xs sm:text-sm font-bold tracking-tight text-white line-clamp-1">
+                    Hydraulic Press Brake
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 8: Tall Vertical (aspect-[2/3]) */}
+              <div
+                onClick={() => openQuoteModal("Program Inquiry: Automated Robotic Welding Cell")}
+                className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[2/3] relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800"
+                  alt="Automated Robotic Welding Cell"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-3.5 left-4 right-4 space-y-0.5 text-white">
+                  <div className="text-[10px] font-normal tracking-tight text-white/70">
+                    Robotic Fabrication
+                  </div>
+                  <div className="text-xs sm:text-sm font-bold tracking-tight text-white line-clamp-1">
+                    Automated TIG/MIG Cell
+                  </div>
+                </div>
+              </div>
+
+              {/* Free-standing Arrow Highlights in the Gap (No box) */}
+              <div className="space-y-3.5 py-3 px-1">
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-normal tracking-tight text-[#121212]">
+                  <ArrowUpRight className="w-4 h-4 text-[#64748b] shrink-0" />
+                  <span>Sub-micron concentricity.</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-normal tracking-tight text-[#121212]">
+                  <ArrowUpRight className="w-4 h-4 text-[#64748b] shrink-0" />
+                  <span>Multi-axis live tooling.</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-normal tracking-tight text-[#121212]">
+                  <ArrowUpRight className="w-4 h-4 text-[#64748b] shrink-0" />
+                  <span>Hardened alloy turning.</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-normal tracking-tight text-[#121212]">
+                  <ArrowUpRight className="w-4 h-4 text-[#64748b] shrink-0" />
+                  <span>Certified shaft runout.</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          {/* SECONDARY & FINAL TIERS: ROW 2 & ROW 3 WITH DIFFERENTIAL LENGTHS ENDING AT THE SAME LINE */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-5 lg:gap-6 mt-4 sm:mt-5 lg:mt-6 items-stretch">
+            
+            {/* COLUMN 1: Tall Portrait (aspect-[3/4]) + Medium Landscape (aspect-[4/3]) */}
+            <div className="flex flex-col justify-between h-full gap-4 sm:gap-5">
+              {/* Row 2 Card */}
+              <div
+                onClick={() => openQuoteModal("Program Inquiry: Advanced Facility Infrastructure & Plant Bed")}
+                className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[3/4] relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
+              >
+                <img
+                  src="/industrial_monument.jpg"
+                  alt="Advanced Facility Infrastructure & Plant Bed"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-3.5 left-4 right-4 space-y-0.5 text-white">
+                  <div className="text-[10px] font-normal tracking-tight text-white/70">
+                    Unit 01 Coimbatore
+                  </div>
+                  <div className="text-xs sm:text-sm font-bold tracking-tight text-white line-clamp-1">
+                    High-Bay Manufacturing Plant
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* COLUMN 2: Sleek Free-standing Arrow Highlights in the Gap */}
+            <div className="flex flex-col justify-between h-full gap-4 sm:gap-5">
+              {/* Row 2: Free-standing Arrow Highlights in the Gap (No box) */}
+              <div className="space-y-3.5 py-3 px-1">
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-normal tracking-tight text-[#121212]">
+                  <ArrowUpRight className="w-4 h-4 text-[#64748b] shrink-0" />
+                  <span>Silent precision.</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-normal tracking-tight text-[#121212]">
+                  <ArrowUpRight className="w-4 h-4 text-[#64748b] shrink-0" />
+                  <span>Honest tolerances.</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-normal tracking-tight text-[#121212]">
+                  <ArrowUpRight className="w-4 h-4 text-[#64748b] shrink-0" />
+                  <span>Pure metallurgy.</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-normal tracking-tight text-[#121212]">
+                  <ArrowUpRight className="w-4 h-4 text-[#64748b] shrink-0" />
+                  <span>Zero-defect depth.</span>
+                </div>
+              </div>
+            </div>
+
+            {/* COLUMN 3: Classic Landscape (aspect-[4/3]) + Tall Portrait (aspect-[3/4]) */}
+            <div className="flex flex-col justify-between h-full gap-4 sm:gap-5">
+              {/* Row 2 Card */}
+              <div
+                onClick={() => openQuoteModal("Program Inquiry: Automated Dual-Bed Pallet Shuttle")}
+                className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[4/3] relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?auto=format&fit=crop&q=80&w=800"
+                  alt="Automated Dual-Bed Pallet Shuttle"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-3.5 left-4 right-4 space-y-0.5 text-white">
+                  <div className="text-[10px] font-normal tracking-tight text-white/70">
+                    Continuous Infeed
+                  </div>
+                  <div className="text-xs sm:text-sm font-bold tracking-tight text-white line-clamp-1">
+                    Dual-Bed Shuttle Automation
+                  </div>
+                </div>
+              </div>
+
+              {/* Row 3 Final Card */}
+              <div
+                onClick={() => openQuoteModal("Program Inquiry: Automated Robotic Pick & Place Cell")}
+                className="rounded-2xl sm:rounded-3xl overflow-hidden flex-1 min-h-[190px] aspect-[3/4] relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800"
+                  alt="Automated Robotic Pick & Place Cell"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-3.5 left-4 right-4 space-y-0.5 text-white">
+                  <div className="text-[10px] font-normal tracking-tight text-white/70">
+                    Robotics & Automation
+                  </div>
+                  <div className="text-xs sm:text-sm font-bold tracking-tight text-white line-clamp-1">
+                    Automated Robotic Assembly Cell
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* COLUMN 4: Dramatic Tall Portrait (aspect-[2/3]) + Sleek Wide Landscape (aspect-[16/9]) */}
+            <div className="flex flex-col justify-between h-full gap-4 sm:gap-5">
+              {/* Row 2 Card */}
+              <div
+                onClick={() => openQuoteModal("Program Inquiry: Heavy Structural Rig Weldments")}
+                className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[2/3] relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=800"
+                  alt="Heavy Structural Rig Weldments"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-3.5 left-4 right-4 space-y-0.5 text-white">
+                  <div className="text-[10px] font-normal tracking-tight text-white/70">
+                    Heavy Fabrication
+                  </div>
+                  <div className="text-xs sm:text-sm font-bold tracking-tight text-white line-clamp-1">
+                    Machine Rig Base Fabrication
+                  </div>
+                </div>
+              </div>
+
+              {/* Row 3 Final Card */}
+              <div
+                onClick={() => openQuoteModal("Program Inquiry: Modular Workstation Production Cells")}
+                className="rounded-2xl sm:rounded-3xl overflow-hidden flex-1 min-h-[160px] aspect-[16/9] relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
+              >
+                <img
+                  src="/isometric_blue_blocks.jpg"
+                  alt="Modular Workstation Production Cells"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-3.5 left-4 right-4 space-y-0.5 text-white">
+                  <div className="text-[10px] font-normal tracking-tight text-white/70">
+                    Plant Engineering
+                  </div>
+                  <div className="text-xs sm:text-sm font-bold tracking-tight text-white line-clamp-1">
+                    Modular Lean Workstation Cells
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* COLUMN 5: Balanced Square (aspect-square) + Balanced Square (aspect-square) */}
+            <div className="flex flex-col justify-between h-full gap-4 sm:gap-5">
+              {/* Row 2 Card */}
+              <div
+                onClick={() => openQuoteModal("Program Inquiry: Certified Global Packaging & Dispatch")}
+                className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-square relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800"
+                  alt="Certified Global Packaging & Dispatch"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-3.5 left-4 right-4 space-y-0.5 text-white">
+                  <div className="text-[10px] font-normal tracking-tight text-white/70">
+                    Logistics Fulfillment
+                  </div>
+                  <div className="text-xs sm:text-sm font-bold tracking-tight text-white line-clamp-1">
+                    Certified Global Dispatch
+                  </div>
+                </div>
+              </div>
+
+              {/* Row 3: Free-standing Engineering CTA in the Gap (No box) */}
+              <div className="space-y-3.5 py-3 px-1">
+                <span className="text-xs font-normal tracking-tight text-[#64748b] block">
+                  Engineering Desk
+                </span>
+                <div className="space-y-2.5">
+                  <div className="flex items-center gap-2 text-xs sm:text-sm font-normal tracking-tight text-[#121212]">
+                    <ArrowUpRight className="w-4 h-4 text-[#64748b] shrink-0" />
+                    <span>Rapid tooling review.</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs sm:text-sm font-normal tracking-tight text-[#121212]">
+                    <ArrowUpRight className="w-4 h-4 text-[#64748b] shrink-0" />
+                    <span>Design for manufacturability.</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs sm:text-sm font-normal tracking-tight text-[#121212]">
+                    <ArrowUpRight className="w-4 h-4 text-[#64748b] shrink-0" />
+                    <span>Zero-defect SLA dispatch.</span>
+                  </div>
+                </div>
+                <div className="pt-2">
+                  <button
+                    onClick={() => openQuoteModal("Direct Engineering Consultation & Rapid RFQ")}
+                    className="inline-flex items-center gap-1.5 text-xs font-bold tracking-tight text-[#121212] hover:text-black hover:underline cursor-pointer"
+                  >
+                    <span>Start Production</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </motion.section>
+
+      </div>
+
+      {/* ========================================================================= */}
+      {/* VIDEO PREVIEW MODAL */}
+      {/* ========================================================================= */}
+      <AnimatePresence>
+        {isVideoModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="relative w-full max-w-4xl bg-black rounded-3xl overflow-hidden shadow-2xl border border-white/20 aspect-video flex items-center justify-center"
+            >
+              <button
+                onClick={() => setIsVideoModalOpen(false)}
+                className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-white hover:text-black transition-colors cursor-pointer"
+                title="Close Video"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <video 
+                autoPlay 
+                loop 
+                controls 
+                className="w-full h-full object-cover"
+              >
+                <source src="/boomerang_production.mp4" type="video/mp4" />
+                <source src="/boomerang_laser.mp4" type="video/mp4" />
+                <source src="/hero_boomerang.mp4" type="video/mp4" />
+              </video>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* ========================================================================= */}
+      {/* RFQ / QUOTE MODAL */}
+      {/* ========================================================================= */}
+      <AnimatePresence>
+        {isQuoteModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/75 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="relative w-full max-w-lg bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-gray-200"
+            >
+              <button
+                onClick={() => setIsQuoteModalOpen(false)}
+                className="absolute top-5 right-5 w-9 h-9 rounded-full bg-gray-100 hover:bg-black hover:text-white flex items-center justify-center transition-colors text-gray-500 cursor-pointer"
+                title="Close Modal"
+              >
+                <X className="w-4 h-4" />
+              </button>
+
+              <div className="space-y-1 mb-6">
+                <span className="text-sm font-medium tracking-tight text-[#64748b]">
+                  Production Inquiries
+                </span>
+                <h3 className="text-2xl font-bold tracking-tight text-[#121212]">
+                  Request Production Quote
+                </h3>
+                <p className="text-sm text-[#475569] font-normal leading-relaxed">
+                  Submit CAD specifications and production volume targets for prompt feasibility review.
+                </p>
+              </div>
+
+              <form 
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  alert("Thank you! Your production inquiry has been received. Our team will contact you within 24 hours.");
+                  setIsQuoteModalOpen(false);
+                }}
+                className="space-y-4 text-left"
+              >
+                <div>
+                  <label className="block text-sm font-medium tracking-tight text-[#121212] mb-1">
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. John Doe"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-[#121212] text-sm text-[#121212] font-normal bg-gray-50"
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-sm font-medium tracking-tight text-[#121212] mb-1">
+                      Business Email
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="john@company.com"
+                      className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-[#121212] text-sm text-[#121212] font-normal bg-gray-50"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium tracking-tight text-[#121212] mb-1">
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      placeholder="+91..."
+                      className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-[#121212] text-sm text-[#121212] font-normal bg-gray-50"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium tracking-tight text-[#121212] mb-1">
+                    Project / Line Subject
+                  </label>
+                  <input
+                    type="text"
+                    defaultValue={quoteSubject || "High-Volume Production Program"}
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-[#121212] text-sm text-[#121212] font-normal bg-gray-50"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium tracking-tight text-[#121212] mb-1">
+                    Target Volume &amp; Specifications
+                  </label>
+                  <textarea
+                    rows={3}
+                    placeholder="Provide details on monthly unit volume, tolerances, assembly steps, and timelines..."
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-[#121212] text-sm text-[#121212] font-normal placeholder-gray-400 resize-none bg-gray-50"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full py-3.5 rounded-full bg-[#121212] hover:bg-black text-white font-medium text-sm tracking-tight transition-all shadow-md mt-2 flex items-center justify-center gap-2 cursor-pointer active:scale-95"
+                >
+                  <Send className="w-3.5 h-3.5" />
+                  <span>Submit Production Inquiry</span>
+                </button>
+              </form>
+
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+    </main>
+  );
 }

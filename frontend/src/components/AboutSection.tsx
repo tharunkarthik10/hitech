@@ -54,15 +54,15 @@ export default function AboutSection() {
           <div className="flex-1 flex flex-col justify-between">
             <div>
               {/* Pill Tabs */}
-              <div className="flex flex-wrap gap-3 mb-12">
+              <div className="flex flex-wrap gap-2.5 mb-8">
                 {tabs.map(tab => (
                   <button 
                     key={tab}
                     onClick={() => setActiveTab(tab)}
-                    className={`px-5 py-2.5 rounded-full font-label-caps tracking-widest text-xs font-bold transition-all duration-300 ${
+                    className={`px-5 py-2.5 rounded-full text-sm font-medium tracking-tight transition-all duration-300 cursor-pointer ${
                       activeTab === tab 
-                        ? 'bg-white text-[#051923] shadow-md' 
-                        : 'bg-white/10 text-white hover:bg-white/20'
+                        ? 'bg-white text-[#121212] shadow-md font-bold' 
+                        : 'bg-white/10 text-white/80 hover:bg-white/20'
                     }`}
                   >
                     {tab}
@@ -71,20 +71,21 @@ export default function AboutSection() {
               </div>
 
               {/* Headline */}
-              <h2 className="text-4xl md:text-5xl lg:text-[56px] text-white font-headline-xl font-semibold leading-[1.1] mb-12 tracking-tight drop-shadow-sm">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-bold tracking-tight text-white leading-[1.12] mb-6">
                 At the heart of engineering innovation.
               </h2>
 
-              {/* Dynamic Content Area (replaces accordion) */}
-              <div className="text-white/80 text-lg leading-relaxed font-medium min-h-[180px] md:min-h-[220px] transition-all duration-500">
+              {/* Dynamic Content Area */}
+              <div className="font-normal text-sm sm:text-base md:text-[17px] text-white/85 leading-relaxed min-h-[160px] md:min-h-[180px] transition-all duration-500">
                 {tabContent[activeTab]}
               </div>
             </div>
 
             {/* Explore Button */}
-            <div className="mt-12 lg:mt-16">
-              <button className="flex items-center gap-2 px-8 py-3.5 rounded-full border border-white text-white hover:bg-white hover:text-[#051923] transition-all duration-300 font-medium text-[16px]">
-                Explore more <span className="material-symbols-outlined text-sm font-bold">north_east</span>
+            <div className="mt-8 lg:mt-12">
+              <button className="inline-flex items-center gap-2 px-7 py-3 rounded-full border border-white/80 text-white hover:bg-white hover:text-black transition-all duration-300 font-medium text-sm tracking-tight cursor-pointer active:scale-95">
+                <span>Explore more</span>
+                <span className="material-symbols-outlined text-[16px]">north_east</span>
               </button>
             </div>
           </div>

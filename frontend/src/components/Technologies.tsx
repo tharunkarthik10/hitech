@@ -70,7 +70,7 @@ export default function Technologies() {
           {/* Left Column */}
           <div className="lg:col-span-7 flex flex-col">
             {/* Tabs */}
-            <div className="flex flex-wrap gap-3 mb-10">
+            <div className="flex flex-wrap gap-2.5 mb-8">
               {assets.map((asset, idx) => (
                 <button
                   key={idx}
@@ -78,10 +78,10 @@ export default function Technologies() {
                     setActiveIndex(idx);
                     setOpenFeatureIndex(null);
                   }}
-                  className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all border ${
+                  className={`px-5 py-2.5 rounded-full text-sm font-medium tracking-tight transition-all border cursor-pointer ${
                     activeIndex === idx
-                      ? 'bg-white text-black border-white shadow-[0_0_15px_rgba(255,255,255,0.15)]'
-                      : 'bg-transparent text-gray-400 border-gray-700 hover:text-white hover:border-gray-400 hover:bg-white/5'
+                      ? 'bg-white text-black font-bold border-white shadow-[0_0_15px_rgba(255,255,255,0.15)]'
+                      : 'bg-transparent text-white/70 border-white/20 hover:text-white hover:border-white/40 hover:bg-white/5'
                   }`}
                 >
                   {asset.shortTitle}
@@ -90,21 +90,26 @@ export default function Technologies() {
             </div>
 
             {/* Heading */}
-            <h2 className="text-4xl md:text-5xl lg:text-[56px] font-headline-xl font-medium leading-[1.1] mb-12 tracking-tight">
-              Our Core Engineering Products
-            </h2>
+            <div className="space-y-2 mb-8">
+              <span className="text-sm font-medium tracking-tight text-white/80 block">
+                Precision Portfolio
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white leading-[1.12]">
+                Our Core Engineering Products
+              </h2>
+            </div>
 
             {/* Features Accordion-style */}
-            <div className="flex flex-col mb-12">
+            <div className="flex flex-col mb-10">
               {activeAsset.features.map((feature, idx) => {
                 const isOpen = openFeatureIndex === idx;
                 return (
-                  <div key={idx} className="flex flex-col border-b border-white/20">
+                  <div key={idx} className="flex flex-col border-b border-white/15">
                     <div 
-                      className="flex justify-between items-center py-6 group cursor-pointer hover:text-white transition-colors"
+                      className="flex justify-between items-center py-5 group cursor-pointer hover:text-white transition-colors"
                       onClick={() => setOpenFeatureIndex(isOpen ? null : idx)}
                     >
-                      <h4 className="text-xl md:text-2xl font-bold tracking-tight text-white/90 group-hover:text-white transition-colors">
+                      <h4 className="text-base sm:text-lg md:text-xl font-bold tracking-tight text-white/90 group-hover:text-white transition-colors">
                         {feature}
                       </h4>
                       {/* Small arrow triangle */}

@@ -49,17 +49,17 @@ export default function Products() {
                   <button
                     onClick={() => toggleDepartment(dept.name)}
                     className={`w-full text-left px-6 py-4 flex items-center justify-between group transition-all duration-300 ${
-                      isDeptActive ? 'text-[#00A6FB] font-bold' : 'text-gray-700 font-semibold hover:text-[#00A6FB]'
+                      isDeptActive ? 'text-[#121212] font-bold' : 'text-[#475569] font-medium hover:text-[#121212]'
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <DeptIcon className={`w-5 h-5 transition-all duration-700 group-hover:rotate-[360deg] group-hover:scale-110 ${isDeptActive ? 'text-[#00A6FB]' : 'text-gray-400'}`} strokeWidth={2} />
-                      <span className="text-[16px] tracking-wide">{dept.name}</span>
+                      <DeptIcon className={`w-5 h-5 transition-all duration-700 group-hover:rotate-[360deg] group-hover:scale-110 ${isDeptActive ? 'text-[#00A6FB]' : 'text-[#64748b]'}`} strokeWidth={2} />
+                      <span className="text-[16px] tracking-tight font-bold">{dept.name}</span>
                     </div>
                     {isDeptActive ? (
-                      <ChevronUp className="w-4 h-4" />
+                      <ChevronUp className="w-4 h-4 text-[#121212]" />
                     ) : (
-                      <ChevronDown className="w-4 h-4 text-gray-400" />
+                      <ChevronDown className="w-4 h-4 text-[#64748b]" />
                     )}
                   </button>
 
@@ -76,8 +76,8 @@ export default function Products() {
                             onClick={() => setActiveCategory(cat.name)}
                             className={`w-full text-left pl-12 pr-6 py-3 text-[15px] transition-all duration-300 flex items-center gap-3 relative group ${
                               isCatActive
-                                ? 'font-bold text-[#051923] bg-[#f0f9ff]'
-                                : 'font-medium text-gray-500 hover:text-[#051923] hover:bg-gray-50'
+                                ? 'font-bold text-[#121212] bg-[#f1f5f9]'
+                                : 'font-medium text-[#64748b] hover:text-[#121212] hover:bg-gray-50'
                             }`}
                           >
                             {/* Animated Left Border Indicator */}
@@ -86,15 +86,15 @@ export default function Products() {
                             }`}></div>
                             
                             <CatIcon className={`w-4 h-4 transition-all duration-700 group-hover:rotate-[360deg] group-hover:scale-110 ${
-                              isCatActive ? 'text-[#00A6FB]' : 'text-gray-400 group-hover:text-[#051923]'
+                              isCatActive ? 'text-[#00A6FB]' : 'text-[#64748b] group-hover:text-[#121212]'
                             }`} strokeWidth={isCatActive ? 2 : 1.5} />
                             
-                            <span className="relative z-10 tracking-wide">{cat.name}</span>
+                            <span className="relative z-10 tracking-tight">{cat.name}</span>
                           </button>
                         );
                       })}
                       <div className="pl-12 pr-6 py-3 mt-1">
-                        <Link to="#" className="text-[15px] font-bold text-[#00A6FB] hover:underline">
+                        <Link to="#" className="text-sm font-semibold tracking-tight text-[#00A6FB] hover:underline">
                           View All
                         </Link>
                       </div>
@@ -112,11 +112,11 @@ export default function Products() {
             <div>
               {/* Category Header */}
               <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-100">
-                <h2 className="text-2xl font-bold text-gray-900 tracking-tight">
+                <h2 className="text-2xl sm:text-3xl font-bold text-[#121212] tracking-tight">
                   {currentCategoryData.name}
                 </h2>
                 <span className="text-gray-300">|</span>
-                <Link to="#" className="text-[15px] font-bold text-[#00A6FB] hover:underline">
+                <Link to="#" className="text-sm font-semibold tracking-tight text-[#00A6FB] hover:underline">
                   View All
                 </Link>
               </div>
@@ -129,22 +129,22 @@ export default function Products() {
                       key={subGroup.name} 
                       className={`flex flex-col pr-8 ${idx !== currentCategoryData.subGroups.length - 1 ? 'border-r border-gray-100' : ''}`}
                     >
-                      <h3 className="text-[17px] font-bold text-gray-900 mb-6">
+                      <h3 className="text-lg font-bold text-[#121212] tracking-tight mb-5">
                         {subGroup.name}
                       </h3>
-                      <ul className="space-y-4">
+                      <ul className="space-y-3.5">
                         {subGroup.items.map((item) => (
                           <li key={item.id}>
                             <Link 
                               to={`/products/${item.id}`} 
-                              className="text-[15px] text-gray-600 hover:text-[#00A6FB] hover:underline transition-colors block"
+                              className="text-[15px] text-[#475569] hover:text-[#121212] hover:underline transition-colors block leading-relaxed"
                             >
                               {item.name}
                             </Link>
                           </li>
                         ))}
                       </ul>
-                      <Link to="#" className="text-[14px] font-semibold text-[#00A6FB] hover:underline mt-6">
+                      <Link to="#" className="text-sm font-medium tracking-tight text-[#00A6FB] hover:underline mt-5">
                         View All
                       </Link>
                     </div>
@@ -152,13 +152,13 @@ export default function Products() {
                 </div>
               ) : (
                 <div className="text-center py-20">
-                  <p className="text-gray-500">More categories coming soon.</p>
+                  <p className="text-sm sm:text-base text-[#64748b]">More categories coming soon.</p>
                 </div>
               )}
             </div>
           ) : (
             <div className="text-center py-20">
-              <p className="text-gray-500">Please select a category to view products.</p>
+              <p className="text-sm sm:text-base text-[#64748b]">Please select a category to view products.</p>
             </div>
           )}
         </div>

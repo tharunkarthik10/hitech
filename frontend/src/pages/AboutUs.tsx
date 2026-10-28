@@ -1,7 +1,22 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useInView, animate, AnimatePresence } from 'framer-motion';
-import { ChevronRight, ChevronLeft, Target, Shield, Lightbulb, Users, Package, Settings, Globe, Play, ArrowUpRight } from 'lucide-react';
+import { 
+  ChevronRight, 
+  ChevronLeft, 
+  Target, 
+  Shield, 
+  Lightbulb, 
+  Users, 
+  Package, 
+  Settings, 
+  Globe, 
+  Play, 
+  ArrowUpRight,
+  Sparkles,
+  Briefcase,
+  ArrowRight
+} from 'lucide-react';
 
 const timelineData = [
   { year: '1977', title: 'Establishment', description: 'Establishment of Hitech by our visionary founders, setting the foundation for excellence in engineering.', image: 'https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?q=80&w=800&auto=format&fit=crop' },
@@ -66,47 +81,132 @@ export default function AboutUs() {
   };
 
   return (
-    <div className="w-full bg-[#f4f7f9]">
-      {/* Hero Section */}
-      <div className="relative h-[85vh] min-h-[640px] w-full flex items-center justify-center overflow-hidden text-center">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop" 
-            alt="Factory Background" 
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black/60"></div>
-        </div>
-        
-        <div className="relative z-10 px-8 md:px-16 max-w-4xl mx-auto w-full mt-16">
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 font-heading tracking-tight"
-          >
-            About <span className="text-[#00A6FB]">Us</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl md:text-2xl text-gray-200 mb-10 max-w-2xl mx-auto font-light"
-          >
-            Pioneering engineering excellence and innovative solutions for the modern industrial era.
-          </motion.p>
+    <div className="w-full bg-[#f4f7f9] pt-20 sm:pt-24">
+      {/* 01. HERO SECTION: MATCHING MANUFACTURING & CONTACT PAGES */}
+      <section className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 mb-8 sm:mb-12">
+        <div className="relative -mx-[0.5cm]" style={{ marginLeft: '-0.5cm', marginRight: '-0.5cm' }}>
           <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex items-center justify-center gap-2 text-sm font-semibold text-gray-300 uppercase tracking-widest"
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="rounded-2xl sm:rounded-[22px] overflow-hidden relative shadow-xl min-h-[640px] sm:min-h-[720px] lg:min-h-[760px] flex flex-col justify-between p-6 sm:p-10 lg:p-12 text-white bg-black border border-gray-900"
           >
-            <a href="/" className="hover:text-white transition-colors">Home</a>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#00A6FB] mx-2"></span>
-            <span className="text-white">About us</span>
+            {/* Background High-Tech Facility Media / Looping Video */}
+            <div className="absolute inset-0 z-0">
+              <video 
+                autoPlay 
+                loop 
+                muted 
+                playsInline 
+                poster="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop"
+                className="w-full h-full object-cover opacity-75"
+              >
+                <source src="/boomerang.mp4" type="video/mp4" />
+                <source src="/boomerang_production.mp4" type="video/mp4" />
+              </video>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/45 to-black/60 pointer-events-none" />
+            </div>
+
+            {/* Top Navigation Bar Inside Hero Card */}
+            <div className="relative z-20 flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-4">
+                <Link to="/" className="flex items-center gap-2 group">
+                  <span className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse" />
+                  <span className="font-bold text-sm tracking-tight text-white group-hover:text-blue-400 transition-colors">
+                    HITECH
+                  </span>
+                </Link>
+                <span className="text-white/40 text-xs hidden sm:inline">|</span>
+                <div className="hidden sm:flex items-center gap-2 text-xs text-white/70 font-normal">
+                  <span className="text-white font-bold">EN</span>
+                  <span>/</span>
+                  <span className="hover:text-white cursor-pointer transition-colors">IN</span>
+                </div>
+              </div>
+
+              {/* Right Action Buttons: Careers & Contact */}
+              <div className="flex items-center gap-3">
+                <Link 
+                  to="/career"
+                  className="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white hover:text-black backdrop-blur-md border border-white/25 text-white text-xs sm:text-sm font-medium tracking-tight transition-all shadow-md flex items-center gap-2 group"
+                >
+                  <Briefcase className="w-3.5 h-3.5 text-[#00A6FB] group-hover:text-black transition-colors" />
+                  <span>Careers</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </Link>
+
+                <Link 
+                  to="/contact"
+                  className="hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-full bg-white hover:bg-gray-100 text-black text-xs sm:text-sm font-medium tracking-tight transition-all shadow-md group"
+                >
+                  <span>Get in touch</span>
+                  <div className="w-5 h-5 rounded-full bg-black text-white flex items-center justify-center">
+                    <ArrowRight className="w-3 h-3" />
+                  </div>
+                </Link>
+              </div>
+            </div>
+
+            {/* Outlined Vertical / Giant Watermark Typography */}
+            <div className="absolute right-6 sm:right-12 top-1/2 -translate-y-1/2 pointer-events-none select-none hidden md:block z-10">
+              <span 
+                className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-widest text-transparent uppercase opacity-20"
+                style={{
+                  writingMode: 'vertical-rl',
+                  WebkitTextStroke: '1.5px rgba(255, 255, 255, 0.75)'
+                }}
+              >
+                ABOUT US
+              </span>
+            </div>
+
+            {/* Bottom Hero Content: Title, Narrative & CTA + Breadcrumbs */}
+            <div className="relative z-20 flex flex-col lg:flex-row lg:items-end justify-between gap-8 pt-28 sm:pt-40">
+              
+              <div className="max-w-2xl space-y-4">
+                <div className="flex items-center gap-2 text-white/90">
+                  <Sparkles className="w-5 h-5 text-[#00A6FB]" />
+                  <span className="text-sm font-medium tracking-tight text-white/80">49+ Years of Engineering Excellence</span>
+                </div>
+
+                <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.08]">
+                  About Us
+                </h1>
+
+                <p className="text-sm sm:text-base text-white/85 font-normal leading-relaxed max-w-lg">
+                  Pioneering engineering excellence, micron-level machining precision, and integrated automation across 3 specialized manufacturing units.
+                </p>
+
+                <div className="pt-2 flex flex-wrap items-center gap-3">
+                  <Link 
+                    to="/career"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white hover:bg-gray-100 text-[#121212] font-medium text-xs sm:text-sm tracking-tight transition-all shadow-lg group"
+                  >
+                    <Briefcase className="w-4 h-4 text-[#00A6FB]" />
+                    <span>Explore Careers at Hitech</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                  <Link 
+                    to="/contact"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-medium text-xs sm:text-sm tracking-tight transition-all"
+                  >
+                    <span>Contact Our Engineering Team</span>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Floating Breadcrumb Pill */}
+              <div className="bg-white/95 backdrop-blur-md text-[#121212] px-6 py-2.5 rounded-full text-xs sm:text-sm font-medium tracking-tight shadow-lg flex items-center gap-2 border border-white shrink-0 self-start lg:self-end">
+                <Link to="/" className="text-[#64748b] hover:text-[#121212] transition-colors">Home</Link>
+                <span className="text-[#94a3b8]">/</span>
+                <span className="text-[#121212] font-semibold">About us</span>
+              </div>
+
+            </div>
+
           </motion.div>
         </div>
-      </div>
+      </section>
 
       {/* Stats Banner */}
       <div className="relative py-20 overflow-hidden">
@@ -126,10 +226,10 @@ export default function AboutUs() {
               <div className="w-16 h-16 rounded-full bg-[#00A6FB]/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 border border-[#00A6FB]/20 shadow-sm">
                 <stat.icon className="w-8 h-8 text-[#00A6FB]" strokeWidth={2} />
               </div>
-              <div className="text-4xl md:text-5xl font-bold text-[#051923] mb-2 font-heading tracking-tight">
+              <div className="text-4xl md:text-5xl font-bold text-[#121212] mb-2 tracking-tight">
                 <AnimatedCounter value={stat.count} suffix={stat.suffix} />
               </div>
-              <div className="text-gray-500 text-sm md:text-base font-bold tracking-widest uppercase">
+              <div className="text-sm font-medium tracking-tight text-[#64748b]">
                 {stat.label}
               </div>
             </FadeIn>
@@ -170,8 +270,8 @@ export default function AboutUs() {
                       className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
                     />
                     <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-4">
-                      <p className="text-white font-bold text-sm">Founder Name 1</p>
-                      <p className="text-blue-300 text-xs">CEO & Visionary</p>
+                      <p className="text-white font-bold text-sm tracking-tight">Founder Name 1</p>
+                      <p className="text-white/80 text-xs sm:text-sm font-medium tracking-tight">CEO & Visionary</p>
                     </div>
                   </div>
                   
@@ -182,8 +282,8 @@ export default function AboutUs() {
                       className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
                     />
                     <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-4">
-                      <p className="text-white font-bold text-sm">Founder Name 2</p>
-                      <p className="text-blue-300 text-xs">Co-Founder</p>
+                      <p className="text-white font-bold text-sm tracking-tight">Founder Name 2</p>
+                      <p className="text-white/80 text-xs sm:text-sm font-medium tracking-tight">Co-Founder</p>
                     </div>
                   </div>
                 </div>
@@ -191,8 +291,8 @@ export default function AboutUs() {
 
               {/* Experience Badge */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-sm p-6 rounded-2xl shadow-2xl border border-white z-20 flex flex-col items-center justify-center transform md:-translate-x-[20%]">
-                <span className="text-[#00A6FB] font-black text-5xl mb-1">49+</span>
-                <span className="text-gray-800 font-bold text-xs uppercase tracking-widest text-center">Years of<br/>Excellence</span>
+                <span className="text-[#00A6FB] font-bold text-5xl mb-1 tracking-tight">49+</span>
+                <span className="text-xs font-semibold tracking-tight text-[#64748b] text-center">Years of<br/>Excellence</span>
               </div>
             </div>
             
@@ -200,26 +300,26 @@ export default function AboutUs() {
             <div className="lg:col-span-7 relative z-10">
               <FadeIn className="space-y-12">
                 <div>
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="h-[2px] w-12 bg-[#00A6FB]"></div>
-                    <span className="text-[#00A6FB] font-bold uppercase tracking-widest text-sm">The Hitech Story</span>
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="h-[2px] w-8 bg-[#00A6FB]"></div>
+                    <span className="text-sm font-medium tracking-tight text-[#64748b]">The Hitech Story</span>
                   </div>
-                  <h2 className="text-4xl lg:text-5xl font-bold text-[#051923] mb-6 font-heading leading-tight">
+                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#121212] mb-6 tracking-tight leading-tight">
                     Pioneering the future of <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A6FB] to-[#051923]">automation.</span>
                   </h2>
                 </div>
 
                 <div className="space-y-8">
                   <div className="border-l-4 border-[#00A6FB]/20 pl-6 hover:border-[#00A6FB] transition-colors duration-300">
-                    <h3 className="text-xl font-bold text-[#051923] mb-3 font-heading">Who We Are</h3>
-                    <p className="text-gray-600 leading-relaxed text-[15px]">
+                    <h3 className="text-xl font-bold text-[#121212] mb-2 tracking-tight">Who We Are</h3>
+                    <p className="text-sm sm:text-base text-[#475569] leading-relaxed">
                       Hitech stands today as one of the foremost names in engineering, trusted for quality, reliability, and innovation. We empower industries and simplify automation.
                     </p>
                   </div>
                   
                   <div className="border-l-4 border-[#00A6FB]/20 pl-6 hover:border-[#00A6FB] transition-colors duration-300">
-                    <h3 className="text-xl font-bold text-[#051923] mb-3 font-heading">Our Journey</h3>
-                    <p className="text-gray-600 leading-relaxed text-[15px]">
+                    <h3 className="text-xl font-bold text-[#121212] mb-2 tracking-tight">Our Journey</h3>
+                    <p className="text-sm sm:text-base text-[#475569] leading-relaxed">
                       What started as a humble workshop years ago has grown into a sophisticated organization serving global clients. Over decades, we have adapted to ever-changing technologies, always placing the customer at the heart of our journey.
                     </p>
                   </div>
@@ -244,25 +344,25 @@ export default function AboutUs() {
               <FadeIn className="space-y-6">
                 <div>
                   <div className="flex items-center gap-4 mb-3">
-                    <div className="h-[2px] w-12 bg-[#00A6FB]" />
-                    <span className="text-[#00A6FB] font-bold uppercase tracking-widest text-xs">Leadership — Strategic Vision</span>
+                    <div className="h-[2px] w-8 bg-[#00A6FB]" />
+                    <span className="text-sm font-medium tracking-tight text-[#64748b]">Leadership — Strategic Vision</span>
                   </div>
-                  <h2 className="text-3xl lg:text-4xl font-bold text-[#051923] font-heading leading-tight">
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#121212] tracking-tight leading-tight">
                     From the <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A6FB] to-[#051923]">MD's Desk.</span>
                   </h2>
                 </div>
 
                 <div className="space-y-4">
                   <div className="border-l-4 border-[#00A6FB] pl-5 py-1">
-                    <h3 className="text-lg font-bold text-[#051923] mb-1.5 font-heading">Our Commitment</h3>
-                    <p className="text-gray-600 leading-relaxed text-sm">
+                    <h3 className="text-lg font-bold text-[#121212] mb-1.5 tracking-tight">Our Commitment</h3>
+                    <p className="text-sm sm:text-base text-[#475569] leading-relaxed">
                       At Hitech, we believe that innovation is a continuous journey. Our commitment to excellence drives us to constantly push boundaries and redefine what is possible in the engineering and automation sectors.
                     </p>
                   </div>
                   
                   <div className="border-l-4 border-[#00A6FB]/30 pl-5 py-1">
-                    <h3 className="text-lg font-bold text-[#051923] mb-1.5 font-heading">Looking Ahead</h3>
-                    <p className="text-gray-600 leading-relaxed text-sm">
+                    <h3 className="text-lg font-bold text-[#121212] mb-1.5 tracking-tight">Looking Ahead</h3>
+                    <p className="text-sm sm:text-base text-[#475569] leading-relaxed">
                       As we look to the future, we remain dedicated to our core values. We will continue to invest in our people, our technologies, and our partnerships to ensure we deliver unmatched value to our clients worldwide.
                     </p>
                   </div>
@@ -279,8 +379,8 @@ export default function AboutUs() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                 />
                 <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md p-3 rounded-xl border border-white shadow-lg text-center">
-                  <span className="block text-[#00A6FB] font-black text-xs uppercase tracking-wider">Strategic Vision</span>
-                  <span className="text-gray-600 font-medium text-[11px]">Managing Director</span>
+                  <span className="block text-sm font-bold tracking-tight text-[#121212]">Strategic Vision</span>
+                  <span className="text-xs sm:text-sm font-medium tracking-tight text-[#64748b]">Managing Director</span>
                 </div>
               </div>
             </div>
@@ -301,8 +401,8 @@ export default function AboutUs() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                 />
                 <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md p-3 rounded-xl border border-white shadow-lg text-center">
-                  <span className="block text-[#00A6FB] font-black text-xs uppercase tracking-wider">Technology &amp; R&amp;D</span>
-                  <span className="text-gray-600 font-medium text-[11px]">Managing Director</span>
+                  <span className="block text-sm font-bold tracking-tight text-[#121212]">Technology &amp; R&amp;D</span>
+                  <span className="text-xs sm:text-sm font-medium tracking-tight text-[#64748b]">Managing Director</span>
                 </div>
               </div>
             </div>
@@ -312,25 +412,25 @@ export default function AboutUs() {
               <FadeIn className="space-y-6">
                 <div>
                   <div className="flex items-center gap-4 mb-3">
-                    <div className="h-[2px] w-12 bg-[#00A6FB]" />
-                    <span className="text-[#00A6FB] font-bold uppercase tracking-widest text-xs">Leadership — Technology &amp; Innovation</span>
+                    <div className="h-[2px] w-8 bg-[#00A6FB]" />
+                    <span className="text-sm font-medium tracking-tight text-[#64748b]">Leadership — Technology &amp; Innovation</span>
                   </div>
-                  <h2 className="text-3xl lg:text-4xl font-bold text-[#051923] font-heading leading-tight">
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#121212] tracking-tight leading-tight">
                     From the <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A6FB] to-[#051923]">MD's Desk.</span>
                   </h2>
                 </div>
 
                 <div className="space-y-4">
                   <div className="border-l-4 border-[#00A6FB] pl-5 py-1">
-                    <h3 className="text-lg font-bold text-[#051923] mb-1.5 font-heading">Technological Innovation</h3>
-                    <p className="text-gray-600 leading-relaxed text-sm">
+                    <h3 className="text-lg font-bold text-[#121212] mb-1.5 tracking-tight">Technological Innovation</h3>
+                    <p className="text-sm sm:text-base text-[#475569] leading-relaxed">
                       Integrating 12kW fiber laser technology, continuous 5-axis CNC machining, and automated robotic MIG/TIG cells enables us to offer micron-level accuracy and rapid prototype-to-production turnaround times.
                     </p>
                   </div>
                   
                   <div className="border-l-4 border-[#00A6FB]/30 pl-5 py-1">
-                    <h3 className="text-lg font-bold text-[#051923] mb-1.5 font-heading">Engineering Precision</h3>
-                    <p className="text-gray-600 leading-relaxed text-sm">
+                    <h3 className="text-lg font-bold text-[#121212] mb-1.5 tracking-tight">Engineering Precision</h3>
+                    <p className="text-sm sm:text-base text-[#475569] leading-relaxed">
                       Our dedicated R&amp;D team works closely with OEMs to optimize Design for Manufacturability (DFM), reducing material waste, extending part lifespans, and guaranteeing exact CAD compliance.
                     </p>
                   </div>
@@ -350,25 +450,25 @@ export default function AboutUs() {
               <FadeIn className="space-y-6">
                 <div>
                   <div className="flex items-center gap-4 mb-3">
-                    <div className="h-[2px] w-12 bg-[#00A6FB]" />
-                    <span className="text-[#00A6FB] font-bold uppercase tracking-widest text-xs">Leadership — Operations &amp; Quality Control</span>
+                    <div className="h-[2px] w-8 bg-[#00A6FB]" />
+                    <span className="text-sm font-medium tracking-tight text-[#64748b]">Leadership — Operations &amp; Quality Control</span>
                   </div>
-                  <h2 className="text-3xl lg:text-4xl font-bold text-[#051923] font-heading leading-tight">
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#121212] tracking-tight leading-tight">
                     From the <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A6FB] to-[#051923]">MD's Desk.</span>
                   </h2>
                 </div>
 
                 <div className="space-y-4">
                   <div className="border-l-4 border-[#00A6FB] pl-5 py-1">
-                    <h3 className="text-lg font-bold text-[#051923] mb-1.5 font-heading">Operational Excellence</h3>
-                    <p className="text-gray-600 leading-relaxed text-sm">
+                    <h3 className="text-lg font-bold text-[#121212] mb-1.5 tracking-tight">Operational Excellence</h3>
+                    <p className="text-sm sm:text-base text-[#475569] leading-relaxed">
                       Streamlined production scheduling, real-time shop floor telemetry, and robust supply chain logistics ensure that our manufacturing lines operate at peak efficiency with zero delays.
                     </p>
                   </div>
                   
                   <div className="border-l-4 border-[#00A6FB]/30 pl-5 py-1">
-                    <h3 className="text-lg font-bold text-[#051923] mb-1.5 font-heading">Quality Assurance &amp; Metrology</h3>
-                    <p className="text-gray-600 leading-relaxed text-sm">
+                    <h3 className="text-lg font-bold text-[#121212] mb-1.5 tracking-tight">Quality Assurance &amp; Metrology</h3>
+                    <p className="text-sm sm:text-base text-[#475569] leading-relaxed">
                       With ISO 9001:2015 certification, 3D CMM metrology coordinate inspection, and comprehensive Mill Test Reports (MTRs), we ensure 100% defect-free delivery for every batch.
                     </p>
                   </div>
@@ -385,8 +485,8 @@ export default function AboutUs() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                 />
                 <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md p-3 rounded-xl border border-white shadow-lg text-center">
-                  <span className="block text-[#00A6FB] font-black text-xs uppercase tracking-wider">Operations &amp; Quality</span>
-                  <span className="text-gray-600 font-medium text-[11px]">Managing Director</span>
+                  <span className="block text-sm font-bold tracking-tight text-[#121212]">Operations &amp; Quality</span>
+                  <span className="text-xs sm:text-sm font-medium tracking-tight text-[#64748b]">Managing Director</span>
                 </div>
               </div>
             </div>
@@ -401,15 +501,15 @@ export default function AboutUs() {
         <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-4 md:px-8">
           
           <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#051923] font-heading mb-4">Our Infrastructure</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">Explore our state-of-the-art facilities powering our engineering excellence.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#121212] tracking-tight mb-4">Our Infrastructure</h2>
+            <p className="text-sm sm:text-base text-[#475569] leading-relaxed max-w-2xl mx-auto">Explore our state-of-the-art facilities powering our engineering excellence.</p>
           </div>
 
           {/* Tab Navigation */}
           <div className="flex flex-col md:flex-row border border-gray-300 w-full max-w-3xl mx-auto bg-white mb-8">
             <button 
               onClick={() => setActiveInfraTab('production')}
-              className={`flex-1 py-3 text-center font-bold tracking-widest uppercase transition-colors text-xs md:text-sm ${
+              className={`flex-1 py-3 text-center font-medium tracking-tight uppercase transition-colors text-sm ${
                 activeInfraTab === 'production' 
                   ? 'bg-black text-white' 
                   : 'bg-white text-black hover:bg-gray-50 border-b md:border-b-0 md:border-r border-gray-300'
@@ -419,7 +519,7 @@ export default function AboutUs() {
             </button>
             <button 
               onClick={() => setActiveInfraTab('manufacturing')}
-              className={`flex-1 py-3 text-center font-bold tracking-widest uppercase transition-colors text-xs md:text-sm ${
+              className={`flex-1 py-3 text-center font-medium tracking-tight uppercase transition-colors text-sm ${
                 activeInfraTab === 'manufacturing' 
                   ? 'bg-black text-white' 
                   : 'bg-white text-black hover:bg-gray-50 border-b md:border-b-0 md:border-r border-gray-300'
@@ -429,7 +529,7 @@ export default function AboutUs() {
             </button>
             <button 
               onClick={() => setActiveInfraTab('lasercutting')}
-              className={`flex-1 py-3 text-center font-bold tracking-widest uppercase transition-colors text-xs md:text-sm ${
+              className={`flex-1 py-3 text-center font-medium tracking-tight uppercase transition-colors text-sm ${
                 activeInfraTab === 'lasercutting' 
                   ? 'bg-black text-white' 
                   : 'bg-white text-black hover:bg-gray-50'
@@ -467,7 +567,7 @@ export default function AboutUs() {
 
             {/* Description & View More CTA */}
             <div className="flex flex-row justify-between items-center gap-4 w-full mt-6 px-1">
-              <p className="text-gray-700 text-[15px] md:text-[16px] font-medium leading-relaxed max-w-4xl">
+              <p className="text-sm sm:text-base text-[#475569] leading-relaxed max-w-4xl">
                 {activeInfraTab === 'production' && 'High-volume, state-of-the-art assembly lines optimized for zero-defect output.'}
                 {activeInfraTab === 'manufacturing' && 'Advanced CNC machining and fabrication capabilities delivering tight tolerances.'}
                 {activeInfraTab === 'lasercutting' && 'High-speed fiber laser profiling for intricate, high-precision metal sheet fabrication.'}
@@ -480,7 +580,7 @@ export default function AboutUs() {
                     ? '/manufacturing' 
                     : '/services'
                 }
-                className="group inline-flex items-center gap-1.5 text-[#051923] hover:text-[#00A6FB] font-bold text-[14px] uppercase tracking-wider transition-colors duration-300 shrink-0"
+                className="group inline-flex items-center gap-1.5 text-[#121212] hover:text-[#00A6FB] text-sm font-medium tracking-tight transition-colors duration-300 shrink-0"
               >
                 <span className="underline underline-offset-4 decoration-2">View More</span>
                 <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -491,12 +591,11 @@ export default function AboutUs() {
       </div>
 
       {/* Premium Mission, Vision, Values */}
-      {/* Premium Mission, Vision, Values - Light Theme */}
       <div className="relative py-24 bg-[#f4f7f9] overflow-hidden">
         <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-8 lg:px-16 relative z-10">
           <FadeIn className="text-center mb-16">
-            <h2 className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Core Principles</h2>
-            <h3 className="text-4xl md:text-5xl font-bold text-[#051923] font-heading">
+            <h2 className="text-sm font-medium tracking-tight text-[#64748b] mb-4">Core Principles</h2>
+            <h3 className="text-3xl md:text-4xl font-bold text-[#121212] tracking-tight">
               What Drives <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A6FB] to-[#051923]">Us Forward.</span>
             </h3>
           </FadeIn>
@@ -510,8 +609,8 @@ export default function AboutUs() {
                 <div className="w-16 h-16 rounded-2xl bg-[#f8fbfe] border border-gray-100 flex items-center justify-center mb-8 group-hover:bg-[#00A6FB]/10 group-hover:border-[#00A6FB]/20 group-hover:scale-110 transition-all duration-500">
                   <Lightbulb className="w-8 h-8 text-[#051923] group-hover:text-[#00A6FB] transition-colors duration-500" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-2xl font-bold text-[#051923] mb-4 font-heading group-hover:text-[#00A6FB] transition-colors duration-300">Our Mission</h3>
-                <p className="text-gray-600 leading-relaxed text-[15px]">
+                <h3 className="text-xl sm:text-2xl font-bold text-[#121212] mb-3 tracking-tight group-hover:text-[#00A6FB] transition-colors duration-300">Our Mission</h3>
+                <p className="text-sm sm:text-base text-[#475569] leading-relaxed">
                   Our mission is simple but powerful: To deliver world-class pneumatic solutions that drive productivity, efficiency and reliability for our customers.
                 </p>
               </div>
@@ -524,8 +623,8 @@ export default function AboutUs() {
                 <div className="w-16 h-16 rounded-2xl bg-[#f8fbfe] border border-gray-100 flex items-center justify-center mb-8 group-hover:bg-[#00A6FB]/10 group-hover:border-[#00A6FB]/20 group-hover:scale-110 transition-all duration-500">
                   <Shield className="w-8 h-8 text-[#051923] group-hover:text-[#00A6FB] transition-colors duration-500" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-2xl font-bold text-[#051923] mb-4 font-heading group-hover:text-[#00A6FB] transition-colors duration-300">Our Vision</h3>
-                <p className="text-gray-600 leading-relaxed text-[15px]">
+                <h3 className="text-xl sm:text-2xl font-bold text-[#121212] mb-3 tracking-tight group-hover:text-[#00A6FB] transition-colors duration-300">Our Vision</h3>
+                <p className="text-sm sm:text-base text-[#475569] leading-relaxed">
                   We envision Hitech as the brand of choice for customers seeking dependable, innovative and sustainable pneumatic systems worldwide.
                 </p>
               </div>
@@ -538,8 +637,8 @@ export default function AboutUs() {
                 <div className="w-16 h-16 rounded-2xl bg-[#f8fbfe] border border-gray-100 flex items-center justify-center mb-8 group-hover:bg-[#00A6FB]/10 group-hover:border-[#00A6FB]/20 group-hover:scale-110 transition-all duration-500">
                   <Target className="w-8 h-8 text-[#051923] group-hover:text-[#00A6FB] transition-colors duration-500" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-2xl font-bold text-[#051923] mb-4 font-heading group-hover:text-[#00A6FB] transition-colors duration-300">Our Values</h3>
-                <p className="text-gray-600 leading-relaxed text-[15px]">
+                <h3 className="text-xl sm:text-2xl font-bold text-[#121212] mb-3 tracking-tight group-hover:text-[#00A6FB] transition-colors duration-300">Our Values</h3>
+                <p className="text-sm sm:text-base text-[#475569] leading-relaxed">
                   Innovation: We believe in nurturing creativity and translating ideas into practical industrial solutions.
                 </p>
               </div>
@@ -555,8 +654,8 @@ export default function AboutUs() {
         
         <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-8 lg:px-16 relative z-10">
           <FadeIn className="text-center mb-16">
-            <h2 className="text-sm font-bold text-[#00A6FB] uppercase tracking-[0.2em] mb-4">Our Heritage</h2>
-            <h3 className="text-4xl md:text-5xl font-bold text-[#051923] font-heading">
+            <h2 className="text-sm font-medium tracking-tight text-[#64748b] mb-4">Our Heritage</h2>
+            <h3 className="text-3xl md:text-4xl font-bold text-[#121212] tracking-tight">
               A Journey of <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A6FB] to-[#051923]">Excellence.</span>
             </h3>
           </FadeIn>
@@ -603,7 +702,7 @@ export default function AboutUs() {
                       }`} />
                     </div>
                     
-                    <span className={`absolute top-8 text-sm font-bold transition-all duration-300 ${
+                    <span className={`absolute top-8 text-sm font-medium tracking-tight transition-all duration-300 ${
                       activeTimeline === index 
                         ? 'text-[#00A6FB] scale-110' 
                         : 'text-gray-400 group-hover:text-gray-600'
@@ -653,16 +752,16 @@ export default function AboutUs() {
                   <div className="w-[90%] md:w-[45%] -mt-16 md:mt-0 md:-ml-[10%] bg-white/95 backdrop-blur-xl p-8 md:p-12 rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.08)] border border-white relative z-20">
                     <div className="flex items-center gap-4 mb-6">
                       <div className="h-[2px] w-8 bg-[#00A6FB]"></div>
-                      <span className="text-[#00A6FB] font-bold text-2xl font-heading">{timelineData[activeTimeline].year}</span>
+                      <span className="text-[#00A6FB] font-bold text-2xl tracking-tight">{timelineData[activeTimeline].year}</span>
                     </div>
-                    <h3 className="text-2xl md:text-3xl font-bold text-[#051923] mb-4 font-heading leading-tight">
+                    <h3 className="text-2xl md:text-3xl font-bold text-[#121212] mb-4 tracking-tight leading-tight">
                       {timelineData[activeTimeline].year === "1977" ? "The Foundation" : 
                        timelineData[activeTimeline].year === "1987" ? "Global Expansion" :
                        timelineData[activeTimeline].year === "1995" ? "Technological Leap" :
                        timelineData[activeTimeline].year === "2005" ? "Industry Leaders" :
                        timelineData[activeTimeline].year === "2015" ? "Sustainable Future" : "Next Generation"}
                     </h3>
-                    <p className="text-gray-600 leading-relaxed text-[16px]">
+                    <p className="text-sm sm:text-base text-[#475569] leading-relaxed">
                       {timelineData[activeTimeline].description}
                     </p>
                   </div>

@@ -48,14 +48,14 @@ function SolutionCard({ service, idx }: { service: any; idx: number }) {
       </div>
 
       <div className="p-6 md:p-8 flex flex-col flex-grow relative z-20 bg-white">
-        <h3 className="font-headline-md text-[20px] md:text-[22px] font-bold text-gray-900 mb-3 leading-snug group-hover:text-[#006494] transition-colors duration-300">
+        <h3 className="text-lg sm:text-xl font-bold tracking-tight text-[#121212] mb-2 group-hover:text-black transition-colors duration-300">
           {service.title}
         </h3>
-        <p className="font-body-md text-[15px] text-gray-600 leading-relaxed mb-8 line-clamp-3">
+        <p className="font-normal text-sm sm:text-base text-[#475569] leading-relaxed mb-6 line-clamp-3">
           {service.desc}
         </p>
         <div className="mt-auto">
-          <button className="text-[#006494] font-semibold text-[13px] uppercase underline underline-offset-4 decoration-1 hover:text-gray-900 transition-colors">
+          <button className="text-[#121212] font-semibold text-sm tracking-tight uppercase underline underline-offset-4 decoration-1 hover:text-black transition-colors">
             VISIT US
           </button>
         </div>
@@ -87,14 +87,17 @@ export default function FeaturedSolutions() {
   ];
 
   return (
-    <section className="bg-stark-white py-section-padding">
+    <section className="bg-stark-white py-16 md:py-24">
       <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12">
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16">
-          <div className="space-y-4 max-w-3xl">
-            <h2 className="font-headline-xl text-[36px] md:text-[48px] text-on-surface uppercase tracking-wide font-bold leading-tight">
-              Visit our specialised<br />industries<span className="text-[#051923]">.</span>
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-14 gap-4">
+          <div className="space-y-2 max-w-3xl">
+            <span className="text-sm font-medium tracking-tight text-[#64748b]">
+              Specialised Engineering Sectors
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#121212] leading-[1.12]">
+              Visit our specialised industries
             </h2>
-            <p className="font-body-md text-[16px] text-on-surface-variant italic">
+            <p className="font-normal text-sm sm:text-base text-[#475569] leading-relaxed">
               Discover the core sectors where Hitech Engineering drives innovation, precision, and world-class capabilities.
             </p>
           </div>

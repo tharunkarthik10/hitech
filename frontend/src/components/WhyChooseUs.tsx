@@ -56,12 +56,17 @@ export default function WhyChooseUs() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8 }}
-          className="mb-20 text-center max-w-3xl mx-auto"
+          className="mb-16 text-center max-w-3xl mx-auto space-y-2"
         >
-          <h2 className="text-4xl md:text-5xl lg:text-[56px] text-[#051923] font-headline-xl font-bold leading-[1.1] tracking-tight">
-            Why Manufacturers <br className="hidden md:block" />
-            Choose <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#006494] to-[#006494]">Hitech Engineering</span>
+          <span className="text-sm font-medium tracking-tight text-[#64748b]">
+            Engineering Advantages
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#121212] leading-[1.12]">
+            Why Manufacturers Choose HiTech
           </h2>
+          <p className="text-sm sm:text-base text-[#475569] font-normal leading-relaxed max-w-xl mx-auto">
+            High-duty precision algorithms and robotic integration tailored for real factory uptime.
+          </p>
         </motion.div>
 
         {/* Interactive Horizontal Accordion */}
@@ -107,14 +112,14 @@ export default function WhyChooseUs() {
               {/* Bottom Content */}
               <div className="relative z-10 mt-12 lg:mt-auto">
                 {/* Title */}
-                <h3 className="text-[22px] md:text-[26px] font-bold text-white mb-2 tracking-wide whitespace-nowrap overflow-hidden text-ellipsis drop-shadow-md">
+                <h3 className="text-lg sm:text-xl font-bold tracking-tight text-white mb-1.5 whitespace-nowrap overflow-hidden text-ellipsis drop-shadow-md">
                   {feature.title}
                 </h3>
                 
                 {/* Expandable Description */}
-                <div className="lg:grid lg:grid-rows-[0fr] lg:group-hover/card:grid-rows-[1fr] transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] lg:opacity-0 lg:group-hover/card:opacity-100 mt-2 lg:mt-0 lg:group-hover/card:mt-4">
+                <div className="lg:grid lg:grid-rows-[0fr] lg:group-hover/card:grid-rows-[1fr] transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] lg:opacity-0 lg:group-hover/card:opacity-100 mt-2 lg:mt-0 lg:group-hover/card:mt-3">
                   <div className="lg:overflow-hidden">
-                    <p className="text-white/70 text-[15px] md:text-[16px] leading-relaxed max-w-[320px] font-medium lg:w-[320px]">
+                    <p className="font-normal text-xs sm:text-sm text-white/80 leading-relaxed max-w-[320px] lg:w-[320px]">
                       {feature.desc}
                     </p>
                   </div>

@@ -55,11 +55,14 @@ export default function IndustriesWeServe() {
         {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-16">
           <div className="max-w-2xl">
-            <h2 className="text-[36px] md:text-[48px] font-bold text-[#051923] tracking-tight leading-tight mb-4 uppercase">
+            <span className="text-sm font-medium tracking-tight text-[#64748b] block mb-2">
+              Cross-Sector Capabilities
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#121212] leading-[1.12] mb-3">
               Industries We Serve
               <span className="text-[#00A6FB]">.</span>
             </h2>
-            <p className="text-[16px] md:text-[18px] text-gray-600 font-light leading-relaxed">
+            <p className="font-normal text-sm sm:text-base text-[#475569] leading-relaxed max-w-xl">
               Delivering world-class engineering solutions across diverse sectors. Our commitment to precision and quality ensures optimal performance in every application.
             </p>
           </div>
@@ -105,10 +108,10 @@ export default function IndustriesWeServe() {
               
               {/* Content */}
               <div className="absolute inset-0 p-8 flex flex-col justify-end transform transition-transform duration-300">
-                <h3 className="text-white text-[24px] font-bold mb-2 group-hover:-translate-y-2 transition-transform duration-300">
+                <h3 className="text-lg sm:text-xl font-bold tracking-tight text-white mb-1 group-hover:-translate-y-2 transition-transform duration-300">
                   {industry.name}
                 </h3>
-                <p className="text-gray-200 text-[14px] leading-relaxed opacity-0 group-hover:opacity-100 group-hover:-translate-y-2 transition-all duration-300 delay-75">
+                <p className="font-normal text-xs sm:text-sm text-white/80 leading-relaxed opacity-0 group-hover:opacity-100 group-hover:-translate-y-2 transition-all duration-300 delay-75">
                   {industry.description}
                 </p>
               </div>

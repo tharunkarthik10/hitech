@@ -28,25 +28,26 @@ export default function CTA() {
         <div className="flex flex-col xl:flex-row justify-between items-center xl:items-start gap-12 mb-24">
           
           {/* Left: Heading */}
-          <div className="w-full xl:w-auto flex-shrink-0 text-center xl:text-left">
-            <h2 className="text-[40px] md:text-[56px] lg:text-[64px] font-medium text-gray-900 leading-tight mb-2 tracking-tight">
+          <div className="w-full xl:w-auto flex-shrink-0 text-center xl:text-left max-w-xl">
+            <span className="text-sm font-medium tracking-tight text-[#64748b] block mb-2">
+              Global Presence
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#121212] leading-[1.12] mb-3">
               Our Partners
             </h2>
-            <p className="text-xl md:text-[28px] text-gray-800 font-medium leading-snug">
-              Hitech Operates in following<br className="hidden md:block" />countries
+            <p className="font-normal text-sm sm:text-base md:text-[17px] text-[#475569] leading-relaxed">
+              HiTech operates across key industrial territories worldwide, supporting mission-critical manufacturing partnerships with consistent execution.
             </p>
           </div>
-
-
 
           {/* Right: Counter */}
           <div className="w-full xl:w-auto flex-shrink-0 flex justify-center xl:justify-end items-center gap-4">
             <div className="relative">
-              <span className="text-[100px] md:text-[140px] font-bold text-[#e0e7ff]">
+              <span className="text-[90px] md:text-[120px] font-bold tracking-tight text-[#cbd5e1] leading-none">
                 07+
               </span>
             </div>
-            <span className="text-gray-900 font-bold text-sm md:text-base uppercase tracking-widest pt-4" style={{ writingMode: 'vertical-rl', textOrientation: 'mixed', transform: 'rotate(180deg)' }}>
+            <span className="text-sm font-semibold tracking-widest text-[#64748b] uppercase pt-4" style={{ writingMode: 'vertical-rl', textOrientation: 'mixed', transform: 'rotate(180deg)' }}>
               Countries
             </span>
           </div>

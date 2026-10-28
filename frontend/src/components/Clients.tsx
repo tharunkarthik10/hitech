@@ -19,11 +19,13 @@ export default function Clients() {
   return (
     <section className="bg-stark-white pt-10 pb-16 overflow-hidden">
       <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 relative flex flex-col items-center">
-        <div className="text-center mb-16 z-10 relative bg-stark-white px-8 py-4">
-          <p className="font-label-caps text-[14px] text-on-surface-variant">They Always Trust Us</p>
-          <h3 className="font-headline-lg text-[32px] text-on-surface mt-1">
-            OUR CLIENTS<span className="text-[#051923]">.</span>
-          </h3>
+        <div className="text-center mb-14 z-10 relative bg-stark-white px-8 py-4 space-y-1">
+          <span className="text-sm font-medium tracking-tight text-[#64748b]">
+            Trusted Industry Partners
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#121212]">
+            Our Clients & Enterprise Network
+          </h2>
         </div>
       </div>
         
@@ -67,7 +69,7 @@ export default function Clients() {
               <img
                 src={logo}
                 alt={`Client ${index + 1}`}
-                className="h-20 md:h-24 w-auto object-contain transition-all duration-300 grayscale opacity-70 hover:grayscale-0 hover:opacity-100"
+                className="h-20 md:h-24 w-auto object-contain transition-all duration-300 filter-none opacity-100 hover:scale-108"
               />
             </div>
           ))}
