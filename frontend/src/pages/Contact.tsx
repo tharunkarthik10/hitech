@@ -5,7 +5,6 @@ import {
   ChevronUp, 
   Send, 
   CheckCircle2, 
-  Navigation,
   MapPin,
   ExternalLink,
   Briefcase,
@@ -438,7 +437,6 @@ export default function Contact() {
 
         {/* Map Frame */}
         <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-200/80 shadow-md h-[400px] sm:h-[480px] bg-slate-100">
-          
           <iframe
             key={selectedUnit.id}
             title={`${selectedUnit.name} Map`}
@@ -446,48 +444,6 @@ export default function Contact() {
             className="w-full h-full border-0 grayscale-[20%] contrast-[1.05]"
             loading="lazy"
           />
-
-          {/* Floating Location Card in Map (Positioned on top-right to prevent overlap with native Google Maps UI) */}
-          <div className="absolute top-6 right-6 z-10 bg-white/95 backdrop-blur-md p-5 rounded-2xl shadow-xl border border-white max-w-xs sm:max-w-sm hidden sm:block">
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <h4 className="font-bold text-sm sm:text-base text-[#121212] tracking-tight">
-                  {selectedUnit.name}
-                </h4>
-                <p className="text-xs text-[#64748b] mt-0.5 leading-snug">
-                  {selectedUnit.address}
-                </p>
-              </div>
-              <a 
-                href={`https://maps.google.com/?q=${selectedUnit.query}`}
-                target="_blank" 
-                rel="noopener noreferrer"
-                title="Get Directions"
-                className="p-2.5 bg-gray-100 hover:bg-[#121212] hover:text-white rounded-xl transition-colors shrink-0 text-[#121212]"
-              >
-                <Navigation className="w-4 h-4" />
-              </a>
-            </div>
-
-            <div className="flex items-center gap-2 text-xs text-[#64748b] mt-3 pt-3 border-t border-gray-100">
-              <span className="font-bold text-[#121212]">4.9</span>
-              <span className="text-amber-500">★★★★★</span>
-              <span>(184 corporate reviews)</span>
-            </div>
-
-            <div className="mt-2.5 pt-2 border-t border-gray-100 flex items-center justify-between text-xs">
-              <span className="text-[#64748b] font-medium">{selectedUnit.focus}</span>
-              <a 
-                href={`https://maps.google.com/?q=${selectedUnit.query}`}
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-[#00A6FB] font-semibold hover:underline"
-              >
-                Directions
-              </a>
-            </div>
-          </div>
-
         </div>
       </section>
 
