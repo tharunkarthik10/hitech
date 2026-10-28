@@ -638,9 +638,9 @@ export default function Production() {
           id="gallery"
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
+          viewport={{ once: false, amount: 0.1 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="pt-6 sm:pt-10 border-t border-gray-200/80"
+          className="pt-6 sm:pt-10 border-t border-gray-200/80 overflow-hidden"
         >
           {/* Asymmetric 5-Column Collage Grid with Uneven Heights & Baseline Alignment */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-5 lg:gap-6 items-stretch">
@@ -670,7 +670,11 @@ export default function Production() {
               </div>
 
               {/* Bottom Card: Landscape (aspect-[4/3]) */}
-              <div
+              <motion.div
+                initial={{ opacity: 0, x: 70, y: 70, scale: 0.92 }}
+                whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.15 }}
+                transition={{ duration: 0.65, delay: 0, ease: [0.16, 1, 0.3, 1] }}
                 onClick={() => openQuoteModal("Program Inquiry: Heavy Structural Gantry Milling")}
                 className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[4/3] relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
               >
@@ -688,13 +692,17 @@ export default function Production() {
                     Heavy Machine Base Milling
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             {/* COLUMN 2: 2 Uneven Cards (Tall Portrait on Top, Landscape on Bottom) */}
             <div className="flex flex-col justify-end gap-4 sm:gap-5">
               {/* Card 2: Tall Portrait (aspect-[3/4]) */}
-              <div
+              <motion.div
+                initial={{ opacity: 0, x: 70, y: 70, scale: 0.92 }}
+                whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.15 }}
+                transition={{ duration: 0.65, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
                 onClick={() => openQuoteModal("Program Inquiry: 5-Axis Aerospace Spindle Milling")}
                 className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[3/4] relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
               >
@@ -712,10 +720,14 @@ export default function Production() {
                     Aerospace Impeller Spindle
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Card 3: Landscape (aspect-[4/3]) */}
-              <div
+              <motion.div
+                initial={{ opacity: 0, x: 70, y: 70, scale: 0.92 }}
+                whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.15 }}
+                transition={{ duration: 0.65, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                 onClick={() => openQuoteModal("Program Inquiry: Precision CNC Lathe Turning")}
                 className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[4/3] relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
               >
@@ -733,13 +745,17 @@ export default function Production() {
                     Sub-Micron Shaft Turning
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             {/* COLUMN 3: 2 Uneven Cards (Square on Top, Tall Portrait on Bottom) */}
             <div className="flex flex-col justify-end gap-4 sm:gap-5">
               {/* Card 4: Square (aspect-square) */}
-              <div
+              <motion.div
+                initial={{ opacity: 0, x: 70, y: 70, scale: 0.92 }}
+                whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.15 }}
+                transition={{ duration: 0.65, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
                 onClick={() => openQuoteModal("Program Inquiry: High-Power Fiber Laser Cutting")}
                 className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-square relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
               >
@@ -757,10 +773,14 @@ export default function Production() {
                     12kW Clean Kerf Cutting
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Card 5: Tall Portrait (aspect-[3/4]) */}
-              <div
+              <motion.div
+                initial={{ opacity: 0, x: 70, y: 70, scale: 0.92 }}
+                whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.15 }}
+                transition={{ duration: 0.65, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
                 onClick={() => openQuoteModal("Program Inquiry: 5-Axis Spiral Impeller Sculpting")}
                 className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[3/4] relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
               >
@@ -778,7 +798,7 @@ export default function Production() {
                     Continuous 5-Axis Impeller
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             {/* COLUMN 4: Arrow Highlights List + 1 Tall Portrait Card at Bottom */}
@@ -804,7 +824,11 @@ export default function Production() {
               </div>
 
               {/* Card 6: Tall Portrait (aspect-[3/4]) */}
-              <div
+              <motion.div
+                initial={{ opacity: 0, x: 70, y: 70, scale: 0.92 }}
+                whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.15 }}
+                transition={{ duration: 0.65, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
                 onClick={() => openQuoteModal("Program Inquiry: Zeiss Bridge CMM Metrology Lab")}
                 className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[3/4] relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
               >
@@ -822,13 +846,17 @@ export default function Production() {
                     Zeiss Bridge CMM Probe
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             {/* COLUMN 5: 3 Uneven Cards (Landscape on Top, Very Tall Portrait in Middle, Wide Landscape on Bottom) */}
             <div className="flex flex-col justify-end gap-4 sm:gap-5">
               {/* Card 7: Landscape (aspect-[4/3]) */}
-              <div
+              <motion.div
+                initial={{ opacity: 0, x: 70, y: 70, scale: 0.92 }}
+                whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.15 }}
+                transition={{ duration: 0.65, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
                 onClick={() => openQuoteModal("Program Inquiry: Hydraulic Press Brake Bending")}
                 className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[4/3] relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
               >
@@ -846,10 +874,14 @@ export default function Production() {
                     Hydraulic Press Brake
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Card 8: Tall Vertical (aspect-[2/3]) */}
-              <div
+              <motion.div
+                initial={{ opacity: 0, x: 70, y: 70, scale: 0.92 }}
+                whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.15 }}
+                transition={{ duration: 0.65, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
                 onClick={() => openQuoteModal("Program Inquiry: Automated Robotic Welding Cell")}
                 className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[2/3] relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
               >
@@ -867,7 +899,7 @@ export default function Production() {
                     Automated TIG/MIG Cell
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Free-standing Arrow Highlights in the Gap (No box) */}
               <div className="space-y-3.5 py-3 px-1">
@@ -898,7 +930,11 @@ export default function Production() {
             {/* COLUMN 1: Tall Portrait (aspect-[3/4]) + Medium Landscape (aspect-[4/3]) */}
             <div className="flex flex-col justify-between h-full gap-4 sm:gap-5">
               {/* Row 2 Card */}
-              <div
+              <motion.div
+                initial={{ opacity: 0, x: 70, y: 70, scale: 0.92 }}
+                whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.15 }}
+                transition={{ duration: 0.65, delay: 0, ease: [0.16, 1, 0.3, 1] }}
                 onClick={() => openQuoteModal("Program Inquiry: Advanced Facility Infrastructure & Plant Bed")}
                 className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[3/4] relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
               >
@@ -916,7 +952,7 @@ export default function Production() {
                     High-Bay Manufacturing Plant
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             {/* COLUMN 2: Sleek Free-standing Arrow Highlights in the Gap */}
@@ -945,7 +981,11 @@ export default function Production() {
             {/* COLUMN 3: Classic Landscape (aspect-[4/3]) + Tall Portrait (aspect-[3/4]) */}
             <div className="flex flex-col justify-between h-full gap-4 sm:gap-5">
               {/* Row 2 Card */}
-              <div
+              <motion.div
+                initial={{ opacity: 0, x: 70, y: 70, scale: 0.92 }}
+                whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.15 }}
+                transition={{ duration: 0.65, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
                 onClick={() => openQuoteModal("Program Inquiry: Automated Dual-Bed Pallet Shuttle")}
                 className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[4/3] relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
               >
@@ -963,10 +1003,14 @@ export default function Production() {
                     Dual-Bed Shuttle Automation
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Row 3 Final Card */}
-              <div
+              <motion.div
+                initial={{ opacity: 0, x: 70, y: 70, scale: 0.92 }}
+                whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.15 }}
+                transition={{ duration: 0.65, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                 onClick={() => openQuoteModal("Program Inquiry: Automated Robotic Pick & Place Cell")}
                 className="rounded-2xl sm:rounded-3xl overflow-hidden flex-1 min-h-[190px] aspect-[3/4] relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
               >
@@ -984,13 +1028,17 @@ export default function Production() {
                     Automated Robotic Assembly Cell
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             {/* COLUMN 4: Dramatic Tall Portrait (aspect-[2/3]) + Sleek Wide Landscape (aspect-[16/9]) */}
             <div className="flex flex-col justify-between h-full gap-4 sm:gap-5">
               {/* Row 2 Card */}
-              <div
+              <motion.div
+                initial={{ opacity: 0, x: 70, y: 70, scale: 0.92 }}
+                whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.15 }}
+                transition={{ duration: 0.65, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
                 onClick={() => openQuoteModal("Program Inquiry: Heavy Structural Rig Weldments")}
                 className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-[2/3] relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
               >
@@ -1008,10 +1056,14 @@ export default function Production() {
                     Machine Rig Base Fabrication
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Row 3 Final Card */}
-              <div
+              <motion.div
+                initial={{ opacity: 0, x: 70, y: 70, scale: 0.92 }}
+                whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.15 }}
+                transition={{ duration: 0.65, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
                 onClick={() => openQuoteModal("Program Inquiry: Modular Workstation Production Cells")}
                 className="rounded-2xl sm:rounded-3xl overflow-hidden flex-1 min-h-[160px] aspect-[16/9] relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
               >
@@ -1029,13 +1081,17 @@ export default function Production() {
                     Modular Lean Workstation Cells
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             {/* COLUMN 5: Balanced Square (aspect-square) + Balanced Square (aspect-square) */}
             <div className="flex flex-col justify-between h-full gap-4 sm:gap-5">
               {/* Row 2 Card */}
-              <div
+              <motion.div
+                initial={{ opacity: 0, x: 70, y: 70, scale: 0.92 }}
+                whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.15 }}
+                transition={{ duration: 0.65, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
                 onClick={() => openQuoteModal("Program Inquiry: Certified Global Packaging & Dispatch")}
                 className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-square relative group cursor-pointer border border-gray-100 bg-gray-100 shadow-2xs"
               >
@@ -1053,7 +1109,7 @@ export default function Production() {
                     Certified Global Dispatch
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Row 3: Free-standing Engineering CTA in the Gap (No box) */}
               <div className="space-y-3.5 py-3 px-1">
