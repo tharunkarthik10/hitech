@@ -266,15 +266,15 @@ export default function Services() {
                 viewport={{ once: false, amount: 0.3 }}
                 transition={{ duration: 0.6, delay: i * 0.1, ease: "easeOut" }}
                 whileHover={{ y: -3, transition: { duration: 0.2 } }}
-                className="space-y-1.5 text-center lg:text-left group cursor-default"
+                className="space-y-1.5 text-center flex flex-col items-center justify-center group cursor-default"
               >
-                <div className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#121212] font-heading tracking-tight group-hover:text-blue-900 transition-colors">
+                <div className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#121212] font-heading tracking-tight group-hover:text-blue-900 transition-colors text-center">
                   {stat.value}
                 </div>
-                <div className="text-sm font-bold text-gray-900 tracking-wide">
+                <div className="text-sm sm:text-base font-bold text-[#121212] tracking-tight text-center">
                   {stat.label}
                 </div>
-                <div className="text-xs text-gray-500 font-light">
+                <div className="text-xs sm:text-sm text-[#64748b] font-normal tracking-tight text-center">
                   {stat.sublabel}
                 </div>
               </motion.div>
