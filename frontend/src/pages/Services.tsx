@@ -669,91 +669,96 @@ export default function Services() {
 
         </section>
 
-        {/* ========================================================================= */}
-        {/* 05. EDITORIAL METRIC SHOWCASE (Grid Section matching user reference) */}
-        {/* ========================================================================= */}
-        <motion.section
-          initial={{ opacity: 0, y: 35 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full border border-gray-300 bg-white"
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-12">
-            
-            {/* Left Column: Bold Typography & Narrative */}
-            <div className="lg:col-span-5 p-8 sm:p-12 lg:p-14 border-b lg:border-b-0 lg:border-r border-gray-300 flex flex-col justify-between">
-              <div>
-                <h2 className="text-3xl sm:text-5xl lg:text-[54px] font-bold tracking-tight text-[#121212] leading-[1.04] uppercase">
-                  From first<br />
-                  idea to a<br />
-                  place that<br />
-                  breathes.
-                </h2>
-              </div>
+      </div>
 
-              <div className="pt-12 lg:pt-20">
-                <p className="text-xs sm:text-sm text-[#475569] font-normal leading-relaxed max-w-sm">
-                  We believe that precision engineering is measured not only in microns — but in meaning and reliability. These numbers reflect the care, consistency, and vision we bring into every project.
-                </p>
+      {/* ========================================================================= */}
+      {/* 05. EDITORIAL METRIC SHOWCASE (Full-Bleed Edge-to-Edge Grid Section) */}
+      {/* ========================================================================= */}
+      <motion.section
+        initial={{ opacity: 0, y: 35 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="w-full border-y border-gray-300 bg-white my-14 sm:my-20"
+      >
+        <div className="w-full grid grid-cols-1 lg:grid-cols-12">
+          
+          {/* Left Column: Bold Typography & Narrative */}
+          <div className="lg:col-span-5 p-8 sm:p-12 md:p-16 lg:p-20 border-b lg:border-b-0 lg:border-r border-gray-300 flex flex-col justify-between">
+            <div>
+              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-[66px] font-bold tracking-tight text-[#121212] leading-[1] uppercase font-sans">
+                From first<br />
+                idea to a<br />
+                place that<br />
+                breathes.
+              </h2>
+            </div>
+
+            <div className="pt-12 lg:pt-24">
+              <p className="text-xs sm:text-sm text-[#475569] font-normal leading-relaxed max-w-md">
+                We believe that precision engineering is measured not only in microns — but in meaning and reliability. These numbers reflect the care, consistency, and vision we bring into every project.
+              </p>
+            </div>
+          </div>
+
+          {/* Right Column: 4-Quadrant Metric Grid */}
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2">
+            
+            {/* Quadrant 1: Top-Left */}
+            <div className="p-8 sm:p-10 md:p-14 lg:p-16 border-b border-r-0 sm:border-r border-gray-300 flex flex-col justify-end min-h-[220px] sm:min-h-[260px] lg:min-h-[290px]">
+              <div className="flex items-end justify-between gap-4 w-full">
+                <span className="text-xs sm:text-sm text-[#475569] font-normal leading-snug max-w-[160px]">
+                  Completed residential and commercial projects
+                </span>
+                <span className="text-6xl sm:text-7xl lg:text-8xl font-normal text-[#121212] tracking-tighter leading-none">
+                  28
+                </span>
               </div>
             </div>
 
-            {/* Right Column: 4-Quadrant Metric Grid */}
-            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2">
-              
-              {/* Quadrant 1: Top-Left */}
-              <div className="p-8 sm:p-10 lg:p-12 border-b border-r-0 sm:border-r border-gray-300 flex flex-col justify-end min-h-[200px] sm:min-h-[240px]">
-                <div className="flex items-end justify-between gap-4 w-full">
-                  <span className="text-xs sm:text-sm text-[#475569] font-normal leading-snug max-w-[150px]">
-                    Completed residential and commercial projects
-                  </span>
-                  <span className="text-5xl sm:text-6xl lg:text-7xl font-normal text-[#121212] tracking-tighter leading-none">
-                    28
-                  </span>
-                </div>
+            {/* Quadrant 2: Top-Right */}
+            <div className="p-8 sm:p-10 md:p-14 lg:p-16 border-b border-gray-300 flex flex-col justify-end min-h-[220px] sm:min-h-[260px] lg:min-h-[290px]">
+              <div className="flex items-end justify-between gap-4 w-full">
+                <span className="text-xs sm:text-sm text-[#475569] font-normal leading-snug max-w-[160px]">
+                  Years of architectural practice
+                </span>
+                <span className="text-6xl sm:text-7xl lg:text-8xl font-normal text-[#121212] tracking-tighter leading-none">
+                  12
+                </span>
               </div>
+            </div>
 
-              {/* Quadrant 2: Top-Right */}
-              <div className="p-8 sm:p-10 lg:p-12 border-b border-gray-300 flex flex-col justify-end min-h-[200px] sm:min-h-[240px]">
-                <div className="flex items-end justify-between gap-4 w-full">
-                  <span className="text-xs sm:text-sm text-[#475569] font-normal leading-snug max-w-[150px]">
-                    Years of architectural practice
-                  </span>
-                  <span className="text-5xl sm:text-6xl lg:text-7xl font-normal text-[#121212] tracking-tighter leading-none">
-                    12
-                  </span>
-                </div>
+            {/* Quadrant 3: Bottom-Left */}
+            <div className="p-8 sm:p-10 md:p-14 lg:p-16 border-b sm:border-b-0 border-r-0 sm:border-r border-gray-300 flex flex-col justify-end min-h-[220px] sm:min-h-[260px] lg:min-h-[290px]">
+              <div className="flex items-end justify-between gap-4 w-full">
+                <span className="text-xs sm:text-sm text-[#475569] font-normal leading-snug max-w-[160px]">
+                  Countries with built spaces
+                </span>
+                <span className="text-6xl sm:text-7xl lg:text-8xl font-normal text-[#121212] tracking-tighter leading-none">
+                  6
+                </span>
               </div>
+            </div>
 
-              {/* Quadrant 3: Bottom-Left */}
-              <div className="p-8 sm:p-10 lg:p-12 border-b sm:border-b-0 border-r-0 sm:border-r border-gray-300 flex flex-col justify-end min-h-[200px] sm:min-h-[240px]">
-                <div className="flex items-end justify-between gap-4 w-full">
-                  <span className="text-xs sm:text-sm text-[#475569] font-normal leading-snug max-w-[150px]">
-                    Countries with built spaces
-                  </span>
-                  <span className="text-5xl sm:text-6xl lg:text-7xl font-normal text-[#121212] tracking-tighter leading-none">
-                    6
-                  </span>
-                </div>
+            {/* Quadrant 4: Bottom-Right */}
+            <div className="p-8 sm:p-10 md:p-14 lg:p-16 flex flex-col justify-end min-h-[220px] sm:min-h-[260px] lg:min-h-[290px]">
+              <div className="flex items-end justify-between gap-4 w-full">
+                <span className="text-xs sm:text-sm text-[#475569] font-normal leading-snug max-w-[160px]">
+                  Custom concepts for every client
+                </span>
+                <span className="text-6xl sm:text-7xl lg:text-8xl font-normal text-[#121212] tracking-tighter leading-none">
+                  100
+                </span>
               </div>
-
-              {/* Quadrant 4: Bottom-Right */}
-              <div className="p-8 sm:p-10 lg:p-12 flex flex-col justify-end min-h-[200px] sm:min-h-[240px]">
-                <div className="flex items-end justify-between gap-4 w-full">
-                  <span className="text-xs sm:text-sm text-[#475569] font-normal leading-snug max-w-[150px]">
-                    Custom concepts for every client
-                  </span>
-                  <span className="text-5xl sm:text-6xl lg:text-7xl font-normal text-[#121212] tracking-tighter leading-none">
-                    100
-                  </span>
-                </div>
-              </div>
-
             </div>
 
           </div>
-        </motion.section>
+
+        </div>
+      </motion.section>
+
+      {/* Re-open container for Capabilities & Fleet Schedule */}
+      <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 space-y-16">
 
         {/* ========================================================================= */}
         {/* 06. ENGINEERING SOLUTIONS & CAPABILITIES TABLE (Staggered Row Reveals) */}
