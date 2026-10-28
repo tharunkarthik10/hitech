@@ -160,7 +160,7 @@ export default function Services() {
                 transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                 className="text-4xl sm:text-5xl md:text-6xl lg:text-[66px] font-extrabold tracking-tight text-[#121212] leading-[1.06] font-heading"
               >
-                Our Services <span className="text-gray-400 font-light select-none">↴</span>
+                Our Services
               </motion.h1>
 
               <motion.p 
@@ -280,9 +280,8 @@ export default function Services() {
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
               className="lg:col-span-5 space-y-4"
             >
-              <h2 className="text-4xl sm:text-5xl lg:text-[56px] font-extrabold tracking-tight text-[#121212] leading-[1.08] font-heading flex items-center gap-2">
-                <span>What We Do</span>
-                <span className="text-3xl sm:text-4xl font-normal select-none">↴</span>
+              <h2 className="text-4xl sm:text-5xl lg:text-[56px] font-extrabold tracking-tight text-[#121212] leading-[1.08] font-heading">
+                What We Do
               </h2>
 
               <div>
