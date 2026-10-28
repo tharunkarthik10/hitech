@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useInView, animate, AnimatePresence } from 'framer-motion';
+import IndustriesWeServe from '../components/IndustriesWeServe';
 import { 
   ChevronRight, 
   ChevronLeft, 
@@ -529,6 +530,9 @@ export default function AboutUs() {
           </div>
         </div>
       </div>
+
+      {/* Cross-Sector Capabilities: Industries We Serve */}
+      <IndustriesWeServe />
 
       {/* Premium Mission, Vision, Values */}
       <div className="relative py-24 bg-[#f4f7f9] overflow-hidden">
