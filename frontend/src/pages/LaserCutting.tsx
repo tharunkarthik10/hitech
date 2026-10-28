@@ -504,117 +504,70 @@ export default function LaserCutting() {
             </div>
           </div>
 
-          {/* Process Step Card with Swipe Gestures & Cool Animations */}
-          <div className="relative overflow-hidden select-none [perspective:1200px]">
+          {/* Process Step Card with Clean Simple Transition */}
+          <div className="relative overflow-hidden select-none">
             <AnimatePresence mode="wait" custom={stepDirection}>
               <motion.div
                 key={activeStep}
                 custom={stepDirection}
                 initial={{ 
                   opacity: 0, 
-                  x: stepDirection >= 0 ? 100 : -100, 
-                  rotateY: stepDirection >= 0 ? 14 : -14,
-                  rotateZ: stepDirection >= 0 ? 1.5 : -1.5,
-                  scale: 0.93,
-                  filter: 'blur(5px)'
+                  x: stepDirection >= 0 ? 35 : -35
                 }}
                 animate={{ 
                   opacity: 1, 
-                  x: 0, 
-                  rotateY: 0,
-                  rotateZ: 0,
-                  scale: 1,
-                  filter: 'blur(0px)'
+                  x: 0
                 }}
                 exit={{ 
                   opacity: 0, 
-                  x: stepDirection >= 0 ? -100 : 100, 
-                  rotateY: stepDirection >= 0 ? -14 : 14,
-                  rotateZ: stepDirection >= 0 ? -1.5 : 1.5,
-                  scale: 0.93,
-                  filter: 'blur(5px)'
+                  x: stepDirection >= 0 ? -35 : 35
                 }}
                 transition={{ 
-                  type: "spring",
-                  stiffness: 280,
-                  damping: 25,
-                  mass: 0.8
+                  duration: 0.35,
+                  ease: [0.25, 1, 0.5, 1]
                 }}
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={0.28}
-                whileDrag={{ scale: 0.97, rotateZ: stepDirection >= 0 ? -1.5 : 1.5, cursor: "grabbing" }}
+                dragElastic={0.15}
                 onDragEnd={(_, info) => {
-                  if (info.offset.x < -35 || info.velocity.x < -250) {
+                  if (info.offset.x < -35 || info.velocity.x < -200) {
                     handleSwipeNext();
-                  } else if (info.offset.x > 35 || info.velocity.x > 250) {
+                  } else if (info.offset.x > 35 || info.velocity.x > 200) {
                     handleSwipePrev();
                   }
                 }}
                 className="rounded-3xl bg-white border border-gray-200/70 p-6 sm:p-8 lg:p-10 shadow-xs grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-10 items-center cursor-grab active:cursor-grabbing touch-pan-y relative overflow-hidden"
               >
-                {/* Subtle dynamic sheen swipe feedback overlay */}
-                <motion.div 
-                  key={`step-sheen-${activeStep}`}
-                  initial={{ opacity: 0.35, x: stepDirection >= 0 ? '-100%' : '100%' }}
-                  animate={{ opacity: 0, x: stepDirection >= 0 ? '100%' : '-100%' }}
-                  transition={{ duration: 0.55, ease: "easeOut" }}
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none z-20"
-                />
-
-                {/* Step Left: Photo with Zoom & Badge */}
+                {/* Step Left: Photo & Badge */}
                 <div className="md:col-span-6 rounded-2xl overflow-hidden aspect-[4/3] bg-gray-100 border border-gray-100 relative group">
-                  <motion.img 
-                    initial={{ scale: 1.12, opacity: 0.8 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                  <img 
                     src={steps[activeStep].image} 
                     alt={steps[activeStep].title} 
-                    className="w-full h-full object-cover pointer-events-none"
+                    className="w-full h-full object-cover pointer-events-none transition-transform duration-500 ease-out group-hover:scale-105"
                   />
-                  <motion.div 
-                    initial={{ opacity: 0, y: -10, scale: 0.9 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ delay: 0.1, duration: 0.35, type: "spring", stiffness: 350 }}
-                    className="absolute top-4 left-4 bg-black/75 backdrop-blur-md text-white px-3.5 py-1.5 rounded-full text-xs font-medium tracking-tight shadow-md"
-                  >
+                  <div className="absolute top-4 left-4 bg-black/75 backdrop-blur-md text-white px-3.5 py-1.5 rounded-full text-xs font-medium tracking-tight shadow-md">
                     Step {steps[activeStep].number} of 0{steps.length}
-                  </motion.div>
+                  </div>
                 </div>
 
-                {/* Step Right: Number & Description with Staggered Entrance */}
+                {/* Step Right: Number & Description */}
                 <div className="md:col-span-6 space-y-3 pointer-events-auto">
                   <div className="flex items-center justify-between">
-                    <motion.span 
-                      initial={{ opacity: 0, scale: 0.85 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.05, duration: 0.35 }}
-                      className="text-3xl sm:text-4xl font-bold tracking-tight text-[#121212]"
-                    >
+                    <span className="text-3xl sm:text-4xl font-bold tracking-tight text-[#121212]">
                       {steps[activeStep].number}
-                    </motion.span>
+                    </span>
                     <span className="text-xs font-medium text-[#64748b] bg-gray-100 px-3 py-1 rounded-full hidden sm:inline-block">
                       Swipe left / right to navigate
                     </span>
                   </div>
 
-                  <motion.h3 
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1, duration: 0.4 }}
-                    className="text-lg sm:text-xl font-medium tracking-tight text-[#64748b]"
-                  >
+                  <h3 className="text-lg sm:text-xl font-medium tracking-tight text-[#64748b]">
                     {steps[activeStep].title}
-                  </motion.h3>
+                  </h3>
 
-                  <motion.p 
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.15, duration: 0.45 }}
-                    className="text-sm sm:text-base text-[#475569] font-normal leading-relaxed"
-                  >
+                  <p className="text-sm sm:text-base text-[#475569] font-normal leading-relaxed">
                     {steps[activeStep].desc}
-                  </motion.p>
+                  </p>
 
                   <div className="pt-3 flex flex-wrap items-center gap-3">
                     <button
