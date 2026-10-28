@@ -61,13 +61,6 @@ export default function Services() {
     setIsQuoteModalOpen(true);
   };
 
-  // 4 Key Statistics Ribbon (Section 2)
-  const stats = [
-    { value: "150+", label: "Certified Basic Models", sublabel: "Engineering CAD Specs" },
-    { value: "50+", label: "Tons Monthly Capacity", sublabel: "Industrial Plate & Structural" },
-    { value: "10+", label: "Automated Work Cells", sublabel: "Continuous 5-Axis & Laser" },
-    { value: "24/7", label: "IoT Telemetry Uptime", sublabel: "Predictive Monitoring" }
-  ];
 
   // Engineering Solutions Table Data (Section 5)
   const capabilitiesSchedule = [
@@ -247,40 +240,6 @@ export default function Services() {
 
         </motion.section>
 
-        {/* ========================================================================= */}
-        {/* 02. KEY STATISTICS RIBBON (Scroll Viewport Triggered Reveal) */}
-        {/* ========================================================================= */}
-        <motion.section 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.25 }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="py-4 border-b border-gray-200"
-        >
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
-            {stats.map((stat, i) => (
-              <motion.div 
-                key={i} 
-                initial={{ opacity: 0, y: 25 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.3 }}
-                transition={{ duration: 0.6, delay: i * 0.1, ease: "easeOut" }}
-                whileHover={{ y: -3, transition: { duration: 0.2 } }}
-                className="space-y-1.5 text-center flex flex-col items-center justify-center group cursor-default"
-              >
-                <div className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#121212] font-heading tracking-tight group-hover:text-blue-900 transition-colors text-center">
-                  {stat.value}
-                </div>
-                <div className="text-sm sm:text-base font-bold text-[#121212] tracking-tight text-center">
-                  {stat.label}
-                </div>
-                <div className="text-xs sm:text-sm text-[#64748b] font-normal tracking-tight text-center">
-                  {stat.sublabel}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
 
         {/* ========================================================================= */}
         {/* 03. "WHAT WE DO ↴" CAROUSEL SECTION (Swipeable with Scroll In-View Fade) */}
