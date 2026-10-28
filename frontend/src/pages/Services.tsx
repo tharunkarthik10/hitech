@@ -117,23 +117,7 @@ export default function Services() {
           className="relative w-full overflow-hidden pt-1 pb-6 sm:pb-8 border-b border-gray-200/90"
         >
           
-          {/* Subtle Background Geometric Wireframe Watermark (Matching Section 03) */}
-          <div className="absolute top-0 right-0 w-[420px] h-[420px] pointer-events-none opacity-15 -mr-16 -mt-16">
-            <svg viewBox="0 0 400 400" className="w-full h-full stroke-gray-900" fill="none">
-              {Array.from({ length: 20 }).map((_, i) => (
-                <ellipse
-                  key={i}
-                  cx="200"
-                  cy="200"
-                  rx={26 + i * 8}
-                  ry={13 + i * 4.4}
-                  strokeDasharray="2 4"
-                  strokeWidth="0.85"
-                  transform={`rotate(${i * 8} 200 200)`}
-                />
-              ))}
-            </svg>
-          </div>
+
 
           {/* Top Breadcrumb */}
           <div className="mb-4 sm:mb-5">
