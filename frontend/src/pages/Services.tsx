@@ -102,7 +102,7 @@ export default function Services() {
   ];
 
   return (
-    <main className="w-full min-h-screen bg-[#fafafa] text-[#121212] font-sans pt-20 sm:pt-24 pb-20 selection:bg-[#121212] selection:text-white overflow-x-hidden">
+    <main className="services-page w-full min-h-screen bg-[#fafafa] text-[#121212] font-sans pt-20 sm:pt-24 pb-20 selection:bg-[#121212] selection:text-white overflow-x-hidden">
       
       {/* Site-wide Container Matching All Sections */}
       <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 space-y-12 lg:space-y-16">
