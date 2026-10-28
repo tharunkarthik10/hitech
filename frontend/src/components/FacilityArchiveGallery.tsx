@@ -1,127 +1,6 @@
-import React, { useRef, useEffect } from "react";
-import {
-  motion,
-  useScroll,
-  useSpring,
-  useTransform,
-  useMotionValue,
-  MotionValue,
-} from "framer-motion";
+import React, { useRef, useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-
-interface ScrollFlyCardProps {
-  sectionRef: React.RefObject<HTMLDivElement | null>;
-  smoothProgress: MotionValue<number>;
-  order: number; // 0 to 13
-  total?: number;
-  fallbackX: number;
-  fallbackY: number;
-  onClick?: () => void;
-  className?: string;
-  children: React.ReactNode;
-}
-
-function ScrollFlyCard({
-  sectionRef,
-  smoothProgress,
-  order,
-  total = 14,
-  fallbackX,
-  fallbackY,
-  onClick,
-  className = "",
-  children,
-}: ScrollFlyCardProps) {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const deltaX = useMotionValue(fallbackX);
-  const deltaY = useMotionValue(fallbackY);
-
-  useEffect(() => {
-    const calc = () => {
-      if (!wrapperRef.current || !sectionRef.current) return;
-      const cardRect = wrapperRef.current.getBoundingClientRect();
-      const secRect = sectionRef.current.getBoundingClientRect();
-
-      // Target is bottom-right corner of the entire section container
-      const targetRight = secRect.right - 16;
-      const targetBottom = secRect.bottom - 16;
-
-      const dx = Math.max(targetRight - cardRect.right, 40);
-      const dy = Math.max(targetBottom - cardRect.bottom, 40);
-
-      deltaX.set(dx);
-      deltaY.set(dy);
-    };
-
-    calc();
-    const frameId = requestAnimationFrame(calc);
-
-    window.addEventListener("resize", calc);
-    let observer: ResizeObserver | null = null;
-    if (typeof ResizeObserver !== "undefined") {
-      observer = new ResizeObserver(() => calc());
-      if (sectionRef.current) observer.observe(sectionRef.current);
-      if (wrapperRef.current) observer.observe(wrapperRef.current);
-    }
-
-    return () => {
-      cancelAnimationFrame(frameId);
-      window.removeEventListener("resize", calc);
-      if (observer) observer.disconnect();
-    };
-  }, [sectionRef, deltaX, deltaY]);
-
-  // Staggered launch intervals tied to scroll progress (0 to 1)
-  const startP = (order / total) * 0.35;
-  const endP = Math.min(1, startP + 0.48);
-
-  const x = useTransform([smoothProgress, deltaX], (latest: number[]) => {
-    const p = latest[0] ?? 0;
-    const currentDx = latest[1] ?? fallbackX;
-    if (p <= startP) return currentDx;
-    if (p >= endP) return 0;
-    const t = (p - startP) / (endP - startP);
-    const ease = 1 - Math.pow(1 - t, 3);
-    return currentDx * (1 - ease);
-  });
-
-  const y = useTransform([smoothProgress, deltaY], (latest: number[]) => {
-    const p = latest[0] ?? 0;
-    const currentDy = latest[1] ?? fallbackY;
-    if (p <= startP) return currentDy;
-    if (p >= endP) return 0;
-    const t = (p - startP) / (endP - startP);
-    const ease = 1 - Math.pow(1 - t, 3);
-    return currentDy * (1 - ease);
-  });
-
-  const opacity = useTransform(smoothProgress, (p: number) => {
-    if (p <= startP) return 0;
-    if (p >= endP) return 1;
-    const t = (p - startP) / (endP - startP);
-    return Math.min(1, t * 1.6);
-  });
-
-  const scale = useTransform(smoothProgress, (p: number) => {
-    if (p <= startP) return 0.85;
-    if (p >= endP) return 1;
-    const t = (p - startP) / (endP - startP);
-    const ease = 1 - Math.pow(1 - t, 3);
-    return 0.85 + 0.15 * ease;
-  });
-
-  return (
-    <div ref={wrapperRef} className="w-full h-full relative">
-      <motion.div
-        style={{ x, y, opacity, scale }}
-        onClick={onClick}
-        className={className}
-      >
-        {children}
-      </motion.div>
-    </div>
-  );
-}
 
 interface FacilityArchiveGalleryProps {
   openQuoteModal: (title: string) => void;
@@ -131,18 +10,66 @@ export default function FacilityArchiveGallery({
   openQuoteModal,
 }: FacilityArchiveGalleryProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
-
-  // Link scroll progress of this section directly to user's vertical swipe/scroll
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start 0.85", "center 0.45"],
+  const [sectionDimensions, setSectionDimensions] = useState({
+    width: 1200,
+    height: 1400,
   });
 
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 220,
-    damping: 28,
-    mass: 0.1,
-  });
+  useEffect(() => {
+    const updateDims = () => {
+      if (sectionRef.current) {
+        setSectionDimensions({
+          width: sectionRef.current.clientWidth || 1200,
+          height: sectionRef.current.clientHeight || 1400,
+        });
+      }
+    };
+
+    updateDims();
+    const frameId = requestAnimationFrame(updateDims);
+
+    window.addEventListener("resize", updateDims);
+    let observer: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== "undefined" && sectionRef.current) {
+      observer = new ResizeObserver(() => updateDims());
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      cancelAnimationFrame(frameId);
+      window.removeEventListener("resize", updateDims);
+      if (observer) observer.disconnect();
+    };
+  }, []);
+
+  // Helper function to generate diagonal bottom-right entrance props
+  // Starts each card from the bottom-right of the entire section container
+  // and smoothly decelerates into exact grid coordinates (x: 0, y: 0) at a reduced, elegant speed
+  const getDiagonalProps = (colRatio: number, rowRatio: number, order: number) => {
+    const initialX = Math.max(colRatio * sectionDimensions.width, 50);
+    const initialY = Math.max(rowRatio * sectionDimensions.height, 50);
+
+    return {
+      initial: {
+        opacity: 0,
+        x: initialX,
+        y: initialY,
+        scale: 0.88,
+      },
+      whileInView: {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        scale: 1,
+      },
+      viewport: { once: false, amount: 0.15 },
+      transition: {
+        duration: 1.35, // Reduced speed: calm, luxurious diagonal travel
+        delay: order * 0.055, // Short interval staggered sequence
+        ease: [0.16, 1, 0.3, 1] as const, // Smooth deceleration curve
+      },
+    };
+  };
 
   return (
     <section
@@ -181,12 +108,8 @@ export default function FacilityArchiveGallery({
           </div>
 
           {/* Bottom Card: Landscape (aspect-[4/3]) */}
-          <ScrollFlyCard
-            sectionRef={sectionRef}
-            smoothProgress={smoothProgress}
-            order={0}
-            fallbackX={1100}
-            fallbackY={585}
+          <motion.div
+            {...getDiagonalProps(0.82, 0.55, 0)}
             onClick={() =>
               openQuoteModal("Program Inquiry: Heavy Structural Gantry Milling")
             }
@@ -206,18 +129,14 @@ export default function FacilityArchiveGallery({
                 Heavy Machine Base Milling
               </div>
             </div>
-          </ScrollFlyCard>
+          </motion.div>
         </div>
 
         {/* COLUMN 2: 2 Uneven Cards (Tall Portrait on Top, Landscape on Bottom) */}
         <div className="flex flex-col justify-end gap-4 sm:gap-5">
           {/* Card 2: Tall Portrait (aspect-[3/4]) */}
-          <ScrollFlyCard
-            sectionRef={sectionRef}
-            smoothProgress={smoothProgress}
-            order={1}
-            fallbackX={840}
-            fallbackY={935}
+          <motion.div
+            {...getDiagonalProps(0.62, 0.85, 1)}
             onClick={() =>
               openQuoteModal("Program Inquiry: 5-Axis Aerospace Spindle Milling")
             }
@@ -237,15 +156,11 @@ export default function FacilityArchiveGallery({
                 Aerospace Impeller Spindle
               </div>
             </div>
-          </ScrollFlyCard>
+          </motion.div>
 
           {/* Card 3: Landscape (aspect-[4/3]) */}
-          <ScrollFlyCard
-            sectionRef={sectionRef}
-            smoothProgress={smoothProgress}
-            order={2}
-            fallbackX={840}
-            fallbackY={585}
+          <motion.div
+            {...getDiagonalProps(0.62, 0.55, 2)}
             onClick={() =>
               openQuoteModal("Program Inquiry: Precision CNC Lathe Turning")
             }
@@ -265,18 +180,14 @@ export default function FacilityArchiveGallery({
                 Sub-Micron Shaft Turning
               </div>
             </div>
-          </ScrollFlyCard>
+          </motion.div>
         </div>
 
         {/* COLUMN 3: 2 Uneven Cards (Square on Top, Tall Portrait on Bottom) */}
         <div className="flex flex-col justify-end gap-4 sm:gap-5">
           {/* Card 4: Square (aspect-square) */}
-          <ScrollFlyCard
-            sectionRef={sectionRef}
-            smoothProgress={smoothProgress}
-            order={3}
-            fallbackX={580}
-            fallbackY={935}
+          <motion.div
+            {...getDiagonalProps(0.42, 0.85, 3)}
             onClick={() =>
               openQuoteModal("Program Inquiry: High-Power Fiber Laser Cutting")
             }
@@ -296,15 +207,11 @@ export default function FacilityArchiveGallery({
                 12kW Clean Kerf Cutting
               </div>
             </div>
-          </ScrollFlyCard>
+          </motion.div>
 
           {/* Card 5: Tall Portrait (aspect-[3/4]) */}
-          <ScrollFlyCard
-            sectionRef={sectionRef}
-            smoothProgress={smoothProgress}
-            order={4}
-            fallbackX={580}
-            fallbackY={585}
+          <motion.div
+            {...getDiagonalProps(0.42, 0.55, 4)}
             onClick={() =>
               openQuoteModal("Program Inquiry: 5-Axis Spiral Impeller Sculpting")
             }
@@ -324,7 +231,7 @@ export default function FacilityArchiveGallery({
                 Continuous 5-Axis Impeller
               </div>
             </div>
-          </ScrollFlyCard>
+          </motion.div>
         </div>
 
         {/* COLUMN 4: Arrow Highlights List + 1 Tall Portrait Card at Bottom */}
@@ -350,12 +257,8 @@ export default function FacilityArchiveGallery({
           </div>
 
           {/* Card 6: Tall Portrait (aspect-[3/4]) */}
-          <ScrollFlyCard
-            sectionRef={sectionRef}
-            smoothProgress={smoothProgress}
-            order={5}
-            fallbackX={320}
-            fallbackY={585}
+          <motion.div
+            {...getDiagonalProps(0.22, 0.55, 5)}
             onClick={() =>
               openQuoteModal("Program Inquiry: Zeiss Bridge CMM Metrology Lab")
             }
@@ -375,18 +278,14 @@ export default function FacilityArchiveGallery({
                 Zeiss Bridge CMM Probe
               </div>
             </div>
-          </ScrollFlyCard>
+          </motion.div>
         </div>
 
         {/* COLUMN 5: 3 Uneven Cards (Landscape on Top, Very Tall Portrait in Middle, Wide Landscape on Bottom) */}
         <div className="flex flex-col justify-end gap-4 sm:gap-5">
           {/* Card 7: Landscape (aspect-[4/3]) */}
-          <ScrollFlyCard
-            sectionRef={sectionRef}
-            smoothProgress={smoothProgress}
-            order={6}
-            fallbackX={60}
-            fallbackY={935}
+          <motion.div
+            {...getDiagonalProps(0.05, 0.85, 6)}
             onClick={() =>
               openQuoteModal("Program Inquiry: Hydraulic Press Brake Bending")
             }
@@ -406,15 +305,11 @@ export default function FacilityArchiveGallery({
                 Hydraulic Press Brake
               </div>
             </div>
-          </ScrollFlyCard>
+          </motion.div>
 
           {/* Card 8: Tall Vertical (aspect-[2/3]) */}
-          <ScrollFlyCard
-            sectionRef={sectionRef}
-            smoothProgress={smoothProgress}
-            order={7}
-            fallbackX={60}
-            fallbackY={585}
+          <motion.div
+            {...getDiagonalProps(0.05, 0.55, 7)}
             onClick={() =>
               openQuoteModal("Program Inquiry: Automated Robotic Welding Cell")
             }
@@ -434,7 +329,7 @@ export default function FacilityArchiveGallery({
                 Automated TIG/MIG Cell
               </div>
             </div>
-          </ScrollFlyCard>
+          </motion.div>
 
           {/* Free-standing Arrow Highlights in the Gap (No box) */}
           <div className="space-y-3.5 py-3 px-1">
@@ -460,15 +355,11 @@ export default function FacilityArchiveGallery({
 
       {/* SECONDARY & FINAL TIERS: ROW 2 & ROW 3 WITH DIFFERENTIAL LENGTHS ENDING AT THE SAME LINE */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-5 lg:gap-6 mt-4 sm:mt-5 lg:mt-6 items-stretch">
-        {/* COLUMN 1: Tall Portrait (aspect-[3/4]) + Medium Landscape (aspect-[4/3]) */}
+        {/* COLUMN 1: Tall Portrait (aspect-[3/4]) */}
         <div className="flex flex-col justify-between h-full gap-4 sm:gap-5">
           {/* Row 2 Card */}
-          <ScrollFlyCard
-            sectionRef={sectionRef}
-            smoothProgress={smoothProgress}
-            order={8}
-            fallbackX={1100}
-            fallbackY={235}
+          <motion.div
+            {...getDiagonalProps(0.82, 0.32, 8)}
             onClick={() =>
               openQuoteModal(
                 "Program Inquiry: Advanced Facility Infrastructure & Plant Bed"
@@ -490,7 +381,7 @@ export default function FacilityArchiveGallery({
                 High-Bay Manufacturing Plant
               </div>
             </div>
-          </ScrollFlyCard>
+          </motion.div>
         </div>
 
         {/* COLUMN 2: Sleek Free-standing Arrow Highlights in the Gap */}
@@ -518,12 +409,8 @@ export default function FacilityArchiveGallery({
         {/* COLUMN 3: Classic Landscape (aspect-[4/3]) + Tall Portrait (aspect-[3/4]) */}
         <div className="flex flex-col justify-between h-full gap-4 sm:gap-5">
           {/* Row 2 Card */}
-          <ScrollFlyCard
-            sectionRef={sectionRef}
-            smoothProgress={smoothProgress}
-            order={9}
-            fallbackX={580}
-            fallbackY={235}
+          <motion.div
+            {...getDiagonalProps(0.42, 0.32, 9)}
             onClick={() =>
               openQuoteModal("Program Inquiry: Automated Dual-Bed Pallet Shuttle")
             }
@@ -543,15 +430,11 @@ export default function FacilityArchiveGallery({
                 Dual-Bed Shuttle Automation
               </div>
             </div>
-          </ScrollFlyCard>
+          </motion.div>
 
           {/* Row 3 Final Card */}
-          <ScrollFlyCard
-            sectionRef={sectionRef}
-            smoothProgress={smoothProgress}
-            order={10}
-            fallbackX={580}
-            fallbackY={60}
+          <motion.div
+            {...getDiagonalProps(0.42, 0.10, 10)}
             onClick={() =>
               openQuoteModal(
                 "Program Inquiry: Automated Robotic Pick & Place Cell"
@@ -573,18 +456,14 @@ export default function FacilityArchiveGallery({
                 Automated Robotic Assembly Cell
               </div>
             </div>
-          </ScrollFlyCard>
+          </motion.div>
         </div>
 
         {/* COLUMN 4: Dramatic Tall Portrait (aspect-[2/3]) + Sleek Wide Landscape (aspect-[16/9]) */}
         <div className="flex flex-col justify-between h-full gap-4 sm:gap-5">
           {/* Row 2 Card */}
-          <ScrollFlyCard
-            sectionRef={sectionRef}
-            smoothProgress={smoothProgress}
-            order={11}
-            fallbackX={320}
-            fallbackY={235}
+          <motion.div
+            {...getDiagonalProps(0.22, 0.32, 11)}
             onClick={() =>
               openQuoteModal("Program Inquiry: Heavy Structural Rig Weldments")
             }
@@ -604,15 +483,11 @@ export default function FacilityArchiveGallery({
                 Machine Rig Base Fabrication
               </div>
             </div>
-          </ScrollFlyCard>
+          </motion.div>
 
           {/* Row 3 Final Card */}
-          <ScrollFlyCard
-            sectionRef={sectionRef}
-            smoothProgress={smoothProgress}
-            order={12}
-            fallbackX={320}
-            fallbackY={60}
+          <motion.div
+            {...getDiagonalProps(0.22, 0.10, 12)}
             onClick={() =>
               openQuoteModal(
                 "Program Inquiry: Modular Workstation Production Cells"
@@ -634,18 +509,14 @@ export default function FacilityArchiveGallery({
                 Modular Lean Workstation Cells
               </div>
             </div>
-          </ScrollFlyCard>
+          </motion.div>
         </div>
 
         {/* COLUMN 5: Balanced Square (aspect-square) + Balanced Square (aspect-square) */}
         <div className="flex flex-col justify-between h-full gap-4 sm:gap-5">
           {/* Row 2 Card */}
-          <ScrollFlyCard
-            sectionRef={sectionRef}
-            smoothProgress={smoothProgress}
-            order={13}
-            fallbackX={60}
-            fallbackY={235}
+          <motion.div
+            {...getDiagonalProps(0.05, 0.30, 13)}
             onClick={() =>
               openQuoteModal(
                 "Program Inquiry: Certified Global Packaging & Dispatch"
@@ -667,7 +538,7 @@ export default function FacilityArchiveGallery({
                 Certified Global Dispatch
               </div>
             </div>
-          </ScrollFlyCard>
+          </motion.div>
 
           {/* Row 3: Free-standing Engineering CTA in the Gap (No box) */}
           <div className="space-y-3.5 py-3 px-1">
