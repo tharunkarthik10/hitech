@@ -98,51 +98,8 @@ export default function Contact() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/60 pointer-events-none" />
             </div>
 
-            {/* Top Navigation Bar Inside Hero Card (with Career button) */}
-            <div className="relative z-20 flex flex-wrap items-center justify-between gap-4">
-              <div className="flex items-center gap-4">
-                <Link to="/" className="flex items-center gap-2 group">
-                  <span className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse" />
-                  <span className="font-bold text-sm tracking-tight text-white group-hover:text-blue-400 transition-colors">
-                    HITECH
-                  </span>
-                </Link>
-                <span className="text-white/40 text-xs hidden sm:inline">|</span>
-                <div className="hidden sm:flex items-center gap-2 text-xs text-white/70 font-normal">
-                  <span className="text-white font-bold">EN</span>
-                  <span>/</span>
-                  <span className="hover:text-white cursor-pointer transition-colors">IN</span>
-                </div>
-              </div>
-
-              {/* Right Action Buttons: Career Button & Breadcrumbs */}
-              <div className="flex items-center gap-3">
-                <Link 
-                  to="/career"
-                  className="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white hover:text-black backdrop-blur-md border border-white/25 text-white text-xs sm:text-sm font-medium tracking-tight transition-all shadow-md flex items-center gap-2 group"
-                >
-                  <Briefcase className="w-3.5 h-3.5 text-[#00A6FB] group-hover:text-black transition-colors" />
-                  <span>Careers</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Outlined Vertical / Giant Watermark Typography */}
-            <div className="absolute right-6 sm:right-12 top-1/2 -translate-y-1/2 pointer-events-none select-none hidden md:block z-10">
-              <span 
-                className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-widest text-transparent uppercase opacity-20"
-                style={{
-                  writingMode: 'vertical-rl',
-                  WebkitTextStroke: '1.5px rgba(255, 255, 255, 0.75)'
-                }}
-              >
-                Contacts
-              </span>
-            </div>
-
-            {/* Bottom Hero Content: Title, Narrative & Career CTA + Breadcrumb */}
-            <div className="relative z-20 flex flex-col lg:flex-row lg:items-end justify-between gap-8 pt-28 sm:pt-40">
+            {/* Bottom Hero Content: Title, Narrative & Career CTA */}
+            <div className="relative z-20 flex flex-col lg:flex-row lg:items-end justify-between gap-8 pt-12 sm:pt-16 pb-2">
               
               <div className="max-w-2xl space-y-4">
                 <div className="flex items-center gap-2 text-white/90">
@@ -170,7 +127,7 @@ export default function Contact() {
                 </div>
               </div>
 
-              {/* Right Floating Metric Card & Breadcrumb Pill */}
+              {/* Right Floating Metric Card */}
               <div className="flex flex-col items-start lg:items-end gap-3 shrink-0 self-start lg:self-end">
                 {/* Metric Card: 15+ Years */}
                 <div className="bg-white/95 text-gray-900 rounded-2xl p-5 sm:p-6 shadow-xl backdrop-blur-md min-w-[170px] sm:min-w-[220px] max-w-[260px] space-y-1.5 border border-white">
@@ -180,13 +137,6 @@ export default function Contact() {
                   <p className="text-sm text-[#64748b] font-normal leading-relaxed">
                     A decade and a half of expertise in high-tolerance machining.
                   </p>
-                </div>
-
-                {/* Floating Breadcrumb Pill */}
-                <div className="bg-white/95 backdrop-blur-md text-[#121212] px-6 py-2.5 rounded-full text-xs sm:text-sm font-medium tracking-tight shadow-lg flex items-center gap-2 border border-white shrink-0">
-                  <Link to="/" className="text-[#64748b] hover:text-[#121212] transition-colors">Home</Link>
-                  <span className="text-[#94a3b8]">/</span>
-                  <span className="text-[#121212] font-semibold">Contacts</span>
                 </div>
               </div>
 
@@ -212,62 +162,102 @@ export default function Contact() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           
           {/* ================= LEFT COLUMN: INFO & CALL CENTER ================= */}
-          <div className="lg:col-span-7 space-y-8 lg:pr-6">
+          <div className="lg:col-span-7 space-y-10 lg:pr-6">
             
             {/* Header intro */}
             <div>
               <span className="text-sm font-medium tracking-tight text-[#64748b]">
                 / get in touch /
               </span>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-bold text-[#121212] tracking-tight leading-[1.14] mt-4 mb-6">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-bold text-[#121212] tracking-tight leading-[1.14] mt-4 mb-5">
                 We are always ready to help you and answer your questions
               </h2>
-              <p className="text-sm sm:text-base text-[#475569] font-normal leading-relaxed max-w-xl">
-                Whether you need technical consulting on custom pneumatic automation, CNC machining specifications, fiber laser cutting tolerances, or production scheduling, our engineering desk is ready to assist you.
+              <p className="text-sm sm:text-base text-[#475569] font-normal leading-relaxed max-w-2xl">
+                Whether you need technical consulting on custom pneumatic automation, 5-axis CNC machining specifications (±0.005mm), 12kW fiber laser cutting tolerances, or high-volume serial assembly, our senior engineering desk provides rapid DFM assessments and accurate cost estimations.
               </p>
             </div>
 
-            {/* 2x2 Contact Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-10 gap-x-8 pt-4 max-w-xl">
+            {/* 3 Dedicated Plant Desks for Specific Routing */}
+            <div className="space-y-4 pt-2">
+              <span className="text-xs font-bold tracking-wider uppercase text-[#64748b]">
+                Dedicated Facility Desks
+              </span>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {/* Unit 1 Desk */}
+                <div className="p-4 rounded-2xl bg-[#f8fafc] border border-gray-200/70 space-y-2 hover:border-gray-300 transition-colors">
+                  <div className="text-xs font-bold text-[#00A6FB] tracking-tight">Unit 1 — Laser & Sheet</div>
+                  <h4 className="text-sm font-bold text-[#121212]">Laser Cutting Desk</h4>
+                  <div className="text-xs text-[#64748b] space-y-1">
+                    <p>SIDCO Industrial Estate, Kurichi</p>
+                    <a href="tel:+914222648801" className="block text-[#121212] font-medium hover:text-[#00A6FB]">+91 (0422) 264-8801</a>
+                    <a href="mailto:laser@hitechengineering.com" className="block text-[#00A6FB] truncate hover:underline">laser@hitechengineering.com</a>
+                  </div>
+                </div>
+
+                {/* Unit 2 Desk */}
+                <div className="p-4 rounded-2xl bg-[#f8fafc] border border-gray-200/70 space-y-2 hover:border-gray-300 transition-colors">
+                  <div className="text-xs font-bold text-[#00A6FB] tracking-tight">Unit 2 — CNC Machining</div>
+                  <h4 className="text-sm font-bold text-[#121212]">Heavy Machining Desk</h4>
+                  <div className="text-xs text-[#64748b] space-y-1">
+                    <p>Eachanari Industrial Area</p>
+                    <a href="tel:+914222648802" className="block text-[#121212] font-medium hover:text-[#00A6FB]">+91 (0422) 264-8802</a>
+                    <a href="mailto:machining@hitechengineering.com" className="block text-[#00A6FB] truncate hover:underline">machining@hitechengineering.com</a>
+                  </div>
+                </div>
+
+                {/* Unit 3 Desk */}
+                <div className="p-4 rounded-2xl bg-[#f8fafc] border border-gray-200/70 space-y-2 hover:border-gray-300 transition-colors">
+                  <div className="text-xs font-bold text-[#00A6FB] tracking-tight">Unit 3 — SPM Assembly</div>
+                  <h4 className="text-sm font-bold text-[#121212]">Automation & SPM Desk</h4>
+                  <div className="text-xs text-[#64748b] space-y-1">
+                    <p>Malumichampatti Corridor</p>
+                    <a href="tel:+914222648803" className="block text-[#121212] font-medium hover:text-[#00A6FB]">+91 (0422) 264-8803</a>
+                    <a href="mailto:automation@hitechengineering.com" className="block text-[#00A6FB] truncate hover:underline">automation@hitechengineering.com</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 2x2 Core Contact & SLA Overview */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-8 gap-x-8 pt-2 max-w-xl">
               
-              {/* Call Center */}
-              <div className="space-y-2">
-                <h3 className="text-base font-bold text-[#121212] tracking-tight">Call Center</h3>
+              {/* Central Hotline */}
+              <div className="space-y-1.5">
+                <h3 className="text-sm font-bold text-[#121212] tracking-tight">Central Engineering Hotline</h3>
                 <div className="space-y-1 text-sm text-[#475569] leading-relaxed">
-                  <a href="tel:+914222648800" className="block hover:text-[#00A6FB] transition-colors">
+                  <a href="tel:+914222648800" className="block font-medium text-[#121212] hover:text-[#00A6FB] transition-colors">
                     +91 (0422) 264-8800
                   </a>
                   <a href="tel:+919842264880" className="block hover:text-[#00A6FB] transition-colors">
-                    +91 98422 64880
+                    +91 98422 64880 (WhatsApp RFQ)
                   </a>
                 </div>
               </div>
 
-              {/* Our Location */}
-              <div className="space-y-2">
-                <h3 className="text-base font-bold text-[#121212] tracking-tight">Our Location</h3>
+              {/* Direct CAD Portal */}
+              <div className="space-y-1.5">
+                <h3 className="text-sm font-bold text-[#121212] tracking-tight">CAD / Drawing Exchange</h3>
                 <div className="space-y-1 text-sm text-[#475569] leading-relaxed">
-                  <p>Plot No. 12, SIDCO Industrial Estate,</p>
-                  <p>Kurichi, Coimbatore 641021</p>
+                  <a href="mailto:cad@hitechengineering.com" className="block font-medium text-[#00A6FB] hover:underline">
+                    cad@hitechengineering.com
+                  </a>
+                  <p className="text-xs text-[#64748b]">Formats: STEP, IGES, DXF, SLDPRT</p>
                 </div>
               </div>
 
-              {/* Email */}
-              <div className="space-y-2">
-                <h3 className="text-base font-bold text-[#121212] tracking-tight">Email</h3>
-                <div className="space-y-1 text-sm text-[#475569] leading-relaxed">
-                  <a href="mailto:info@hitechengineering.com" className="block hover:text-[#00A6FB] transition-colors">
-                    info@hitechengineering.com
-                  </a>
-                  <a href="mailto:sales@hitechengineering.com" className="block hover:text-[#00A6FB] transition-colors">
-                    sales@hitechengineering.com
-                  </a>
+              {/* Operational SLA & Shifts */}
+              <div className="space-y-1.5">
+                <h3 className="text-sm font-bold text-[#121212] tracking-tight">Operating Schedule & Shifts</h3>
+                <div className="space-y-1 text-xs sm:text-sm text-[#475569] leading-relaxed">
+                  <p className="font-medium text-[#121212]">Plant: 24/7 Automated Production</p>
+                  <p className="text-xs text-[#64748b]">Office & Consultations: Mon – Sat, 8:30 AM – 7:30 PM IST</p>
                 </div>
               </div>
 
-              {/* Social Network */}
-              <div className="space-y-2">
-                <h3 className="text-base font-bold text-[#121212] tracking-tight">Social network</h3>
+              {/* Social Network & MTR Dossiers */}
+              <div className="space-y-1.5">
+                <h3 className="text-sm font-bold text-[#121212] tracking-tight">Network & Compliance</h3>
                 <div className="flex items-center gap-4 text-[#121212] pt-1">
                   <a 
                     href="https://facebook.com" 
@@ -354,7 +344,7 @@ export default function Contact() {
                       required
                       value={formData.name}
                       onChange={handleInputChange}
-                      placeholder="Full name"
+                      placeholder="Full name *"
                       className="w-full bg-transparent border-b border-gray-300 focus:border-[#121212] py-3 text-sm text-[#121212] placeholder:text-gray-400 focus:outline-none transition-colors"
                     />
                   </div>
@@ -366,7 +356,7 @@ export default function Contact() {
                       required
                       value={formData.email}
                       onChange={handleInputChange}
-                      placeholder="Email"
+                      placeholder="Email address *"
                       className="w-full bg-transparent border-b border-gray-300 focus:border-[#121212] py-3 text-sm text-[#121212] placeholder:text-gray-400 focus:outline-none transition-colors"
                     />
                   </div>
@@ -378,7 +368,7 @@ export default function Contact() {
                       required
                       value={formData.subject}
                       onChange={handleInputChange}
-                      placeholder="Subject"
+                      placeholder="Subject / Project Drawing Reference *"
                       className="w-full bg-transparent border-b border-gray-300 focus:border-[#121212] py-3 text-sm text-[#121212] placeholder:text-gray-400 focus:outline-none transition-colors"
                     />
                   </div>
@@ -386,11 +376,11 @@ export default function Contact() {
                   <div>
                     <textarea 
                       name="message"
-                      rows={3}
+                      rows={4}
                       required
                       value={formData.message}
                       onChange={handleInputChange}
-                      placeholder="Message"
+                      placeholder="Describe your engineering requirement, material specs, or batch volume... *"
                       className="w-full bg-transparent border-b border-gray-300 focus:border-[#121212] py-3 text-sm text-[#121212] placeholder:text-gray-400 focus:outline-none transition-colors resize-none"
                     />
                   </div>
@@ -457,8 +447,8 @@ export default function Contact() {
             loading="lazy"
           />
 
-          {/* Floating Location Card in Map (Matching the reference screenshot) */}
-          <div className="absolute top-6 left-6 z-10 bg-white/95 backdrop-blur-md p-5 rounded-2xl shadow-xl border border-white max-w-xs sm:max-w-sm hidden sm:block">
+          {/* Floating Location Card in Map (Positioned on top-right to prevent overlap with native Google Maps UI) */}
+          <div className="absolute top-6 right-6 z-10 bg-white/95 backdrop-blur-md p-5 rounded-2xl shadow-xl border border-white max-w-xs sm:max-w-sm hidden sm:block">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <h4 className="font-bold text-sm sm:text-base text-[#121212] tracking-tight">

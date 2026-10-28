@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  ArrowRight, ArrowUpRight, Search, ShieldCheck, 
+  ArrowRight, ArrowUpRight, ShieldCheck, 
   Settings, X, Send, ChevronLeft, ChevronRight
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -119,7 +119,7 @@ export default function Manufacturing() {
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="rounded-2xl sm:rounded-[22px] overflow-hidden relative shadow-xl min-h-[640px] sm:min-h-[720px] lg:min-h-[760px] flex flex-col justify-between p-6 sm:p-10 lg:p-12 text-white bg-black border border-gray-900"
+            className="rounded-2xl sm:rounded-[22px] overflow-hidden relative shadow-xl min-h-[608px] sm:min-h-[684px] lg:min-h-[722px] flex flex-col justify-end p-6 sm:p-10 lg:p-12 text-white bg-black border border-gray-900"
           >
             {/* Background High-Tech Facility Media / Looping Video */}
             <div className="absolute inset-0 z-0">
@@ -137,65 +137,8 @@ export default function Manufacturing() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/50" />
             </div>
 
-            {/* Top Navigation Bar Inside Hero Card */}
-            <div className="relative z-20 flex flex-wrap items-center justify-between gap-4">
-              {/* Brand and Language Selector */}
-              <div className="flex items-center gap-4">
-                <Link to="/" className="flex items-center gap-2 group">
-                  <span className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse" />
-                  <span className="font-bold text-sm tracking-tight text-white group-hover:text-blue-400 transition-colors">
-                    HITECH
-                  </span>
-                </Link>
-                <span className="text-white/40 text-xs hidden sm:inline">|</span>
-                <div className="hidden sm:flex items-center gap-2 text-xs text-white/70 font-normal">
-                  <span className="text-white font-bold">EN</span>
-                  <span>/</span>
-                  <span className="hover:text-white cursor-pointer transition-colors">IN</span>
-                </div>
-              </div>
-
-              {/* Navigation Center Links */}
-              <nav className="hidden lg:flex items-center gap-6 text-xs text-white/80 font-normal">
-                <a href="#benefits" className="hover:text-white transition-colors">Benefits</a>
-                <a href="#performance" className="hover:text-white transition-colors">Performance</a>
-                <a href="#process" className="hover:text-white transition-colors">How it works</a>
-                <button 
-                  onClick={() => openQuoteModal("General Consultation")}
-                  className="hover:text-white transition-colors cursor-pointer"
-                >
-                  Contact us
-                </button>
-              </nav>
-
-              {/* Right Search Pill & CTA Button */}
-              <div className="flex items-center gap-2.5">
-                <div className="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs text-white/70 font-normal">
-                  <Search className="w-3.5 h-3.5" />
-                  <span className="text-[11px]">Search Fleet</span>
-                </div>
-
-                <button
-                  onClick={() => openQuoteModal("Manufacturing Division Quote")}
-                  className="px-5 py-2.5 rounded-full bg-white hover:bg-gray-100 text-black font-normal text-xs tracking-tight transition-all shadow-md flex items-center gap-2 cursor-pointer active:scale-95"
-                >
-                  <span>Get in touch</span>
-                  <div className="w-5 h-5 rounded-full bg-black text-white flex items-center justify-center">
-                    <ArrowRight className="w-3 h-3" />
-                  </div>
-                </button>
-              </div>
-            </div>
-
-            {/* Giant "H I T E C H" Background Watermark Typography */}
-            <div className="absolute top-1/4 sm:top-1/5 left-0 right-0 z-10 pointer-events-none select-none flex justify-center overflow-hidden">
-              <span className="text-[18vw] sm:text-[16vw] font-bold tracking-tight text-white/15 uppercase leading-none">
-                HITECH
-              </span>
-            </div>
-
-            {/* Bottom Hero Area: Left Headline + Right 2 Floating Metric Cards */}
-            <div className="relative z-20 flex flex-col lg:flex-row lg:items-end justify-between gap-8 pt-32 sm:pt-48">
+            {/* Hero Content Area: Left Headline + Right Floating Metric Card */}
+            <div className="relative z-20 flex flex-col lg:flex-row lg:items-end justify-between gap-8 pt-10 sm:pt-14">
               
               {/* Left Headline & Intro Statement */}
               <div className="max-w-xl space-y-3">

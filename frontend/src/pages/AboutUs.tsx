@@ -89,7 +89,7 @@ export default function AboutUs() {
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="rounded-2xl sm:rounded-[22px] overflow-hidden relative shadow-xl min-h-[640px] sm:min-h-[720px] lg:min-h-[760px] flex flex-col justify-between p-6 sm:p-10 lg:p-12 text-white bg-black border border-gray-900"
+            className="rounded-2xl sm:rounded-[22px] overflow-hidden relative shadow-xl min-h-[608px] sm:min-h-[684px] lg:min-h-[722px] flex flex-col justify-end p-6 sm:p-10 lg:p-12 text-white bg-black border border-gray-900"
           >
             {/* Background High-Tech Facility Media / Looping Video */}
             <div className="absolute inset-0 z-0">
@@ -107,61 +107,8 @@ export default function AboutUs() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/45 to-black/60 pointer-events-none" />
             </div>
 
-            {/* Top Navigation Bar Inside Hero Card */}
-            <div className="relative z-20 flex flex-wrap items-center justify-between gap-4">
-              <div className="flex items-center gap-4">
-                <Link to="/" className="flex items-center gap-2 group">
-                  <span className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse" />
-                  <span className="font-bold text-sm tracking-tight text-white group-hover:text-blue-400 transition-colors">
-                    HITECH
-                  </span>
-                </Link>
-                <span className="text-white/40 text-xs hidden sm:inline">|</span>
-                <div className="hidden sm:flex items-center gap-2 text-xs text-white/70 font-normal">
-                  <span className="text-white font-bold">EN</span>
-                  <span>/</span>
-                  <span className="hover:text-white cursor-pointer transition-colors">IN</span>
-                </div>
-              </div>
-
-              {/* Right Action Buttons: Careers & Contact */}
-              <div className="flex items-center gap-3">
-                <Link 
-                  to="/career"
-                  className="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white hover:text-black backdrop-blur-md border border-white/25 text-white text-xs sm:text-sm font-medium tracking-tight transition-all shadow-md flex items-center gap-2 group"
-                >
-                  <Briefcase className="w-3.5 h-3.5 text-[#00A6FB] group-hover:text-black transition-colors" />
-                  <span>Careers</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </Link>
-
-                <Link 
-                  to="/contact"
-                  className="hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-full bg-white hover:bg-gray-100 text-black text-xs sm:text-sm font-medium tracking-tight transition-all shadow-md group"
-                >
-                  <span>Get in touch</span>
-                  <div className="w-5 h-5 rounded-full bg-black text-white flex items-center justify-center">
-                    <ArrowRight className="w-3 h-3" />
-                  </div>
-                </Link>
-              </div>
-            </div>
-
-            {/* Outlined Vertical / Giant Watermark Typography */}
-            <div className="absolute right-6 sm:right-12 top-1/2 -translate-y-1/2 pointer-events-none select-none hidden md:block z-10">
-              <span 
-                className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-widest text-transparent uppercase opacity-20"
-                style={{
-                  writingMode: 'vertical-rl',
-                  WebkitTextStroke: '1.5px rgba(255, 255, 255, 0.75)'
-                }}
-              >
-                ABOUT US
-              </span>
-            </div>
-
-            {/* Bottom Hero Content: Title, Narrative & CTA + Breadcrumbs */}
-            <div className="relative z-20 flex flex-col lg:flex-row lg:items-end justify-between gap-8 pt-28 sm:pt-40">
+            {/* Bottom Hero Content: Title, Narrative & CTA */}
+            <div className="relative z-20 flex flex-col lg:flex-row lg:items-end justify-between gap-8 pt-10 sm:pt-14">
               
               <div className="max-w-2xl space-y-4">
                 <div className="flex items-center gap-2 text-white/90">
@@ -193,13 +140,6 @@ export default function AboutUs() {
                     <span>Contact Our Engineering Team</span>
                   </Link>
                 </div>
-              </div>
-
-              {/* Floating Breadcrumb Pill */}
-              <div className="bg-white/95 backdrop-blur-md text-[#121212] px-6 py-2.5 rounded-full text-xs sm:text-sm font-medium tracking-tight shadow-lg flex items-center gap-2 border border-white shrink-0 self-start lg:self-end">
-                <Link to="/" className="text-[#64748b] hover:text-[#121212] transition-colors">Home</Link>
-                <span className="text-[#94a3b8]">/</span>
-                <span className="text-[#121212] font-semibold">About us</span>
               </div>
 
             </div>
