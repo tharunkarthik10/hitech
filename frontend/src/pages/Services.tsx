@@ -683,72 +683,261 @@ export default function Services() {
       >
         <div className="w-full grid grid-cols-1 lg:grid-cols-12">
           
-          {/* Left Column: Bold Typography & Narrative */}
-          <div className="lg:col-span-5 p-8 sm:p-12 md:p-16 lg:p-20 border-b lg:border-b-0 lg:border-r border-gray-300 flex flex-col justify-between">
-            <div>
-              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-[66px] font-bold tracking-tight text-[#121212] leading-[1] uppercase font-sans">
-                From first<br />
-                idea to a<br />
-                place that<br />
-                breathes.
-              </h2>
-            </div>
+          {/* Card 1: Left Main Box (3D Flip Card) */}
+          <div className="lg:col-span-5 border-b lg:border-b-0 lg:border-r border-gray-300 flip-card-container group cursor-pointer relative min-h-[460px] sm:min-h-[520px] lg:min-h-[600px]">
+            <div className="flip-card-inner">
+              
+              {/* Front Face: Minimalist Typography & Narrative */}
+              <div className="flip-card-front relative w-full h-full p-8 sm:p-12 md:p-16 lg:p-20 bg-white flex flex-col justify-between">
+                <div>
+                  <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-[66px] font-bold tracking-tight text-[#121212] leading-[1] uppercase font-sans">
+                    From first<br />
+                    idea to a<br />
+                    place that<br />
+                    breathes.
+                  </h2>
+                </div>
 
-            <div className="pt-12 lg:pt-24">
-              <p className="text-xs sm:text-sm text-[#475569] font-normal leading-relaxed max-w-md">
-                We believe that precision engineering is measured not only in microns — but in meaning and reliability. These numbers reflect the care, consistency, and vision we bring into every project.
-              </p>
+                <div className="pt-12 lg:pt-24 flex items-end justify-between gap-4">
+                  <p className="text-xs sm:text-sm text-[#475569] font-normal leading-relaxed max-w-md">
+                    We believe that precision engineering is measured not only in microns — but in meaning and reliability. These numbers reflect the care, consistency, and vision we bring into every project.
+                  </p>
+                  <span className="text-[11px] font-mono tracking-widest text-[#00A6FB] uppercase font-semibold hidden sm:inline-flex items-center gap-1 shrink-0 group-hover:translate-x-1 transition-transform">
+                    Flip ↻
+                  </span>
+                </div>
+              </div>
+
+              {/* Back Face: Signature Blue Background & Detailed Architecture Scope */}
+              <div className="flip-card-back bg-gradient-to-br from-[#00A6FB] via-[#0091e6] to-[#005f9e] text-white p-8 sm:p-12 md:p-14 lg:p-16 flex flex-col justify-between shadow-2xl overflow-hidden">
+                <div>
+                  <div className="flex items-center justify-between pb-4 border-b border-white/20">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-[11px] font-semibold tracking-wider uppercase text-white border border-white/20">
+                      <Sparkles className="w-3.5 h-3.5 text-cyan-200" />
+                      Precision Philosophy
+                    </span>
+                    <span className="text-white/70 font-mono text-xs tracking-widest uppercase">
+                      HITECH CORE
+                    </span>
+                  </div>
+
+                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-tight mt-6 mb-3">
+                    From First Concept to Industrial Reality
+                  </h3>
+
+                  <p className="text-xs sm:text-sm text-blue-50/95 leading-relaxed font-normal mb-6">
+                    Every specification is engineered through advanced CAD analysis, 5-axis CNC machining, 12kW fiber laser cutting, and micro-tolerance verification. We engineer spaces, structural enclosures, and components built for uncompromising longevity.
+                  </p>
+
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    <span className="px-3 py-1.5 rounded-lg bg-white/15 backdrop-blur-sm text-xs font-medium text-white border border-white/20">
+                      ±0.005mm Tolerances
+                    </span>
+                    <span className="px-3 py-1.5 rounded-lg bg-white/15 backdrop-blur-sm text-xs font-medium text-white border border-white/20">
+                      ISO 9001:2015 Assured
+                    </span>
+                    <span className="px-3 py-1.5 rounded-lg bg-white/15 backdrop-blur-sm text-xs font-medium text-white border border-white/20">
+                      End-to-End Turnkey DFM
+                    </span>
+                  </div>
+                </div>
+
+                <div className="pt-6 border-t border-white/20 flex items-center justify-between text-xs text-blue-100 font-medium">
+                  <span>Engineered with Zero Compromise</span>
+                  <div className="flex items-center gap-1 text-white font-semibold">
+                    <span>Explore Fleet</span>
+                    <ArrowUpRight className="w-4 h-4 text-white" />
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 
           {/* Right Column: 4-Quadrant Metric Grid */}
           <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2">
             
-            {/* Quadrant 1: Top-Left */}
-            <div className="p-8 sm:p-10 md:p-14 lg:p-16 border-b border-r-0 sm:border-r border-gray-300 flex flex-col justify-end min-h-[220px] sm:min-h-[260px] lg:min-h-[290px]">
-              <div className="flex items-end justify-between gap-4 w-full">
-                <span className="text-xs sm:text-sm text-[#475569] font-normal leading-snug max-w-[160px]">
-                  Completed residential and commercial projects
-                </span>
-                <span className="text-6xl sm:text-7xl lg:text-8xl font-normal text-[#121212] tracking-tighter leading-none">
-                  28
-                </span>
+            {/* Quadrant 1: Top-Left (28 Projects - 3D Flip Card) */}
+            <div className="flip-card-container group cursor-pointer relative border-b border-r-0 sm:border-r border-gray-300 min-h-[240px] sm:min-h-[270px] lg:min-h-[300px]">
+              <div className="flip-card-inner">
+                
+                {/* Front Face */}
+                <div className="flip-card-front relative w-full h-full p-8 sm:p-10 md:p-12 lg:p-14 bg-white flex flex-col justify-end">
+                  <span className="text-[10px] font-mono tracking-widest text-[#00A6FB] uppercase font-semibold absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    Turn ↻
+                  </span>
+                  <div className="flex items-end justify-between gap-4 w-full">
+                    <span className="text-xs sm:text-sm text-[#475569] font-normal leading-snug max-w-[160px]">
+                      Completed residential and commercial projects
+                    </span>
+                    <span className="text-6xl sm:text-7xl lg:text-8xl font-normal text-[#121212] tracking-tighter leading-none">
+                      28
+                    </span>
+                  </div>
+                </div>
+
+                {/* Back Face: Signature Blue */}
+                <div className="flip-card-back bg-gradient-to-br from-[#00A6FB] to-[#005f9e] text-white p-6 sm:p-8 md:p-10 flex flex-col justify-between shadow-xl">
+                  <div className="flex items-center justify-between pb-2 border-b border-white/20">
+                    <span className="text-[11px] font-mono uppercase tracking-widest text-blue-100 font-semibold">
+                      01 / Proven Track Record
+                    </span>
+                    <CheckCircle2 className="w-4 h-4 text-cyan-200" />
+                  </div>
+
+                  <div className="my-auto py-2">
+                    <h4 className="text-xl sm:text-2xl font-bold tracking-tight text-white mb-2">
+                      28+ Major Deployments
+                    </h4>
+                    <p className="text-xs sm:text-sm text-blue-50/95 leading-relaxed">
+                      Turnkey structural frameworks, facade assemblies, robotic enclosures, and industrial production lines delivered with 100% on-time completion.
+                    </p>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-3 border-t border-white/15 text-[11px] text-blue-100 font-semibold tracking-wider uppercase">
+                    <span>100% Sign-Off</span>
+                    <span>Industrial Scope</span>
+                  </div>
+                </div>
+
               </div>
             </div>
 
-            {/* Quadrant 2: Top-Right */}
-            <div className="p-8 sm:p-10 md:p-14 lg:p-16 border-b border-gray-300 flex flex-col justify-end min-h-[220px] sm:min-h-[260px] lg:min-h-[290px]">
-              <div className="flex items-end justify-between gap-4 w-full">
-                <span className="text-xs sm:text-sm text-[#475569] font-normal leading-snug max-w-[160px]">
-                  Years of architectural practice
-                </span>
-                <span className="text-6xl sm:text-7xl lg:text-8xl font-normal text-[#121212] tracking-tighter leading-none">
-                  12
-                </span>
+            {/* Quadrant 2: Top-Right (12 Years - 3D Flip Card) */}
+            <div className="flip-card-container group cursor-pointer relative border-b border-gray-300 min-h-[240px] sm:min-h-[270px] lg:min-h-[300px]">
+              <div className="flip-card-inner">
+                
+                {/* Front Face */}
+                <div className="flip-card-front relative w-full h-full p-8 sm:p-10 md:p-12 lg:p-14 bg-white flex flex-col justify-end">
+                  <span className="text-[10px] font-mono tracking-widest text-[#00A6FB] uppercase font-semibold absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    Turn ↻
+                  </span>
+                  <div className="flex items-end justify-between gap-4 w-full">
+                    <span className="text-xs sm:text-sm text-[#475569] font-normal leading-snug max-w-[160px]">
+                      Years of architectural practice
+                    </span>
+                    <span className="text-6xl sm:text-7xl lg:text-8xl font-normal text-[#121212] tracking-tighter leading-none">
+                      12
+                    </span>
+                  </div>
+                </div>
+
+                {/* Back Face: Signature Blue */}
+                <div className="flip-card-back bg-gradient-to-br from-[#00A6FB] to-[#005f9e] text-white p-6 sm:p-8 md:p-10 flex flex-col justify-between shadow-xl">
+                  <div className="flex items-center justify-between pb-2 border-b border-white/20">
+                    <span className="text-[11px] font-mono uppercase tracking-widest text-blue-100 font-semibold">
+                      02 / Industry Mastery
+                    </span>
+                    <ShieldCheck className="w-4 h-4 text-cyan-200" />
+                  </div>
+
+                  <div className="my-auto py-2">
+                    <h4 className="text-xl sm:text-2xl font-bold tracking-tight text-white mb-2">
+                      12+ Years Precision Legacy
+                    </h4>
+                    <p className="text-xs sm:text-sm text-blue-50/95 leading-relaxed">
+                      Over a decade mastering heavy-duty laser profiling, multi-axis milling, metallurgical treatment, and zero-defect quality management.
+                    </p>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-3 border-t border-white/15 text-[11px] text-blue-100 font-semibold tracking-wider uppercase">
+                    <span>25,000+ Machine Hours</span>
+                    <span>Expertise</span>
+                  </div>
+                </div>
+
               </div>
             </div>
 
-            {/* Quadrant 3: Bottom-Left */}
-            <div className="p-8 sm:p-10 md:p-14 lg:p-16 border-b sm:border-b-0 border-r-0 sm:border-r border-gray-300 flex flex-col justify-end min-h-[220px] sm:min-h-[260px] lg:min-h-[290px]">
-              <div className="flex items-end justify-between gap-4 w-full">
-                <span className="text-xs sm:text-sm text-[#475569] font-normal leading-snug max-w-[160px]">
-                  Countries with built spaces
-                </span>
-                <span className="text-6xl sm:text-7xl lg:text-8xl font-normal text-[#121212] tracking-tighter leading-none">
-                  6
-                </span>
+            {/* Quadrant 3: Bottom-Left (6 Countries - 3D Flip Card) */}
+            <div className="flip-card-container group cursor-pointer relative border-b sm:border-b-0 border-r-0 sm:border-r border-gray-300 min-h-[240px] sm:min-h-[270px] lg:min-h-[300px]">
+              <div className="flip-card-inner">
+                
+                {/* Front Face */}
+                <div className="flip-card-front relative w-full h-full p-8 sm:p-10 md:p-12 lg:p-14 bg-white flex flex-col justify-end">
+                  <span className="text-[10px] font-mono tracking-widest text-[#00A6FB] uppercase font-semibold absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    Turn ↻
+                  </span>
+                  <div className="flex items-end justify-between gap-4 w-full">
+                    <span className="text-xs sm:text-sm text-[#475569] font-normal leading-snug max-w-[160px]">
+                      Countries with built spaces
+                    </span>
+                    <span className="text-6xl sm:text-7xl lg:text-8xl font-normal text-[#121212] tracking-tighter leading-none">
+                      6
+                    </span>
+                  </div>
+                </div>
+
+                {/* Back Face: Signature Blue */}
+                <div className="flip-card-back bg-gradient-to-br from-[#00A6FB] to-[#005f9e] text-white p-6 sm:p-8 md:p-10 flex flex-col justify-between shadow-xl">
+                  <div className="flex items-center justify-between pb-2 border-b border-white/20">
+                    <span className="text-[11px] font-mono uppercase tracking-widest text-blue-100 font-semibold">
+                      03 / Global Supply Chain
+                    </span>
+                    <Zap className="w-4 h-4 text-cyan-200" />
+                  </div>
+
+                  <div className="my-auto py-2">
+                    <h4 className="text-xl sm:text-2xl font-bold tracking-tight text-white mb-2">
+                      6 International Markets
+                    </h4>
+                    <p className="text-xs sm:text-sm text-blue-50/95 leading-relaxed">
+                      Exporting certified precision assemblies, specialized jigs, and architectural metalwork adhering to stringent international standards.
+                    </p>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-3 border-t border-white/15 text-[11px] text-blue-100 font-semibold tracking-wider uppercase">
+                    <span>Export-Grade Certified</span>
+                    <span>Global Reach</span>
+                  </div>
+                </div>
+
               </div>
             </div>
 
-            {/* Quadrant 4: Bottom-Right */}
-            <div className="p-8 sm:p-10 md:p-14 lg:p-16 flex flex-col justify-end min-h-[220px] sm:min-h-[260px] lg:min-h-[290px]">
-              <div className="flex items-end justify-between gap-4 w-full">
-                <span className="text-xs sm:text-sm text-[#475569] font-normal leading-snug max-w-[160px]">
-                  Custom concepts for every client
-                </span>
-                <span className="text-6xl sm:text-7xl lg:text-8xl font-normal text-[#121212] tracking-tighter leading-none">
-                  100
-                </span>
+            {/* Quadrant 4: Bottom-Right (100 Concepts - 3D Flip Card) */}
+            <div className="flip-card-container group cursor-pointer relative min-h-[240px] sm:min-h-[270px] lg:min-h-[300px]">
+              <div className="flip-card-inner">
+                
+                {/* Front Face */}
+                <div className="flip-card-front relative w-full h-full p-8 sm:p-10 md:p-12 lg:p-14 bg-white flex flex-col justify-end">
+                  <span className="text-[10px] font-mono tracking-widest text-[#00A6FB] uppercase font-semibold absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    Turn ↻
+                  </span>
+                  <div className="flex items-end justify-between gap-4 w-full">
+                    <span className="text-xs sm:text-sm text-[#475569] font-normal leading-snug max-w-[160px]">
+                      Custom concepts for every client
+                    </span>
+                    <span className="text-6xl sm:text-7xl lg:text-8xl font-normal text-[#121212] tracking-tighter leading-none">
+                      100
+                    </span>
+                  </div>
+                </div>
+
+                {/* Back Face: Signature Blue */}
+                <div className="flip-card-back bg-gradient-to-br from-[#00A6FB] to-[#005f9e] text-white p-6 sm:p-8 md:p-10 flex flex-col justify-between shadow-xl">
+                  <div className="flex items-center justify-between pb-2 border-b border-white/20">
+                    <span className="text-[11px] font-mono uppercase tracking-widest text-blue-100 font-semibold">
+                      04 / Bespoke DFM
+                    </span>
+                    <Target className="w-4 h-4 text-cyan-200" />
+                  </div>
+
+                  <div className="my-auto py-2">
+                    <h4 className="text-xl sm:text-2xl font-bold tracking-tight text-white mb-2">
+                      100% Tailored Engineering
+                    </h4>
+                    <p className="text-xs sm:text-sm text-blue-50/95 leading-relaxed">
+                      Zero generic compromises. Every fixture, frame, and architectural profile is custom modeled and validated specifically for client requirements.
+                    </p>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-3 border-t border-white/15 text-[11px] text-blue-100 font-semibold tracking-wider uppercase">
+                    <span>Bespoke Prototyping</span>
+                    <span>Tailored DFM</span>
+                  </div>
+                </div>
+
               </div>
             </div>
 
