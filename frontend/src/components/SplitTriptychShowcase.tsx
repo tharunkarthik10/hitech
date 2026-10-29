@@ -13,9 +13,23 @@ export default function SplitTriptychShowcase({
 }: SplitTriptychShowcaseProps) {
   return (
     <section
-      id="facility-feature"
+      id="infrastructure"
       className={`w-full pt-4 pb-8 sm:pb-12 ${className}`}
     >
+      {/* Section Header: Our Infrastructure */}
+      <div className="space-y-4 mb-8 sm:mb-10 max-w-3xl">
+        <span className="text-sm font-medium tracking-tight text-[#64748b]">
+          ✦ Section 06 — Our Infrastructure
+        </span>
+        <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-[#121212] leading-[1.12]">
+          Our Infrastructure.<br />
+          <span className="font-normal text-[#64748b]">Built For Heavy Precision & Serial Scale.</span>
+        </h2>
+        <p className="text-sm sm:text-base text-[#475569] font-normal leading-relaxed max-w-2xl">
+          Multi-bay manufacturing units equipped with robotic welding cells, high-tonnage gantry beds, and serialized digital inspection stations engineered for uninterrupted OEM output.
+        </p>
+      </div>
+
       {/* 3-Column Split Grid with 90% reduced gap (2px - 3px hairline slit) */}
       <div className="rounded-2xl sm:rounded-[26px] overflow-hidden border border-gray-200/90 shadow-lg bg-[#f8fafc]">
         <div className="grid grid-cols-3 gap-[2px] sm:gap-[3px] bg-[#f8fafc]">
@@ -23,7 +37,7 @@ export default function SplitTriptychShowcase({
           <div className="overflow-hidden bg-black aspect-[341/567] relative">
             <img
               src={slice1}
-              alt="Facility Welding Cell - Left Section"
+              alt="Our Infrastructure - Welding Bay Left Section"
               className="w-full h-full object-cover block"
               loading="lazy"
             />
@@ -34,7 +48,7 @@ export default function SplitTriptychShowcase({
           <div className="overflow-hidden bg-black aspect-[341/567] relative">
             <img
               src={slice2}
-              alt="Facility Welding Cell - Center Section"
+              alt="Our Infrastructure - Welding Bay Center Section"
               className="w-full h-full object-cover block"
               loading="lazy"
             />
@@ -45,7 +59,7 @@ export default function SplitTriptychShowcase({
           <div className="overflow-hidden bg-black aspect-[342/567] relative">
             <img
               src={slice3}
-              alt="Facility Welding Cell - Right Section"
+              alt="Our Infrastructure - Welding Bay Right Section"
               className="w-full h-full object-cover block"
               loading="lazy"
             />
