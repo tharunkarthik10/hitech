@@ -105,10 +105,8 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
           --btn-ink: #ffffff;
           --line: #e6e8ee;
           width: 100%;
-          max-width: 1260px;
-          margin: 0 auto;
-          padding: 0;
           border-top: 1px solid var(--line);
+          padding: 0;
           overflow: visible;
           position: relative;
         }
@@ -125,6 +123,9 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
         .facility-archive-stage {
           position: relative;
           width: 100%;
+          max-width: 1260px;
+          margin-left: 0;
+          margin-right: auto;
           aspect-ratio: 1.0230;
           container-type: inline-size;
         }
