@@ -6,6 +6,7 @@ import {
   ChevronLeft, ChevronRight
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import DynamicConduitWorkflow from '../components/DynamicConduitWorkflow';
 
 /**
  * THREE UNIFIED TYPOGRAPHIC STYLES (MATCHING USER'S EXACT REFERENCE):
@@ -18,29 +19,6 @@ export default function Production() {
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
   const [quoteSubject, setQuoteSubject] = useState("");
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
-  
-  // Section 4 Step State with Swipe Support
-  const [activeStep, setActiveStep] = useState(0);
-  const [stepDirection, setStepDirection] = useState(0);
-
-  const handleStepChange = (newStep: number) => {
-    setStepDirection(newStep > activeStep ? 1 : -1);
-    setActiveStep(newStep);
-  };
-
-  const handleSwipePrev = () => {
-    if (activeStep > 0) {
-      setStepDirection(-1);
-      setActiveStep(prev => prev - 1);
-    }
-  };
-
-  const handleSwipeNext = () => {
-    if (activeStep < steps.length - 1) {
-      setStepDirection(1);
-      setActiveStep(prev => prev + 1);
-    }
-  };
 
   // Section 3 Interactive Showcase Slider with Swipe Support
   const showcaseSlides = [
@@ -79,33 +57,6 @@ export default function Production() {
     setIsQuoteModalOpen(true);
   };
 
-  // Section 4 Step Data for Production & Assembly
-  const steps = [
-    {
-      number: "01",
-      title: "Consultation & Line Balancing",
-      desc: "We analyze your Bill of Materials (BOM), 3D CAD assemblies, cycle times, and volume targets. Our manufacturing engineers simulate reach envelopes, design lean takt-time workflows, and balance operator workstations to maximize throughput and minimize handling bottlenecks.",
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-      number: "02",
-      title: "Tooling Setup & Poka-Yoke Proofing",
-      desc: "Custom ergonomic assembly jigs, automated pneumatic clamps, and optical sensor barriers are integrated into the cell. Digital torque drivers and automatic screw feeders are calibrated to store tightening data for every critical fastener.",
-      image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-      number: "03",
-      title: "Pilot Run & First Article Inspection (FAI)",
-      desc: "Initial pilot batches undergo full First Article Inspection (FAI). We conduct optical dimensional validation, electrical continuity checks, and mechanical stress verification to benchmark repeatability before serial production approval.",
-      image: "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-      number: "04",
-      title: "Multi-Shift Serial Assembly & Dispatch",
-      desc: "High-speed conveyor cells and articulated robotic arms run continuous shifts under lean Kanban parts replenishment. Every finished product undergoes 100% functional load testing, barcode labeling, protective packaging, and global export crating.",
-      image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800"
-    }
-  ];
 
   return (
     <main className="w-full min-h-screen bg-white text-[#121212] font-sans pt-20 sm:pt-24 pb-20 selection:bg-[#121212] selection:text-white overflow-x-hidden">
@@ -478,158 +429,9 @@ export default function Production() {
         </section>
 
         {/* ========================================================================= */}
-        {/* 04. "HOW IT WORKS (STEP BY STEP)" (Large Process Card Container) */}
+        {/* 04. "HOW IT WORKS (STEP BY STEP)" - DYNAMIC CONDUIT WORKFLOW */}
         {/* ========================================================================= */}
-        <motion.section 
-          id="process"
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="rounded-[32px] sm:rounded-[40px] bg-[#f0f2f5] border border-gray-200/80 p-6 sm:p-10 lg:p-12 space-y-8"
-        >
-          {/* Header Row */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start">
-            <div className="lg:col-span-4">
-              <span className="text-sm font-medium tracking-tight text-[#64748b]">
-                ✦ How it Works (Step by Step)
-              </span>
-            </div>
-
-            <div className="lg:col-span-8 space-y-1">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#121212] leading-[1.18]">
-                We deliver an integrated assembly process from feasibility to serial launch.
-              </h2>
-              <div className="text-2xl sm:text-3xl md:text-4xl font-normal tracking-tight text-[#64748b] leading-[1.18]">
-                Each workstation is designed for ergonomic efficiency and verified zero-defect quality.
-              </div>
-            </div>
-          </div>
-
-          {/* Process Step Card with Clean Simple Transition */}
-          <div className="relative overflow-hidden select-none">
-            <AnimatePresence mode="wait" custom={stepDirection}>
-              <motion.div
-                key={activeStep}
-                custom={stepDirection}
-                initial={{ 
-                  opacity: 0, 
-                  x: stepDirection >= 0 ? 35 : -35
-                }}
-                animate={{ 
-                  opacity: 1, 
-                  x: 0
-                }}
-                exit={{ 
-                  opacity: 0, 
-                  x: stepDirection >= 0 ? -35 : 35
-                }}
-                transition={{ 
-                  duration: 0.35,
-                  ease: [0.25, 1, 0.5, 1]
-                }}
-                drag="x"
-                dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={0.15}
-                onDragEnd={(_, info) => {
-                  if (info.offset.x < -35 || info.velocity.x < -200) {
-                    handleSwipeNext();
-                  } else if (info.offset.x > 35 || info.velocity.x > 200) {
-                    handleSwipePrev();
-                  }
-                }}
-                className="rounded-3xl bg-white border border-gray-200/70 p-6 sm:p-8 lg:p-10 shadow-xs grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-10 items-center cursor-grab active:cursor-grabbing touch-pan-y relative overflow-hidden"
-              >
-                {/* Step Left: Photo & Badge */}
-                <div className="md:col-span-6 rounded-2xl overflow-hidden aspect-[4/3] bg-gray-100 border border-gray-100 relative group">
-                  <img 
-                    src={steps[activeStep].image} 
-                    alt={steps[activeStep].title} 
-                    className="w-full h-full object-cover pointer-events-none transition-transform duration-500 ease-out group-hover:scale-105"
-                  />
-                  <div className="absolute top-4 left-4 bg-black/75 backdrop-blur-md text-white px-3.5 py-1.5 rounded-full text-xs font-medium tracking-tight shadow-md">
-                    Step {steps[activeStep].number} of 0{steps.length}
-                  </div>
-                </div>
-
-                {/* Step Right: Number & Description */}
-                <div className="md:col-span-6 space-y-3 pointer-events-auto">
-                  <div className="flex items-center justify-between">
-                    <span className="text-3xl sm:text-4xl font-bold tracking-tight text-[#121212]">
-                      {steps[activeStep].number}
-                    </span>
-                    <span className="text-xs font-medium text-[#64748b] bg-gray-100 px-3 py-1 rounded-full hidden sm:inline-block">
-                      Swipe left / right to navigate
-                    </span>
-                  </div>
-
-                  <h3 className="text-lg sm:text-xl font-medium tracking-tight text-[#64748b]">
-                    {steps[activeStep].title}
-                  </h3>
-
-                  <p className="text-sm sm:text-base text-[#475569] font-normal leading-relaxed">
-                    {steps[activeStep].desc}
-                  </p>
-
-                  <div className="pt-3 flex flex-wrap items-center gap-3">
-                    <button
-                      onClick={() => openQuoteModal(`Assembly Process Consultation: ${steps[activeStep].title}`)}
-                      className="px-5 py-2.5 rounded-full bg-[#121212] hover:bg-black text-white font-medium text-sm tracking-tight transition-all shadow-xs flex items-center gap-2 cursor-pointer active:scale-95"
-                    >
-                      <span>Initiate This Step</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
-
-                    {/* Step Navigation Controls (Prev/Next Arrows + Dots) */}
-                    <div className="flex items-center gap-2 ml-auto">
-                      <button
-                        onClick={handleSwipePrev}
-                        disabled={activeStep === 0}
-                        aria-label="Previous step"
-                        className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-700 hover:bg-black hover:text-white hover:border-black disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer"
-                      >
-                        <ChevronLeft className="w-4 h-4" />
-                      </button>
-
-                      {steps.map((_, i) => (
-                        <button
-                          key={i}
-                          onClick={() => handleStepChange(i)}
-                          className={`h-3 rounded-full transition-all duration-300 cursor-pointer ${
-                            activeStep === i ? 'bg-black w-7' : 'bg-gray-300 hover:bg-gray-400 w-3'
-                          }`}
-                          title={`Step ${i + 1}`}
-                        />
-                      ))}
-
-                      <button
-                        onClick={handleSwipeNext}
-                        disabled={activeStep === steps.length - 1}
-                        aria-label="Next step"
-                        className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-700 hover:bg-black hover:text-white hover:border-black disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer"
-                      >
-                        <ChevronRight className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Step Pagination Line */}
-          <div className="flex items-center justify-between text-sm text-[#64748b] font-medium pt-2">
-            <span>01</span>
-            <div className="w-full mx-4 h-[1px] bg-gray-300 relative">
-              <div 
-                className="absolute left-0 top-0 h-full bg-gray-800 transition-all duration-300"
-                style={{ width: `${((activeStep + 1) / steps.length) * 100}%` }}
-              />
-            </div>
-            <span>04</span>
-          </div>
-
-        </motion.section>
+        <DynamicConduitWorkflow openQuoteModal={openQuoteModal} />
 
         {/* ========================================================================= */}
         {/* 05. EDITORIAL ASYMMETRIC GALLERY (NOIR ARCHIVE TEMPLATE) */}
