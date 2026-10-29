@@ -1,5 +1,4 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
 
 interface ManufacturingWorkflowInfographicProps {
   className?: string;
@@ -9,6 +8,8 @@ interface ManufacturingWorkflowInfographicProps {
 interface WorkflowStageData {
   step: string;
   title: string;
+  rangeStart: number;
+  rangeEnd: number;
   desc1: string;
   desc2?: string;
 }
@@ -17,28 +18,38 @@ const STAGES: WorkflowStageData[] = [
   {
     step: "01",
     title: "Brief",
+    rangeStart: 0,
+    rangeEnd: 0.18,
     desc1: "Initial customer RFQ review, 3D CAD analysis, geometric dimensioning and tolerance (GD&T) alignment, and serialized volume targets.",
   },
   {
     step: "02",
     title: "Research",
+    rangeStart: 0.18,
+    rangeEnd: 0.35,
     desc1: "Certified metallurgy selection, heat-treat scheduling, tool path simulations, and raw stock supply chain mapping.",
   },
   {
     step: "03",
     title: "Study",
+    rangeStart: 0.35,
+    rangeEnd: 0.55,
     desc1: "Design for Manufacturability (DFM) audits, fixture engineering, robotic cell line-balancing, and cycle time reduction.",
     desc2: "Digital twin feasibility and FEA stress testing ensure zero unforced engineering change orders.",
   },
   {
     step: "04",
     title: "Proposals",
+    rangeStart: 0.55,
+    rangeEnd: 0.80,
     desc1: "Comprehensive turnkey quotation, serialized batch pricing, transparent lead-time SLA milestones, and prototyping options.",
     desc2: "First-article inspection (FAI) protocols and customized Kanban staging buffers tailored to client intake schedules.",
   },
   {
     step: "05",
     title: "Delivery",
+    rangeStart: 0.80,
+    rangeEnd: 1.0,
     desc1: "100% CMM coordinate validation, ultrasonic cleaning, and cleanroom protective vacuum packaging.",
     desc2: "JIT serialized delivery directly to OEM assembly lines with full metallurgical test certification reports.",
   },
@@ -48,6 +59,37 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
   className = "",
   openQuoteModal,
 }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Target and smoothed cursor progress [0.0 - 1.0] across the flowchart
+  const [targetProgress, setTargetProgress] = useState<number>(0.28);
+  const [cursorProgress, setCursorProgress] = useState<number>(0.28);
+  const [isHovering, setIsHovering] = useState<boolean>(false);
+
+  // Smooth lerp physics: tracks cursor movements organically with momentum
+  useEffect(() => {
+    let animId: number;
+    const update = () => {
+      setCursorProgress((prev) => {
+        const diff = targetProgress - prev;
+        if (Math.abs(diff) < 0.0008) return targetProgress;
+        return prev + diff * 0.12; // Natural spring damping
+      });
+      animId = requestAnimationFrame(update);
+    };
+    animId = requestAnimationFrame(update);
+    return () => cancelAnimationFrame(animId);
+  }, [targetProgress]);
+
+  // Handle cursor interaction across the flowchart area
+  const handlePointerMove = (clientX: number) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const rawProgress = (clientX - rect.left) / rect.width;
+    const clamped = Math.max(0.04, Math.min(0.99, rawProgress));
+    setTargetProgress(clamped);
+  };
+
   // Continuous fluid conduit path coordinates (20% enlarged canvas)
   const conduitD = `
     M 90, 200
@@ -71,44 +113,24 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
     C 920, 595  990, 550  990, 470
   `;
 
+  // Pathlength normalized to 1000 for exact cursor scrubbing
+  const normalizedLen = 1000;
+  const traveledOffset = normalizedLen - cursorProgress * normalizedLen;
+  const tracerOffset = -(cursorProgress * (normalizedLen - 50));
+
   return (
     <section
       id="workflow"
       className={`w-full py-8 sm:py-14 text-[#121212] overflow-hidden ${className}`}
     >
-      {/* Precision CSS animations with exact mathematically seamless loop periods */}
       <style>{`
-        @keyframes seamlessConduitPulse {
-          from {
-            stroke-dashoffset: 0;
-          }
-          to {
-            stroke-dashoffset: -400;
-          }
-        }
-        @keyframes seamlessFeedbackFlow {
-          from {
-            stroke-dashoffset: 0;
-          }
-          to {
-            stroke-dashoffset: -32;
-          }
-        }
-        .wf-seamless-pulse {
-          stroke-dasharray: 20 180;
-          animation: seamlessConduitPulse 6s linear infinite;
-        }
-        .wf-seamless-feedback {
-          stroke-dasharray: 8 8;
-          animation: seamlessFeedbackFlow 2s linear infinite;
-        }
-        .wf-node-interactive {
-          transition: transform 0.22s ease-out, filter 0.22s ease-out;
+        .wf-node-hover {
+          transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.25s ease-out;
           cursor: pointer;
         }
-        .wf-node-interactive:hover {
-          transform: scale(1.08);
-          filter: drop-shadow(0 4px 12px rgba(230, 57, 46, 0.45));
+        .wf-node-hover:hover {
+          transform: scale(1.09);
+          filter: drop-shadow(0 6px 14px rgba(230, 57, 46, 0.45));
         }
       `}</style>
 
@@ -125,7 +147,7 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
             <span className="font-normal text-[#64748b]">Contract Manufacturing Process &amp; Lifecycle.</span>
           </h2>
           <p className="text-xs sm:text-sm md:text-base text-[#475569] font-normal leading-relaxed pt-1">
-            A disciplined, five-stage serialized pipeline engineered for rapid prototype validation, zero-defect machining, and scheduled JIT delivery.
+            Move your cursor across the flow to trace the precision engineering lifecycle from initial RFQ telemetry to automated robotic assembly and coordinate-validated delivery.
           </p>
         </div>
 
@@ -141,9 +163,21 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
       </div>
 
       {/* ========================================================================= */}
-      {/* 2. DESKTOP / TABLET INFOGRAPHIC (+20% ENLARGED, PRECISE & GLITCH-FREE)    */}
+      {/* 2. CURSOR-DRIVEN INTERACTIVE INFOGRAPHIC (DEPENDS DIRECTLY ON CURSOR)     */}
       {/* ========================================================================= */}
-      <div className="w-full hidden md:block select-none">
+      <div
+        ref={containerRef}
+        onMouseMove={(e) => {
+          setIsHovering(true);
+          handlePointerMove(e.clientX);
+        }}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+        onTouchMove={(e) => {
+          if (e.touches[0]) handlePointerMove(e.touches[0].clientX);
+        }}
+        className="w-full hidden md:block select-none relative cursor-crosshair group"
+      >
         <svg
           viewBox="0 0 1520 740"
           className="w-full h-auto overflow-visible"
@@ -177,11 +211,12 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
               <path d="M 0 2 L 10 6 L 0 10 z" fill="#718E85" />
             </marker>
 
-            {/* Linear Glow for dynamic pulse tracer */}
-            <linearGradient id="conduitGlow" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#8EF3C5" stopOpacity="0" />
-              <stop offset="50%" stopColor="#FFFFFF" stopOpacity="0.9" />
-              <stop offset="100%" stopColor="#8EF3C5" stopOpacity="0" />
+            {/* Dynamic Cursor Tracer Beam Glow */}
+            <linearGradient id="cursorTracerGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#5F7D74" stopOpacity="0.1" />
+              <stop offset="40%" stopColor="#8EF3C5" stopOpacity="0.9" />
+              <stop offset="70%" stopColor="#FFFFFF" stopOpacity="1" />
+              <stop offset="100%" stopColor="#8EF3C5" stopOpacity="0.2" />
             </linearGradient>
           </defs>
 
@@ -195,103 +230,200 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
             strokeWidth="2.8"
           />
 
-          {/* 2. Main Continuous Fluid Conduit Base Path */}
-          <motion.path
-            initial={{ pathLength: 0.9 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
+          {/* 2. Base Idle Conduit Path (Subtle guide track) */}
+          <path
             d={conduitD}
             stroke="#5F7D74"
-            strokeWidth="3.6"
+            strokeWidth="3.2"
             strokeLinecap="round"
+            strokeOpacity="0.38"
             fill="none"
             markerEnd="url(#wf-terminal-arrow)"
           />
 
-          {/* 3. Smooth, Mathematically Seamless Traveling Energy Signal */}
+          {/* 3. CURSOR-DRIVEN TRAVELED PATH (Progressively drawn exactly up to cursor) */}
           <path
             d={conduitD}
-            stroke="url(#conduitGlow)"
-            strokeWidth="4.2"
+            pathLength={normalizedLen}
+            stroke="#5F7D74"
+            strokeWidth="3.8"
             strokeLinecap="round"
+            strokeDasharray={normalizedLen}
+            strokeDashoffset={traveledOffset}
             fill="none"
-            className="wf-seamless-pulse pointer-events-none"
+            className="transition-all duration-75 ease-out"
           />
 
-          {/* 4. Proposals Loop Dashed Feedback Route */}
+          {/* 4. CURSOR-FOLLOWING ENERGY BEAM (Glides directly under user mouse) */}
+          <path
+            d={conduitD}
+            pathLength={normalizedLen}
+            stroke="url(#cursorTracerGlow)"
+            strokeWidth="5"
+            strokeLinecap="round"
+            strokeDasharray="42 1000"
+            strokeDashoffset={tracerOffset}
+            fill="none"
+            className="pointer-events-none transition-all duration-75 ease-out"
+          />
+
+          {/* 5. Cursor-Driven Proposals Loop Dashed Feedback Route */}
           <path
             d={feedbackLoopD}
             stroke="#718E85"
             strokeWidth="2.6"
+            strokeDasharray="8 8"
+            strokeDashoffset={-cursorProgress * 160}
             fill="none"
-            className="wf-seamless-feedback"
             markerEnd="url(#wf-loop-arrow)"
           />
 
-          {/* 5. Walking Silhouette Figure on Apex (Stable, Crisp Vector Artwork) */}
-          <g transform="translate(820, 148)">
-            {/* Perspective Ground Shadow */}
+          {/* ========================================================================= */}
+          {/* 6. PRECISION INDUSTRIAL MACHINE ON APEX (REPLACES THE PERSON)            */}
+          {/* Multi-Axis Robotic CNC Machining & Laser Center Vector Silhouette         */}
+          {/* ========================================================================= */}
+          <g transform="translate(805, 96)">
+            {/* Ground Perspective Cast Shadow along Arch Curve */}
             <ellipse
-              cx="54"
-              cy="3"
-              rx="54"
-              ry="4.5"
-              transform="rotate(5, 54, 3)"
+              cx="72"
+              cy="55"
+              rx="64"
+              ry="5.2"
+              transform="rotate(4, 72, 55)"
               fill="#121212"
-              opacity="0.88"
+              opacity="0.85"
             />
 
-            {/* Silhouette Figure */}
-            <g fill="#121212" transform="scale(1.2)">
-              {/* Head */}
-              <circle cx="16" cy="-44" r="4.8" />
-              {/* Torso & Suit Coat */}
-              <path d="M 11 -37 C 13 -39, 19 -39, 21 -37 L 22 -19 L 11 -19 Z" />
-              {/* Arms */}
-              <path d="M 12 -34 L 6 -20" stroke="#121212" strokeWidth="2.5" strokeLinecap="round" />
-              <path d="M 20 -34 L 26 -21" stroke="#121212" strokeWidth="2.5" strokeLinecap="round" />
-              {/* Trailing Leg */}
-              <path d="M 13 -19 L 9 -3 L 5 13" stroke="#121212" strokeWidth="2.8" strokeLinecap="round" />
-              {/* Forward Stride Leg */}
-              <path d="M 19 -19 L 24 -2 L 31 14" stroke="#121212" strokeWidth="2.8" strokeLinecap="round" />
+            {/* Industrial CNC Robotic Machine Vector Silhouette */}
+            <g fill="#121212">
+              {/* Heavy Mounting Base Bed */}
+              <rect x="24" y="47" width="50" height="7" rx="2" />
+              <rect x="30" y="42" width="38" height="5" rx="1.5" />
+
+              {/* Rotary Turret Housing */}
+              <rect x="33" y="27" width="24" height="15" rx="3" />
+              <circle cx="45" cy="25" r="7.5" />
+
+              {/* Articulated Lower Arm (Heavy Structural Profile) */}
+              <path d="M 45 25 L 65 -2 L 73 2 L 51 30 Z" />
+              <circle cx="69" cy="0" r="6.5" />
+
+              {/* Articulated Forearm */}
+              <path d="M 69 0 L 89 18 L 85 23 L 65 5 Z" />
+              <circle cx="87" cy="20.5" r="5.5" />
+
+              {/* 5-Axis Spindle Toolhead */}
+              <rect
+                x="81"
+                y="24"
+                width="13"
+                height="16"
+                rx="2"
+                transform="rotate(-18, 87, 32)"
+              />
+
+              {/* Precision Tool Bit / Laser Cutting Nozzle */}
+              <polygon points="84,39 89,39 86.5,49" />
+
+              {/* Laser Focal Alignment Guide Beam (Glows subtly when cursor scrubs arch) */}
+              <line
+                x1="86.5"
+                y1="49"
+                x2="88"
+                y2="55"
+                stroke="#E6392E"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                opacity={cursorProgress > 0.5 && cursorProgress < 0.8 ? "0.9" : "0.35"}
+              />
+
+              {/* HiTech Status LED Accent */}
+              <circle cx="45" cy="33" r="2.2" fill="#E6392E" />
             </g>
           </g>
 
-          {/* 6. Accent Coral-Red Circular Nodes (+20% Size with Smooth Hover State) */}
+          {/* ========================================================================= */}
+          {/* 7. ACCENT CORAL-RED CIRCULAR NODES (REACT TO CURSOR & HOVER)              */}
+          {/* ========================================================================= */}
           {/* Start Node */}
           <circle cx="90" cy="200" r="22" fill="#E6392E" />
 
           {/* Node 1: Brief Upper Connector */}
-          <g className="wf-node-interactive" style={{ transformOrigin: "340px 340px" }}>
-            <circle cx="340" cy="340" r="31" fill="#E6392E" />
+          <g
+            className="wf-node-hover"
+            style={{ transformOrigin: "340px 340px" }}
+            onMouseEnter={() => setTargetProgress(0.12)}
+          >
+            <circle
+              cx="340"
+              cy="340"
+              r={cursorProgress >= 0.08 && cursorProgress <= 0.22 ? "34" : "31"}
+              fill="#E6392E"
+            />
           </g>
 
           {/* Node 2: Research Lower Node (Large) */}
-          <g className="wf-node-interactive" style={{ transformOrigin: "340px 480px" }}>
-            <circle cx="340" cy="480" r="52" fill="#E6392E" />
+          <g
+            className="wf-node-hover"
+            style={{ transformOrigin: "340px 480px" }}
+            onMouseEnter={() => setTargetProgress(0.24)}
+          >
+            <circle
+              cx="340"
+              cy="480"
+              r={cursorProgress >= 0.20 && cursorProgress <= 0.35 ? "55" : "52"}
+              fill="#E6392E"
+            />
           </g>
 
           {/* Node 3: Study Arch Base Node */}
-          <g className="wf-node-interactive" style={{ transformOrigin: "680px 360px" }}>
-            <circle cx="680" cy="360" r="48" fill="#E6392E" />
+          <g
+            className="wf-node-hover"
+            style={{ transformOrigin: "680px 360px" }}
+            onMouseEnter={() => setTargetProgress(0.45)}
+          >
+            <circle
+              cx="680"
+              cy="360"
+              r={cursorProgress >= 0.38 && cursorProgress <= 0.55 ? "52" : "48"}
+              fill="#E6392E"
+            />
           </g>
 
           {/* Node 4: Proposals Loop Node */}
-          <g className="wf-node-interactive" style={{ transformOrigin: "1000px 450px" }}>
-            <circle cx="1000" cy="450" r="48" fill="#E6392E" />
+          <g
+            className="wf-node-hover"
+            style={{ transformOrigin: "1000px 450px" }}
+            onMouseEnter={() => setTargetProgress(0.70)}
+          >
+            <circle
+              cx="1000"
+              cy="450"
+              r={cursorProgress >= 0.60 && cursorProgress <= 0.78 ? "52" : "48"}
+              fill="#E6392E"
+            />
           </g>
 
           {/* Node 5: Delivery Rising Node */}
-          <g className="wf-node-interactive" style={{ transformOrigin: "1320px 380px" }}>
-            <circle cx="1320" cy="380" r="45" fill="#E6392E" />
+          <g
+            className="wf-node-hover"
+            style={{ transformOrigin: "1320px 380px" }}
+            onMouseEnter={() => setTargetProgress(0.92)}
+          >
+            <circle
+              cx="1320"
+              cy="380"
+              r={cursorProgress >= 0.80 ? "49" : "45"}
+              fill="#E6392E"
+            />
           </g>
 
           {/* ========================================================================= */}
-          {/* 7. VECTOR TEXT BLOCKS (+20% LARGER, CRISP, GUARANTEED ZERO-OVERLAP)       */}
+          {/* 8. VECTOR TEXT BLOCKS (+20% LARGER, CRISP, GUARANTEED ZERO-OVERLAP)       */}
           {/* ========================================================================= */}
 
           {/* STAGE 1: BRIEF */}
-          <g>
+          <g onMouseEnter={() => setTargetProgress(0.12)} className="cursor-pointer">
             <text
               x="70"
               y="280"
@@ -319,7 +451,7 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
           </g>
 
           {/* STAGE 2: RESEARCH */}
-          <g>
+          <g onMouseEnter={() => setTargetProgress(0.24)} className="cursor-pointer">
             <text
               x="70"
               y="445"
@@ -347,7 +479,7 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
           </g>
 
           {/* STAGE 3: STUDY */}
-          <g>
+          <g onMouseEnter={() => setTargetProgress(0.45)} className="cursor-pointer">
             <text
               x="410"
               y="265"
@@ -387,7 +519,7 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
           </g>
 
           {/* STAGE 4: PROPOSALS (CENTERED INSIDE ARCH) */}
-          <g>
+          <g onMouseEnter={() => setTargetProgress(0.70)} className="cursor-pointer">
             <text
               x="745"
               y="275"
@@ -427,7 +559,7 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
           </g>
 
           {/* STAGE 5: DELIVERY */}
-          <g>
+          <g onMouseEnter={() => setTargetProgress(0.92)} className="cursor-pointer">
             <text
               x="1040"
               y="265"
