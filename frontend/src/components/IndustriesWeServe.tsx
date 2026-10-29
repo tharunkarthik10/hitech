@@ -1,8 +1,16 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 
-const industries = [
+export interface IndustryItem {
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+}
+
+const industries: IndustryItem[] = [
   {
     id: '01',
     name: 'Automotive',
@@ -53,18 +61,113 @@ const industries = [
   },
 ];
 
-export default function IndustriesWeServe() {
+interface IndustriesWeServeProps {
+  variant?: 'marquee' | 'scroll';
+}
+
+export default function IndustriesWeServe({ variant }: IndustriesWeServeProps) {
+  const location = useLocation();
+  // Automatically select 'marquee' on Home page ('/'), and 'scroll' on About Us
+  const activeVariant = variant || (location.pathname === '/' ? 'marquee' : 'scroll');
+
+  // =========================================================================
+  // 1. HOME PAGE FLOW: Previous smooth infinite auto-scrolling marquee
+  // =========================================================================
+  if (activeVariant === 'marquee') {
+    const duplicatedIndustries = [...industries, ...industries];
+
+    return (
+      <section className="bg-white py-20 md:py-28 overflow-hidden">
+        <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12">
+          {/* Header Section */}
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-16">
+            <div className="max-w-2xl">
+              <span className="text-sm font-medium tracking-tight text-[#64748b] block mb-2">
+                Cross-Sector Capabilities
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#121212] leading-[1.12] mb-3">
+                Industries We Serve
+                <span className="text-[#00A6FB]">.</span>
+              </h2>
+              <p className="font-normal text-sm sm:text-base text-[#475569] leading-relaxed max-w-xl">
+                Delivering world-class engineering solutions across diverse sectors. Our commitment to precision and quality ensures optimal performance in every application.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <style>
+          {`
+            @keyframes industries-marquee {
+              0% { transform: translateX(0); }
+              100% { transform: translateX(-50%); }
+            }
+            .animate-industries-marquee {
+              animation: industries-marquee 45s linear infinite;
+              display: flex;
+              width: max-content;
+            }
+            .animate-industries-marquee:hover {
+              animation-play-state: paused;
+            }
+          `}
+        </style>
+
+        {/* Horizontal Scrolling Row */}
+        <div className="w-full overflow-hidden pb-6">
+          <div className="animate-industries-marquee">
+            {duplicatedIndustries.map((industry, index) => (
+              <div
+                key={index}
+                className="group relative h-[380px] w-[280px] sm:w-[300px] md:w-[320px] lg:w-[310px] xl:w-[320px] rounded-xl overflow-hidden shrink-0 cursor-pointer shadow-sm hover:shadow-lg transition-all duration-300 mx-3"
+              >
+                {/* Background Image */}
+                <div className="absolute inset-0">
+                  <img
+                    src={industry.image}
+                    alt={industry.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                </div>
+
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent transition-opacity duration-300" />
+
+                {/* Content */}
+                <div className="absolute inset-0 p-8 flex flex-col justify-end transform transition-transform duration-300">
+                  <h3 className="text-lg sm:text-xl font-bold tracking-tight text-white mb-1 group-hover:-translate-y-2 transition-transform duration-300">
+                    {industry.name}
+                  </h3>
+                  <p className="font-normal text-xs sm:text-sm text-white/80 leading-relaxed opacity-0 group-hover:opacity-100 group-hover:-translate-y-2 transition-all duration-300 delay-75">
+                    {industry.description}
+                  </p>
+                </div>
+
+                {/* Hover icon */}
+                <div className="absolute top-6 right-6 w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 border border-white/20">
+                  <ArrowUpRight className="w-5 h-5 text-white" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // =========================================================================
+  // 2. ABOUT US PAGE FLOW: Pinned sticky vertical-to-horizontal scroll
+  // =========================================================================
   const targetRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [scrollDistance, setScrollDistance] = useState(0);
 
-  // Measure dynamic horizontal scroll distance to ensure the last card stops exactly in view
   useEffect(() => {
     const calculateDistance = () => {
       if (trackRef.current) {
         const trackWidth = trackRef.current.scrollWidth;
         const windowWidth = window.innerWidth;
-        // Dynamic horizontal padding matching container gutters
         const padding = windowWidth >= 1024 ? 48 : windowWidth >= 768 ? 32 : 16;
         const maxOffset = Math.max(0, trackWidth - windowWidth + padding);
         setScrollDistance(maxOffset);
@@ -72,7 +175,6 @@ export default function IndustriesWeServe() {
     };
 
     calculateDistance();
-    // Re-calculate on resize and image load
     window.addEventListener('resize', calculateDistance);
     const timer = setTimeout(calculateDistance, 500);
     return () => {
@@ -81,13 +183,11 @@ export default function IndustriesWeServe() {
     };
   }, []);
 
-  // Track vertical scroll progress through the pinned track
   const { scrollYProgress } = useScroll({
     target: targetRef,
     offset: ['start start', 'end end'],
   });
 
-  // Tactile, smooth spring physics: eliminates jitter and creates fluid glide
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 220,
     damping: 32,
@@ -95,7 +195,6 @@ export default function IndustriesWeServe() {
     restDelta: 0.0005,
   });
 
-  // Map vertical scroll progress to horizontal translation
   const x = useTransform(smoothProgress, [0, 1], [0, -scrollDistance]);
 
   return (
@@ -104,9 +203,7 @@ export default function IndustriesWeServe() {
       id="industries-we-serve"
       className="relative w-full h-[320vh] bg-white"
     >
-      {/* Sticky pinned viewport: locks in place below the fixed navbar */}
       <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden pt-20 pb-8 bg-white z-20">
-        
         {/* Header Section */}
         <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 mb-6 sm:mb-8">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
@@ -173,7 +270,6 @@ export default function IndustriesWeServe() {
             ))}
           </motion.div>
         </div>
-
       </div>
     </div>
   );

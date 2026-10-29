@@ -532,7 +532,7 @@ export default function AboutUs() {
       </div>
 
       {/* Cross-Sector Capabilities: Industries We Serve */}
-      <IndustriesWeServe />
+      <IndustriesWeServe variant="scroll" />
 
       {/* Premium Mission, Vision, Values */}
       <div className="relative py-24 bg-[#f4f7f9] overflow-hidden">

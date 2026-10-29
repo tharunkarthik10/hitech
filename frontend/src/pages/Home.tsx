@@ -18,7 +18,7 @@ export default function Home() {
       <FeaturedSolutions />
       <Technologies />
       <FeaturedVideo />
-      <IndustriesWeServe />
+      <IndustriesWeServe variant="marquee" />
       <CTA />
     </main>
   );
