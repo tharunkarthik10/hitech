@@ -50,23 +50,23 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Pure GPU motion values: zero React re-renders during cursor scrub
-  const rawProgress = useMotionValue<number>(0.28);
+  // Pure GPU motion value: begins exactly at start (0.0)
+  const rawProgress = useMotionValue<number>(0.0);
 
-  // Ultra-buttery spring physics with ideal damping (zero stutter, zero overshoot lag)
+  // Butter-smooth spring physics: zero stutter, responsive tracking
   const smoothProgress = useSpring(rawProgress, {
-    stiffness: 160,
+    stiffness: 170,
     damping: 26,
-    mass: 0.15,
+    mass: 0.14,
     restDelta: 0.0001,
   });
 
   // SVG Normalized Path Length = 1000
-  // Traveled drawn line: draws forward from 1000 down to 0
+  // Traveled drawn line: Starts at 1000 (0% drawn at start circle) and reaches 0 (100% drawn at terminal arrow)
   const traveledDashoffset = useTransform(smoothProgress, [0, 1], [1000, 0]);
 
-  // Glowing tracer bead: glides seamlessly along the 1000 unit line
-  const tracerDashoffset = useTransform(smoothProgress, [0, 1], [0, -960]);
+  // Glowing tracer bead: starts centered on start circle (offset: 20) and ends centered on terminal arrow (offset: -980)
+  const tracerDashoffset = useTransform(smoothProgress, [0, 1], [20, -980]);
 
   // Proposals dashed feedback loop: shifts in direct harmony with cursor
   const feedbackDashoffset = useTransform(smoothProgress, [0, 1], [0, -160]);
@@ -74,12 +74,20 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
   // Subtle focal guide beam intensity on the robotic machine
   const laserOpacity = useTransform(smoothProgress, [0.45, 0.62, 0.80], [0.25, 0.95, 0.25]);
 
-  // Handle pointer tracking across container without triggering component state updates
+  // Physical geometry mapping:
+  // In the 1520px viewBox, the start circle is at x = 90 (5.92%) and the terminal arrow is at x = 1450 (95.39%)
+  // When cursor is at or before the start circle -> progress is exactly 0.0
+  // When cursor is at or past the terminal arrow -> progress is exactly 1.0
   const handlePointerMove = (clientX: number) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     if (rect.width <= 0) return;
-    const progress = Math.max(0.02, Math.min(0.98, (clientX - rect.left) / rect.width));
+
+    const mouseRatio = (clientX - rect.left) / rect.width;
+    const startRatio = 0.059; // 90 / 1520
+    const endRatio = 0.954;   // 1450 / 1520
+
+    const progress = Math.max(0, Math.min(1, (mouseRatio - startRatio) / (endRatio - startRatio)));
     rawProgress.set(progress);
   };
 
@@ -151,7 +159,7 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
       </div>
 
       {/* ========================================================================= */}
-      {/* 2. BUTTERY-SMOOTH GPU CURSOR-DRIVEN FLOWCHART (ZERO RE-RENDERS)           */}
+      {/* 2. BUTTERY-SMOOTH GPU CURSOR-DRIVEN FLOWCHART (PROPER ENDPOINTS)          */}
       {/* ========================================================================= */}
       <div
         ref={containerRef}
@@ -168,7 +176,7 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
           xmlns="http://www.w3.org/2000/svg"
         >
           <defs>
-            {/* Terminal Arrowhead */}
+            {/* Terminal Arrowhead (Active solid color) */}
             <marker
               id="wf-terminal-arrow"
               viewBox="0 0 16 16"
@@ -179,6 +187,19 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
               orient="auto-start-reverse"
             >
               <path d="M 0 2 L 14 8 L 0 14 z" fill="#5F7D74" />
+            </marker>
+
+            {/* Terminal Arrowhead (Muted base track) */}
+            <marker
+              id="wf-terminal-arrow-base"
+              viewBox="0 0 16 16"
+              refX="11"
+              refY="8"
+              markerWidth="11"
+              markerHeight="11"
+              orient="auto-start-reverse"
+            >
+              <path d="M 0 2 L 14 8 L 0 14 z" fill="#5F7D74" opacity="0.4" />
             </marker>
 
             {/* Loop Feedback Arrow */}
@@ -213,18 +234,18 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
             strokeWidth="2.8"
           />
 
-          {/* 2. Base Idle Conduit Path (Subtle guide track) */}
+          {/* 2. Base Idle Conduit Path (Subtle guide track with base arrow) */}
           <path
             d={conduitD}
             stroke="#5F7D74"
             strokeWidth="3.2"
             strokeLinecap="round"
-            strokeOpacity="0.35"
+            strokeOpacity="0.32"
             fill="none"
-            markerEnd="url(#wf-terminal-arrow)"
+            markerEnd="url(#wf-terminal-arrow-base)"
           />
 
-          {/* 3. GPU-ACCELERATED TRAVELED PATH (Progressively drawn with spring physics) */}
+          {/* 3. GPU-ACCELERATED TRAVELED PATH (Starts precisely at node x=90, ends at arrow x=1450) */}
           <motion.path
             d={conduitD}
             pathLength={1000}
@@ -234,9 +255,10 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
             strokeDasharray="1000"
             style={{ strokeDashoffset: traveledDashoffset }}
             fill="none"
+            markerEnd="url(#wf-terminal-arrow)"
           />
 
-          {/* 4. GPU-ACCELERATED ENERGY BEAM (Glides under cursor with zero stutter) */}
+          {/* 4. GPU-ACCELERATED ENERGY BEAM (Glides from exact start circle to terminal arrow tip) */}
           <motion.path
             d={conduitD}
             pathLength={1000}
@@ -327,8 +349,14 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
           {/* ========================================================================= */}
           {/* 7. ACCENT CORAL-RED CIRCULAR NODES (STABLE, CRISP, BUTTERY HOVER)        */}
           {/* ========================================================================= */}
-          {/* Start Node */}
-          <circle cx="90" cy="200" r="22" fill="#E6392E" />
+          {/* Start Node (Click to set progress = 0.0) */}
+          <g
+            className="wf-interactive-node"
+            style={{ transformOrigin: "90px 200px" }}
+            onClick={() => rawProgress.set(0.0)}
+          >
+            <circle cx="90" cy="200" r="22" fill="#E6392E" />
+          </g>
 
           {/* Node 1: Brief Upper Connector */}
           <g
@@ -343,7 +371,7 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
           <g
             className="wf-interactive-node"
             style={{ transformOrigin: "340px 480px" }}
-            onClick={() => rawProgress.set(0.25)}
+            onClick={() => rawProgress.set(0.24)}
           >
             <circle cx="340" cy="480" r="52" fill="#E6392E" />
           </g>
@@ -352,7 +380,7 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
           <g
             className="wf-interactive-node"
             style={{ transformOrigin: "680px 360px" }}
-            onClick={() => rawProgress.set(0.45)}
+            onClick={() => rawProgress.set(0.44)}
           >
             <circle cx="680" cy="360" r="48" fill="#E6392E" />
           </g>
@@ -361,7 +389,7 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
           <g
             className="wf-interactive-node"
             style={{ transformOrigin: "1000px 450px" }}
-            onClick={() => rawProgress.set(0.70)}
+            onClick={() => rawProgress.set(0.68)}
           >
             <circle cx="1000" cy="450" r="48" fill="#E6392E" />
           </g>
@@ -373,6 +401,14 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
             onClick={() => rawProgress.set(0.92)}
           >
             <circle cx="1320" cy="380" r="45" fill="#E6392E" />
+          </g>
+
+          {/* Terminal Arrow Click Target (Click to set progress = 1.0) */}
+          <g
+            className="cursor-pointer"
+            onClick={() => rawProgress.set(1.0)}
+          >
+            <circle cx="1450" cy="200" r="20" fill="transparent" />
           </g>
 
           {/* ========================================================================= */}
@@ -408,7 +444,7 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
           </g>
 
           {/* STAGE 2: RESEARCH */}
-          <g onClick={() => rawProgress.set(0.25)} className="cursor-pointer">
+          <g onClick={() => rawProgress.set(0.24)} className="cursor-pointer">
             <text
               x="70"
               y="445"
@@ -436,7 +472,7 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
           </g>
 
           {/* STAGE 3: STUDY */}
-          <g onClick={() => rawProgress.set(0.45)} className="cursor-pointer">
+          <g onClick={() => rawProgress.set(0.44)} className="cursor-pointer">
             <text
               x="410"
               y="265"
@@ -476,7 +512,7 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
           </g>
 
           {/* STAGE 4: PROPOSALS (CENTERED INSIDE ARCH) */}
-          <g onClick={() => rawProgress.set(0.70)} className="cursor-pointer">
+          <g onClick={() => rawProgress.set(0.68)} className="cursor-pointer">
             <text
               x="745"
               y="275"
