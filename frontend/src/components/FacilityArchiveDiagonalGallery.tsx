@@ -105,10 +105,8 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
           --btn-ink: #ffffff;
           --line: #e6e8ee;
           width: 100%;
-          max-width: 1260px;
-          margin: 0 auto;
-          padding: 0 10px;
           border-top: 1px solid var(--line);
+          padding-top: 1.5rem;
           overflow: visible;
           position: relative;
         }
@@ -122,76 +120,85 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
             --line: #232739;
           }
         }
-        .facility-archive-stage {
-          position: relative;
-          width: 100%;
-          aspect-ratio: 1.0230;
-          container-type: inline-size;
-        }
-        .facility-archive-stage .it {
-          position: absolute;
-          will-change: transform, opacity;
-        }
-        .facility-archive-stage .card {
-          overflow: hidden;
-          border-radius: 4px;
-          background: #f1f5f9;
-          box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08);
-          transition: filter 0.3s ease, box-shadow 0.3s ease;
-        }
-        .facility-archive-stage .card:hover {
-          box-shadow: 0 12px 32px -4px rgba(15, 23, 42, 0.16);
-          filter: brightness(1.03);
-        }
-        .facility-archive-stage .card img {
-          display: block;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-        .facility-archive-stage .facility-archive-header {
-          position: absolute;
-          z-index: 10;
+        /* Header Block moved directly to the border of the page */
+        .facility-archive-page-header {
           font-family: Inter, system-ui, -apple-system, sans-serif;
-          transform: none !important;
-          opacity: 1 !important;
+          z-index: 25;
+          margin-bottom: 1.75rem;
+          width: 100%;
         }
-        .facility-archive-stage .facility-archive-header .eyebrow {
-          font-size: 1.15cqw;
+        @media (min-width: 1024px) {
+          .facility-archive-page-header {
+            position: absolute;
+            left: 0;
+            top: 1.75rem;
+            width: 280px;
+            margin-bottom: 0;
+          }
+        }
+        @media (min-width: 1280px) {
+          .facility-archive-page-header {
+            width: 320px;
+            top: 2rem;
+          }
+        }
+        @media (min-width: 1536px) {
+          .facility-archive-page-header {
+            width: 360px;
+            top: 2.25rem;
+          }
+        }
+        .facility-archive-page-header .eyebrow {
+          font-size: 13px;
           color: #64748b;
           font-weight: 600;
           letter-spacing: -0.01em;
+          margin-bottom: 0.5rem;
         }
-        .facility-archive-stage .facility-archive-header h2 {
-          margin: 0.9cqw 0 0;
-          font-size: 3.1cqw;
-          line-height: 1.05;
+        .facility-archive-page-header h2 {
+          font-size: 32px;
+          line-height: 1.08;
           letter-spacing: -0.03em;
           color: #0f1222;
           font-weight: 800;
+          margin: 0;
         }
-        .facility-archive-stage .facility-archive-header h2 span {
+        @media (min-width: 1280px) {
+          .facility-archive-page-header h2 {
+            font-size: 38px;
+          }
+        }
+        @media (min-width: 1536px) {
+          .facility-archive-page-header h2 {
+            font-size: 42px;
+          }
+        }
+        .facility-archive-page-header h2 span {
           display: block;
           font-weight: 400;
           color: #64748b;
           letter-spacing: -0.02em;
         }
-        .facility-archive-stage .facility-archive-header p {
-          font-size: 1.18cqw;
-          line-height: 1.55;
-          margin: 1.4cqw 0 1.6cqw 0;
+        .facility-archive-page-header p {
+          font-size: 14px;
+          line-height: 1.6;
+          margin: 1rem 0 1.5rem 0;
           color: #475569;
           font-weight: 400;
-          max-width: 100%;
         }
-        .facility-archive-stage .facility-archive-header .btn {
+        @media (min-width: 1280px) {
+          .facility-archive-page-header p {
+            font-size: 15px;
+          }
+        }
+        .facility-archive-page-header .btn {
           display: inline-flex;
           align-items: center;
-          gap: 6px;
+          gap: 8px;
           background: #0f1222;
           color: #ffffff;
-          font-size: 1.0cqw;
-          padding: 0.8cqw 1.5cqw;
+          font-size: 13px;
+          padding: 10px 22px;
           border-radius: 99px;
           text-decoration: none;
           font-weight: 600;
@@ -199,25 +206,29 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
           box-shadow: 0 4px 14px rgba(15, 18, 34, 0.16);
           transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
         }
-        .facility-archive-stage .facility-archive-header .btn:hover {
+        .facility-archive-page-header .btn:hover {
           background: #000000;
           transform: translateY(-1px) scale(1.02);
           box-shadow: 0 6px 20px rgba(15, 18, 34, 0.24);
         }
+        .facility-archive-page-header .btn .arrow {
+          font-size: 14px;
+          line-height: 1;
+        }
         @media (prefers-color-scheme: dark) {
-          .facility-archive-sec:not([data-theme="light"]) .facility-archive-header h2 {
+          .facility-archive-sec:not([data-theme="light"]) .facility-archive-page-header h2 {
             color: #f2f4fa;
           }
-          .facility-archive-sec:not([data-theme="light"]) .facility-archive-header h2 span {
+          .facility-archive-sec:not([data-theme="light"]) .facility-archive-page-header h2 span {
             color: #98a3c0;
           }
-          .facility-archive-sec:not([data-theme="light"]) .facility-archive-header .eyebrow {
+          .facility-archive-sec:not([data-theme="light"]) .facility-archive-page-header .eyebrow {
             color: #98a3c0;
           }
-          .facility-archive-sec:not([data-theme="light"]) .facility-archive-header p {
+          .facility-archive-sec:not([data-theme="light"]) .facility-archive-page-header p {
             color: #cbd5e1;
           }
-          .facility-archive-sec:not([data-theme="light"]) .facility-archive-header .btn {
+          .facility-archive-sec:not([data-theme="light"]) .facility-archive-page-header .btn {
             background: #f2f4fa;
             color: #0d0f18;
           }
@@ -321,13 +332,6 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
           transform: translateY(-2px);
         }
         @media (max-width: 600px) {
-          .facility-archive-stage .facility-archive-header {
-            width: 28% !important;
-          }
-          .facility-archive-stage .facility-archive-header .eyebrow { font-size: 8.5px; }
-          .facility-archive-stage .facility-archive-header h2 { font-size: 19px; }
-          .facility-archive-stage .facility-archive-header p { font-size: 8.5px; line-height: 1.4; margin: 6px 0 8px 0; }
-          .facility-archive-stage .facility-archive-header .btn { font-size: 8px; padding: 5px 10px; }
           .facility-archive-stage .txt { font-size: 7.5px; }
           .facility-archive-stage .eyebrow { font-size: 8px; }
           .facility-archive-stage h2 { font-size: 16px; }
@@ -338,34 +342,27 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
       `}</style>
 
       <section ref={secRef} id="gallery" className="facility-archive-sec my-12 sm:my-16">
-        <div ref={gridRef} className="facility-archive-stage" id="grid">
-          {/* ITEM 1: Title & Lead Text (Static, Moved Left, Increased Size) */}
-          <div
-            className="facility-archive-header"
-            style={{
-              left: "0%",
-              top: "1.5%",
-              width: "20.6%",
-            }}
+        {/* Exactly This: Moved to the Border of the Page */}
+        <div className="facility-archive-page-header">
+          <div className="eyebrow">Section 05 — Facility Archive</div>
+          <h2>
+            Beyond Limits.
+            <span>Pure Precision.</span>
+          </h2>
+          <p>
+            Vibrant factory snapshots capturing micron machining, robotic welding, and high-speed laser profiling in full color.
+          </p>
+          <button
+            onClick={() => openQuoteModal("Section 05 — Facility Archive Stories")}
+            className="btn"
+            type="button"
           >
-            <div className="eyebrow">Section 05 — Facility Archive</div>
-            <h2>
-              Beyond Limits.
-              <span>Pure Precision.</span>
-            </h2>
-            <p>
-              Vibrant factory snapshots capturing micron machining, robotic welding, and high-speed laser profiling in full color.
-            </p>
-            <button
-              onClick={() => openQuoteModal("Section 05 — Facility Archive Stories")}
-              className="btn"
-              type="button"
-            >
-              See the Stories ↗
-            </button>
-          </div>
+            <span>See the Stories</span>
+            <span className="arrow">↗</span>
+          </button>
+        </div>
 
-          {/* ITEM 2: Card 1 */}
+        <div ref={gridRef} className="facility-archive-stage" id="grid">
           <div
             className="it card"
             style={{
