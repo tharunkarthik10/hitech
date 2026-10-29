@@ -149,6 +149,79 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
           height: 100%;
           object-fit: cover;
         }
+        .facility-archive-stage .facility-archive-header {
+          position: absolute;
+          z-index: 10;
+          font-family: Inter, system-ui, -apple-system, sans-serif;
+          transform: none !important;
+          opacity: 1 !important;
+        }
+        .facility-archive-stage .facility-archive-header .eyebrow {
+          font-size: 1.15cqw;
+          color: #64748b;
+          font-weight: 600;
+          letter-spacing: -0.01em;
+        }
+        .facility-archive-stage .facility-archive-header h2 {
+          margin: 0.9cqw 0 0;
+          font-size: 3.1cqw;
+          line-height: 1.05;
+          letter-spacing: -0.03em;
+          color: #0f1222;
+          font-weight: 800;
+        }
+        .facility-archive-stage .facility-archive-header h2 span {
+          display: block;
+          font-weight: 400;
+          color: #64748b;
+          letter-spacing: -0.02em;
+        }
+        .facility-archive-stage .facility-archive-header p {
+          font-size: 1.18cqw;
+          line-height: 1.55;
+          margin: 1.4cqw 0 1.6cqw 0;
+          color: #475569;
+          font-weight: 400;
+          max-width: 100%;
+        }
+        .facility-archive-stage .facility-archive-header .btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          background: #0f1222;
+          color: #ffffff;
+          font-size: 1.0cqw;
+          padding: 0.8cqw 1.5cqw;
+          border-radius: 99px;
+          text-decoration: none;
+          font-weight: 600;
+          cursor: pointer;
+          box-shadow: 0 4px 14px rgba(15, 18, 34, 0.16);
+          transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .facility-archive-stage .facility-archive-header .btn:hover {
+          background: #000000;
+          transform: translateY(-1px) scale(1.02);
+          box-shadow: 0 6px 20px rgba(15, 18, 34, 0.24);
+        }
+        @media (prefers-color-scheme: dark) {
+          .facility-archive-sec:not([data-theme="light"]) .facility-archive-header h2 {
+            color: #f2f4fa;
+          }
+          .facility-archive-sec:not([data-theme="light"]) .facility-archive-header h2 span {
+            color: #98a3c0;
+          }
+          .facility-archive-sec:not([data-theme="light"]) .facility-archive-header .eyebrow {
+            color: #98a3c0;
+          }
+          .facility-archive-sec:not([data-theme="light"]) .facility-archive-header p {
+            color: #cbd5e1;
+          }
+          .facility-archive-sec:not([data-theme="light"]) .facility-archive-header .btn {
+            background: #f2f4fa;
+            color: #0d0f18;
+          }
+        }
         .facility-archive-stage .txt {
           font-size: .82cqw;
           color: var(--mute);
@@ -248,6 +321,13 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
           transform: translateY(-2px);
         }
         @media (max-width: 600px) {
+          .facility-archive-stage .facility-archive-header {
+            width: 28% !important;
+          }
+          .facility-archive-stage .facility-archive-header .eyebrow { font-size: 8.5px; }
+          .facility-archive-stage .facility-archive-header h2 { font-size: 19px; }
+          .facility-archive-stage .facility-archive-header p { font-size: 8.5px; line-height: 1.4; margin: 6px 0 8px 0; }
+          .facility-archive-stage .facility-archive-header .btn { font-size: 8px; padding: 5px 10px; }
           .facility-archive-stage .txt { font-size: 7.5px; }
           .facility-archive-stage .eyebrow { font-size: 8px; }
           .facility-archive-stage h2 { font-size: 16px; }
@@ -259,15 +339,13 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
 
       <section ref={secRef} id="gallery" className="facility-archive-sec my-12 sm:my-16">
         <div ref={gridRef} className="facility-archive-stage" id="grid">
-          {/* ITEM 1: Title & Lead Text */}
+          {/* ITEM 1: Title & Lead Text (Static, Moved Left, Increased Size) */}
           <div
-            className="it txt"
+            className="facility-archive-header"
             style={{
-              left: "1.290%",
-              top: "2.805%",
-              width: "18.548%",
-              // @ts-ignore
-              "--d": 0.0,
+              left: "0%",
+              top: "1.5%",
+              width: "20.6%",
             }}
           >
             <div className="eyebrow">Section 05 — Facility Archive</div>
