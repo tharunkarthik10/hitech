@@ -5,8 +5,7 @@ import {
   Settings, X, Send, Sparkles,
   ChevronLeft, ChevronRight
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import DynamicConduitWorkflow from '../components/DynamicConduitWorkflow';
+
 
 /**
  * THREE UNIFIED TYPOGRAPHIC STYLES (MATCHING USER'S EXACT REFERENCE):
@@ -143,71 +142,7 @@ export default function Production() {
             </div>
 
           </div>
-
-          {/* Bottom Row: 2 Asymmetrical Cards */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
-            
-            {/* Card 1: 100% FAT Verification Metric Card */}
-            <div className="lg:col-span-5 rounded-3xl bg-[#f0f2f5] border border-gray-200/80 p-5 sm:p-6 flex items-center gap-5 shadow-2xs">
-              <div className="w-24 sm:w-28 h-28 sm:h-32 rounded-2xl overflow-hidden shrink-0 bg-gray-200">
-                <img 
-                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=400" 
-                  alt="Automated Torque Verification" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <div className="text-2xl sm:text-3xl font-bold tracking-tight text-[#121212]">
-                  100% FAT
-                </div>
-                <div className="text-sm font-medium tracking-tight text-[#64748b]">
-                  Factory Acceptance Testing
-                </div>
-                <p className="text-sm text-[#475569] font-normal leading-relaxed">
-                  Every assembled sub-system undergoes complete functional testing and digital torque logging before dispatch.
-                </p>
-              </div>
-            </div>
-
-            {/* Card 2: 60% CapEx Savings Card */}
-            <div className="lg:col-span-7 rounded-3xl bg-[#f0f2f5] border border-gray-200/80 p-5 sm:p-6 flex items-center gap-6 shadow-2xs">
-              <div className="w-36 sm:w-52 h-28 sm:h-32 rounded-2xl overflow-hidden shrink-0 bg-gray-200">
-                <img 
-                  src="https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?auto=format&fit=crop&q=80&w=600" 
-                  alt="Robotic Workstation Cell" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <div className="text-2xl sm:text-3xl font-bold tracking-tight text-[#121212]">
-                  60%
-                </div>
-                <div className="text-sm font-medium tracking-tight text-[#64748b]">
-                  CapEx Overhead Savings
-                </div>
-                <p className="text-sm text-[#475569] font-normal leading-relaxed">
-                  Scale production volumes from prototype pilot runs to 100,000+ units monthly without upfront tooling capital.
-                </p>
-              </div>
-            </div>
-
-          </div>
-
-          {/* Thin Slider Pagination Line */}
-          <div className="flex items-center justify-between text-sm text-[#64748b] font-medium pt-1">
-            <span>02</span>
-            <div className="w-full mx-4 h-[1px] bg-gray-200 relative">
-              <div className="absolute left-0 top-0 h-full w-1/4 bg-gray-800" />
-            </div>
-            <span>08</span>
-          </div>
-
         </section>
-
-        {/* ========================================================================= */}
-        {/* 04. "HOW IT WORKS (STEP BY STEP)" - DYNAMIC CONDUIT WORKFLOW */}
-        {/* ========================================================================= */}
-        <DynamicConduitWorkflow openQuoteModal={openQuoteModal} />
 
         {/* ========================================================================= */}
         {/* 05. EDITORIAL ASYMMETRIC GALLERY (NOIR ARCHIVE TEMPLATE) */}
