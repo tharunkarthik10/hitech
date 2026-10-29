@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Layers } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface SplitTriptychShowcaseProps {
   className?: string;
@@ -10,94 +9,133 @@ export default function SplitTriptychShowcase({
   className = "",
 }: SplitTriptychShowcaseProps) {
   // 0 = Precision Welding Bay (Image 1), 1 = Fiber Laser Profiling (Image 2)
-  const [activeStage, setActiveStage] = useState<0 | 1>(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isCooldownRef = useRef(false);
-  const touchStartY = useRef<number | null>(null);
+  const [stage, setStage] = useState<0 | 1>(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Wheel event listener to roll between the two meaningful manufacturing images
+  const stageRef = useRef<0 | 1>(0);
+  const isTransitioningRef = useRef(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Synchronize mutable refs for event listeners
   useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
+    stageRef.current = stage;
+  }, [stage]);
+
+  useEffect(() => {
+    isTransitioningRef.current = isTransitioning;
+  }, [isTransitioning]);
+
+  // Page scroll locking: locks page from moving/scrolling until the roll transition fully completes
+  useEffect(() => {
+    let touchStartY = 0;
 
     const handleWheel = (e: WheelEvent) => {
-      // If user scrolls down on stage 0, roll to stage 1
-      if (e.deltaY > 25 && activeStage === 0 && !isCooldownRef.current) {
+      const el = containerRef.current;
+      if (!el) return;
+
+      const rect = el.getBoundingClientRect();
+      const windowH = window.innerHeight;
+
+      // Check if section is currently active in the main reading view
+      const isInFocus = rect.top <= 200 && rect.bottom >= windowH * 0.45;
+
+      if (!isInFocus) return;
+
+      // 1. While transition is currently animating, ALWAYS block scroll so page cannot move
+      if (isTransitioningRef.current) {
         e.preventDefault();
-        isCooldownRef.current = true;
-        setActiveStage(1);
-        setTimeout(() => {
-          isCooldownRef.current = false;
-        }, 850);
+        return;
       }
-      // If user scrolls up on stage 1, roll back to stage 0
-      else if (e.deltaY < -25 && activeStage === 1 && !isCooldownRef.current) {
+
+      // 2. When at Stage 0 and user attempts to scroll DOWN:
+      // Block page scroll and trigger the 3-section roll transition
+      if (e.deltaY > 15 && stageRef.current === 0) {
         e.preventDefault();
-        isCooldownRef.current = true;
-        setActiveStage(0);
+        isTransitioningRef.current = true;
+        setIsTransitioning(true);
+        setStage(1);
+
+        // Keep page locked until all 3 sections finish rolling (1.2s total duration)
         setTimeout(() => {
-          isCooldownRef.current = false;
-        }, 850);
+          isTransitioningRef.current = false;
+          setIsTransitioning(false);
+        }, 1200);
+        return;
+      }
+
+      // 3. When at Stage 1 and user attempts to scroll back UP:
+      // Block page scroll and trigger the reverse roll transition
+      if (e.deltaY < -15 && stageRef.current === 1 && rect.top >= 20) {
+        e.preventDefault();
+        isTransitioningRef.current = true;
+        setIsTransitioning(true);
+        setStage(0);
+
+        // Keep page locked until reverse roll finishes (1.2s)
+        setTimeout(() => {
+          isTransitioningRef.current = false;
+          setIsTransitioning(false);
+        }, 1200);
+        return;
       }
     };
 
     const handleTouchStart = (e: TouchEvent) => {
-      touchStartY.current = e.touches[0].clientY;
+      touchStartY = e.touches[0].clientY;
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (touchStartY.current === null || isCooldownRef.current) return;
-      const currentY = e.touches[0].clientY;
-      const delta = touchStartY.current - currentY;
+      const el = containerRef.current;
+      if (!el) return;
 
-      if (delta > 35 && activeStage === 0) {
+      const rect = el.getBoundingClientRect();
+      const windowH = window.innerHeight;
+      const isInFocus = rect.top <= 200 && rect.bottom >= windowH * 0.45;
+
+      if (!isInFocus) return;
+
+      if (isTransitioningRef.current) {
         e.preventDefault();
-        isCooldownRef.current = true;
-        setActiveStage(1);
-        touchStartY.current = null;
-        setTimeout(() => {
-          isCooldownRef.current = false;
-        }, 850);
-      } else if (delta < -35 && activeStage === 1) {
+        return;
+      }
+
+      const currentY = e.touches[0].clientY;
+      const deltaY = touchStartY - currentY;
+
+      // Swipe up (scroll down)
+      if (deltaY > 25 && stageRef.current === 0) {
         e.preventDefault();
-        isCooldownRef.current = true;
-        setActiveStage(0);
-        touchStartY.current = null;
+        isTransitioningRef.current = true;
+        setIsTransitioning(true);
+        setStage(1);
         setTimeout(() => {
-          isCooldownRef.current = false;
-        }, 850);
+          isTransitioningRef.current = false;
+          setIsTransitioning(false);
+        }, 1200);
+      }
+      // Swipe down (scroll up)
+      else if (deltaY < -25 && stageRef.current === 1 && rect.top >= 20) {
+        e.preventDefault();
+        isTransitioningRef.current = true;
+        setIsTransitioning(true);
+        setStage(0);
+        setTimeout(() => {
+          isTransitioningRef.current = false;
+          setIsTransitioning(false);
+        }, 1200);
       }
     };
 
-    el.addEventListener("wheel", handleWheel, { passive: false });
-    el.addEventListener("touchstart", handleTouchStart, { passive: true });
-    el.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
 
     return () => {
-      el.removeEventListener("wheel", handleWheel);
-      el.removeEventListener("touchstart", handleTouchStart);
-      el.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
     };
-  }, [activeStage]);
-
-  const stages = [
-    {
-      id: 0,
-      badge: "Cell 01 • Manual Welding",
-      title: "Our Infrastructure.",
-      subtitle: "Built For Heavy Precision & Serial Scale.",
-      desc: "Multi-bay heavy manufacturing units equipped with certified manual TIG/MIG welding enclosures and high-tonnage gantry beds engineered for zero-defect metallurgical integrity.",
-    },
-    {
-      id: 1,
-      badge: "Cell 02 • Fiber Laser Profiling",
-      title: "Advanced Machining.",
-      subtitle: "High-Power Fiber Laser Profiling & Clean Kerf Cutting.",
-      desc: "High-throughput 12kW fiber laser cutting cells profiling structural alloys with micron repeatability, oxygen assist gas purging, and synchronized nesting software.",
-    },
-  ];
-
-  const currentInfo = stages[activeStage];
+  }, []);
 
   return (
     <section
@@ -107,46 +145,18 @@ export default function SplitTriptychShowcase({
     >
       {/* Section Header: Our Infrastructure */}
       <div className="space-y-4 mb-6 sm:mb-8 max-w-4xl">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div>
-            <span className="text-sm font-medium tracking-tight text-[#64748b]">
-              ✦ Section 06 — Our Infrastructure
-            </span>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#121212] leading-[1.15] mt-1">
-              {currentInfo.title}<br />
-              <span className="font-normal text-[#64748b]">{currentInfo.subtitle}</span>
-            </h2>
-          </div>
-
-          {/* Interactive Cell Switcher Pills */}
-          <div className="flex items-center gap-1.5 p-1 bg-gray-100/90 rounded-full border border-gray-200/90 shadow-2xs self-start sm:self-auto shrink-0">
-            <button
-              onClick={() => setActiveStage(0)}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-tight transition-all duration-300 flex items-center gap-1.5 cursor-pointer ${
-                activeStage === 0
-                  ? "bg-[#003554] text-white shadow-xs"
-                  : "text-[#64748b] hover:text-[#121212]"
-              }`}
-            >
-              <span className={`w-1.5 h-1.5 rounded-full ${activeStage === 0 ? "bg-[#00A6FB]" : "bg-gray-400"}`} />
-              <span>01 Welding Bay</span>
-            </button>
-            <button
-              onClick={() => setActiveStage(1)}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-tight transition-all duration-300 flex items-center gap-1.5 cursor-pointer ${
-                activeStage === 1
-                  ? "bg-[#003554] text-white shadow-xs"
-                  : "text-[#64748b] hover:text-[#121212]"
-              }`}
-            >
-              <span className={`w-1.5 h-1.5 rounded-full ${activeStage === 1 ? "bg-[#00A6FB]" : "bg-gray-400"}`} />
-              <span>02 Laser Profiling</span>
-            </button>
-          </div>
+        <div>
+          <span className="text-sm font-medium tracking-tight text-[#64748b]">
+            ✦ Section 06 — Our Infrastructure
+          </span>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#121212] leading-[1.15] mt-1">
+            Our Infrastructure.<br />
+            <span className="font-normal text-[#64748b]">Built For Heavy Precision & Serial Scale.</span>
+          </h2>
         </div>
 
         <p className="text-xs sm:text-sm md:text-base text-[#475569] font-normal leading-relaxed max-w-2xl">
-          {currentInfo.desc}
+          Multi-bay manufacturing units equipped with heavy manual welding enclosures, high-tonnage gantry beds, and serialized robotic automation lines engineered for uninterrupted OEM output.
         </p>
       </div>
 
@@ -155,14 +165,14 @@ export default function SplitTriptychShowcase({
         <div className="grid grid-cols-3 gap-[2px] sm:gap-[3px] bg-[#f8fafc] h-full">
           {[0, 1, 2].map((colIndex) => {
             // Staggered roll delay: column 0 first, column 1 second, column 2 third
-            const forwardDelay = colIndex * 0.16;
-            const reverseDelay = (2 - colIndex) * 0.16;
-            const currentDelay = activeStage === 1 ? forwardDelay : reverseDelay;
+            const forwardDelay = colIndex * 0.18;
+            const reverseDelay = (2 - colIndex) * 0.18;
+            const currentDelay = stage === 1 ? forwardDelay : reverseDelay;
 
             return (
               <div key={colIndex} className="overflow-hidden bg-black h-full relative">
                 <motion.div
-                  animate={{ y: activeStage === 0 ? "0%" : "-100%" }}
+                  animate={{ y: stage === 0 ? "0%" : "-100%" }}
                   transition={{
                     duration: 0.75,
                     ease: [0.16, 1, 0.3, 1],
@@ -201,12 +211,6 @@ export default function SplitTriptychShowcase({
               </div>
             );
           })}
-        </div>
-
-        {/* Bottom Interactive Helper Bar */}
-        <div className="absolute bottom-3 right-4 z-20 flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-medium text-white/90 border border-white/20">
-          <Sparkles className="w-3.5 h-3.5 text-[#00A6FB]" />
-          <span>Scroll over image or click cells to roll</span>
         </div>
       </div>
     </section>
