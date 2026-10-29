@@ -180,7 +180,7 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
                 {/* Column 4: Expansion Chevron */}
                 <div className="md:col-span-1 flex md:justify-end items-start pt-1">
                   <div
-                    className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-all duration-300 ${
+                    className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-all duration-500 ${
                       isActive
                         ? "bg-[#121212] text-white rotate-90 scale-105 shadow-xs"
                         : "bg-gray-100 text-gray-400 group-hover:bg-gray-200 group-hover:text-gray-700"
@@ -201,8 +201,8 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
                     transition={{
-                      height: { duration: 0.42, ease: [0.22, 1, 0.36, 1] },
-                      opacity: { duration: 0.28, ease: "easeOut" }
+                      height: { duration: 0.75, ease: [0.16, 1, 0.3, 1] },
+                      opacity: { duration: 0.55, ease: [0.16, 1, 0.3, 1] }
                     }}
                     className="overflow-hidden"
                   >
