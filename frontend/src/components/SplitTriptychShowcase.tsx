@@ -30,37 +30,37 @@ export default function SplitTriptychShowcase({
         </p>
       </div>
 
-      {/* 3-Column Split Grid with 90% reduced gap (2px - 3px hairline slit) */}
-      <div className="rounded-2xl sm:rounded-[26px] overflow-hidden border border-gray-200/90 shadow-lg bg-[#f8fafc]">
-        <div className="grid grid-cols-3 gap-[2px] sm:gap-[3px] bg-[#f8fafc]">
+      {/* 3-Column Split Grid with 90% reduced gap & 20% decreased height (aspect 1024/454) */}
+      <div className="rounded-2xl sm:rounded-[26px] overflow-hidden border border-gray-200/90 shadow-lg bg-[#f8fafc] aspect-[1024/454]">
+        <div className="grid grid-cols-3 gap-[2px] sm:gap-[3px] bg-[#f8fafc] h-full">
           {/* Slice 1 (Left) */}
-          <div className="overflow-hidden bg-black aspect-[341/567] relative">
+          <div className="overflow-hidden bg-black h-full relative">
             <img
               src={slice1}
               alt="Our Infrastructure - Welding Bay Left Section"
-              className="w-full h-full object-cover block"
+              className="w-full h-full object-cover object-center block"
               loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60" />
           </div>
 
           {/* Slice 2 (Center - Welding Arc & Helmet) */}
-          <div className="overflow-hidden bg-black aspect-[341/567] relative">
+          <div className="overflow-hidden bg-black h-full relative">
             <img
               src={slice2}
               alt="Our Infrastructure - Welding Bay Center Section"
-              className="w-full h-full object-cover block"
+              className="w-full h-full object-cover object-center block"
               loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60" />
           </div>
 
           {/* Slice 3 (Right) */}
-          <div className="overflow-hidden bg-black aspect-[342/567] relative">
+          <div className="overflow-hidden bg-black h-full relative">
             <img
               src={slice3}
               alt="Our Infrastructure - Welding Bay Right Section"
-              className="w-full h-full object-cover block"
+              className="w-full h-full object-cover object-center block"
               loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60" />
