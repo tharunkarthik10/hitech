@@ -20,15 +20,15 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
     let override: number | null = null;
     let raf = 0;
 
-    const ease = (t: number) => 1 - Math.pow(1 - t, 2.2);
+    const ease = (t: number) => 1 - Math.pow(1 - t, 2.5);
     const clamp = (v: number) => Math.min(1, Math.max(0, v));
 
     function progress() {
       if (override !== null) return override;
       const r = sec!.getBoundingClientRect();
       const vh = window.innerHeight;
-      // Much slower, extended scroll window (vh * 2.8) for a serene, cinematic effect
-      return clamp((vh - r.top) / (vh * 2.8));
+      // Balanced scroll progress window (vh * 2.1) for an engaging, slightly faster pace
+      return clamp((vh - r.top) / (vh * 2.1));
     }
 
     function render() {
@@ -45,13 +45,13 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
           return;
         }
         const d = parseFloat(el.style.getPropertyValue("--d")) || 0;
-        // Broad transition window (0.6) for sustained, ultra-smooth movement
-        const t = ease(clamp((p - d * 0.4) / 0.6));
+        // Balanced transition window (0.55)
+        const t = ease(clamp((p - d * 0.45) / 0.55));
         const left = g.left + el.offsetLeft;
         const top = g.top + el.offsetTop;
-        // Start just outside viewport edge (0.15vw/vh) to eliminate high initial speed
-        const dx = (vw - left + vw * 0.15) * (1 - t);
-        const dy = (vh - top + vh * 0.15) * (1 - t);
+        // Controlled off-screen travel offset (0.25vw/vh)
+        const dx = (vw - left + vw * 0.25) * (1 - t);
+        const dy = (vh - top + vh * 0.25) * (1 - t);
         el.style.transform = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0)`;
         el.style.opacity = "1";
       });
@@ -68,8 +68,8 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
     const replayBtn = document.getElementById("facility-archive-replay");
     const handleReplay = () => {
       const s = performance.now();
-      // Increased duration to 5000ms for a slow-motion, graceful replay
-      const dur = 5000;
+      // Balanced 3600ms duration for a refined, responsive replay
+      const dur = 3600;
       function step(n: number) {
         override = clamp((n - s) / dur);
         render();
