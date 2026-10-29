@@ -65,34 +65,9 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
     window.addEventListener("resize", req);
     render();
 
-    const replayBtn = document.getElementById("facility-archive-replay");
-    const handleReplay = () => {
-      const s = performance.now();
-      // Balanced 3600ms duration for a refined, responsive replay
-      const dur = 3600;
-      function step(n: number) {
-        override = clamp((n - s) / dur);
-        render();
-        if (override! < 1) {
-          requestAnimationFrame(step);
-        } else {
-          override = null;
-          render();
-        }
-      }
-      requestAnimationFrame(step);
-    };
-
-    if (replayBtn) {
-      replayBtn.addEventListener("click", handleReplay);
-    }
-
     return () => {
       window.removeEventListener("scroll", req);
       window.removeEventListener("resize", req);
-      if (replayBtn) {
-        replayBtn.removeEventListener("click", handleReplay);
-      }
       if (raf) cancelAnimationFrame(raf);
     };
   }, []);
@@ -300,28 +275,7 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
         .facility-archive-stage .cta:hover {
           text-decoration: underline;
         }
-        .facility-archive-replay-btn {
-          position: fixed;
-          right: 20px;
-          bottom: calc(20px + env(safe-area-inset-bottom, 0px));
-          z-index: 40;
-          font: 600 12px Inter, system-ui, sans-serif;
-          border: 0;
-          background: #0f1222;
-          color: #ffffff;
-          padding: 10px 18px;
-          border-radius: 99px;
-          cursor: pointer;
-          box-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.25);
-          transition: transform 0.2s ease, background-color 0.2s ease;
-          display: flex;
-          align-items: center;
-          gap: 6px;
-        }
-        .facility-archive-replay-btn:hover {
-          background: #000000;
-          transform: translateY(-2px);
-        }
+
         @media (max-width: 600px) {
           .facility-archive-stage .facility-archive-header {
             width: 28% !important;
@@ -717,28 +671,6 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
         </div>
       </section>
 
-      {/* Floating Replay Button */}
-      <button
-        id="facility-archive-replay"
-        className="facility-archive-replay-btn"
-        type="button"
-        title="Replay Facility Archive Diagonal Animation"
-      >
-        <span>Replay Gallery</span>
-        <svg
-          className="w-3.5 h-3.5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2.2"
-            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-          />
-        </svg>
-      </button>
     </>
   );
 };
