@@ -28,36 +28,43 @@ export default function SplitTriptychShowcase({
   // Smoothstep S-curve easing: eliminates linear abruptness for buttery transitions
   const smoothStep = (t: number) => t * t * (3 - 2 * t);
 
-  // Multi-scene synchronized cascade:
-  // Wave 1 (0% -> -100%): Plant Exterior -> Robotic Welding Cell (tight 0.04 cascade)
-  // Rest Zone: 0.42 -> 0.58 (all columns locked and stable on Scene 2)
-  // Wave 2 (-100% -> -200%): Robotic Welding Cell -> Assembly & Warehouse Bay (tight 0.04 cascade)
-  // Rest Zone: 0.88 -> 1.00 (all columns locked and stable on Scene 3)
+  // Strictly sequential column-by-column cascade:
+  // Wave 1 (Exterior -> Robotic Arc Cell):
+  // Col 1: rolls [0.06 -> 0.19] to -100%. Completes completely.
+  // Col 2: rolls [0.20 -> 0.33] to -100%. Starts ONLY after Col 1 is 100% finished.
+  // Col 3: rolls [0.34 -> 0.47] to -100%. Starts ONLY after Col 2 is 100% finished.
+  // Rest Zone 1: [0.47 -> 0.56] All 3 columns stationary on Scene 2 (Robotic Arc Cell).
+  //
+  // Wave 2 (Robotic Arc Cell -> Assembly Bay):
+  // Col 1: rolls [0.56 -> 0.69] to -200%. Completes completely.
+  // Col 2: rolls [0.70 -> 0.83] to -200%. Starts ONLY after Col 1 is 100% finished.
+  // Col 3: rolls [0.84 -> 0.97] to -200%. Starts ONLY after Col 2 is 100% finished.
+  // Rest Zone 2: [0.97 -> 1.00] All 3 columns stationary on Scene 3 (High-Bay Assembly).
   const y1 = useTransform(
     smoothProgress,
-    [0.12, 0.34, 0.58, 0.80],
+    [0.06, 0.19, 0.56, 0.69],
     ["0%", "-100%", "-100%", "-200%"],
     { ease: smoothStep, clamp: true }
   );
 
   const y2 = useTransform(
     smoothProgress,
-    [0.16, 0.38, 0.62, 0.84],
+    [0.20, 0.33, 0.70, 0.83],
     ["0%", "-100%", "-100%", "-200%"],
     { ease: smoothStep, clamp: true }
   );
 
   const y3 = useTransform(
     smoothProgress,
-    [0.20, 0.42, 0.66, 0.88],
+    [0.34, 0.47, 0.84, 0.97],
     ["0%", "-100%", "-100%", "-200%"],
     { ease: smoothStep, clamp: true }
   );
 
-  // Dynamic scene tag indicator driven by scroll progress
-  const scene1Opacity = useTransform(smoothProgress, [0.0, 0.12, 0.36], [1, 1, 0]);
-  const scene2Opacity = useTransform(smoothProgress, [0.18, 0.40, 0.58, 0.82], [0, 1, 1, 0]);
-  const scene3Opacity = useTransform(smoothProgress, [0.64, 0.86, 1.0], [0, 1, 1]);
+  // Dynamic scene tag indicator: strictly non-overlapping opacity cutovers (zero text collision)
+  const scene1Opacity = useTransform(smoothProgress, [0.00, 0.25, 0.27], [1, 1, 0], { clamp: true });
+  const scene2Opacity = useTransform(smoothProgress, [0.27, 0.29, 0.61, 0.63], [0, 1, 1, 0], { clamp: true });
+  const scene3Opacity = useTransform(smoothProgress, [0.63, 0.65, 1.00], [0, 1, 1], { clamp: true });
 
   return (
     <div id="infrastructure" className={`w-full ${className}`}>
@@ -77,7 +84,7 @@ export default function SplitTriptychShowcase({
       {/* ========================================================================= */}
       {/* 2. Pinned Scroll Track: Generous runway for buttery-smooth rolls */}
       {/* ========================================================================= */}
-      <div ref={trackRef} className="relative w-full h-[250vh]">
+      <div ref={trackRef} className="relative w-full h-[280vh]">
         {/* Pinned Viewport: Freezes exactly below the navbar */}
         <div className="sticky top-20 sm:top-24 w-full pt-1 pb-6 space-y-4">
           {/* Subtitle directly above the image, visible in pinned state */}
