@@ -17,35 +17,47 @@ export default function SplitTriptychShowcase({
     offset: ["start 96px", "end end"],
   });
 
+  // Responsive spring physics: tactile, responsive, zero rubber-band drag
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 120,
+    stiffness: 170,
     damping: 28,
-    restDelta: 0.001,
+    mass: 0.16,
+    restDelta: 0.0005,
   });
 
-  // Multi-scene staggered roll across 3 real infrastructure frames:
-  // Wave 1 (0% -> -100%): Facility Exterior -> Robotic Welding Cell
-  // Wave 2 (-100% -> -200%): Robotic Welding Cell -> Warehouse & Assembly Bay
+  // Smoothstep S-curve easing: eliminates linear abruptness for buttery transitions
+  const smoothStep = (t: number) => t * t * (3 - 2 * t);
+
+  // Multi-scene synchronized cascade:
+  // Wave 1 (0% -> -100%): Plant Exterior -> Robotic Welding Cell (tight 0.04 cascade)
+  // Rest Zone: 0.42 -> 0.58 (all columns locked and stable on Scene 2)
+  // Wave 2 (-100% -> -200%): Robotic Welding Cell -> Assembly & Warehouse Bay (tight 0.04 cascade)
+  // Rest Zone: 0.88 -> 1.00 (all columns locked and stable on Scene 3)
   const y1 = useTransform(
     smoothProgress,
-    [0.06, 0.24, 0.52, 0.70],
+    [0.12, 0.34, 0.58, 0.80],
     ["0%", "-100%", "-100%", "-200%"],
-    { clamp: true }
+    { ease: smoothStep, clamp: true }
   );
 
   const y2 = useTransform(
     smoothProgress,
-    [0.16, 0.34, 0.62, 0.80],
+    [0.16, 0.38, 0.62, 0.84],
     ["0%", "-100%", "-100%", "-200%"],
-    { clamp: true }
+    { ease: smoothStep, clamp: true }
   );
 
   const y3 = useTransform(
     smoothProgress,
-    [0.26, 0.44, 0.72, 0.90],
+    [0.20, 0.42, 0.66, 0.88],
     ["0%", "-100%", "-100%", "-200%"],
-    { clamp: true }
+    { ease: smoothStep, clamp: true }
   );
+
+  // Dynamic scene tag indicator driven by scroll progress
+  const scene1Opacity = useTransform(smoothProgress, [0.0, 0.12, 0.36], [1, 1, 0]);
+  const scene2Opacity = useTransform(smoothProgress, [0.18, 0.40, 0.58, 0.82], [0, 1, 1, 0]);
+  const scene3Opacity = useTransform(smoothProgress, [0.64, 0.86, 1.0], [0, 1, 1]);
 
   return (
     <div id="infrastructure" className={`w-full ${className}`}>
@@ -63,17 +75,50 @@ export default function SplitTriptychShowcase({
       </div>
 
       {/* ========================================================================= */}
-      {/* 2. Pinned Scroll Track: Sticks after the title moves behind the header */}
+      {/* 2. Pinned Scroll Track: Generous runway for buttery-smooth rolls */}
       {/* ========================================================================= */}
-      <div ref={trackRef} className="relative w-full h-[220vh]">
+      <div ref={trackRef} className="relative w-full h-[250vh]">
         {/* Pinned Viewport: Freezes exactly below the navbar */}
         <div className="sticky top-20 sm:top-24 w-full pt-1 pb-6 space-y-4">
           {/* Subtitle directly above the image, visible in pinned state */}
-          <p className="text-xs sm:text-sm md:text-base text-[#475569] font-normal leading-relaxed max-w-2xl">
-            Multi-bay manufacturing units equipped with heavy manual welding enclosures, high-tonnage gantry beds, and serialized robotic automation lines engineered for uninterrupted OEM output.
-          </p>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+            <p className="text-xs sm:text-sm md:text-base text-[#475569] font-normal leading-relaxed max-w-2xl">
+              Multi-bay manufacturing units equipped with heavy manual welding enclosures, high-tonnage gantry beds, and serialized robotic automation lines engineered for uninterrupted OEM output.
+            </p>
 
-          {/* 3-Column Split Grid with 90% reduced gap & 20% decreased height */}
+            {/* Dynamic Active Scene Pill */}
+            <div className="relative h-7 min-w-[210px] shrink-0 hidden sm:block">
+              <motion.div
+                style={{ opacity: scene1Opacity }}
+                className="absolute inset-0 flex items-center justify-end"
+              >
+                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/80 text-white text-xs font-mono backdrop-blur-md border border-white/10 shadow-sm">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  01 • Plant Logistics
+                </span>
+              </motion.div>
+              <motion.div
+                style={{ opacity: scene2Opacity }}
+                className="absolute inset-0 flex items-center justify-end"
+              >
+                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/80 text-white text-xs font-mono backdrop-blur-md border border-white/10 shadow-sm">
+                  <span className="w-1.5 h-1.5 rounded-full bg-orange-400" />
+                  02 • Robotic Arc Cell
+                </span>
+              </motion.div>
+              <motion.div
+                style={{ opacity: scene3Opacity }}
+                className="absolute inset-0 flex items-center justify-end"
+              >
+                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/80 text-white text-xs font-mono backdrop-blur-md border border-white/10 shadow-sm">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                  03 • High-Bay Assembly
+                </span>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* 3-Column Split Grid with Hardware-Accelerated Transforms */}
           <div className="rounded-2xl sm:rounded-[26px] overflow-hidden border border-gray-200/90 shadow-lg bg-[#f8fafc] aspect-[1024/454] relative">
             <div className="grid grid-cols-3 gap-[2px] sm:gap-[3px] bg-[#f8fafc] h-full">
               {/* ================================================================= */}
@@ -82,7 +127,7 @@ export default function SplitTriptychShowcase({
               <div className="overflow-hidden bg-black h-full relative">
                 <motion.div
                   style={{ y: y1 }}
-                  className="w-full h-full flex flex-col"
+                  className="w-full h-full flex flex-col will-change-transform"
                 >
                   {/* Frame 1: Facility Exterior Slice 1 */}
                   <div className="w-full h-full shrink-0 relative">
@@ -134,7 +179,7 @@ export default function SplitTriptychShowcase({
               <div className="overflow-hidden bg-black h-full relative">
                 <motion.div
                   style={{ y: y2 }}
-                  className="w-full h-full flex flex-col"
+                  className="w-full h-full flex flex-col will-change-transform"
                 >
                   {/* Frame 1: Facility Exterior Slice 2 */}
                   <div className="w-full h-full shrink-0 relative">
@@ -186,7 +231,7 @@ export default function SplitTriptychShowcase({
               <div className="overflow-hidden bg-black h-full relative">
                 <motion.div
                   style={{ y: y3 }}
-                  className="w-full h-full flex flex-col"
+                  className="w-full h-full flex flex-col will-change-transform"
                 >
                   {/* Frame 1: Facility Exterior Slice 3 */}
                   <div className="w-full h-full shrink-0 relative">
