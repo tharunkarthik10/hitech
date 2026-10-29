@@ -122,20 +122,6 @@ export default function IndustriesWeServe() {
                 Delivering world-class engineering solutions across diverse sectors. Our commitment to precision and quality ensures optimal performance in every application.
               </p>
             </div>
-
-            {/* Interactive Scroll Tracker Indicator */}
-            <div className="hidden md:flex items-center gap-4 bg-gray-50 border border-gray-200/80 px-4 py-2.5 rounded-full">
-              <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-[#64748b] uppercase">
-                <span>Scroll to explore</span>
-                <span className="text-[#00A6FB]">→</span>
-              </div>
-              <div className="w-24 h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                <motion.div
-                  className="h-full bg-gradient-to-r from-[#00A6FB] to-[#051923] rounded-full"
-                  style={{ scaleX: smoothProgress, transformOrigin: '0%' }}
-                />
-              </div>
-            </div>
           </div>
         </div>
 
