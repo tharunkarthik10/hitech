@@ -3,9 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowRight, ArrowUpRight, ShieldCheck, 
   Settings, X, Send, Sparkles,
-  ChevronLeft, ChevronRight
 } from 'lucide-react';
-
+import SplitTriptychShowcase from '../components/SplitTriptychShowcase';
 
 /**
  * THREE UNIFIED TYPOGRAPHIC STYLES (MATCHING USER'S EXACT REFERENCE):
@@ -602,24 +601,9 @@ export default function Production() {
         </motion.section>
 
         {/* ========================================================================= */}
-        {/* 06. FULL-SIZE SHOWCASE IMAGE */}
+        {/* 06. SPLIT TRIPTYCH SHOWCASE (3-SECTION PARALLAX SCROLL REVEAL) */}
         {/* ========================================================================= */}
-        <motion.section
-          id="facility-feature"
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full"
-        >
-          <div className="w-full rounded-2xl sm:rounded-[22px] overflow-hidden border border-gray-200/80 shadow-lg bg-black">
-            <img
-              src="/production_welder_full.png"
-              alt="Precision Industrial Welding & Fabrication"
-              className="w-full h-auto object-cover block"
-            />
-          </div>
-        </motion.section>
+        <SplitTriptychShowcase />
 
       </div>
 
