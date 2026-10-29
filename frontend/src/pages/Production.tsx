@@ -25,7 +25,7 @@ export default function Production() {
 
 
   return (
-    <main className="w-full min-h-screen bg-white text-[#121212] font-sans pt-20 sm:pt-24 pb-20 selection:bg-[#121212] selection:text-white overflow-x-hidden">
+    <main className="w-full min-h-screen bg-white text-[#121212] font-sans pt-20 sm:pt-24 pb-20 selection:bg-[#121212] selection:text-white overflow-x-clip">
       
       {/* Site-wide Container Matching Manufacturing and Home Page */}
       <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 space-y-12 lg:space-y-16">
