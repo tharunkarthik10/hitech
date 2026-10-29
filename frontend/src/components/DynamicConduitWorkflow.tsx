@@ -162,47 +162,6 @@ export default function DynamicConduitWorkflow({
         }}
       />
 
-      {/* ========================================================================= */}
-      {/* SECTION HEADER (Conduit Commerce Style) */}
-      {/* ========================================================================= */}
-      <div className="relative z-10 max-w-4xl mx-auto text-center space-y-5 mb-14 lg:mb-20">
-        {/* Toggle Pill Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-gray-200/90 shadow-2xs text-xs font-semibold text-[#003554]">
-          <span className="w-2 h-2 rounded-full bg-[#00A6FB] animate-pulse" />
-          <span>Feasibility</span>
-          <span className="text-gray-300">/</span>
-          <span className="text-[#64748b]">Takt-Time Sync</span>
-          <span className="text-gray-300">/</span>
-          <span className="text-[#006494]">Serial Launch</span>
-        </div>
-
-        {/* Big Bold Headline */}
-        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-bold tracking-tight text-[#121212] leading-[1.12]">
-          From engineered concept to serial launch{" "}
-          <span className="text-[#006494]">→ zero defect.</span>
-        </h2>
-
-        {/* Subtitle */}
-        <p className="text-sm sm:text-base md:text-lg text-[#475569] font-normal leading-relaxed max-w-2xl mx-auto">
-          We integrate every workstation into a single continuous pipeline—eliminating
-          handling bottlenecks with ergonomic fixtures, optical sensors, and verified repeatability.
-        </p>
-
-        {/* Action Button */}
-        <div className="pt-2 flex justify-center">
-          <button
-            onClick={() =>
-              openQuoteModal(
-                "Assembly Line Balancing & Production Process Architecture"
-              )
-            }
-            className="px-6 py-3 rounded-full bg-[#121212] hover:bg-black text-white font-medium text-sm tracking-tight transition-all shadow-xs flex items-center gap-2 cursor-pointer active:scale-95"
-          >
-            <span>Initiate Line Balancing Review</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
-        </div>
-      </div>
 
       {/* ========================================================================= */}
       {/* PROGRESS TRACKER BAR (Top Sticky Anchor) */}
