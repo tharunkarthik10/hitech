@@ -27,7 +27,8 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
       if (override !== null) return override;
       const r = sec!.getBoundingClientRect();
       const vh = window.innerHeight;
-      return clamp((vh - r.top) / (vh * 0.95));
+      // Slower scroll effect progression across a wider scroll window (reduced effect speed)
+      return clamp((vh - r.top) / (vh * 1.75));
     }
 
     function render() {
@@ -44,12 +45,13 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
           return;
         }
         const d = parseFloat(el.style.getPropertyValue("--d")) || 0;
-        const t = ease(clamp((p - d * 0.55) / 0.45));
+        // Widen transition window to soften and slow down the motion
+        const t = ease(clamp((p - d * 0.45) / 0.55));
         const left = g.left + el.offsetLeft;
         const top = g.top + el.offsetTop;
-        // start fully outside the viewport (right + bottom), travel the diagonal to the final spot
-        const dx = (vw - left + vw * 1.2) * (1 - t);
-        const dy = (vh - top + vh * 1.2) * (1 - t);
+        // Start comfortably off-screen with gentle diagonal travel distance
+        const dx = (vw - left + vw * 0.35) * (1 - t);
+        const dy = (vh - top + vh * 0.35) * (1 - t);
         el.style.transform = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0)`;
         el.style.opacity = "1";
       });
@@ -66,7 +68,8 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
     const replayBtn = document.getElementById("facility-archive-replay");
     const handleReplay = () => {
       const s = performance.now();
-      const dur = 1800;
+      // Increased duration from 1800ms to 3200ms to reduce effect speed significantly
+      const dur = 3200;
       function step(n: number) {
         override = clamp((n - s) / dur);
         render();
@@ -123,9 +126,6 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
         .facility-archive-stage {
           position: relative;
           width: 100%;
-          max-width: 1260px;
-          margin-left: 0;
-          margin-right: auto;
           aspect-ratio: 1.0230;
           container-type: inline-size;
         }
