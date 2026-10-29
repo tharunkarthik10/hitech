@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import SplitTriptychShowcase from '../components/SplitTriptychShowcase';
 import { FacilityArchiveDiagonalGallery } from '../components/FacilityArchiveDiagonalGallery';
+import { ManufacturingWorkflowInfographic } from '../components/ManufacturingWorkflowInfographic';
 
 /**
  * THREE UNIFIED TYPOGRAPHIC STYLES (MATCHING USER'S EXACT REFERENCE):
@@ -153,6 +154,11 @@ export default function Production() {
         {/* 06. SPLIT TRIPTYCH SHOWCASE (3-SECTION PARALLAX SCROLL REVEAL) */}
         {/* ========================================================================= */}
         <SplitTriptychShowcase />
+
+        {/* ========================================================================= */}
+        {/* 07. WORKFLOW / OUR PROCESS INFOGRAPHIC */}
+        {/* ========================================================================= */}
+        <ManufacturingWorkflowInfographic openQuoteModal={openQuoteModal} />
 
       </div>
 
