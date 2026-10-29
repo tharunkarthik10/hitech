@@ -1,4 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X } from "lucide-react";
 
 interface FacilityArchiveDiagonalGalleryProps {
   openQuoteModal: (source: string) => void;
@@ -9,6 +11,31 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
 }) => {
   const secRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
+  const [selectedImage, setSelectedImage] = useState<{ src: string; alt: string } | null>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelectedImage(null);
+    };
+    if (selectedImage) {
+      window.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";
+    }
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [selectedImage]);
+
+  const handleGridClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = (e.target as HTMLElement).closest<HTMLElement>(".it.card");
+    if (target) {
+      const img = target.querySelector<HTMLImageElement>("img");
+      if (img && img.src) {
+        setSelectedImage({ src: img.src, alt: img.alt || "Facility Archive Detail" });
+      }
+    }
+  };
 
   useEffect(() => {
     const sec = secRef.current;
@@ -113,11 +140,14 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
           border-radius: 4px;
           background: #f1f5f9;
           box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08);
-          transition: filter 0.3s ease, box-shadow 0.3s ease;
+          transition: filter 0.3s ease, box-shadow 0.3s ease, transform 0.25s ease;
+          cursor: pointer;
         }
         .facility-archive-stage .card:hover {
-          box-shadow: 0 12px 32px -4px rgba(15, 23, 42, 0.16);
-          filter: brightness(1.03);
+          box-shadow: 0 16px 36px -4px rgba(15, 23, 42, 0.2);
+          filter: brightness(1.05);
+          transform: scale(1.025);
+          z-index: 5;
         }
         .facility-archive-stage .card img {
           display: block;
@@ -294,7 +324,7 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
       `}</style>
 
       <section ref={secRef} id="gallery" className="facility-archive-sec my-12 sm:my-16">
-        <div ref={gridRef} className="facility-archive-stage" id="grid">
+        <div ref={gridRef} onClick={handleGridClick} className="facility-archive-stage" id="grid">
           {/* ITEM 1: Title & Lead Text (Static, Moved to Border of Section, Safe Width Avoiding Any Card) */}
           <div
             className="facility-archive-header"
@@ -671,6 +701,57 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
         </div>
       </section>
 
+      {/* Lightbox Modal: Opens and Displays Image Big */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.22 }}
+            onClick={() => setSelectedImage(null)}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-8 bg-black/85 backdrop-blur-md cursor-zoom-out"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.94, y: 10 }}
+              transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-5xl max-h-[92vh] w-full flex flex-col items-center cursor-default"
+            >
+              {/* Close Button Top Right */}
+              <button
+                type="button"
+                onClick={() => setSelectedImage(null)}
+                className="absolute -top-12 sm:-top-14 right-0 z-10 w-10 h-10 rounded-full bg-white/10 hover:bg-white text-white hover:text-black flex items-center justify-center transition-colors backdrop-blur-md cursor-pointer border border-white/20 shadow-lg"
+                title="Close image"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              {/* Big Image Display Container */}
+              <div className="relative w-full overflow-hidden rounded-2xl sm:rounded-3xl border border-white/15 bg-black shadow-2xl flex items-center justify-center">
+                <img
+                  src={selectedImage.src}
+                  alt={selectedImage.alt}
+                  className="max-h-[78vh] w-auto max-w-full object-contain block select-none"
+                />
+              </div>
+
+              {/* Caption / Title */}
+              <div className="mt-3 flex items-center justify-between w-full px-2 text-white/90">
+                <span className="text-sm sm:text-base font-medium tracking-tight">
+                  {selectedImage.alt}
+                </span>
+                <span className="text-xs font-normal text-white/60 hidden sm:inline">
+                  Click outside or press Esc to close
+                </span>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };
