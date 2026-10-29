@@ -54,8 +54,7 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
       if (override !== null) return override;
       const r = sec!.getBoundingClientRect();
       const vh = window.innerHeight;
-      // Balanced scroll progress window (vh * 2.1) for an engaging, slightly faster pace
-      return clamp((vh - r.top) / (vh * 2.1));
+      return clamp((vh - r.top) / (vh * 1.8));
     }
 
     function render() {
@@ -63,7 +62,6 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
       const p = progress();
       const vw = window.innerWidth;
       const vh = window.innerHeight;
-      const g = grid!.getBoundingClientRect();
 
       items.forEach((el) => {
         if (reduce) {
@@ -72,13 +70,11 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
           return;
         }
         const d = parseFloat(el.style.getPropertyValue("--d")) || 0;
-        // Balanced transition window (0.55)
         const t = ease(clamp((p - d * 0.45) / 0.55));
-        const left = g.left + el.offsetLeft;
-        const top = g.top + el.offsetTop;
-        // Controlled off-screen travel offset (0.25vw/vh)
-        const dx = (vw - left + vw * 0.25) * (1 - t);
-        const dy = (vh - top + vh * 0.25) * (1 - t);
+        // True parallel diagonal origin: every card travels along its own diagonal from 100% outside the viewport
+        const travel = Math.max(vw, vh) * 1.25;
+        const dx = travel * (1 - t);
+        const dy = travel * (1 - t);
         el.style.transform = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0)`;
         el.style.opacity = "1";
       });
@@ -140,13 +136,12 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
           border-radius: 4px;
           background: #f1f5f9;
           box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08);
-          transition: filter 0.3s ease, box-shadow 0.3s ease, transform 0.25s ease;
+          transition: filter 0.3s ease, box-shadow 0.3s ease;
           cursor: pointer;
         }
         .facility-archive-stage .card:hover {
           box-shadow: 0 16px 36px -4px rgba(15, 23, 42, 0.2);
-          filter: brightness(1.05);
-          transform: scale(1.025);
+          filter: brightness(1.06);
           z-index: 5;
         }
         .facility-archive-stage .card img {
@@ -154,6 +149,10 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
           width: 100%;
           height: 100%;
           object-fit: cover;
+          transition: transform 0.35s ease;
+        }
+        .facility-archive-stage .card:hover img {
+          transform: scale(1.05);
         }
         .facility-archive-stage .facility-archive-header {
           position: absolute;
