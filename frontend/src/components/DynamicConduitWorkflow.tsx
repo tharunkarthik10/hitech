@@ -164,49 +164,6 @@ export default function DynamicConduitWorkflow({
 
 
       {/* ========================================================================= */}
-      {/* PROGRESS TRACKER BAR (Top Sticky Anchor) */}
-      {/* ========================================================================= */}
-      <div className="relative z-10 max-w-4xl mx-auto mb-12 sm:mb-16">
-        <div className="grid grid-cols-4 gap-2 sm:gap-4 p-1.5 bg-white/80 backdrop-blur-md rounded-2xl border border-gray-200/80 shadow-2xs">
-          {workflowSteps.map((s, idx) => {
-            const isActive = activeStepIndex === idx;
-            const isPassed = activeStepIndex > idx;
-            return (
-              <button
-                key={s.id}
-                onClick={() => {
-                  const el = document.getElementById(s.id);
-                  el?.scrollIntoView({ behavior: "smooth", block: "center" });
-                }}
-                className={`py-2 px-2 sm:px-4 rounded-xl text-left transition-all duration-300 flex items-center gap-2 sm:gap-3 cursor-pointer ${
-                  isActive
-                    ? "bg-[#003554] text-white shadow-sm"
-                    : isPassed
-                    ? "text-[#003554] hover:bg-gray-100/80"
-                    : "text-[#64748b] hover:bg-gray-50"
-                }`}
-              >
-                <span
-                  className={`text-xs font-mono font-bold px-1.5 py-0.5 rounded-md ${
-                    isActive
-                      ? "bg-white/20 text-white"
-                      : isPassed
-                      ? "bg-[#003554]/10 text-[#003554]"
-                      : "bg-gray-100 text-[#94a3b8]"
-                  }`}
-                >
-                  {s.stepNumber}
-                </span>
-                <span className="text-xs sm:text-sm font-semibold truncate hidden md:inline-block">
-                  {s.title.split(" ")[1] || s.title}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* ========================================================================= */}
       {/* MAIN CONDUIT FLOW CONTAINER WITH SNAKE CABLE */}
       {/* ========================================================================= */}
       <div className="relative z-10 max-w-6xl mx-auto">
@@ -247,10 +204,10 @@ export default function DynamicConduitWorkflow({
             <path
               d="
                 M 500 0
-                V 140
-                Q 500 170 470 170
+                V 40
+                Q 500 70 470 70
                 H 70
-                Q 40 170 40 200
+                Q 40 70 40 100
                 V 620
                 Q 40 650 70 650
                 H 930
@@ -278,10 +235,10 @@ export default function DynamicConduitWorkflow({
             <motion.path
               d="
                 M 500 0
-                V 140
-                Q 500 170 470 170
+                V 40
+                Q 500 70 470 70
                 H 70
-                Q 40 170 40 200
+                Q 40 70 40 100
                 V 620
                 Q 40 650 70 650
                 H 930
