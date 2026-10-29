@@ -13,340 +13,433 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
   return (
     <section
       id="workflow"
-      className={`w-full py-14 sm:py-20 border-t border-gray-200/90 bg-[#F6F4F0] text-[#121212] rounded-3xl sm:rounded-[36px] my-10 sm:my-16 overflow-hidden ${className}`}
+      className={`w-full py-6 sm:py-10 text-[#121212] overflow-hidden ${className}`}
     >
-      <div className="w-full max-w-[1340px] mx-auto px-6 sm:px-10 lg:px-14">
-        {/* Top Header / Infographic Meta */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6 sm:mb-10">
-          <div className="space-y-1">
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#121212] leading-tight">
-              Our Process
-            </h2>
-            <p className="text-xs sm:text-sm font-semibold tracking-wider uppercase text-[#64748b]">
-              Contract Manufacturing Workflow
-            </p>
-          </div>
-          {openQuoteModal && (
-            <button
-              onClick={() => openQuoteModal("Workflow Consultation")}
-              className="self-start sm:self-auto px-5 py-2.5 rounded-full bg-[#121212] hover:bg-black text-white text-xs font-semibold tracking-tight transition-all shadow-sm flex items-center gap-2 cursor-pointer active:scale-95"
-            >
-              <span>Consult Engineering Team</span>
-              <span>↗</span>
-            </button>
-          )}
+      {/* ========================================================================= */}
+      {/* 1. Header Block - MATCHING EXACT SECTION TITLE STYLE (SECTION 06 / 05)   */}
+      {/* ========================================================================= */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 sm:mb-12">
+        <div className="space-y-3 max-w-3xl">
+          <span className="text-sm font-medium tracking-tight text-[#64748b]">
+            ✦ Section 07 — Our Workflow
+          </span>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#121212] leading-[1.15] mt-1">
+            Our Workflow.<br />
+            <span className="font-normal text-[#64748b]">Contract Manufacturing Process &amp; Lifecycle.</span>
+          </h2>
+          <p className="text-xs sm:text-sm md:text-base text-[#475569] font-normal leading-relaxed pt-1">
+            From initial RFQ telemetry and metallurgical research to automated robotic assembly and coordinate-validated JIT delivery.
+          </p>
         </div>
 
-        {/* ========================================================================= */}
-        {/* DESKTOP / TABLET INFOGRAPHIC (CONTINUOUS FLUID SVG CONDUIT + NODES)       */}
-        {/* ========================================================================= */}
-        <div className="relative w-full aspect-[1200/620] hidden md:block select-none">
-          {/* Background SVG Path Canvas */}
-          <svg
-            viewBox="0 0 1200 620"
-            className="w-full h-full overflow-visible"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+        {openQuoteModal && (
+          <button
+            onClick={() => openQuoteModal("Workflow Consultation")}
+            className="self-start md:self-end px-5 py-2.5 rounded-full bg-[#121212] hover:bg-black text-white text-xs font-semibold tracking-tight transition-all shadow-xs flex items-center gap-2 cursor-pointer active:scale-95 shrink-0"
           >
-            <defs>
-              {/* Arrowhead marker for path exit */}
-              <marker
-                id="workflow-arrow"
-                viewBox="0 0 14 14"
-                refX="10"
-                refY="7"
-                markerWidth="8"
-                markerHeight="8"
-                orient="auto-start-reverse"
-              >
-                <path d="M 0 1 L 12 7 L 0 13 z" fill="#5F7D74" />
-              </marker>
+            <span>Consult Engineering Team</span>
+            <span>↗</span>
+          </button>
+        )}
+      </div>
 
-              {/* Loop dashed return arrow */}
-              <marker
-                id="loop-arrow"
-                viewBox="0 0 12 12"
-                refX="9"
-                refY="6"
-                markerWidth="6"
-                markerHeight="6"
-                orient="auto-start-reverse"
-              >
-                <path d="M 0 2 L 10 6 L 0 10 z" fill="#718E85" />
-              </marker>
+      {/* ========================================================================= */}
+      {/* 2. DESKTOP / TABLET INFOGRAPHIC (FULL SIDE, ZERO-OVERLAP VECTOR GRAPHIC)  */}
+      {/* ========================================================================= */}
+      <div className="w-full hidden md:block select-none">
+        <svg
+          viewBox="0 0 1440 640"
+          className="w-full h-auto overflow-visible"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            {/* Terminal Arrowhead */}
+            <marker
+              id="workflow-terminal-arrow"
+              viewBox="0 0 16 16"
+              refX="11"
+              refY="8"
+              markerWidth="10"
+              markerHeight="10"
+              orient="auto-start-reverse"
+            >
+              <path d="M 0 2 L 14 8 L 0 14 z" fill="#5F7D74" />
+            </marker>
 
-              {/* Drop Shadow Filter for Walker Silhouette */}
-              <filter id="walker-shadow" x="-30%" y="-30%" width="160%" height="160%">
-                <feGaussianBlur in="SourceAlpha" stdDeviation="2.5" />
-                <feOffset dx="14" dy="6" result="offsetblur" />
-                <feComponentTransfer>
-                  <feFuncA type="linear" slope="0.35" />
-                </feComponentTransfer>
-                <feMerge>
-                  <feMergeNode />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-            </defs>
+            {/* Iterative loop feedback arrow */}
+            <marker
+              id="workflow-loop-arrow"
+              viewBox="0 0 12 12"
+              refX="9"
+              refY="6"
+              markerWidth="7"
+              markerHeight="7"
+              orient="auto-start-reverse"
+            >
+              <path d="M 0 2 L 10 6 L 0 10 z" fill="#718E85" />
+            </marker>
+          </defs>
 
-            {/* 1. Horizontal connecting branch between Brief & Research */}
-            <line
-              x1="90"
-              y1="326"
-              x2="280"
-              y2="326"
-              stroke="#5F7D74"
-              strokeWidth="2.5"
+          {/* 1. Horizontal Branch Divider between Brief & Research */}
+          <line
+            x1="80"
+            y1="370"
+            x2="340"
+            y2="370"
+            stroke="#5F7D74"
+            strokeWidth="2.5"
+          />
+
+          {/* 2. Main Continuous Fluid Conduit Path */}
+          <motion.path
+            initial={{ pathLength: 0.85 }}
+            animate={{ pathLength: 1 }}
+            transition={{ duration: 1.4, ease: "easeOut" }}
+            d="
+              M 100, 180
+              L 180, 180
+              C 260, 180  330, 210  340, 270
+              L 340, 480
+              C 340, 560  430, 580  510, 580
+              C 580, 580  650, 540  650, 460
+              L 650, 280
+              C 650, 150  940, 150  940, 280
+              L 940, 470
+              C 940, 560  1020, 580 1100, 580
+              C 1170, 580 1240, 540 1240, 450
+              C 1240, 350 1290, 230 1360, 200
+            "
+            stroke="#5F7D74"
+            strokeWidth="3"
+            strokeLinecap="round"
+            fill="none"
+            markerEnd="url(#workflow-terminal-arrow)"
+          />
+
+          {/* 3. Proposals Loop Dashed Feedback Route */}
+          <path
+            d="
+              M 660, 430
+              C 660, 510  720, 545  795, 545
+              C 870, 545  930, 510  930, 440
+            "
+            stroke="#718E85"
+            strokeWidth="2.2"
+            strokeDasharray="6 6"
+            fill="none"
+            markerEnd="url(#workflow-loop-arrow)"
+          />
+
+          {/* 4. Walker Silhouette & Cast Shadow on Loop Apex */}
+          <g transform="translate(775, 148)">
+            {/* Extended Perspective Shadow Cast along the top curve */}
+            <ellipse
+              cx="54"
+              cy="2"
+              rx="48"
+              ry="4.5"
+              transform="rotate(6, 54, 2)"
+              fill="#121212"
+              opacity="0.88"
             />
 
-            {/* 2. Main Continuous Fluid Conduit Line */}
-            <motion.path
-              initial={{ pathLength: 0.9 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 1.5, ease: "easeOut" }}
-              d="
-                M 110, 210
-                C 190, 210  250, 260  280, 290
-                L 280, 360
-                C 280, 450  340, 485  430, 485
-                C 500, 485  525, 445  525, 360
-                L 525, 270
-                C 525, 175  735, 175  735, 270
-                L 735, 370
-                C 735, 455  775, 485  855, 485
-                C 925, 485  955, 445  955, 350
-                C 955, 270  1010, 205 1065, 205
-              "
-              stroke="#5F7D74"
-              strokeWidth="2.8"
-              strokeLinecap="round"
-              fill="none"
-              markerEnd="url(#workflow-arrow)"
-            />
-
-            {/* 3. Proposals Loop Dashed Iteration Route with Direction Arrow */}
-            <path
-              d="
-                M 535, 350
-                C 535, 440  555, 475  630, 475
-                C 705, 475  725, 440  725, 360
-              "
-              stroke="#718E85"
-              strokeWidth="2.2"
-              strokeDasharray="6 6"
-              fill="none"
-              markerEnd="url(#loop-arrow)"
-            />
-
-            {/* 4. Walker Silhouette & Cast Shadow on Loop Apex */}
-            <g transform="translate(610, 160)">
-              {/* Elliptical Cast Shadow stretching forward along the curve */}
-              <ellipse
-                cx="58"
-                cy="19"
-                rx="52"
-                ry="5"
-                transform="rotate(6, 58, 19)"
-                fill="#121212"
-                opacity="0.85"
-              />
-
-              {/* Minimalist Walking Silhouette Figure */}
-              <g fill="#121212">
-                {/* Head */}
-                <circle cx="16" cy="-28" r="4.2" />
-                {/* Torso & Jacket */}
-                <path d="M 13 -22 C 14 -24, 18 -24, 19 -22 L 20 -8 L 13 -8 Z" />
-                {/* Arms */}
-                <path d="M 13 -20 L 9 -10" stroke="#121212" strokeWidth="2.2" strokeLinecap="round" />
-                <path d="M 19 -20 L 23 -11" stroke="#121212" strokeWidth="2.2" strokeLinecap="round" />
-                {/* Back Leg (Trailing) */}
-                <path d="M 14 -8 L 10 3 L 8 16" stroke="#121212" strokeWidth="2.4" strokeLinecap="round" />
-                {/* Front Leg (Stride Forward) */}
-                <path d="M 18 -8 L 22 4 L 28 17" stroke="#121212" strokeWidth="2.4" strokeLinecap="round" />
-              </g>
+            {/* Walking Silhouette Figure */}
+            <g fill="#121212">
+              {/* Head */}
+              <circle cx="16" cy="-42" r="4.5" />
+              {/* Torso & Suit Jacket */}
+              <path d="M 12 -36 C 13 -38, 19 -38, 20 -36 L 21 -18 L 12 -18 Z" />
+              {/* Arms */}
+              <path d="M 12 -33 L 7 -20" stroke="#121212" strokeWidth="2.4" strokeLinecap="round" />
+              <path d="M 20 -33 L 25 -21" stroke="#121212" strokeWidth="2.4" strokeLinecap="round" />
+              {/* Trailing Leg */}
+              <path d="M 13 -18 L 9 -3 L 6 12" stroke="#121212" strokeWidth="2.6" strokeLinecap="round" />
+              {/* Forward Stride Leg */}
+              <path d="M 19 -18 L 24 -2 L 30 13" stroke="#121212" strokeWidth="2.6" strokeLinecap="round" />
             </g>
+          </g>
 
-            {/* 5. Accent Red Circular Nodes of Varying Sizes */}
-            {/* Start Node */}
-            <circle cx="110" cy="210" r="19" fill="#E6392E" />
+          {/* 5. Accent Coral-Red Circular Nodes of Distinct Dimensions */}
+          {/* Start Node */}
+          <circle cx="100" cy="180" r="18" fill="#E6392E" />
 
-            {/* Node 1 (Brief upper connector) */}
-            <circle cx="280" cy="295" r="27" fill="#E6392E" />
+          {/* Node 1: Brief upper connector */}
+          <circle cx="340" cy="310" r="26" fill="#E6392E" />
 
-            {/* Node 2 (Research lower node - large) */}
-            <circle cx="280" cy="370" r="48" fill="#E6392E" />
+          {/* Node 2: Research lower node (large) */}
+          <circle cx="340" cy="440" r="44" fill="#E6392E" />
 
-            {/* Node 3 (Study arch base node) */}
-            <circle cx="525" cy="290" r="42" fill="#E6392E" />
+          {/* Node 3: Study arch base node */}
+          <circle cx="650" cy="340" r="40" fill="#E6392E" />
 
-            {/* Node 4 (Proposals loop node) */}
-            <circle cx="735" cy="370" r="42" fill="#E6392E" />
+          {/* Node 4: Proposals loop node */}
+          <circle cx="940" cy="430" r="40" fill="#E6392E" />
 
-            {/* Node 5 (Delivery final node) */}
-            <circle cx="955" cy="305" r="36" fill="#E6392E" />
-          </svg>
+          {/* Node 5: Delivery rising node */}
+          <circle cx="1240" cy="360" r="38" fill="#E6392E" />
 
           {/* ========================================================================= */}
-          {/* HTML TEXT BLOCKS PRECISELY POSITIONED OVER THE INFOGRAPHIC STAGES        */}
+          {/* 6. VECTOR TEXT BLOCKS LOCKED TO THE COORDINATE GRID (NO OVERLAPS)        */}
           {/* ========================================================================= */}
 
           {/* STAGE 1: BRIEF */}
-          <div
-            className="absolute"
-            style={{ left: "7.5%", top: "41.5%", width: "14%" }}
-          >
-            <h3 className="text-lg font-bold tracking-tight text-[#121212] mb-1">
+          <g>
+            <text
+              x="80"
+              y="270"
+              fill="#121212"
+              fontSize="20"
+              fontWeight="700"
+              letterSpacing="-0.02em"
+              fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+            >
               Brief
-            </h3>
-            <p className="text-[11.5px] leading-relaxed text-[#4b5878] font-normal">
-              Initial customer RFQ review, 3D CAD analysis, geometric dimensioning and tolerance (GD&amp;T) alignment, and volume targets.
-            </p>
-          </div>
+            </text>
+            <text
+              x="80"
+              y="294"
+              fill="#475569"
+              fontSize="12"
+              fontWeight="400"
+              fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+            >
+              <tspan x="80" dy="0">Initial customer RFQ review, 3D CAD</tspan>
+              <tspan x="80" dy="17">analysis, geometric dimensioning</tspan>
+              <tspan x="80" dy="17">and tolerance (GD&amp;T) alignment,</tspan>
+              <tspan x="80" dy="17">and serialized volume targets.</tspan>
+            </text>
+          </g>
 
           {/* STAGE 2: RESEARCH */}
-          <div
-            className="absolute"
-            style={{ left: "7.5%", top: "58.5%", width: "14%" }}
-          >
-            <h3 className="text-lg font-bold tracking-tight text-[#121212] mb-1">
+          <g>
+            <text
+              x="80"
+              y="410"
+              fill="#121212"
+              fontSize="20"
+              fontWeight="700"
+              letterSpacing="-0.02em"
+              fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+            >
               Research
-            </h3>
-            <p className="text-[11.5px] leading-relaxed text-[#4b5878] font-normal">
-              Certified metallurgy selection, heat-treat scheduling, tool path simulations, and raw stock supply chain mapping.
-            </p>
-          </div>
+            </text>
+            <text
+              x="80"
+              y="434"
+              fill="#475569"
+              fontSize="12"
+              fontWeight="400"
+              fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+            >
+              <tspan x="80" dy="0">Certified metallurgy selection,</tspan>
+              <tspan x="80" dy="17">heat-treat scheduling, tool path</tspan>
+              <tspan x="80" dy="17">simulations, and raw stock supply</tspan>
+              <tspan x="80" dy="17">chain mapping.</tspan>
+            </text>
+          </g>
 
           {/* STAGE 3: STUDY */}
-          <div
-            className="absolute"
-            style={{ left: "30.5%", top: "27.5%", width: "15.5%" }}
-          >
-            <h3 className="text-lg font-bold tracking-tight text-[#121212] mb-1">
+          <g>
+            <text
+              x="420"
+              y="250"
+              fill="#121212"
+              fontSize="20"
+              fontWeight="700"
+              letterSpacing="-0.02em"
+              fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+            >
               Study
-            </h3>
-            <p className="text-[11.5px] leading-relaxed text-[#4b5878] font-normal mb-2">
-              Design for Manufacturability (DFM) audits, fixture engineering, robotic cell line-balancing, and cycle time reduction.
-            </p>
-            <p className="text-[11px] leading-relaxed text-[#64748b] font-normal">
-              Digital twin feasibility and FEA stress testing ensure zero unforced engineering change orders.
-            </p>
-          </div>
+            </text>
+            <text
+              x="420"
+              y="274"
+              fill="#475569"
+              fontSize="12"
+              fontWeight="400"
+              fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+            >
+              <tspan x="420" dy="0">Design for Manufacturability (DFM)</tspan>
+              <tspan x="420" dy="17">audits, fixture engineering, robotic</tspan>
+              <tspan x="420" dy="17">cell line-balancing, and cycle time</tspan>
+              <tspan x="420" dy="17">reduction.</tspan>
+            </text>
+            <text
+              x="420"
+              y="360"
+              fill="#64748b"
+              fontSize="11.5"
+              fontWeight="400"
+              fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+            >
+              <tspan x="420" dy="0">Digital twin feasibility and FEA</tspan>
+              <tspan x="420" dy="16">stress testing ensure zero unforced</tspan>
+              <tspan x="420" dy="16">engineering change orders.</tspan>
+            </text>
+          </g>
 
-          {/* STAGE 4: PROPOSALS */}
-          <div
-            className="absolute"
-            style={{ left: "47.5%", top: "34.5%", width: "17%" }}
-          >
-            <h3 className="text-lg font-bold tracking-tight text-[#121212] mb-1">
+          {/* STAGE 4: PROPOSALS (CENTERED INSIDE ARCH) */}
+          <g>
+            <text
+              x="710"
+              y="260"
+              fill="#121212"
+              fontSize="20"
+              fontWeight="700"
+              letterSpacing="-0.02em"
+              fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+            >
               Proposals
-            </h3>
-            <p className="text-[11.5px] leading-relaxed text-[#4b5878] font-normal mb-2">
-              Comprehensive turnkey quotation, serialized batch pricing, transparent lead-time SLA milestones, and prototyping options.
-            </p>
-            <p className="text-[11px] leading-relaxed text-[#64748b] font-normal">
-              First-article inspection (FAI) protocols and customized Kanban staging buffers tailored to client factory intake schedules.
-            </p>
-          </div>
+            </text>
+            <text
+              x="710"
+              y="284"
+              fill="#475569"
+              fontSize="12"
+              fontWeight="400"
+              fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+            >
+              <tspan x="710" dy="0">Comprehensive turnkey quotation,</tspan>
+              <tspan x="710" dy="17">serialized batch pricing, transparent</tspan>
+              <tspan x="710" dy="17">lead-time SLA milestones, and</tspan>
+              <tspan x="710" dy="17">prototyping options.</tspan>
+            </text>
+            <text
+              x="710"
+              y="370"
+              fill="#64748b"
+              fontSize="11.5"
+              fontWeight="400"
+              fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+            >
+              <tspan x="710" dy="0">First-article inspection (FAI) protocols</tspan>
+              <tspan x="710" dy="16">and customized Kanban staging buffers</tspan>
+              <tspan x="710" dy="16">tailored to client intake schedules.</tspan>
+            </text>
+          </g>
 
           {/* STAGE 5: DELIVERY */}
-          <div
-            className="absolute"
-            style={{ left: "67.5%", top: "27.5%", width: "16%" }}
-          >
-            <h3 className="text-lg font-bold tracking-tight text-[#121212] mb-1">
+          <g>
+            <text
+              x="1010"
+              y="250"
+              fill="#121212"
+              fontSize="20"
+              fontWeight="700"
+              letterSpacing="-0.02em"
+              fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+            >
               Delivery
-            </h3>
-            <p className="text-[11.5px] leading-relaxed text-[#4b5878] font-normal mb-2">
-              100% CMM coordinate validation, ultrasonic cleaning, and cleanroom protective vacuum packaging.
-            </p>
-            <p className="text-[11px] leading-relaxed text-[#64748b] font-normal">
-              JIT serialized delivery directly to OEM assembly lines with full metallurgical test certification reports.
+            </text>
+            <text
+              x="1010"
+              y="274"
+              fill="#475569"
+              fontSize="12"
+              fontWeight="400"
+              fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+            >
+              <tspan x="1010" dy="0">100% CMM coordinate validation,</tspan>
+              <tspan x="1010" dy="17">ultrasonic cleaning, and cleanroom</tspan>
+              <tspan x="1010" dy="17">protective vacuum packaging.</tspan>
+            </text>
+            <text
+              x="1010"
+              y="346"
+              fill="#64748b"
+              fontSize="11.5"
+              fontWeight="400"
+              fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+            >
+              <tspan x="1010" dy="0">JIT serialized delivery directly to OEM</tspan>
+              <tspan x="1010" dy="16">assembly lines with full metallurgical</tspan>
+              <tspan x="1010" dy="16">test certification reports.</tspan>
+            </text>
+          </g>
+        </svg>
+      </div>
+
+      {/* ========================================================================= */}
+      {/* 3. MOBILE RESPONSIVE TIMELINE (FOR VIEWPORTS < 768PX)                     */}
+      {/* ========================================================================= */}
+      <div className="md:hidden space-y-6 pt-4">
+        {/* Step 1 */}
+        <div className="flex gap-4 items-start">
+          <div className="flex flex-col items-center shrink-0">
+            <div className="w-9 h-9 rounded-full bg-[#E6392E] text-white font-bold text-xs flex items-center justify-center shadow-xs">
+              01
+            </div>
+            <div className="w-0.5 h-16 bg-[#5F7D74]/40 my-1.5" />
+          </div>
+          <div className="pt-0.5">
+            <h3 className="text-base font-bold text-[#121212]">Brief</h3>
+            <p className="text-xs text-[#475569] leading-relaxed mt-1">
+              Initial customer RFQ review, 3D CAD analysis, geometric dimensioning and tolerance (GD&amp;T) alignment, and volume targets.
             </p>
           </div>
         </div>
 
-        {/* ========================================================================= */}
-        {/* MOBILE RESPONSIVE TIMELINE (FOR VIEWPORTS < 768PX)                        */}
-        {/* ========================================================================= */}
-        <div className="md:hidden space-y-6 pt-2">
-          {/* Mobile Step 1 */}
-          <div className="flex gap-4 items-start">
-            <div className="flex flex-col items-center shrink-0">
-              <div className="w-8 h-8 rounded-full bg-[#E6392E] text-white font-bold text-xs flex items-center justify-center">
-                01
-              </div>
-              <div className="w-0.5 h-16 bg-[#5F7D74]/40 my-1" />
+        {/* Step 2 */}
+        <div className="flex gap-4 items-start">
+          <div className="flex flex-col items-center shrink-0">
+            <div className="w-9 h-9 rounded-full bg-[#E6392E] text-white font-bold text-xs flex items-center justify-center shadow-xs">
+              02
             </div>
-            <div>
-              <h3 className="text-base font-bold text-[#121212]">Brief</h3>
-              <p className="text-xs text-[#4b5878] leading-relaxed mt-1">
-                Initial customer RFQ review, 3D CAD analysis, geometric dimensioning and tolerance (GD&amp;T) alignment, and volume targets.
-              </p>
+            <div className="w-0.5 h-16 bg-[#5F7D74]/40 my-1.5" />
+          </div>
+          <div className="pt-0.5">
+            <h3 className="text-base font-bold text-[#121212]">Research</h3>
+            <p className="text-xs text-[#475569] leading-relaxed mt-1">
+              Certified metallurgy selection, heat-treat scheduling, tool path simulations, and raw stock supply chain mapping.
+            </p>
+          </div>
+        </div>
+
+        {/* Step 3 */}
+        <div className="flex gap-4 items-start">
+          <div className="flex flex-col items-center shrink-0">
+            <div className="w-9 h-9 rounded-full bg-[#E6392E] text-white font-bold text-xs flex items-center justify-center shadow-xs">
+              03
+            </div>
+            <div className="w-0.5 h-16 bg-[#5F7D74]/40 my-1.5" />
+          </div>
+          <div className="pt-0.5">
+            <h3 className="text-base font-bold text-[#121212]">Study</h3>
+            <p className="text-xs text-[#475569] leading-relaxed mt-1">
+              Design for Manufacturability (DFM) audits, fixture engineering, robotic cell line-balancing, and cycle time reduction.
+            </p>
+          </div>
+        </div>
+
+        {/* Step 4 */}
+        <div className="flex gap-4 items-start">
+          <div className="flex flex-col items-center shrink-0">
+            <div className="w-9 h-9 rounded-full bg-[#E6392E] text-white font-bold text-xs flex items-center justify-center shadow-xs">
+              04
+            </div>
+            <div className="w-0.5 h-16 bg-[#5F7D74]/40 my-1.5" />
+          </div>
+          <div className="pt-0.5">
+            <h3 className="text-base font-bold text-[#121212]">Proposals</h3>
+            <p className="text-xs text-[#475569] leading-relaxed mt-1">
+              Comprehensive turnkey quotation, serialized batch pricing, transparent lead-time SLA milestones, and prototyping options.
+            </p>
+          </div>
+        </div>
+
+        {/* Step 5 */}
+        <div className="flex gap-4 items-start">
+          <div className="flex flex-col items-center shrink-0">
+            <div className="w-9 h-9 rounded-full bg-[#E6392E] text-white font-bold text-xs flex items-center justify-center shadow-xs">
+              05
             </div>
           </div>
-
-          {/* Mobile Step 2 */}
-          <div className="flex gap-4 items-start">
-            <div className="flex flex-col items-center shrink-0">
-              <div className="w-9 h-9 rounded-full bg-[#E6392E] text-white font-bold text-xs flex items-center justify-center">
-                02
-              </div>
-              <div className="w-0.5 h-16 bg-[#5F7D74]/40 my-1" />
-            </div>
-            <div>
-              <h3 className="text-base font-bold text-[#121212]">Research</h3>
-              <p className="text-xs text-[#4b5878] leading-relaxed mt-1">
-                Certified metallurgy selection, heat-treat scheduling, tool path simulations, and raw stock supply chain mapping.
-              </p>
-            </div>
-          </div>
-
-          {/* Mobile Step 3 */}
-          <div className="flex gap-4 items-start">
-            <div className="flex flex-col items-center shrink-0">
-              <div className="w-8 h-8 rounded-full bg-[#E6392E] text-white font-bold text-xs flex items-center justify-center">
-                03
-              </div>
-              <div className="w-0.5 h-16 bg-[#5F7D74]/40 my-1" />
-            </div>
-            <div>
-              <h3 className="text-base font-bold text-[#121212]">Study</h3>
-              <p className="text-xs text-[#4b5878] leading-relaxed mt-1">
-                Design for Manufacturability (DFM) audits, fixture engineering, robotic cell line-balancing, and cycle time reduction.
-              </p>
-            </div>
-          </div>
-
-          {/* Mobile Step 4 */}
-          <div className="flex gap-4 items-start">
-            <div className="flex flex-col items-center shrink-0">
-              <div className="w-9 h-9 rounded-full bg-[#E6392E] text-white font-bold text-xs flex items-center justify-center">
-                04
-              </div>
-              <div className="w-0.5 h-16 bg-[#5F7D74]/40 my-1" />
-            </div>
-            <div>
-              <h3 className="text-base font-bold text-[#121212]">Proposals</h3>
-              <p className="text-xs text-[#4b5878] leading-relaxed mt-1">
-                Comprehensive turnkey quotation, serialized batch pricing, transparent lead-time SLA milestones, and prototyping options.
-              </p>
-            </div>
-          </div>
-
-          {/* Mobile Step 5 */}
-          <div className="flex gap-4 items-start">
-            <div className="flex flex-col items-center shrink-0">
-              <div className="w-8 h-8 rounded-full bg-[#E6392E] text-white font-bold text-xs flex items-center justify-center">
-                05
-              </div>
-            </div>
-            <div>
-              <h3 className="text-base font-bold text-[#121212]">Delivery</h3>
-              <p className="text-xs text-[#4b5878] leading-relaxed mt-1">
-                100% CMM coordinate validation, ultrasonic cleaning, cleanroom protective packaging, and serialized JIT delivery.
-              </p>
-            </div>
+          <div className="pt-0.5">
+            <h3 className="text-base font-bold text-[#121212]">Delivery</h3>
+            <p className="text-xs text-[#475569] leading-relaxed mt-1">
+              100% CMM coordinate validation, ultrasonic cleaning, cleanroom protective packaging, and serialized JIT delivery.
+            </p>
           </div>
         </div>
       </div>
