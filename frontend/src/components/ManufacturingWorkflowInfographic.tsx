@@ -91,33 +91,33 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
     rawProgress.set(progress);
   };
 
-  // Continuous fluid conduit path coordinates (20% enlarged canvas)
+  // Continuous fluid conduit path coordinates (Enlarged Height: viewBox 1520 x 920)
   const conduitD = `
-    M 90, 200
-    L 170, 200
-    C 260, 200  330, 230  340, 290
-    L 340, 520
-    C 340, 630  440, 660  530, 660
-    C 610, 660  680, 610  680, 500
-    L 680, 300
-    C 680, 150  1000, 150 1000, 300
-    L 1000, 520
-    C 1000, 630 1090, 660 1170, 660
-    C 1240, 660 1320, 600 1320, 490
-    C 1320, 380 1370, 240 1450, 200
+    M 90, 220
+    L 170, 220
+    C 260, 220  330, 260  340, 320
+    L 340, 660
+    C 340, 790  440, 830  530, 830
+    C 610, 830  680, 770  680, 640
+    L 680, 340
+    C 680, 140  1000, 140 1000, 340
+    L 1000, 660
+    C 1000, 790 1090, 830 1170, 830
+    C 1240, 830 1320, 770 1320, 620
+    C 1320, 470 1370, 270 1450, 220
   `;
 
   // Iterative feedback dashed loop path at bottom of proposals arch
   const feedbackLoopD = `
-    M 690, 460
-    C 690, 550  760, 595  840, 595
-    C 920, 595  990, 550  990, 470
+    M 690, 560
+    C 690, 680  760, 735  840, 735
+    C 920, 735  990, 680  990, 570
   `;
 
   return (
     <section
       id="workflow"
-      className={`w-full py-8 sm:py-14 text-[#121212] overflow-hidden ${className}`}
+      className={`w-full py-10 sm:py-16 text-[#121212] overflow-hidden ${className}`}
     >
       <style>{`
         .wf-interactive-node {
@@ -126,14 +126,14 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
         }
         .wf-interactive-node:hover {
           transform: scale(1.08);
-          filter: drop-shadow(0 6px 14px rgba(230, 57, 46, 0.45));
+          filter: drop-shadow(0 8px 18px rgba(230, 57, 46, 0.45));
         }
       `}</style>
 
       {/* ========================================================================= */}
       {/* 1. Header Block - MATCHING EXACT SECTION TITLE STYLE (SECTION 06 / 05)   */}
       {/* ========================================================================= */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 sm:mb-12">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-14">
         <div className="space-y-3 max-w-3xl">
           <span className="text-sm font-medium tracking-tight text-[#64748b]">
             ✦ Section 07 — Our Workflow
@@ -159,7 +159,7 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
       </div>
 
       {/* ========================================================================= */}
-      {/* 2. BUTTERY-SMOOTH GPU CURSOR-DRIVEN FLOWCHART (PROPER ENDPOINTS)          */}
+      {/* 2. TALLER INFOGRAPHIC CANVAS (HEIGHT INCREASED, LARGER TYPOGRAPHY)         */}
       {/* ========================================================================= */}
       <div
         ref={containerRef}
@@ -170,7 +170,7 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
         className="w-full hidden md:block select-none relative cursor-crosshair"
       >
         <svg
-          viewBox="0 0 1520 740"
+          viewBox="0 0 1520 920"
           className="w-full h-auto overflow-visible"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -182,8 +182,8 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
               viewBox="0 0 16 16"
               refX="11"
               refY="8"
-              markerWidth="11"
-              markerHeight="11"
+              markerWidth="12"
+              markerHeight="12"
               orient="auto-start-reverse"
             >
               <path d="M 0 2 L 14 8 L 0 14 z" fill="#5F7D74" />
@@ -195,8 +195,8 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
               viewBox="0 0 16 16"
               refX="11"
               refY="8"
-              markerWidth="11"
-              markerHeight="11"
+              markerWidth="12"
+              markerHeight="12"
               orient="auto-start-reverse"
             >
               <path d="M 0 2 L 14 8 L 0 14 z" fill="#5F7D74" opacity="0.4" />
@@ -227,18 +227,18 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
           {/* 1. Horizontal Branch Divider between Brief & Research */}
           <line
             x1="70"
-            y1="400"
+            y1="495"
             x2="340"
-            y2="400"
+            y2="495"
             stroke="#5F7D74"
-            strokeWidth="2.8"
+            strokeWidth="3.2"
           />
 
           {/* 2. Base Idle Conduit Path (Subtle guide track with base arrow) */}
           <path
             d={conduitD}
             stroke="#5F7D74"
-            strokeWidth="3.2"
+            strokeWidth="3.6"
             strokeLinecap="round"
             strokeOpacity="0.32"
             fill="none"
@@ -250,9 +250,9 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
             d={conduitD}
             pathLength={1000}
             stroke="#5F7D74"
-            strokeWidth={3.8}
+            strokeWidth={4.2}
             strokeLinecap="round"
-            strokeDasharray="1000"
+            strokeDasharray={1000}
             style={{ strokeDashoffset: traveledDashoffset }}
             fill="none"
             markerEnd="url(#wf-terminal-arrow)"
@@ -263,9 +263,9 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
             d={conduitD}
             pathLength={1000}
             stroke="url(#cursorTracerGlow)"
-            strokeWidth={5.2}
+            strokeWidth={5.8}
             strokeLinecap="round"
-            strokeDasharray="40 1000"
+            strokeDasharray="44 1000"
             style={{ strokeDashoffset: tracerDashoffset }}
             fill="none"
             className="pointer-events-none"
@@ -275,7 +275,7 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
           <motion.path
             d={feedbackLoopD}
             stroke="#718E85"
-            strokeWidth="2.6"
+            strokeWidth="2.8"
             strokeDasharray="8 8"
             style={{ strokeDashoffset: feedbackDashoffset }}
             fill="none"
@@ -286,7 +286,7 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
           {/* 6. PRECISION INDUSTRIAL MACHINE ON APEX (REPLACES THE PERSON)            */}
           {/* Multi-Axis Robotic CNC Machining & Laser Center Vector Silhouette         */}
           {/* ========================================================================= */}
-          <g transform="translate(805, 96)">
+          <g transform="translate(805, 86)">
             {/* Ground Perspective Cast Shadow along Arch Curve */}
             <ellipse
               cx="72"
@@ -336,7 +336,7 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
                 x2="88"
                 y2="56"
                 stroke="#E6392E"
-                strokeWidth="2"
+                strokeWidth="2.2"
                 strokeLinecap="round"
                 style={{ opacity: laserOpacity }}
               />
@@ -349,97 +349,97 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
           {/* ========================================================================= */}
           {/* 7. ACCENT CORAL-RED CIRCULAR NODES (STABLE, CRISP, BUTTERY HOVER)        */}
           {/* ========================================================================= */}
-          {/* Start Node (Click to set progress = 0.0) */}
+          {/* Start Node */}
           <g
             className="wf-interactive-node"
-            style={{ transformOrigin: "90px 200px" }}
+            style={{ transformOrigin: "90px 220px" }}
             onClick={() => rawProgress.set(0.0)}
           >
-            <circle cx="90" cy="200" r="22" fill="#E6392E" />
+            <circle cx="90" cy="220" r="24" fill="#E6392E" />
           </g>
 
           {/* Node 1: Brief Upper Connector */}
           <g
             className="wf-interactive-node"
-            style={{ transformOrigin: "340px 340px" }}
+            style={{ transformOrigin: "340px 400px" }}
             onClick={() => rawProgress.set(0.12)}
           >
-            <circle cx="340" cy="340" r="31" fill="#E6392E" />
+            <circle cx="340" cy="400" r="36" fill="#E6392E" />
           </g>
 
           {/* Node 2: Research Lower Node (Large) */}
           <g
             className="wf-interactive-node"
-            style={{ transformOrigin: "340px 480px" }}
+            style={{ transformOrigin: "340px 600px" }}
             onClick={() => rawProgress.set(0.24)}
           >
-            <circle cx="340" cy="480" r="52" fill="#E6392E" />
+            <circle cx="340" cy="600" r="58" fill="#E6392E" />
           </g>
 
           {/* Node 3: Study Arch Base Node */}
           <g
             className="wf-interactive-node"
-            style={{ transformOrigin: "680px 360px" }}
+            style={{ transformOrigin: "680px 440px" }}
             onClick={() => rawProgress.set(0.44)}
           >
-            <circle cx="680" cy="360" r="48" fill="#E6392E" />
+            <circle cx="680" cy="440" r="52" fill="#E6392E" />
           </g>
 
           {/* Node 4: Proposals Loop Node */}
           <g
             className="wf-interactive-node"
-            style={{ transformOrigin: "1000px 450px" }}
+            style={{ transformOrigin: "1000px 540px" }}
             onClick={() => rawProgress.set(0.68)}
           >
-            <circle cx="1000" cy="450" r="48" fill="#E6392E" />
+            <circle cx="1000" cy="540" r="52" fill="#E6392E" />
           </g>
 
           {/* Node 5: Delivery Rising Node */}
           <g
             className="wf-interactive-node"
-            style={{ transformOrigin: "1320px 380px" }}
+            style={{ transformOrigin: "1320px 480px" }}
             onClick={() => rawProgress.set(0.92)}
           >
-            <circle cx="1320" cy="380" r="45" fill="#E6392E" />
+            <circle cx="1320" cy="480" r="50" fill="#E6392E" />
           </g>
 
-          {/* Terminal Arrow Click Target (Click to set progress = 1.0) */}
+          {/* Terminal Arrow Click Target */}
           <g
             className="cursor-pointer"
             onClick={() => rawProgress.set(1.0)}
           >
-            <circle cx="1450" cy="200" r="20" fill="transparent" />
+            <circle cx="1450" cy="220" r="22" fill="transparent" />
           </g>
 
           {/* ========================================================================= */}
-          {/* 8. VECTOR TEXT BLOCKS (+20% LARGER, CRISP, GUARANTEED ZERO-OVERLAP)       */}
+          {/* 8. VECTOR TEXT BLOCKS (LARGER TYPOGRAPHY: TITLES 30PX, BODY 17PX)         */}
           {/* ========================================================================= */}
 
           {/* STAGE 1: BRIEF */}
           <g onClick={() => rawProgress.set(0.12)} className="cursor-pointer">
             <text
               x="70"
-              y="280"
+              y="300"
               fill="#121212"
-              fontSize="24"
+              fontSize="30"
               fontWeight="700"
-              letterSpacing="-0.02em"
+              letterSpacing="-0.025em"
               fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
             >
               Brief
             </text>
             <text
               x="70"
-              y="308"
+              y="336"
               fill="#475569"
-              fontSize="14"
+              fontSize="17"
               fontWeight="400"
               fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
             >
               <tspan x="70" dy="0">Initial customer RFQ review, 3D CAD</tspan>
-              <tspan x="70" dy="20.5">analysis, geometric dimensioning</tspan>
-              <tspan x="70" dy="20.5">and tolerance (GD&amp;T) alignment,</tspan>
-              <tspan x="70" dy="20.5">and serialized volume targets.</tspan>
+              <tspan x="70" dy="25">analysis, geometric dimensioning</tspan>
+              <tspan x="70" dy="25">and tolerance (GD&amp;T) alignment,</tspan>
+              <tspan x="70" dy="25">and serialized volume targets.</tspan>
             </text>
           </g>
 
@@ -447,27 +447,27 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
           <g onClick={() => rawProgress.set(0.24)} className="cursor-pointer">
             <text
               x="70"
-              y="445"
+              y="550"
               fill="#121212"
-              fontSize="24"
+              fontSize="30"
               fontWeight="700"
-              letterSpacing="-0.02em"
+              letterSpacing="-0.025em"
               fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
             >
               Research
             </text>
             <text
               x="70"
-              y="473"
+              y="586"
               fill="#475569"
-              fontSize="14"
+              fontSize="17"
               fontWeight="400"
               fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
             >
               <tspan x="70" dy="0">Certified metallurgy selection,</tspan>
-              <tspan x="70" dy="20.5">heat-treat scheduling, tool path</tspan>
-              <tspan x="70" dy="20.5">simulations, and raw stock supply</tspan>
-              <tspan x="70" dy="20.5">chain mapping.</tspan>
+              <tspan x="70" dy="25">heat-treat scheduling, tool path</tspan>
+              <tspan x="70" dy="25">simulations, and raw stock supply</tspan>
+              <tspan x="70" dy="25">chain mapping.</tspan>
             </text>
           </g>
 
@@ -475,39 +475,39 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
           <g onClick={() => rawProgress.set(0.44)} className="cursor-pointer">
             <text
               x="410"
-              y="265"
+              y="290"
               fill="#121212"
-              fontSize="24"
+              fontSize="30"
               fontWeight="700"
-              letterSpacing="-0.02em"
+              letterSpacing="-0.025em"
               fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
             >
               Study
             </text>
             <text
               x="410"
-              y="294"
+              y="326"
               fill="#475569"
-              fontSize="14"
+              fontSize="17"
               fontWeight="400"
               fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
             >
               <tspan x="410" dy="0">Design for Manufacturability (DFM)</tspan>
-              <tspan x="410" dy="20.5">audits, fixture engineering, robotic</tspan>
-              <tspan x="410" dy="20.5">cell line-balancing, and cycle time</tspan>
-              <tspan x="410" dy="20.5">reduction.</tspan>
+              <tspan x="410" dy="25">audits, fixture engineering, robotic</tspan>
+              <tspan x="410" dy="25">cell line-balancing, and cycle time</tspan>
+              <tspan x="410" dy="25">reduction.</tspan>
             </text>
             <text
               x="410"
-              y="395"
+              y="445"
               fill="#64748b"
-              fontSize="13"
+              fontSize="15.5"
               fontWeight="400"
               fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
             >
               <tspan x="410" dy="0">Digital twin feasibility and FEA</tspan>
-              <tspan x="410" dy="19">stress testing ensure zero unforced</tspan>
-              <tspan x="410" dy="19">engineering change orders.</tspan>
+              <tspan x="410" dy="23">stress testing ensure zero unforced</tspan>
+              <tspan x="410" dy="23">engineering change orders.</tspan>
             </text>
           </g>
 
@@ -515,39 +515,39 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
           <g onClick={() => rawProgress.set(0.68)} className="cursor-pointer">
             <text
               x="745"
-              y="275"
+              y="300"
               fill="#121212"
-              fontSize="24"
+              fontSize="30"
               fontWeight="700"
-              letterSpacing="-0.02em"
+              letterSpacing="-0.025em"
               fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
             >
               Proposals
             </text>
             <text
               x="745"
-              y="304"
+              y="336"
               fill="#475569"
-              fontSize="14"
+              fontSize="17"
               fontWeight="400"
               fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
             >
               <tspan x="745" dy="0">Comprehensive turnkey quotation,</tspan>
-              <tspan x="745" dy="20.5">serialized batch pricing, transparent</tspan>
-              <tspan x="745" dy="20.5">lead-time SLA milestones, and</tspan>
-              <tspan x="745" dy="20.5">prototyping options.</tspan>
+              <tspan x="745" dy="25">serialized batch pricing, transparent</tspan>
+              <tspan x="745" dy="25">lead-time SLA milestones, and</tspan>
+              <tspan x="745" dy="25">prototyping options.</tspan>
             </text>
             <text
               x="745"
-              y="405"
+              y="455"
               fill="#64748b"
-              fontSize="13"
+              fontSize="15.5"
               fontWeight="400"
               fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
             >
               <tspan x="745" dy="0">First-article inspection (FAI) protocols</tspan>
-              <tspan x="745" dy="19">and customized Kanban staging buffers</tspan>
-              <tspan x="745" dy="19">tailored to client intake schedules.</tspan>
+              <tspan x="745" dy="23">and customized Kanban staging buffers</tspan>
+              <tspan x="745" dy="23">tailored to client intake schedules.</tspan>
             </text>
           </g>
 
@@ -555,38 +555,38 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
           <g onClick={() => rawProgress.set(0.92)} className="cursor-pointer">
             <text
               x="1040"
-              y="265"
+              y="290"
               fill="#121212"
-              fontSize="24"
+              fontSize="30"
               fontWeight="700"
-              letterSpacing="-0.02em"
+              letterSpacing="-0.025em"
               fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
             >
               Delivery
             </text>
             <text
               x="1040"
-              y="294"
+              y="326"
               fill="#475569"
-              fontSize="14"
+              fontSize="17"
               fontWeight="400"
               fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
             >
               <tspan x="1040" dy="0">100% CMM coordinate validation,</tspan>
-              <tspan x="1040" dy="20.5">ultrasonic cleaning, and cleanroom</tspan>
-              <tspan x="1040" dy="20.5">protective vacuum packaging.</tspan>
+              <tspan x="1040" dy="25">ultrasonic cleaning, and cleanroom</tspan>
+              <tspan x="1040" dy="25">protective vacuum packaging.</tspan>
             </text>
             <text
               x="1040"
-              y="380"
+              y="445"
               fill="#64748b"
-              fontSize="13"
+              fontSize="15.5"
               fontWeight="400"
               fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
             >
               <tspan x="1040" dy="0">JIT serialized delivery directly to OEM</tspan>
-              <tspan x="1040" dy="19">assembly lines with full metallurgical</tspan>
-              <tspan x="1040" dy="19">test certification reports.</tspan>
+              <tspan x="1040" dy="23">assembly lines with full metallurgical</tspan>
+              <tspan x="1040" dy="23">test certification reports.</tspan>
             </text>
           </g>
         </svg>
@@ -595,24 +595,24 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
       {/* ========================================================================= */}
       {/* 3. MOBILE RESPONSIVE TIMELINE (FOR VIEWPORTS < 768PX)                     */}
       {/* ========================================================================= */}
-      <div className="md:hidden space-y-6 pt-4">
+      <div className="md:hidden space-y-8 pt-6">
         {STAGES.map((s, idx) => (
           <div key={s.step} className="flex gap-4 items-start">
             <div className="flex flex-col items-center shrink-0">
-              <div className="w-9 h-9 rounded-full bg-[#E6392E] text-white font-bold text-xs flex items-center justify-center shadow-xs">
+              <div className="w-10 h-10 rounded-full bg-[#E6392E] text-white font-bold text-sm flex items-center justify-center shadow-xs">
                 {s.step}
               </div>
               {idx < STAGES.length - 1 && (
-                <div className="w-0.5 h-16 bg-[#5F7D74]/40 my-1.5" />
+                <div className="w-0.5 h-20 bg-[#5F7D74]/40 my-1.5" />
               )}
             </div>
             <div className="pt-0.5 flex-1">
-              <h3 className="text-base font-bold text-[#121212]">{s.title}</h3>
-              <p className="text-xs text-[#475569] leading-relaxed mt-1">
+              <h3 className="text-lg font-bold text-[#121212]">{s.title}</h3>
+              <p className="text-sm text-[#475569] leading-relaxed mt-1.5">
                 {s.desc1}
               </p>
               {s.desc2 && (
-                <p className="text-[11px] text-[#64748b] leading-relaxed mt-1">
+                <p className="text-xs text-[#64748b] leading-relaxed mt-1.5">
                   {s.desc2}
                 </p>
               )}
