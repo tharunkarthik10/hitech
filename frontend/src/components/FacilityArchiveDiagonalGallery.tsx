@@ -107,7 +107,7 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
           width: 100%;
           max-width: 1260px;
           margin: 0 auto;
-          padding: 0 10px;
+          padding: 0;
           border-top: 1px solid var(--line);
           overflow: visible;
           position: relative;
@@ -155,18 +155,19 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
           font-family: Inter, system-ui, -apple-system, sans-serif;
           transform: none !important;
           opacity: 1 !important;
+          padding-top: 0.4cqw;
         }
         .facility-archive-stage .facility-archive-header .eyebrow {
-          font-size: 1.15cqw;
+          font-size: 1.05cqw;
           color: #64748b;
           font-weight: 600;
           letter-spacing: -0.01em;
         }
         .facility-archive-stage .facility-archive-header h2 {
-          margin: 0.9cqw 0 0;
-          font-size: 3.1cqw;
+          margin: 0.7cqw 0 0;
+          font-size: 2.85cqw;
           line-height: 1.05;
-          letter-spacing: -0.03em;
+          letter-spacing: -0.025em;
           color: #0f1222;
           font-weight: 800;
         }
@@ -177,9 +178,9 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
           letter-spacing: -0.02em;
         }
         .facility-archive-stage .facility-archive-header p {
-          font-size: 1.18cqw;
-          line-height: 1.55;
-          margin: 1.4cqw 0 1.6cqw 0;
+          font-size: 1.08cqw;
+          line-height: 1.5;
+          margin: 1.1cqw 0 1.3cqw 0;
           color: #475569;
           font-weight: 400;
           max-width: 100%;
@@ -190,8 +191,8 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
           gap: 6px;
           background: #0f1222;
           color: #ffffff;
-          font-size: 1.0cqw;
-          padding: 0.8cqw 1.5cqw;
+          font-size: 0.95cqw;
+          padding: 0.7cqw 1.35cqw;
           border-radius: 99px;
           text-decoration: none;
           font-weight: 600;
@@ -339,13 +340,13 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
 
       <section ref={secRef} id="gallery" className="facility-archive-sec my-12 sm:my-16">
         <div ref={gridRef} className="facility-archive-stage" id="grid">
-          {/* ITEM 1: Title & Lead Text (Static, Moved Left, Increased Size) */}
+          {/* ITEM 1: Title & Lead Text (Static, Moved to Border of Section, Safe Width Avoiding Any Card) */}
           <div
             className="facility-archive-header"
             style={{
               left: "0%",
-              top: "1.5%",
-              width: "20.6%",
+              top: "0%",
+              width: "19.5%",
             }}
           >
             <div className="eyebrow">Section 05 — Facility Archive</div>
