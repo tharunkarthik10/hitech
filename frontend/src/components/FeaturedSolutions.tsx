@@ -11,7 +11,7 @@ function SolutionCard({ service, idx }: { service: any; idx: number }) {
 
   return (
     <div 
-      className={`bg-white w-full flex flex-col group overflow-hidden rounded-xl border border-gray-200 shadow-sm transition-all duration-500 hover: hover:shadow-[#006494]/15 hover:-translate-y-2 ${idx === 0 ? 'pb-10' : idx === 1 ? 'pb-0' : 'pb-16'}`}
+      className="bg-white w-full flex flex-col group overflow-hidden rounded-xl border border-gray-200 shadow-sm transition-all duration-500 hover:shadow-[#006494]/15 hover:-translate-y-2"
       onMouseEnter={() => videoRef.current?.play().catch(() => {})}
       onMouseLeave={() => {
         if (videoRef.current) {
@@ -87,7 +87,7 @@ export default function FeaturedSolutions() {
   ];
 
   return (
-    <section className="bg-stark-white" style={{ paddingTop: '1.5cm', paddingBottom: '1.5cm' }}>
+    <section className="bg-stark-white" style={{ paddingTop: '1.5cm', paddingBottom: '0.75cm' }}>
       <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-14 gap-4">
           <div className="space-y-2 max-w-3xl">
@@ -129,7 +129,7 @@ export default function FeaturedSolutions() {
           className="servicesSwiper overflow-visible cursor-grab active:cursor-grabbing"
         >
           {services.map((service, idx) => (
-            <SwiperSlide key={idx} className="!h-auto flex items-start pb-16 pt-4 px-1">
+            <SwiperSlide key={idx} className="!h-auto flex items-start pb-3 pt-2 px-1">
               <SolutionCard service={service} idx={idx} />
             </SwiperSlide>
           ))}
