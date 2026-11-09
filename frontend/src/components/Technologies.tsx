@@ -33,26 +33,6 @@ export default function Technologies() {
         'Maximized production efficiency'
       ]
     },
-    { 
-      id: 'PRD-04', 
-      title: 'CNC Precision Components', 
-      shortTitle: 'CNC Parts',
-      img: 'https://motiequipments.com/assets/images/shop/grid/flex-1.jpg',
-      features: [
-        'Unparalleled accuracy',
-        'Critical engineering needs'
-      ]
-    },
-    { 
-      id: 'PRD-05', 
-      title: 'Laser Cutting', 
-      shortTitle: 'Laser Cut',
-      img: 'https://motiequipments.com/assets/images/shop/grid/truck-1.jpg',
-      features: [
-        'Clean, precise cuts',
-        'Variety of industrial metals'
-      ]
-    },
   ];
 
   const [activeIndex, setActiveIndex] = useState(0);
@@ -70,7 +50,7 @@ export default function Technologies() {
           {/* Left Column */}
           <div className="lg:col-span-7 flex flex-col">
             {/* Tabs */}
-            <div className="flex flex-wrap gap-2.5 mb-8">
+            <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-2.5 mb-6 sm:mb-8 overflow-x-auto no-scrollbar">
               {assets.map((asset, idx) => (
                 <button
                   key={idx}
@@ -78,7 +58,7 @@ export default function Technologies() {
                     setActiveIndex(idx);
                     setOpenFeatureIndex(null);
                   }}
-                  className={`px-5 py-2.5 rounded-full text-sm font-medium tracking-tight transition-all border cursor-pointer ${
+                  className={`px-3.5 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium tracking-tight transition-all border cursor-pointer whitespace-nowrap shrink-0 ${
                     activeIndex === idx
                       ? 'bg-white text-black font-bold border-white shadow-[0_0_15px_rgba(255,255,255,0.15)]'
                       : 'bg-transparent text-white/70 border-white/20 hover:text-white hover:border-white/40 hover:bg-white/5'
