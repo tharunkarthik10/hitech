@@ -5,7 +5,8 @@ import {
   CheckCircle2, 
   ExternalLink,
   Briefcase,
-  ArrowRight
+  ArrowRight,
+  ChevronDown
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -40,14 +41,18 @@ export default function Contact() {
   const [selectedUnit, setSelectedUnit] = useState(UNITS[0]);
   const [formData, setFormData] = useState({
     name: '',
+    region: '+91',
+    mobile: '',
     email: '',
-    subject: '',
-    message: ''
+    service: '',
+    description: ''
   });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
@@ -60,9 +65,11 @@ export default function Contact() {
       setSubmitted(true);
       setFormData({
         name: '',
+        region: '+91',
+        mobile: '',
         email: '',
-        subject: '',
-        message: ''
+        service: '',
+        description: ''
       });
     }, 900);
   };
@@ -109,11 +116,11 @@ export default function Contact() {
                 <div className="pt-2 flex flex-wrap items-center gap-3">
                   <Link 
                     to="/career"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white hover:bg-gray-100 text-[#121212] font-medium text-xs sm:text-sm tracking-tight transition-all shadow-lg group"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#00A6FB] hover:bg-[#008ecc] text-white font-medium text-xs sm:text-sm tracking-tight transition-all shadow-lg shadow-[#00A6FB]/30 group"
                   >
-                    <Briefcase className="w-4 h-4 text-[#00A6FB]" />
+                    <Briefcase className="w-4 h-4 text-white" />
                     <span>Explore Careers at Hitech</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </div>
               </div>
@@ -229,13 +236,14 @@ export default function Contact() {
                   </p>
                   <button 
                     onClick={() => setSubmitted(false)}
-                    className="px-6 py-2.5 rounded-full bg-[#121212] text-white text-xs font-medium tracking-tight hover:bg-[#00A6FB] transition-colors mt-2"
+                    className="px-6 py-2.5 rounded-full bg-[#00A6FB] text-white text-xs font-medium tracking-tight hover:bg-[#008ecc] transition-colors shadow-md shadow-[#00A6FB]/20 mt-2"
                   >
                     Send another message
                   </button>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Full Name */}
                   <div>
                     <input 
                       type="text"
@@ -244,10 +252,41 @@ export default function Contact() {
                       value={formData.name}
                       onChange={handleInputChange}
                       placeholder="Full name *"
-                      className="w-full bg-transparent border-b border-gray-300 focus:border-[#121212] py-3 text-sm text-[#121212] placeholder:text-gray-400 focus:outline-none transition-colors"
+                      className="w-full bg-transparent border-b border-gray-300 focus:border-[#00A6FB] py-3 text-sm text-[#121212] placeholder:text-gray-400 focus:outline-none transition-colors"
                     />
                   </div>
 
+                  {/* Mobile number with region */}
+                  <div className="flex items-center gap-2 border-b border-gray-300 focus-within:border-[#00A6FB] py-1 transition-colors">
+                    <select 
+                      name="region"
+                      aria-label="Country Region Code"
+                      value={formData.region}
+                      onChange={handleInputChange}
+                      className="bg-transparent py-2 pr-1 text-sm text-[#121212] focus:outline-none cursor-pointer shrink-0 font-medium"
+                    >
+                      <option value="+91" className="text-gray-800">🇮🇳 +91 (India)</option>
+                      <option value="+1" className="text-gray-800">🇺🇸 +1 (USA)</option>
+                      <option value="+44" className="text-gray-800">🇬🇧 +44 (UK)</option>
+                      <option value="+971" className="text-gray-800">🇦🇪 +971 (UAE)</option>
+                      <option value="+49" className="text-gray-800">🇩🇪 +49 (Germany)</option>
+                      <option value="+65" className="text-gray-800">🇸🇬 +65 (Singapore)</option>
+                      <option value="+61" className="text-gray-800">🇦🇺 +61 (Australia)</option>
+                      <option value="+81" className="text-gray-800">🇯🇵 +81 (Japan)</option>
+                    </select>
+                    <div className="h-4 w-px bg-gray-300 shrink-0" />
+                    <input 
+                      type="tel"
+                      name="mobile"
+                      required
+                      value={formData.mobile}
+                      onChange={handleInputChange}
+                      placeholder="Mobile number *"
+                      className="w-full bg-transparent py-2 text-sm text-[#121212] placeholder:text-gray-400 focus:outline-none"
+                    />
+                  </div>
+
+                  {/* Email */}
                   <div>
                     <input 
                       type="email"
@@ -256,39 +295,49 @@ export default function Contact() {
                       value={formData.email}
                       onChange={handleInputChange}
                       placeholder="Email address *"
-                      className="w-full bg-transparent border-b border-gray-300 focus:border-[#121212] py-3 text-sm text-[#121212] placeholder:text-gray-400 focus:outline-none transition-colors"
+                      className="w-full bg-transparent border-b border-gray-300 focus:border-[#00A6FB] py-3 text-sm text-[#121212] placeholder:text-gray-400 focus:outline-none transition-colors"
                     />
                   </div>
 
-                  <div>
-                    <input 
-                      type="text"
-                      name="subject"
+                  {/* Services dropdown */}
+                  <div className="relative">
+                    <select 
+                      name="service"
                       required
-                      value={formData.subject}
+                      aria-label="Select Service"
+                      value={formData.service}
                       onChange={handleInputChange}
-                      placeholder="Subject / Project Drawing Reference *"
-                      className="w-full bg-transparent border-b border-gray-300 focus:border-[#121212] py-3 text-sm text-[#121212] placeholder:text-gray-400 focus:outline-none transition-colors"
-                    />
+                      className={`w-full bg-transparent border-b border-gray-300 focus:border-[#00A6FB] py-3 pr-8 text-sm focus:outline-none transition-colors appearance-none cursor-pointer ${
+                        formData.service ? 'text-[#121212]' : 'text-gray-400'
+                      }`}
+                    >
+                      <option value="" disabled className="text-gray-400">Select Service / Unit *</option>
+                      <option value="Production" className="text-gray-800">Production</option>
+                      <option value="Manufacturing" className="text-gray-800">Manufacturing</option>
+                      <option value="Laser Cutting" className="text-gray-800">Laser Cutting</option>
+                    </select>
+                    <ChevronDown className="w-4 h-4 text-gray-400 absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none" />
                   </div>
 
+                  {/* Description box */}
                   <div>
                     <textarea 
-                      name="message"
+                      name="description"
                       rows={4}
                       required
-                      value={formData.message}
+                      value={formData.description}
                       onChange={handleInputChange}
                       placeholder="Describe your engineering requirement, material specs, or batch volume... *"
-                      className="w-full bg-transparent border-b border-gray-300 focus:border-[#121212] py-3 text-sm text-[#121212] placeholder:text-gray-400 focus:outline-none transition-colors resize-none"
+                      className="w-full bg-transparent border-b border-gray-300 focus:border-[#00A6FB] py-3 text-sm text-[#121212] placeholder:text-gray-400 focus:outline-none transition-colors resize-none"
                     />
                   </div>
 
+                  {/* Submit CTA in Blue */}
                   <div className="pt-2">
                     <button 
                       type="submit"
                       disabled={submitting}
-                      className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-[#121212] hover:bg-[#00A6FB] text-white text-sm font-medium tracking-tight transition-all duration-300 shadow-md group disabled:opacity-50"
+                      className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-[#00A6FB] hover:bg-[#008ecc] text-white text-sm font-medium tracking-tight transition-all duration-300 shadow-lg shadow-[#00A6FB]/25 group disabled:opacity-50"
                     >
                       <span className="w-1.5 h-1.5 rounded-full bg-white group-hover:scale-125 transition-transform" />
                       <span>{submitting ? 'Sending...' : 'Send a message'}</span>
@@ -315,8 +364,8 @@ export default function Contact() {
                 onClick={() => setSelectedUnit(unit)}
                 className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium tracking-tight transition-all ${
                   selectedUnit.id === unit.id 
-                    ? 'bg-[#121212] text-white shadow-sm' 
-                    : 'bg-gray-100 text-[#475569] hover:bg-gray-200 hover:text-[#121212]'
+                    ? 'bg-[#00A6FB] text-white shadow-md shadow-[#00A6FB]/25' 
+                    : 'bg-blue-50/60 text-[#475569] hover:bg-blue-100/70 hover:text-[#00A6FB]'
                 }`}
               >
                 {unit.shortName}
@@ -328,7 +377,7 @@ export default function Contact() {
             href={`https://maps.google.com/?q=${selectedUnit.query}`}
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-xs sm:text-sm font-medium text-[#00A6FB] hover:text-[#121212] flex items-center gap-1 transition-colors"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#00A6FB]/10 text-[#00A6FB] hover:bg-[#00A6FB] hover:text-white text-xs sm:text-sm font-semibold transition-all border border-[#00A6FB]/20"
           >
             <span>Open in Google Maps</span>
             <ExternalLink className="w-3.5 h-3.5" />
