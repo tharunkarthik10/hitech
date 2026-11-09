@@ -129,7 +129,7 @@ export default function AboutUs() {
     <div className="w-full bg-[#f4f7f9] pt-20 sm:pt-24">
       {/* 01. HERO SECTION: MATCHING MANUFACTURING & CONTACT PAGES */}
       <section className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 mb-8 sm:mb-12">
-        <div className="relative -mx-[0.5cm]" style={{ marginLeft: '-0.5cm', marginRight: '-0.5cm' }}>
+        <div className="relative">
           <motion.div 
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
@@ -270,12 +270,9 @@ export default function AboutUs() {
           {/* Desktop Interlocking Bento Grid (lg+) */}
           <div className="hidden lg:grid grid-cols-[1fr_2.8fr_1.25fr] gap-0">
             {/* Row 1 */}
-            <div className="flex items-start">
-              <h2 
-                style={{ position: 'relative', left: '-1cm', top: '-2cm' }}
-                className="text-4xl xl:text-5xl font-black text-neutral-900 tracking-tight uppercase leading-none whitespace-normal"
-              >
-                OUR IMPACT
+            <div className="flex items-start pt-2 pr-6">
+              <h2 className="text-4xl xl:text-5xl font-black text-neutral-900 tracking-tight uppercase leading-[1.08] whitespace-normal">
+                OUR<br />IMPACT
               </h2>
             </div>
             <div className="flex justify-start items-end h-[240px] xl:h-[260px]">
