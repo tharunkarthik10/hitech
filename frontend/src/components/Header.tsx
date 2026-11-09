@@ -40,11 +40,16 @@ export default function Header() {
       <nav className="h-20 flex items-center justify-between w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 relative bg-white">
         {/* Left: Logo */}
         <Link to="/" className="flex items-center gap-4 group z-10">
-          <img 
-            src="/logo.png" 
-            alt="Hitech" 
-            className="h-11 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105"
-          />
+          <picture>
+            <source srcSet="/logo.webp" type="image/webp" />
+            <img 
+              src="/logo.png" 
+              alt="Hitech" 
+              loading="eager"
+              decoding="sync"
+              className="h-11 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105"
+            />
+          </picture>
         </Link>
 
         {/* Center: Main Links (Desktop) */}
@@ -117,11 +122,16 @@ export default function Header() {
               {/* Sheet Header */}
               <div className="h-20 flex items-center justify-between px-5 border-b border-gray-100 bg-white">
                 <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>
-                  <img 
-                    src="/logo.png" 
-                    alt="Hitech" 
-                    className="h-11 w-auto object-contain"
-                  />
+                  <picture>
+                    <source srcSet="/logo.webp" type="image/webp" />
+                    <img 
+                      src="/logo.png" 
+                      alt="Hitech" 
+                      loading="eager"
+                      decoding="sync"
+                      className="h-11 w-auto object-contain"
+                    />
+                  </picture>
                 </Link>
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
