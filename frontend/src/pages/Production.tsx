@@ -5,6 +5,7 @@ import {
   Settings, X, Send, Sparkles,
 } from 'lucide-react';
 import SplitTriptychShowcase from '../components/SplitTriptychShowcase';
+import TurningFacilityShowcase from '../components/TurningFacilityShowcase';
 import { FacilityArchiveDiagonalGallery } from '../components/FacilityArchiveDiagonalGallery';
 import { ManufacturingWorkflowInfographic } from '../components/ManufacturingWorkflowInfographic';
 
@@ -144,6 +145,11 @@ export default function Production() {
 
           </div>
         </section>
+
+        {/* ========================================================================= */}
+        {/* 04.5 TURNING CARD FACILITY SHOWCASE & INFRASTRUCTURE METRICS */}
+        {/* ========================================================================= */}
+        <TurningFacilityShowcase openQuoteModal={openQuoteModal} />
 
         {/* ========================================================================= */}
         {/* 05. FACILITY ARCHIVE DIAGONAL REVEAL GALLERY */}
