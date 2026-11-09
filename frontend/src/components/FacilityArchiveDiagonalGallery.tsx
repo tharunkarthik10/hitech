@@ -62,6 +62,7 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
       const p = progress();
       const vw = window.innerWidth;
       const vh = window.innerHeight;
+      const isMobile = vw < 768;
 
       items.forEach((el) => {
         if (reduce) {
@@ -71,12 +72,12 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
         }
         const d = parseFloat(el.style.getPropertyValue("--d")) || 0;
         const t = ease(clamp((p - d * 0.45) / 0.55));
-        // True parallel diagonal origin: every card travels along its own diagonal from 100% outside the viewport
-        const travel = Math.max(vw, vh) * 1.25;
+        // On mobile, keep travel strictly bounded to avoid overflowing into adjacent sections
+        const travel = isMobile ? Math.min(vw, 120) * 0.4 : Math.max(vw, vh) * 1.25;
         const dx = travel * (1 - t);
         const dy = travel * (1 - t);
         el.style.transform = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0)`;
-        el.style.opacity = "1";
+        el.style.opacity = isMobile ? Math.min(1, Math.max(0, t * 1.8)).toFixed(2) : "1";
       });
     }
 
@@ -108,7 +109,7 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
           width: 100%;
           border-top: 1px solid var(--line);
           padding: 0;
-          overflow: visible;
+          overflow: hidden;
           position: relative;
         }
         @media (prefers-color-scheme: dark) {
@@ -305,12 +306,19 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
           text-decoration: underline;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
+          .facility-archive-sec {
+            overflow: hidden !important;
+            margin-bottom: 2rem;
+          }
+          .facility-archive-stage {
+            aspect-ratio: 1 / 1.05;
+          }
           .facility-archive-stage .facility-archive-header {
-            width: 28% !important;
+            width: 30% !important;
           }
           .facility-archive-stage .facility-archive-header .eyebrow { font-size: 8.5px; }
-          .facility-archive-stage .facility-archive-header h2 { font-size: 19px; }
+          .facility-archive-stage .facility-archive-header h2 { font-size: 18px; }
           .facility-archive-stage .facility-archive-header p { font-size: 8.5px; line-height: 1.4; margin: 6px 0 8px 0; }
           .facility-archive-stage .facility-archive-header .btn { font-size: 8px; padding: 5px 10px; }
           .facility-archive-stage .txt { font-size: 7.5px; }
