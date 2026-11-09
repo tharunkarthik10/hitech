@@ -15,7 +15,6 @@ import {
   ShieldCheck,
   PackageCheck,
   Activity,
-  Sparkles,
 } from "lucide-react";
 
 interface StepItem {
@@ -465,7 +464,6 @@ export default function DynamicConduitWorkflow({
         <div className="rounded-3xl bg-gradient-to-br from-[#003554] via-[#051923] to-[#002022] text-white p-8 sm:p-10 shadow-xl border border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 text-center md:text-left">
             <span className="text-xs font-mono uppercase tracking-wider text-[#00A6FB] flex items-center gap-1.5 justify-center md:justify-start">
-              <Sparkles className="w-3.5 h-3.5" />
               <span>Full Turnkey Integration</span>
             </span>
             <h4 className="text-xl sm:text-2xl font-bold tracking-tight text-white">

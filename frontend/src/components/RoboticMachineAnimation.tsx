@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Zap, Activity, Cpu, Sparkles, Play, Pause, RefreshCw } from 'lucide-react';
+import { Zap, Activity, Cpu, Play, Pause, RefreshCw } from 'lucide-react';
 
 export default function RoboticMachineAnimation() {
   const [mode, setMode] = useState<'laser' | 'weld'>('laser');

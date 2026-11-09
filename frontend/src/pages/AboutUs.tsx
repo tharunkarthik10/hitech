@@ -14,7 +14,6 @@ import {
   Globe, 
   Play, 
   ArrowUpRight,
-  Sparkles,
   Briefcase,
   ArrowRight
 } from 'lucide-react';
@@ -158,7 +157,6 @@ export default function AboutUs() {
               
               <div className="max-w-2xl space-y-4">
                 <div className="flex items-center gap-2 text-white/90">
-                  <Sparkles className="w-5 h-5 text-[#00A6FB]" />
                   <span className="text-sm font-medium tracking-tight text-white/80">49+ Years of Engineering Excellence</span>
                 </div>
 

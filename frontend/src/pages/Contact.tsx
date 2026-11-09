@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  Sparkles, 
   CheckCircle2, 
   ExternalLink,
   Briefcase,
@@ -101,7 +100,6 @@ export default function Contact() {
               
               <div className="max-w-2xl space-y-4">
                 <div className="flex items-center gap-2 text-white/90">
-                  <Sparkles className="w-5 h-5 text-[#00A6FB]" />
                   <span className="text-sm font-medium tracking-tight text-white/80">Global Industrial Outreach</span>
                 </div>
 
@@ -153,10 +151,7 @@ export default function Contact() {
             
             {/* Header intro */}
             <div>
-              <span className="text-sm font-medium tracking-tight text-[#64748b]">
-                / get in touch /
-              </span>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-bold text-[#121212] tracking-tight leading-[1.14] mt-4 mb-5">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-bold text-[#121212] tracking-tight leading-[1.14] mb-5">
                 We are always ready to help you and answer your questions
               </h2>
               <p className="text-sm sm:text-base text-[#475569] font-normal leading-relaxed max-w-2xl">

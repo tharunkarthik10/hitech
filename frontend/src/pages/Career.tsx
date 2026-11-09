@@ -12,7 +12,6 @@ import {
   ShieldCheck, 
   GraduationCap, 
   HeartPulse, 
-  Sparkles,
   Search,
   ChevronRight,
   Send,
@@ -345,7 +344,6 @@ export default function Career() {
             <h2 className="text-3xl md:text-5xl font-bold text-[#051923] font-heading mt-2">
               Available Positions ({filteredJobs.length})
             </h2>
-            <p className="text-sm md:text-base text-gray-500 mt-1">Click on any offer card to view complete role specifications and requirements.</p>
           </div>
 
           {/* Search Input */}
@@ -414,12 +412,8 @@ export default function Career() {
                     </span>
                   </div>
 
-                  <h3 className="text-2xl md:text-3xl font-bold text-[#051923] font-heading group-hover:text-[#00A6FB] transition-colors flex items-center gap-3">
+                  <h3 className="text-2xl md:text-3xl font-bold text-[#051923] font-heading group-hover:text-[#00A6FB] transition-colors">
                     {job.title}
-                    <span className="text-xs md:text-sm font-normal text-gray-400 group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
-                      (Click to view specifications)
-                      <ArrowRight className="w-4 h-4 text-[#00A6FB]" />
-                    </span>
                   </h3>
 
                   <p className="text-base md:text-lg text-gray-600 leading-relaxed font-normal">

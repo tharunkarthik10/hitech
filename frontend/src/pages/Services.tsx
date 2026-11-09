@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Play, ArrowUpRight, ArrowRight, X, PhoneCall, Mail, 
-  CheckCircle2, Clock, ShieldCheck, Factory, Sparkles, 
+  CheckCircle2, Clock, ShieldCheck, Factory, 
   Sliders, Cpu, Layers, MessageSquare, Zap, Target, Box
 } from 'lucide-react';
 
@@ -644,7 +644,6 @@ export default function Services() {
                 <div>
                   <div className="flex items-center justify-between pb-4 border-b border-white/20">
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-[11px] font-semibold tracking-wider uppercase text-white border border-white/20">
-                      <Sparkles className="w-3.5 h-3.5 text-cyan-200" />
                       Precision Philosophy
                     </span>
                     <span className="text-white/70 font-mono text-xs tracking-widest uppercase">

@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { 
   ChevronRight, ArrowRight, CheckCircle2, ShieldCheck, 
-  Sparkles, Layers, Award, Zap, Phone, Mail, MapPin, Factory
+  Layers, Award, Zap, Phone, Mail, MapPin, Factory
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import type { UnitData, GalleryItem } from '../../data/unitsData';

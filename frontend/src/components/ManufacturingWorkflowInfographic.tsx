@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ChevronRight, Sparkles } from "lucide-react";
+import { ArrowRight, ChevronRight } from "lucide-react";
 
 interface ManufacturingWorkflowInfographicProps {
   className?: string;
@@ -224,7 +224,6 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
                           {/* Specs & Stage Consultation Button */}
                           <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-gray-200/80">
                             <span className="text-xs font-normal text-[#64748b] flex items-center gap-1.5">
-                              <Sparkles className="w-3.5 h-3.5 text-[#64748b]" />
                               {stage.specs}
                             </span>
 

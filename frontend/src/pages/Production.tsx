@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowRight, ArrowUpRight, ShieldCheck, 
-  Settings, X, Send, Sparkles,
+  Settings, X, Send,
 } from 'lucide-react';
 import SplitTriptychShowcase from '../components/SplitTriptychShowcase';
 import TurningFacilityShowcase from '../components/TurningFacilityShowcase';
@@ -66,7 +66,6 @@ export default function Production() {
               {/* Left Headline & Intro Statement */}
               <div className="max-w-xl space-y-3">
                 <div className="flex items-center gap-2 text-white/90">
-                  <Sparkles className="w-4 h-4 text-[#00A6FB]" />
                   <span className="text-xs sm:text-sm font-medium tracking-tight text-white/80">Turnkey Contract Manufacturing</span>
                 </div>
 
