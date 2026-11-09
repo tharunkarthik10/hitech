@@ -19,7 +19,6 @@ import {
   FileText,
   Sliders
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 interface JobSpecification {
   label: string;
@@ -180,6 +179,19 @@ const BENEFITS = [
   }
 ];
 
+const GENERAL_APPLICATION_JOB: JobPosition = {
+  id: 'general-application',
+  title: 'Send Us Your Resume',
+  department: 'General Application',
+  location: 'Coimbatore Facilities',
+  type: 'All Roles & Shifts',
+  experience: 'All Levels',
+  description: 'Drop your resume for consideration across machining, automation, laser fabrication, and assembly roles.',
+  overview: 'General candidate submission for future opportunities across all Hitech engineering and manufacturing facilities.',
+  highlights: [],
+  specifications: []
+};
+
 export default function Career() {
   const [selectedDept, setSelectedDept] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
@@ -214,6 +226,11 @@ export default function Career() {
   const handleOpenApply = (job: JobPosition, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
     setSelectedJob(job);
+    setActiveModalTab('apply');
+  };
+
+  const handleOpenGeneralApply = () => {
+    setSelectedJob(GENERAL_APPLICATION_JOB);
     setActiveModalTab('apply');
   };
 
@@ -425,14 +442,14 @@ export default function Career() {
                       e.stopPropagation();
                       handleOpenDetails(job);
                     }}
-                    className="px-6 py-3.5 rounded-xl bg-gray-100 text-gray-800 hover:bg-gray-200 text-xs md:text-sm font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-2"
+                    className="px-6 py-3.5 rounded-xl bg-blue-50/70 text-[#00A6FB] hover:bg-[#00A6FB] hover:text-white border border-[#00A6FB]/30 text-xs md:text-sm font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2"
                   >
-                    <FileText className="w-4 h-4 text-[#00A6FB]" />
+                    <FileText className="w-4 h-4" />
                     Role Specs
                   </button>
                   <button
                     onClick={(e) => handleOpenApply(job, e)}
-                    className="px-7 py-3.5 rounded-xl bg-[#051923] text-white hover:bg-[#00A6FB] text-xs md:text-sm font-bold uppercase tracking-wider transition-all duration-300 shadow-md group-hover:shadow-lg flex items-center justify-center gap-2"
+                    className="px-7 py-3.5 rounded-xl bg-[#00A6FB] text-white hover:bg-[#008ecc] text-xs md:text-sm font-bold uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-lg shadow-[#00A6FB]/25 flex items-center justify-center gap-2"
                   >
                     Apply Now
                     <ArrowRight className="w-4 h-4" />
@@ -458,13 +475,13 @@ export default function Career() {
           </div>
 
           <div className="relative z-10 shrink-0">
-            <Link 
-              to="/contact"
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#00A6FB] text-white hover:bg-white hover:text-[#051923] text-xs md:text-sm font-bold uppercase tracking-widest transition-all shadow-xl"
+            <button 
+              onClick={handleOpenGeneralApply}
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#00A6FB] text-white hover:bg-[#008ecc] text-xs md:text-sm font-bold uppercase tracking-widest transition-all shadow-xl shadow-[#00A6FB]/30 cursor-pointer"
             >
               Contact HR Desk
               <ChevronRight className="w-4 h-4" />
-            </Link>
+            </button>
           </div>
         </div>
       </section>
@@ -501,31 +518,33 @@ export default function Career() {
                 </button>
               </div>
 
-              {/* Modal Tabs Header */}
-              <div className="flex border-b border-gray-200 mt-4 shrink-0">
-                <button
-                  onClick={() => setActiveModalTab('details')}
-                  className={`py-3.5 px-6 text-xs md:text-sm font-bold uppercase tracking-wider border-b-2 transition-all flex items-center gap-2 ${
-                    activeModalTab === 'details'
-                      ? 'border-[#00A6FB] text-[#00A6FB]'
-                      : 'border-transparent text-gray-500 hover:text-gray-900'
-                  }`}
-                >
-                  <FileText className="w-4.5 h-4.5" />
-                  Role Overview &amp; Specifications
-                </button>
-                <button
-                  onClick={() => setActiveModalTab('apply')}
-                  className={`py-3.5 px-6 text-xs md:text-sm font-bold uppercase tracking-wider border-b-2 transition-all flex items-center gap-2 ${
-                    activeModalTab === 'apply'
-                      ? 'border-[#00A6FB] text-[#00A6FB]'
-                      : 'border-transparent text-gray-500 hover:text-gray-900'
-                  }`}
-                >
-                  <Send className="w-4.5 h-4.5" />
-                  Apply Now
-                </button>
-              </div>
+              {/* Modal Tabs Header (Only shown for specific roles) */}
+              {selectedJob.id !== 'general-application' && (
+                <div className="flex border-b border-gray-200 mt-4 shrink-0">
+                  <button
+                    onClick={() => setActiveModalTab('details')}
+                    className={`py-3.5 px-6 text-xs md:text-sm font-bold uppercase tracking-wider border-b-2 transition-all flex items-center gap-2 ${
+                      activeModalTab === 'details'
+                        ? 'border-[#00A6FB] text-[#00A6FB]'
+                        : 'border-transparent text-gray-500 hover:text-gray-900'
+                    }`}
+                  >
+                    <FileText className="w-4.5 h-4.5" />
+                    Role Overview &amp; Specifications
+                  </button>
+                  <button
+                    onClick={() => setActiveModalTab('apply')}
+                    className={`py-3.5 px-6 text-xs md:text-sm font-bold uppercase tracking-wider border-b-2 transition-all flex items-center gap-2 ${
+                      activeModalTab === 'apply'
+                        ? 'border-[#00A6FB] text-[#00A6FB]'
+                        : 'border-transparent text-gray-500 hover:text-gray-900'
+                    }`}
+                  >
+                    <Send className="w-4.5 h-4.5" />
+                    Apply Now
+                  </button>
+                </div>
+              )}
 
               {/* Modal Body Content */}
               <div className="overflow-y-auto py-6 space-y-6 flex-1 pr-2">
@@ -579,11 +598,15 @@ export default function Career() {
                         </div>
                         <h3 className="text-2xl md:text-3xl font-bold text-[#051923] font-heading">Application Submitted!</h3>
                         <p className="text-gray-600 text-base max-w-md mx-auto">
-                          Thank you for applying for the <span className="font-bold text-[#051923]">{selectedJob.title}</span> role. Our hiring team will review your credentials and contact you shortly.
+                          {selectedJob.id === 'general-application' ? (
+                            'Thank you for submitting your resume. Our HR desk will review your profile and reach out when an opportunity matching your skills opens.'
+                          ) : (
+                            <>Thank you for applying for the <span className="font-bold text-[#051923]">{selectedJob.title}</span> role. Our hiring team will review your credentials and contact you shortly.</>
+                          )}
                         </p>
                         <button
                           onClick={closeModal}
-                          className="px-8 py-3.5 bg-[#051923] text-white rounded-xl font-bold text-xs md:text-sm uppercase tracking-wider hover:bg-[#00A6FB] transition-colors"
+                          className="px-8 py-3.5 bg-[#00A6FB] text-white rounded-xl font-bold text-xs md:text-sm uppercase tracking-wider hover:bg-[#008ecc] transition-all shadow-md shadow-[#00A6FB]/25 cursor-pointer"
                         >
                           Done
                         </button>
@@ -591,7 +614,11 @@ export default function Career() {
                     ) : (
                       <form onSubmit={handleApplySubmit} className="space-y-5">
                         <div className="bg-blue-50 p-4 rounded-xl text-sm md:text-base text-[#00A6FB] font-semibold flex items-center justify-between">
-                          <span>Submitting profile for: <strong>{selectedJob.title}</strong></span>
+                          <span>
+                            {selectedJob.id === 'general-application'
+                              ? 'Submitting profile for: General Talent Pool / Open Roles'
+                              : <>Submitting profile for: <strong>{selectedJob.title}</strong></>}
+                          </span>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -667,7 +694,7 @@ export default function Career() {
                         <button
                           type="submit"
                           disabled={submitting}
-                          className="w-full py-4 bg-[#00A6FB] text-white font-bold text-xs md:text-sm uppercase tracking-widest rounded-xl hover:bg-[#051923] transition-colors flex items-center justify-center gap-2 shadow-lg"
+                          className="w-full py-4 bg-[#00A6FB] text-white font-bold text-xs md:text-sm uppercase tracking-widest rounded-xl hover:bg-[#008ecc] transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#00A6FB]/25 cursor-pointer"
                         >
                           {submitting ? (
                             <span>Submitting Application...</span>
@@ -685,11 +712,11 @@ export default function Career() {
               </div>
 
               {/* Modal Footer Bar */}
-              {activeModalTab === 'details' && (
+              {activeModalTab === 'details' && selectedJob.id !== 'general-application' && (
                 <div className="pt-4 border-t border-gray-100 flex items-center justify-end shrink-0">
                   <button
                     onClick={() => setActiveModalTab('apply')}
-                    className="px-8 py-3 rounded-xl bg-[#00A6FB] text-white hover:bg-[#051923] text-xs md:text-sm font-bold uppercase tracking-wider transition-colors flex items-center gap-2 shadow-md"
+                    className="px-8 py-3 rounded-xl bg-[#00A6FB] text-white hover:bg-[#008ecc] text-xs md:text-sm font-bold uppercase tracking-wider transition-all flex items-center gap-2 shadow-md shadow-[#00A6FB]/25 cursor-pointer"
                   >
                     Proceed to Apply
                     <ArrowRight className="w-4 h-4" />
