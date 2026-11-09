@@ -63,9 +63,60 @@ const FadeIn = ({ children, delay = 0, className = "" }: { children: React.React
   </motion.div>
 );
 
+const impactImageSets = {
+  slot1: [
+    { src: '/impact_inspection.jpg', alt: 'Precision Metrology Inspection' },
+    { src: '/impact_inspection_2.jpg', alt: 'Quality Assurance Metrology Engineering' },
+    { src: '/impact_inspection_3.jpg', alt: 'Advanced Coordinate Optical Metrology' },
+  ],
+  slot2: [
+    { src: '/impact_machining_line.jpg', alt: 'Automated 5-Axis CNC Machining Line' },
+    { src: '/impact_machining_line_2.jpg', alt: 'High-Precision Automated Turning and Milling' },
+    { src: '/impact_machining_line_3.jpg', alt: 'Robotic High-Speed Production Cell' },
+  ],
+  slot3: [
+    { src: '/impact_offshore.jpg', alt: 'Offshore Marine and Energy Infrastructure' },
+    { src: '/impact_sector_aerospace.jpg', alt: 'Global Aerospace and Aviation Manufacturing' },
+    { src: '/impact_sector_energy.jpg', alt: 'Renewable Power and Industrial Energy Grid' },
+  ],
+};
+
+const DynamicImageSlot = ({
+  images,
+  activeIndex,
+  className = '',
+}: {
+  images: { src: string; alt: string }[];
+  activeIndex: number;
+  className?: string;
+}) => {
+  return (
+    <div className={`relative overflow-hidden ${className}`}>
+      {images.map((item, idx) => (
+        <img
+          key={item.src}
+          src={item.src}
+          alt={item.alt}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
+            idx === activeIndex ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
+          }`}
+        />
+      ))}
+    </div>
+  );
+};
+
 export default function AboutUs() {
   const [activeTimeline, setActiveTimeline] = useState(0);
   const [activeInfraTab, setActiveInfraTab] = useState('production');
+  const [impactImageIndex, setImpactImageIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setImpactImageIndex((prev) => (prev + 1) % 3);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
 
   const handlePrevTimeline = () => {
     setActiveTimeline((prev) => Math.max(0, prev - 1));
@@ -162,13 +213,11 @@ export default function AboutUs() {
                 </p>
               </div>
 
-              <div className="overflow-hidden aspect-video sm:aspect-auto sm:h-full">
-                <img 
-                  src="/impact_inspection.jpg" 
-                  alt="Quality Metrology Inspection" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
+              <DynamicImageSlot 
+                images={impactImageSets.slot1} 
+                activeIndex={impactImageIndex} 
+                className="h-56 sm:h-64 w-full"
+              />
 
               <div className="bg-[#f1f1f1] p-8 flex flex-col justify-center">
                 <div className="text-5xl font-bold tracking-tight text-neutral-900 mb-2 leading-none">
@@ -179,13 +228,11 @@ export default function AboutUs() {
                 </p>
               </div>
 
-              <div className="overflow-hidden aspect-video sm:aspect-auto sm:h-full">
-                <img 
-                  src="/impact_machining_line.jpg" 
-                  alt="Automated CNC Machining Facility" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
+              <DynamicImageSlot 
+                images={impactImageSets.slot2} 
+                activeIndex={impactImageIndex} 
+                className="h-56 sm:h-64 w-full"
+              />
 
               <div className="bg-[#f8f9fa] border border-gray-100 p-8 flex flex-col justify-center">
                 <div className="text-5xl font-bold tracking-tight text-neutral-900 mb-2 leading-none">
@@ -214,21 +261,22 @@ export default function AboutUs() {
                 </p>
               </div>
 
-              <div className="overflow-hidden aspect-video sm:aspect-auto sm:h-full">
-                <img 
-                  src="/impact_offshore.jpg" 
-                  alt="Global Offshore and Marine Infrastructure" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
+              <DynamicImageSlot 
+                images={impactImageSets.slot3} 
+                activeIndex={impactImageIndex} 
+                className="h-56 sm:h-64 w-full"
+              />
             </div>
           </div>
 
           {/* Desktop Interlocking Bento Grid (lg+) */}
           <div className="hidden lg:grid grid-cols-[1fr_2.8fr_1.25fr] gap-0">
             {/* Row 1 */}
-            <div className="flex items-start pt-2 pr-6">
-              <h2 className="text-4xl xl:text-5xl font-black text-neutral-900 tracking-tight uppercase leading-none">
+            <div className="flex items-start">
+              <h2 
+                style={{ position: 'relative', left: '-1cm', top: '-2cm' }}
+                className="text-4xl xl:text-5xl font-black text-neutral-900 tracking-tight uppercase leading-none whitespace-normal"
+              >
                 OUR IMPACT
               </h2>
             </div>
@@ -242,13 +290,11 @@ export default function AboutUs() {
                 </p>
               </div>
             </div>
-            <div className="h-[240px] xl:h-[260px] overflow-hidden">
-              <img 
-                src="/impact_inspection.jpg" 
-                alt="Quality Inspection" 
-                className="w-full h-full object-cover"
-              />
-            </div>
+            <DynamicImageSlot 
+              images={impactImageSets.slot1} 
+              activeIndex={impactImageIndex} 
+              className="h-[240px] xl:h-[260px] w-full"
+            />
 
             {/* Row 2 */}
             <div className="h-[160px] xl:h-[170px] bg-[#f1f1f1] p-8 xl:p-10 flex flex-col justify-center">
@@ -259,13 +305,11 @@ export default function AboutUs() {
                 Years of<br />Operations
               </p>
             </div>
-            <div className="h-[160px] xl:h-[170px] overflow-hidden">
-              <img 
-                src="/impact_machining_line.jpg" 
-                alt="Automated CNC Machining Line" 
-                className="w-full h-full object-cover"
-              />
-            </div>
+            <DynamicImageSlot 
+              images={impactImageSets.slot2} 
+              activeIndex={impactImageIndex} 
+              className="h-[160px] xl:h-[170px] w-full"
+            />
             <div className="h-[160px] xl:h-[170px] bg-white p-8 xl:p-10 flex flex-col justify-center">
               <div className="text-5xl xl:text-6xl font-bold tracking-tight text-neutral-900 mb-2 leading-none">
                 <AnimatedCounter value={1700} suffix="+" />
@@ -297,13 +341,11 @@ export default function AboutUs() {
                 </p>
               </div>
             </div>
-            <div className="h-[160px] xl:h-[170px] overflow-hidden">
-              <img 
-                src="/impact_offshore.jpg" 
-                alt="Global Offshore and Energy Sector" 
-                className="w-full h-full object-cover"
-              />
-            </div>
+            <DynamicImageSlot 
+              images={impactImageSets.slot3} 
+              activeIndex={impactImageIndex} 
+              className="h-[160px] xl:h-[170px] w-full"
+            />
           </div>
 
         </div>
