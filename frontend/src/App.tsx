@@ -28,7 +28,7 @@ function AppContent() {
     <div className="antialiased selection:bg-blue-900 selection:text-white">
       <Header />
       {showSubNavbar && <SubNavbar />}
-      <div className={showSubNavbar ? "pt-12" : ""}>
+      <div className={showSubNavbar ? "pt-11 sm:pt-12" : ""}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/production" element={<Production />} />

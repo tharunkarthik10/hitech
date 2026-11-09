@@ -35,12 +35,12 @@ export default function LaserCutting() {
         {/* ========================================================================= */}
         {/* 01. HERO SECTION (Giant Soltera-Style Watermark & Floating Metric Dock) */}
         {/* ========================================================================= */}
-        <section className="relative -mx-[0.5cm]" style={{ marginLeft: '-0.5cm', marginRight: '-0.5cm' }}>
+        <section className="relative mx-0 sm:-mx-[0.5cm]">
           <motion.div 
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="rounded-2xl sm:rounded-[22px] overflow-hidden relative shadow-xl min-h-[608px] sm:min-h-[684px] lg:min-h-[722px] flex flex-col justify-end p-6 sm:p-10 lg:p-12 text-white bg-black border border-gray-900"
+            className="rounded-2xl sm:rounded-[22px] overflow-hidden relative shadow-xl min-h-[520px] sm:min-h-[640px] lg:min-h-[722px] flex flex-col justify-end p-5 sm:p-10 lg:p-12 text-white bg-black border border-gray-900"
           >
             {/* Background Looping Production Video */}
             <div className="absolute inset-0 z-0">
@@ -60,36 +60,36 @@ export default function LaserCutting() {
             </div>
 
             {/* Bottom Hero Area: Left Headline + Right Floating Metric Card */}
-            <div className="relative z-20 flex flex-col lg:flex-row lg:items-end justify-between gap-8 pt-10 sm:pt-14">
+            <div className="relative z-20 flex flex-col lg:flex-row lg:items-end justify-between gap-6 sm:gap-8 pt-8 sm:pt-14">
               
               {/* Left Headline & Intro Statement */}
               <div className="max-w-xl space-y-3">
                 <div className="flex items-center gap-2 text-white/90">
                   <Sparkles className="w-4 h-4 text-[#00A6FB]" />
-                  <span className="text-sm font-medium tracking-tight text-white/80">Turnkey Contract Manufacturing</span>
+                  <span className="text-xs sm:text-sm font-medium tracking-tight text-white/80">Turnkey Contract Manufacturing</span>
                 </div>
 
-                <p className="text-sm sm:text-base text-white/85 font-normal leading-relaxed max-w-lg">
+                <p className="text-xs sm:text-base text-white/85 font-normal leading-relaxed max-w-lg">
                   Conveyor-driven assembly lines, articulated robotic fastening cells, and synchronized Kanban supply staging engineered for zero-defect OEM reliability.
                 </p>
 
                 <div className="flex items-center gap-3">
-                  <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-bold tracking-tight text-white leading-tight">
+                  <h1 className="text-2xl sm:text-5xl lg:text-[54px] font-bold tracking-tight text-white leading-tight">
                     Scale Your Production
                   </h1>
-                  <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full border border-white/40 flex items-center justify-center shrink-0">
-                    <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                  <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-full border border-white/40 flex items-center justify-center shrink-0">
+                    <ArrowUpRight className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-white" />
                   </div>
                 </div>
               </div>
 
               {/* Right Floating Metric Card: 100k+ Units */}
-              <div className="shrink-0 self-start lg:self-end">
-                <div className="bg-white/95 text-gray-900 rounded-2xl p-5 sm:p-6 shadow-xl backdrop-blur-md min-w-[170px] sm:min-w-[220px] max-w-[260px] space-y-1.5 border border-white">
-                  <div className="text-2xl sm:text-3xl font-bold tracking-tight text-[#121212] leading-none">
+              <div className="shrink-0 self-start lg:self-end w-full sm:w-auto">
+                <div className="bg-white/95 text-gray-900 rounded-2xl p-4 sm:p-6 shadow-xl backdrop-blur-md min-w-0 sm:min-w-[220px] max-w-[260px] space-y-1.5 border border-white">
+                  <div className="text-xl sm:text-3xl font-bold tracking-tight text-[#121212] leading-none">
                     100k+ Units
                   </div>
-                  <p className="text-sm text-[#64748b] font-normal leading-relaxed">
+                  <p className="text-xs sm:text-sm text-[#64748b] font-normal leading-relaxed">
                     Monthly turnkey contract manufacturing throughput across 3 certified units.
                   </p>
                 </div>

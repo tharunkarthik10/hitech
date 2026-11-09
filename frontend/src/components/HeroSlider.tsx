@@ -12,7 +12,7 @@ export default function HeroSlider({
   buttonText = "View Our Infra"
 }: HeroSliderProps) {
   return (
-    <section className="relative w-full h-[95vh] min-h-[750px] flex items-center overflow-hidden">
+    <section className="relative w-full h-[90vh] sm:h-[95vh] min-h-[560px] sm:min-h-[660px] lg:min-h-[750px] flex items-center overflow-hidden">
       {/* Background Video */}
       <video 
         autoPlay 
@@ -30,25 +30,25 @@ export default function HeroSlider({
       <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/30 z-10"></div>
 
       {/* Content on the left */}
-      <div className="relative z-20 w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 mt-24">
-        <div className="max-w-3xl text-left text-white space-y-6">
-          <div className="space-y-2.5">
-            <span className="text-sm font-medium tracking-tight text-white/80 block">
+      <div className="relative z-20 w-full max-w-[1920px] mx-auto px-5 sm:px-8 lg:px-12 mt-16 sm:mt-20 md:mt-24">
+        <div className="max-w-3xl text-left text-white space-y-4 sm:space-y-6">
+          <div className="space-y-2 sm:space-y-2.5">
+            <span className="text-xs sm:text-sm font-medium tracking-tight text-white/80 block">
               Established 1999 — Coimbatore, India
             </span>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-bold tracking-tight text-white leading-[1.12]">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[54px] font-bold tracking-tight text-white leading-[1.18] sm:leading-[1.12]">
               {title}
             </h1>
           </div>
           
-          <p className="font-normal text-sm sm:text-base md:text-[17px] text-white/90 leading-relaxed max-w-2xl">
+          <p className="font-normal text-xs sm:text-base md:text-[17px] text-white/90 leading-relaxed max-w-2xl">
             {description}
           </p>
 
-          <div className="pt-4">
-            <button className="inline-flex items-center gap-2.5 px-7 py-3 rounded-full border border-white/80 bg-white/10 hover:bg-white hover:text-black text-white font-medium text-sm tracking-tight backdrop-blur-xs transition-all duration-300 cursor-pointer active:scale-95">
+          <div className="pt-2 sm:pt-4">
+            <button className="inline-flex items-center gap-2 px-6 py-2.5 sm:px-7 sm:py-3 rounded-full border border-white/80 bg-white/10 hover:bg-white hover:text-black text-white font-medium text-xs sm:text-sm tracking-tight backdrop-blur-xs transition-all duration-300 cursor-pointer active:scale-95">
               <span>{buttonText}</span>
-              <span className="material-symbols-outlined text-[18px]">north_east</span>
+              <span className="material-symbols-outlined text-[16px] sm:text-[18px]">north_east</span>
             </button>
           </div>
         </div>

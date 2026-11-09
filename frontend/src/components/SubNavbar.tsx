@@ -37,23 +37,23 @@ export default function SubNavbar() {
       }`}
       onMouseLeave={() => setActiveMenu(null)}
     >
-      <nav className="h-12 flex items-center justify-center w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 relative">
-        <div className="flex items-center h-full">
+      <nav className="h-11 sm:h-12 w-full max-w-[1920px] mx-auto px-2 sm:px-6 md:px-8 lg:px-12 flex items-center overflow-x-auto no-scrollbar">
+        <div className="flex items-center h-full mx-auto min-w-max">
           {navigation.map((item, index) => {
             const isActive = location.pathname === item.path || activeMenu === item.name;
             return (
-              <div key={item.name} className="h-full flex items-center">
+              <div key={item.name} className="h-full flex items-center shrink-0">
                 <Link
                   to={item.path}
                   onMouseEnter={() => setActiveMenu(item.name)}
-                  className={`h-full px-12 flex items-center text-[11px] font-bold tracking-[0.25em] uppercase transition-colors duration-300 ${
-                    isActive ? 'text-blue-900' : 'text-gray-600 hover:text-blue-900'
+                  className={`h-full px-3.5 sm:px-6 md:px-8 lg:px-12 flex items-center text-[10.5px] sm:text-[11px] font-bold tracking-[0.14em] sm:tracking-[0.2em] md:tracking-[0.25em] uppercase whitespace-nowrap transition-colors duration-300 ${
+                    isActive ? 'text-blue-900 font-extrabold' : 'text-gray-600 hover:text-blue-900'
                   }`}
                 >
                   {item.name}
                 </Link>
                 {index < navigation.length - 1 && (
-                  <div className="h-6 w-[2px] bg-gray-300" />
+                  <div className="h-4 sm:h-6 w-[1.5px] bg-gray-300 shrink-0" />
                 )}
               </div>
             );
