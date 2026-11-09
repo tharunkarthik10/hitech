@@ -35,4 +35,5 @@ cosmo/
 !public/*.jpg
 !public/*.svg
 !public/*.mp4
+!public/videos/*.mp4
 .firebase/
