@@ -147,14 +147,14 @@ export default function Manufacturing() {
         </section>
 
         {/* ========================================================================= */}
-        {/* 04.5 TURNING CARD FACILITY SHOWCASE & INFRASTRUCTURE METRICS */}
-        {/* ========================================================================= */}
-        <TurningFacilityShowcase openQuoteModal={openQuoteModal} />
-
-        {/* ========================================================================= */}
-        {/* 05. FACILITY ARCHIVE DIAGONAL REVEAL GALLERY */}
+        {/* 05. FACILITY ARCHIVE DIAGONAL REVEAL GALLERY ("BEYOND LIMITS.") */}
         {/* ========================================================================= */}
         <FacilityArchiveDiagonalGallery openQuoteModal={openQuoteModal} />
+
+        {/* ========================================================================= */}
+        {/* 05.5 TURNING CARD FACILITY SHOWCASE & INFRASTRUCTURE METRICS */}
+        {/* ========================================================================= */}
+        <TurningFacilityShowcase openQuoteModal={openQuoteModal} />
 
         {/* ========================================================================= */}
         {/* 06. SPLIT TRIPTYCH SHOWCASE (3-SECTION PARALLAX SCROLL REVEAL) */}
