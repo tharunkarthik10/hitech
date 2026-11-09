@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import Header from './components/Header'
 import SubNavbar from './components/SubNavbar'
 import Footer from './components/Footer'
+import LoadingScreen from './components/LoadingScreen'
 import Home from './pages/Home'
 import Manufacturing from './pages/Manufacturing'
 import LaserCutting from './pages/LaserCutting'
@@ -26,6 +27,7 @@ function AppContent() {
 
   return (
     <div className="antialiased selection:bg-blue-900 selection:text-white">
+      <LoadingScreen />
       <Header />
       {showSubNavbar && <SubNavbar />}
       <div className={showSubNavbar ? "pt-11 sm:pt-12" : ""}>
