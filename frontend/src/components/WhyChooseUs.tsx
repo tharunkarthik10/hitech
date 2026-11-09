@@ -45,7 +45,7 @@ export default function WhyChooseUs() {
   };
 
   return (
-    <section className="relative bg-slate-50 py-24 overflow-hidden">
+    <section className="relative bg-slate-50 overflow-hidden" style={{ paddingTop: '1.5cm', paddingBottom: '1.5cm' }}>
       {/* Background AI Glow Effects (Light Theme) */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] md:w-[1000px] h-[600px] md:h-[1000px] bg-[#006494] opacity-[0.04] rounded-full blur-[100px] md:blur-[150px] pointer-events-none"></div>
       

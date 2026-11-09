@@ -3,7 +3,7 @@ import { Play } from 'lucide-react';
 
 export default function FeaturedVideo() {
   return (
-    <section className="bg-white w-full overflow-hidden py-20">
+    <section className="bg-white w-full overflow-hidden" style={{ paddingTop: '1.5cm', paddingBottom: '1.5cm' }}>
       <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12">
         
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">

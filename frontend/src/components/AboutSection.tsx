@@ -40,7 +40,7 @@ export default function AboutSection() {
   };
 
   return (
-    <section className="bg-stark-white relative py-4 md:py-6 lg:py-8">
+    <section className="bg-stark-white relative" style={{ paddingTop: '1.5cm', paddingBottom: '1.5cm' }}>
       <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 font-body-md group/section">
         {/* Massive Box Wrapper */}
         <div className="relative w-full bg-[#051923] rounded-2xl p-6 md:p-8 lg:p-12 shadow-2xl border border-white/10 flex flex-col">

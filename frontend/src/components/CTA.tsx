@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 export default function CTA() {
 
   return (
-    <section className="py-24 w-full bg-white relative overflow-hidden border-t border-gray-100">
+    <section className="w-full bg-white relative overflow-hidden border-t border-gray-100" style={{ paddingTop: '1.5cm', paddingBottom: '3cm' }}>
       {/* Background Dotted Map */}
       <div className="absolute inset-0 z-0 flex items-center justify-end pointer-events-none opacity-[0.35]">
         <div 

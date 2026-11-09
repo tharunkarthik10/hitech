@@ -87,7 +87,7 @@ export default function FeaturedSolutions() {
   ];
 
   return (
-    <section className="bg-stark-white py-16 md:py-24">
+    <section className="bg-stark-white" style={{ paddingTop: '1.5cm', paddingBottom: '1.5cm' }}>
       <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-14 gap-4">
           <div className="space-y-2 max-w-3xl">

@@ -17,7 +17,7 @@ export default function Clients() {
   const duplicatedLogos = [...logos, ...logos];
 
   return (
-    <section className="bg-stark-white pt-10 pb-16 overflow-hidden">
+    <section className="bg-stark-white overflow-hidden" style={{ paddingTop: '3cm', paddingBottom: '1.5cm' }}>
       <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 relative flex flex-col items-center">
         <div className="text-center mb-14 z-10 relative bg-stark-white px-8 py-4 space-y-1">
           <span className="text-sm font-medium tracking-tight text-[#64748b]">
