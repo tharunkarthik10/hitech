@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { 
   Sparkles, 
-  ChevronUp, 
-  Send, 
   CheckCircle2, 
-  Navigation,
-  MapPin,
   ExternalLink,
   Briefcase,
-  ArrowRight,
-  ArrowUpRight
+  ArrowRight
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -70,10 +65,6 @@ export default function Contact() {
         message: ''
       });
     }, 900);
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -146,17 +137,6 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* Floating Scroll to Top helper pill button on the right */}
-      <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 flex justify-end mb-8 sm:mb-12">
-        <button 
-          onClick={scrollToTop}
-          aria-label="Scroll to top"
-          className="w-10 h-10 rounded-full bg-[#ef4444] hover:bg-[#dc2626] text-white flex items-center justify-center shadow-md transition-all duration-300 hover:scale-105"
-        >
-          <ChevronUp className="w-5 h-5" />
-        </button>
-      </div>
-
       {/* 2. MAIN CONTENT TWO-COLUMN SECTION */}
       <section className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 mb-20 sm:mb-28">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
@@ -217,87 +197,6 @@ export default function Contact() {
                   </div>
                 </div>
               </div>
-            </div>
-
-            {/* 2x2 Core Contact & SLA Overview */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-8 gap-x-8 pt-2 max-w-xl">
-              
-              {/* Central Hotline */}
-              <div className="space-y-1.5">
-                <h3 className="text-sm font-bold text-[#121212] tracking-tight">Central Engineering Hotline</h3>
-                <div className="space-y-1 text-sm text-[#475569] leading-relaxed">
-                  <a href="tel:+914222648800" className="block font-medium text-[#121212] hover:text-[#00A6FB] transition-colors">
-                    +91 (0422) 264-8800
-                  </a>
-                  <a href="tel:+919842264880" className="block hover:text-[#00A6FB] transition-colors">
-                    +91 98422 64880 (WhatsApp RFQ)
-                  </a>
-                </div>
-              </div>
-
-              {/* Direct CAD Portal */}
-              <div className="space-y-1.5">
-                <h3 className="text-sm font-bold text-[#121212] tracking-tight">CAD / Drawing Exchange</h3>
-                <div className="space-y-1 text-sm text-[#475569] leading-relaxed">
-                  <a href="mailto:cad@hitechengineering.com" className="block font-medium text-[#00A6FB] hover:underline">
-                    cad@hitechengineering.com
-                  </a>
-                  <p className="text-xs text-[#64748b]">Formats: STEP, IGES, DXF, SLDPRT</p>
-                </div>
-              </div>
-
-              {/* Operational SLA & Shifts */}
-              <div className="space-y-1.5">
-                <h3 className="text-sm font-bold text-[#121212] tracking-tight">Operating Schedule & Shifts</h3>
-                <div className="space-y-1 text-xs sm:text-sm text-[#475569] leading-relaxed">
-                  <p className="font-medium text-[#121212]">Plant: 24/7 Automated Production</p>
-                  <p className="text-xs text-[#64748b]">Office & Consultations: Mon – Sat, 8:30 AM – 7:30 PM IST</p>
-                </div>
-              </div>
-
-              {/* Social Network & MTR Dossiers */}
-              <div className="space-y-1.5">
-                <h3 className="text-sm font-bold text-[#121212] tracking-tight">Network & Compliance</h3>
-                <div className="flex items-center gap-4 text-[#121212] pt-1">
-                  <a 
-                    href="https://facebook.com" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    aria-label="Facebook"
-                    className="hover:text-[#00A6FB] transition-colors font-bold text-sm"
-                  >
-                    f
-                  </a>
-                  <a 
-                    href="https://x.com" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    aria-label="X (Twitter)"
-                    className="hover:text-[#00A6FB] transition-colors font-bold text-sm"
-                  >
-                    𝕏
-                  </a>
-                  <a 
-                    href="https://linkedin.com" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    aria-label="LinkedIn"
-                    className="hover:text-[#00A6FB] transition-colors font-bold text-sm"
-                  >
-                    in
-                  </a>
-                  <a 
-                    href="https://youtube.com" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    aria-label="YouTube"
-                    className="hover:text-[#00A6FB] transition-colors font-bold text-sm"
-                  >
-                    ▶
-                  </a>
-                </div>
-              </div>
-
             </div>
 
           </div>
@@ -446,47 +345,6 @@ export default function Contact() {
             className="w-full h-full border-0 grayscale-[20%] contrast-[1.05]"
             loading="lazy"
           />
-
-          {/* Floating Location Card in Map (Positioned on top-right to prevent overlap with native Google Maps UI) */}
-          <div className="absolute top-6 right-6 z-10 bg-white/95 backdrop-blur-md p-5 rounded-2xl shadow-xl border border-white max-w-xs sm:max-w-sm hidden sm:block">
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <h4 className="font-bold text-sm sm:text-base text-[#121212] tracking-tight">
-                  {selectedUnit.name}
-                </h4>
-                <p className="text-xs text-[#64748b] mt-0.5 leading-snug">
-                  {selectedUnit.address}
-                </p>
-              </div>
-              <a 
-                href={`https://maps.google.com/?q=${selectedUnit.query}`}
-                target="_blank" 
-                rel="noopener noreferrer"
-                title="Get Directions"
-                className="p-2.5 bg-gray-100 hover:bg-[#121212] hover:text-white rounded-xl transition-colors shrink-0 text-[#121212]"
-              >
-                <Navigation className="w-4 h-4" />
-              </a>
-            </div>
-
-            <div className="flex items-center gap-2 text-xs text-[#64748b] mt-3 pt-3 border-t border-gray-100">
-              <span className="font-bold text-[#121212]">4.9</span>
-              <span className="text-amber-500">★★★★★</span>
-              <span>(184 corporate reviews)</span>
-            </div>
-
-            <div className="mt-2.5 pt-2 border-t border-gray-100 flex items-center justify-between text-xs">
-              <span className="text-[#64748b] font-medium">{selectedUnit.focus}</span>
-              <a 
-                href={`https://maps.google.com/?q=${selectedUnit.query}`}
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-[#00A6FB] font-semibold hover:underline"
-              >
-                Directions
-              </a>
-            </div>
-          </div>
 
         </div>
       </section>
