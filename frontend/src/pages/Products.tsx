@@ -198,12 +198,12 @@ export default function Products() {
                 className="group bg-white rounded-xl border border-gray-200 overflow-hidden hover:border-blue-500 hover:shadow-md transition-all flex flex-col"
               >
                 {/* Product Image */}
-                <div className="aspect-square bg-gray-50/70 p-3 sm:p-4 flex items-center justify-center overflow-hidden border-b border-gray-100">
+                <div className="aspect-square w-full bg-gray-100 overflow-hidden border-b border-gray-100 relative">
                   <img
                     src={product.imageUrl}
                     alt={product.title}
                     loading="lazy"
-                    className="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
 
