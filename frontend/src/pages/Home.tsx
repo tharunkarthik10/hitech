@@ -10,21 +10,24 @@ import CTA from '../components/CTA'
 
 interface ScrollSectionProps {
   children: React.ReactNode;
+  direction?: 'left' | 'right';
   delay?: number;
 }
 
-function ScrollSection({ children, delay = 0 }: ScrollSectionProps) {
+function ScrollSection({ children, direction = 'left', delay = 0 }: ScrollSectionProps) {
+  const xOffset = direction === 'left' ? -90 : 90;
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 48, filter: 'blur(5px)' }}
-      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      initial={{ opacity: 0, x: xOffset }}
+      whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ 
-        duration: 2.4, 
+        duration: 1.4, 
         delay, 
         ease: [0.16, 1, 0.3, 1] 
       }}
-      className="w-full"
+      className="w-full overflow-hidden"
     >
       {children}
     </motion.div>
@@ -38,43 +41,43 @@ export default function Home() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 2.0, ease: 'easeOut' }}
+        transition={{ duration: 1.5, ease: 'easeOut' }}
       >
         <HeroSlider />
       </motion.div>
 
-      {/* Clients Section */}
-      <ScrollSection>
+      {/* Clients Section - enters from Left */}
+      <ScrollSection direction="left">
         <Clients />
       </ScrollSection>
 
-      {/* Why Choose Us Section */}
-      <ScrollSection>
+      {/* Why Choose Us Section - enters from Right */}
+      <ScrollSection direction="right">
         <WhyChooseUs />
       </ScrollSection>
 
-      {/* About Us Section */}
-      <ScrollSection>
+      {/* About Us Section - enters from Left */}
+      <ScrollSection direction="left">
         <AboutSection />
       </ScrollSection>
 
-      {/* Featured Solutions / Specialized Industries */}
-      <ScrollSection>
+      {/* Featured Solutions / Specialized Industries - enters from Right */}
+      <ScrollSection direction="right">
         <FeaturedSolutions />
       </ScrollSection>
 
-      {/* Technologies Section */}
-      <ScrollSection>
+      {/* Technologies Section - enters from Left */}
+      <ScrollSection direction="left">
         <Technologies />
       </ScrollSection>
 
-      {/* Featured Facility Video Section */}
-      <ScrollSection>
+      {/* Featured Facility Video Section - enters from Right */}
+      <ScrollSection direction="right">
         <FeaturedVideo />
       </ScrollSection>
 
-      {/* CTA Section */}
-      <ScrollSection>
+      {/* CTA Section - enters from Left */}
+      <ScrollSection direction="left">
         <CTA />
       </ScrollSection>
     </main>
