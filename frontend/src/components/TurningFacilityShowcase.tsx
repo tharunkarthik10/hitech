@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { RotateCw, X, ArrowUpRight, CheckCircle2, Sparkles } from 'lucide-react';
+import { RotateCw, X, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 
 interface CardItem {
   id: string;
@@ -163,58 +163,33 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
     }));
   };
 
-  const flipAllCards = () => {
-    // If any card is not flipped, flip all; otherwise unflip all
-    const allFlipped = currentData.every(item => flippedCards[item.id]);
-    const newState: Record<string, boolean> = { ...flippedCards };
-    currentData.forEach(item => {
-      newState[item.id] = !allFlipped;
-    });
-    setFlippedCards(newState);
-  };
 
   return (
     <section className="relative w-full my-12 lg:my-16">
       
       {/* Top Header & Tabs Bar (Matching Reference) */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
-        <div>
-          {/* Two Tabs at Top: FACILITIES and PRODUCTS */}
-          <div className="flex items-center w-full max-w-[460px] bg-[#e5e5e5] rounded-t-lg overflow-hidden border border-b-0 border-gray-300">
-            <button
-              onClick={() => setActiveTab('facilities')}
-              className={`flex-1 py-3 px-6 text-xs sm:text-sm tracking-wider uppercase transition-all relative ${
-                activeTab === 'facilities'
-                  ? 'bg-white text-gray-900 font-bold border-t-[3px] border-[#00A6FB] shadow-xs'
-                  : 'text-gray-600 hover:text-gray-900 font-medium'
-              }`}
-            >
-              FACILITIES
-            </button>
-            <button
-              onClick={() => setActiveTab('products')}
-              className={`flex-1 py-3 px-6 text-xs sm:text-sm tracking-wider uppercase transition-all relative ${
-                activeTab === 'products'
-                  ? 'bg-white text-gray-900 font-bold border-t-[3px] border-[#00A6FB] shadow-xs'
-                  : 'text-gray-600 hover:text-gray-900 font-medium'
-              }`}
-            >
-              PRODUCTS
-            </button>
-          </div>
-        </div>
-
-        {/* Global Flip All Toggle */}
-        <div className="flex items-center gap-2 self-end">
-          <span className="text-xs text-gray-400 font-medium hidden sm:inline">
-            Click any card to turn
-          </span>
+      <div className="flex items-center justify-between mb-6">
+        {/* Two Tabs at Top: FACILITIES and PRODUCTS */}
+        <div className="flex items-center w-full max-w-[460px] bg-[#e5e5e5] rounded-t-lg overflow-hidden border border-b-0 border-gray-300">
           <button
-            onClick={flipAllCards}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-gray-300 hover:border-gray-900 text-xs font-bold text-gray-800 hover:text-black transition-all bg-white shadow-2xs group cursor-pointer"
+            onClick={() => setActiveTab('facilities')}
+            className={`flex-1 py-3 px-6 text-xs sm:text-sm tracking-wider uppercase transition-all relative ${
+              activeTab === 'facilities'
+                ? 'bg-white text-gray-900 font-bold border-t-[3px] border-[#00A6FB] shadow-xs'
+                : 'text-gray-600 hover:text-gray-900 font-medium'
+            }`}
           >
-            <span>TURN ALL CARDS</span>
-            <RotateCw className="w-3.5 h-3.5 text-[#00A6FB] transition-transform group-hover:rotate-180 duration-500" />
+            FACILITIES
+          </button>
+          <button
+            onClick={() => setActiveTab('products')}
+            className={`flex-1 py-3 px-6 text-xs sm:text-sm tracking-wider uppercase transition-all relative ${
+              activeTab === 'products'
+                ? 'bg-white text-gray-900 font-bold border-t-[3px] border-[#00A6FB] shadow-xs'
+                : 'text-gray-600 hover:text-gray-900 font-medium'
+            }`}
+          >
+            PRODUCTS
           </button>
         </div>
       </div>
