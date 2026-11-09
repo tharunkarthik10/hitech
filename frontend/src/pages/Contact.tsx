@@ -77,14 +77,14 @@ export default function Contact() {
   return (
     <main className="w-full bg-white text-[#121212] min-h-screen pt-24 sm:pt-28 pb-16">
       
-      {/* 1. HERO BANNER: EXACT SAME LENGTH & CURVATURE AS MANUFACTURING PAGE */}
+      {/* 1. HERO BANNER: COMPACT & PROPORTIONAL */}
       <section className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 mb-8 sm:mb-12">
         <div className="relative -mx-[0.5cm]" style={{ marginLeft: '-0.5cm', marginRight: '-0.5cm' }}>
           <motion.div 
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="rounded-2xl sm:rounded-[22px] overflow-hidden relative shadow-xl min-h-[640px] sm:min-h-[720px] lg:min-h-[760px] flex flex-col justify-between p-6 sm:p-10 lg:p-12 text-white bg-black border border-gray-900"
+            className="rounded-2xl sm:rounded-[22px] overflow-hidden relative shadow-xl min-h-[340px] sm:min-h-[380px] lg:min-h-[420px] flex flex-col justify-end p-6 sm:p-8 lg:p-10 text-white bg-black border border-gray-900"
           >
             {/* Background Fluid Art */}
             <div className="absolute inset-0 z-0">
@@ -97,7 +97,7 @@ export default function Contact() {
             </div>
 
             {/* Bottom Hero Content: Title, Narrative & Career CTA */}
-            <div className="relative z-20 flex flex-col lg:flex-row lg:items-end justify-between gap-8 pt-12 sm:pt-16 pb-2">
+            <div className="relative z-20 flex flex-col lg:flex-row lg:items-end justify-between gap-6 pt-4 pb-1">
               
               <div className="max-w-2xl space-y-4">
                 <div className="flex items-center gap-2 text-white/90">
@@ -252,12 +252,12 @@ export default function Contact() {
                       value={formData.name}
                       onChange={handleInputChange}
                       placeholder="Full name *"
-                      className="w-full bg-transparent border-b border-gray-300 focus:border-[#00A6FB] py-3 text-sm text-[#121212] placeholder:text-gray-400 focus:outline-none transition-colors"
+                      className="w-full bg-transparent border-b-2 border-gray-700 focus:border-[#00A6FB] py-3 text-sm text-[#121212] placeholder:text-gray-500 focus:outline-none transition-colors"
                     />
                   </div>
 
                   {/* Mobile number with region */}
-                  <div className="flex items-center gap-2 border-b border-gray-300 focus-within:border-[#00A6FB] py-1 transition-colors">
+                  <div className="flex items-center gap-2 border-b-2 border-gray-700 focus-within:border-[#00A6FB] py-1 transition-colors">
                     <select 
                       name="region"
                       aria-label="Country Region Code"
@@ -274,7 +274,7 @@ export default function Contact() {
                       <option value="+61" className="text-gray-800">🇦🇺 +61 (Australia)</option>
                       <option value="+81" className="text-gray-800">🇯🇵 +81 (Japan)</option>
                     </select>
-                    <div className="h-4 w-px bg-gray-300 shrink-0" />
+                    <div className="h-4 w-px bg-gray-600 shrink-0" />
                     <input 
                       type="tel"
                       name="mobile"
@@ -282,7 +282,7 @@ export default function Contact() {
                       value={formData.mobile}
                       onChange={handleInputChange}
                       placeholder="Mobile number *"
-                      className="w-full bg-transparent py-2 text-sm text-[#121212] placeholder:text-gray-400 focus:outline-none"
+                      className="w-full bg-transparent py-2 text-sm text-[#121212] placeholder:text-gray-500 focus:outline-none"
                     />
                   </div>
 
@@ -295,7 +295,7 @@ export default function Contact() {
                       value={formData.email}
                       onChange={handleInputChange}
                       placeholder="Email address *"
-                      className="w-full bg-transparent border-b border-gray-300 focus:border-[#00A6FB] py-3 text-sm text-[#121212] placeholder:text-gray-400 focus:outline-none transition-colors"
+                      className="w-full bg-transparent border-b-2 border-gray-700 focus:border-[#00A6FB] py-3 text-sm text-[#121212] placeholder:text-gray-500 focus:outline-none transition-colors"
                     />
                   </div>
 
@@ -307,8 +307,8 @@ export default function Contact() {
                       aria-label="Select Service"
                       value={formData.service}
                       onChange={handleInputChange}
-                      className={`w-full bg-transparent border-b border-gray-300 focus:border-[#00A6FB] py-3 pr-8 text-sm focus:outline-none transition-colors appearance-none cursor-pointer ${
-                        formData.service ? 'text-[#121212]' : 'text-gray-400'
+                      className={`w-full bg-transparent border-b-2 border-gray-700 focus:border-[#00A6FB] py-3 pr-8 text-sm focus:outline-none transition-colors appearance-none cursor-pointer ${
+                        formData.service ? 'text-[#121212]' : 'text-gray-500'
                       }`}
                     >
                       <option value="" disabled className="text-gray-400">Select Service / Unit *</option>
@@ -316,7 +316,7 @@ export default function Contact() {
                       <option value="Manufacturing" className="text-gray-800">Manufacturing</option>
                       <option value="Laser Cutting" className="text-gray-800">Laser Cutting</option>
                     </select>
-                    <ChevronDown className="w-4 h-4 text-gray-400 absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    <ChevronDown className="w-4 h-4 text-gray-700 absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none" />
                   </div>
 
                   {/* Description box */}
@@ -328,7 +328,7 @@ export default function Contact() {
                       value={formData.description}
                       onChange={handleInputChange}
                       placeholder="Describe your engineering requirement, material specs, or batch volume... *"
-                      className="w-full bg-transparent border-b border-gray-300 focus:border-[#00A6FB] py-3 text-sm text-[#121212] placeholder:text-gray-400 focus:outline-none transition-colors resize-none"
+                      className="w-full bg-transparent border-b-2 border-gray-700 focus:border-[#00A6FB] py-3 text-sm text-[#121212] placeholder:text-gray-500 focus:outline-none transition-colors resize-none"
                     />
                   </div>
 
