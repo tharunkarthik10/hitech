@@ -106,7 +106,7 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
           onClick={() => handleSelectTab('facilities')}
           className={`flex-1 py-3 px-6 text-xs sm:text-sm tracking-wider uppercase transition-all relative ${
             activeTab === 'facilities'
-              ? 'bg-white text-gray-900 font-bold border-t-[3px] border-[#ff6600] shadow-xs'
+              ? 'bg-white text-gray-900 font-bold border-t-[3px] border-[#00A6FB] shadow-xs'
               : 'text-gray-600 hover:text-gray-900 font-medium'
           }`}
         >
@@ -116,7 +116,7 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
           onClick={() => handleSelectTab('metrics')}
           className={`flex-1 py-3 px-6 text-xs sm:text-sm tracking-wider uppercase transition-all relative ${
             activeTab === 'metrics'
-              ? 'bg-white text-gray-900 font-bold border-t-[3px] border-[#ff6600] shadow-xs'
+              ? 'bg-white text-gray-900 font-bold border-t-[3px] border-[#00A6FB] shadow-xs'
               : 'text-gray-600 hover:text-gray-900 font-medium'
           }`}
         >
@@ -157,7 +157,7 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
                 className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-gray-300 hover:border-gray-900 text-xs font-bold text-gray-800 hover:text-black transition-all bg-gray-50 hover:bg-white shadow-2xs group cursor-pointer"
               >
                 <span>VIEW STATS</span>
-                <RotateCw className="w-3.5 h-3.5 text-blue-600 transition-transform group-hover:rotate-180 duration-500" />
+                <RotateCw className="w-3.5 h-3.5 text-[#00A6FB] transition-transform group-hover:rotate-180 duration-500" />
               </button>
             </div>
 
@@ -177,8 +177,8 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
                   {/* Card Content */}
                   <div className="flex-1 flex flex-col justify-between h-full space-y-3">
                     <div>
-                      {/* Green Title Matching Image 2 */}
-                      <h4 className="text-lg font-bold text-[#15803d] tracking-tight group-hover:text-green-700 transition-colors">
+                      {/* Bright Blue Title Matching Services Section */}
+                      <h4 className="text-lg font-bold text-[#00A6FB] tracking-tight group-hover:text-[#0084c7] transition-colors">
                         {fac.title}
                       </h4>
                       <p className="text-xs sm:text-[13px] text-gray-600 leading-relaxed mt-2 line-clamp-4">
@@ -231,7 +231,7 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
                   {/* Exact Flip Button from Image 1 */}
                   <button
                     onClick={handleToggleFlip}
-                    className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-[#006494] hover:text-black transition-colors shrink-0 cursor-pointer group"
+                    className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-[#00A6FB] hover:text-[#0084c7] transition-colors shrink-0 cursor-pointer group"
                   >
                     <span>FLIP</span>
                     <RotateCw className="w-3.5 h-3.5 transition-transform group-hover:rotate-180 duration-500" />
@@ -302,7 +302,7 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-6">
                   <div>
-                    <span className="text-[11px] font-bold text-amber-400 uppercase tracking-widest">
+                    <span className="text-[11px] font-bold text-[#00A6FB] uppercase tracking-widest">
                       Facility Engineering Detail
                     </span>
                     <h3 className="text-2xl font-bold text-white tracking-tight mt-1">
@@ -330,7 +330,7 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
                   <ul className="space-y-2">
                     {selectedFacility.specs.map((spec, i) => (
                       <li key={i} className="flex items-start gap-2 text-xs sm:text-sm text-gray-700">
-                        <CheckCircle2 className="w-4 h-4 text-green-600 shrink-0 mt-0.5" />
+                        <CheckCircle2 className="w-4 h-4 text-[#00A6FB] shrink-0 mt-0.5" />
                         <span>{spec}</span>
                       </li>
                     ))}
@@ -357,7 +357,7 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
                           setSelectedFacility(null);
                           openQuoteModal(`Facility Inquiry: ${title}`);
                         }}
-                        className="px-5 py-2 rounded-lg bg-[#051923] hover:bg-blue-600 text-white text-xs font-bold transition-colors shadow-sm inline-flex items-center gap-1.5"
+                        className="px-5 py-2 rounded-lg bg-[#00A6FB] hover:bg-[#0084c7] text-white text-xs font-bold transition-colors shadow-sm inline-flex items-center gap-1.5"
                       >
                         <span>Request Specs</span>
                         <ArrowUpRight className="w-3.5 h-3.5" />
@@ -374,3 +374,4 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
     </section>
   );
 }
+
