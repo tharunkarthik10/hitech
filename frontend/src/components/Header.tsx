@@ -48,7 +48,7 @@ export default function Header() {
         </Link>
 
         {/* Center: Main Links (Desktop) */}
-        <div className="hidden md:flex items-center h-full justify-center flex-1 gap-4 lg:gap-10">
+        <div className="hidden md:flex items-center justify-center flex-1 gap-2 lg:gap-3">
           {mainNavigation.filter(item => item.name !== "Career").map((item) => {
             const isActive = item.path !== "#" && (
               location.pathname === item.path || 
@@ -58,14 +58,13 @@ export default function Header() {
               <Link
                 key={item.name}
                 to={item.path}
-                className={`relative h-full flex items-center justify-center gap-2 text-[12px] font-bold tracking-[0.15em] uppercase transition-colors duration-300 ${
-                  isActive ? 'text-blue-900' : 'text-gray-900 hover:text-blue-900'
+                className={`px-4 py-2 rounded-full text-[12px] font-bold tracking-[0.15em] uppercase transition-all duration-300 flex items-center justify-center ${
+                  isActive 
+                    ? 'bg-[#00A6FB] text-white shadow-sm shadow-[#00A6FB]/25' 
+                    : 'text-gray-800 hover:text-[#00A6FB] hover:bg-sky-50/60'
                 }`}
               >
                 {item.name}
-                {isActive && (
-                  <span className="absolute bottom-0 left-0 w-full h-[3px] bg-blue-900" />
-                )}
               </Link>
             );
           })}
@@ -159,14 +158,14 @@ export default function Header() {
                           key={item.name}
                           to={item.path}
                           onClick={() => setIsMobileMenuOpen(false)}
-                          className={`flex items-center justify-between px-3.5 py-3 rounded-xl text-base font-bold tracking-tight transition-all ${
+                          className={`flex items-center justify-between px-4 py-3 rounded-xl text-base font-bold tracking-tight transition-all ${
                             isActive
-                              ? "bg-blue-50 text-blue-900 border-l-4 border-blue-900"
+                              ? "bg-[#00A6FB] text-white shadow-sm shadow-[#00A6FB]/25"
                               : "text-[#121212] hover:bg-gray-50"
                           }`}
                         >
                           <span>{item.name}</span>
-                          <ChevronRight className={`w-4 h-4 ${isActive ? 'text-blue-900' : 'text-gray-400'}`} />
+                          <ChevronRight className={`w-4 h-4 ${isActive ? 'text-white' : 'text-gray-400'}`} />
                         </Link>
                       );
                     })}
