@@ -28,33 +28,27 @@ const timelineData = [
   { year: '2023', title: 'Sustainable Future', description: 'Launched our green initiative, achieving carbon-neutral manufacturing operations.', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop' },
 ];
 
-const stats = [
-  { icon: Settings, count: 4000, suffix: '+', label: 'Basic Models' },
-  { icon: Package, count: 38500, suffix: '+', label: 'Variants' },
-  { icon: Globe, count: 300, suffix: '+', label: 'Distribution Partners' },
-  { icon: Users, count: 100000, suffix: '+', label: 'Customers' },
-];
 
-const AnimatedCounter = ({ value, suffix = '' }: { value: number; suffix?: string }) => {
+const AnimatedCounter = ({ value, suffix = '', prefix = '' }: { value: number; suffix?: string; prefix?: string }) => {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   useEffect(() => {
     if (inView && ref.current) {
       const controls = animate(0, value, {
-        duration: 1.0,
+        duration: 1.2,
         ease: "easeOut",
-        onUpdate(value) {
+        onUpdate(latest) {
           if (ref.current) {
-            ref.current.textContent = Intl.NumberFormat('en-US').format(Math.floor(value)) + suffix;
+            ref.current.textContent = prefix + Intl.NumberFormat('en-US').format(Math.floor(latest)) + suffix;
           }
         }
       });
       return () => controls.stop();
     }
-  }, [inView, value, suffix]);
+  }, [inView, value, suffix, prefix]);
 
-  return <span ref={ref}>0{suffix}</span>;
+  return <span ref={ref}>{prefix}0{suffix}</span>;
 };
 
 const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => (
@@ -149,35 +143,171 @@ export default function AboutUs() {
         </div>
       </section>
 
-      {/* Stats Banner */}
-      <div className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0">
-          <img 
-            src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop" 
-            alt="Stats Background" 
-            className="w-full h-full object-cover grayscale"
-          />
-        <div className="absolute inset-0 bg-white/95"></div>
-      </div>
-      
-      <div className="relative z-10 px-8 md:px-16 lg:px-32 max-w-[96%] 2xl:max-w-[1920px] mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-gray-200">
-          {stats.map((stat, index) => (
-            <FadeIn key={index} delay={index * 0.1} className="flex flex-col items-center text-center px-4 group">
-              <div className="w-16 h-16 rounded-full bg-[#00A6FB]/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 border border-[#00A6FB]/20 shadow-sm">
-                <stat.icon className="w-8 h-8 text-[#00A6FB]" strokeWidth={2} />
+      {/* OUR IMPACT - Interlocking Bento Grid Section */}
+      <section className="w-full bg-white py-20 lg:py-28 overflow-hidden">
+        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-6 md:px-12 lg:px-16">
+          
+          {/* Mobile & Tablet Layout (< lg) */}
+          <div className="block lg:hidden">
+            <h2 className="text-3xl md:text-4xl font-black text-neutral-900 tracking-tight uppercase mb-8">
+              OUR IMPACT
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="bg-[#f1f1f1] p-8 flex flex-col justify-center">
+                <div className="text-5xl font-bold tracking-tight text-neutral-900 mb-2 leading-none">
+                  <AnimatedCounter value={45} suffix="+" />
+                </div>
+                <p className="text-base text-neutral-600 font-normal leading-snug">
+                  Specialised Manufacturing Processes
+                </p>
               </div>
-              <div className="text-4xl md:text-5xl font-bold text-[#121212] mb-2 tracking-tight">
-                <AnimatedCounter value={stat.count} suffix={stat.suffix} />
+
+              <div className="overflow-hidden aspect-video sm:aspect-auto sm:h-full">
+                <img 
+                  src="/impact_inspection.jpg" 
+                  alt="Quality Metrology Inspection" 
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <div className="text-sm font-medium tracking-tight text-[#64748b]">
-                {stat.label}
+
+              <div className="bg-[#f1f1f1] p-8 flex flex-col justify-center">
+                <div className="text-5xl font-bold tracking-tight text-neutral-900 mb-2 leading-none">
+                  <AnimatedCounter value={17} suffix="+" />
+                </div>
+                <p className="text-base text-neutral-600 font-normal leading-snug">
+                  Years of Operations
+                </p>
               </div>
-            </FadeIn>
-          ))}
+
+              <div className="overflow-hidden aspect-video sm:aspect-auto sm:h-full">
+                <img 
+                  src="/impact_machining_line.jpg" 
+                  alt="Automated CNC Machining Facility" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              <div className="bg-[#f8f9fa] border border-gray-100 p-8 flex flex-col justify-center">
+                <div className="text-5xl font-bold tracking-tight text-neutral-900 mb-2 leading-none">
+                  <AnimatedCounter value={1700} suffix="+" />
+                </div>
+                <p className="text-base text-neutral-600 font-normal leading-snug">
+                  Qualified Parts
+                </p>
+              </div>
+
+              <div className="bg-[#00A6FB] p-8 flex flex-col justify-center text-white">
+                <div className="text-5xl font-bold tracking-tight text-white mb-2 leading-none">
+                  <AnimatedCounter value={3} prefix="0" />
+                </div>
+                <p className="text-base text-white font-normal leading-snug">
+                  Sectors
+                </p>
+              </div>
+
+              <div className="bg-[#f1f1f1] p-8 flex flex-col justify-center">
+                <div className="text-5xl font-bold tracking-tight text-neutral-900 mb-2 leading-none">
+                  <AnimatedCounter value={90} suffix="%" />
+                </div>
+                <p className="text-base text-neutral-600 font-normal leading-snug">
+                  Exports
+                </p>
+              </div>
+
+              <div className="overflow-hidden aspect-video sm:aspect-auto sm:h-full">
+                <img 
+                  src="/impact_offshore.jpg" 
+                  alt="Global Offshore and Marine Infrastructure" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
           </div>
+
+          {/* Desktop Interlocking Bento Grid (lg+) */}
+          <div className="hidden lg:grid grid-cols-[1fr_2.8fr_1.25fr] gap-0">
+            {/* Row 1 */}
+            <div className="flex items-start pt-2 pr-6">
+              <h2 className="text-4xl xl:text-5xl font-black text-neutral-900 tracking-tight uppercase leading-none">
+                OUR IMPACT
+              </h2>
+            </div>
+            <div className="flex justify-start items-end h-[240px] xl:h-[260px]">
+              <div className="w-[80%] bg-[#f1f1f1] p-8 xl:p-10 flex flex-col justify-center h-[180px] xl:h-[190px]">
+                <div className="text-5xl xl:text-6xl font-bold tracking-tight text-neutral-900 mb-2 leading-none">
+                  <AnimatedCounter value={45} suffix="+" />
+                </div>
+                <p className="text-base xl:text-lg text-neutral-600 font-normal leading-snug">
+                  Specialised Manufacturing<br />Processes
+                </p>
+              </div>
+            </div>
+            <div className="h-[240px] xl:h-[260px] overflow-hidden">
+              <img 
+                src="/impact_inspection.jpg" 
+                alt="Quality Inspection" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Row 2 */}
+            <div className="h-[160px] xl:h-[170px] bg-[#f1f1f1] p-8 xl:p-10 flex flex-col justify-center">
+              <div className="text-5xl xl:text-6xl font-bold tracking-tight text-neutral-900 mb-2 leading-none">
+                <AnimatedCounter value={17} suffix="+" />
+              </div>
+              <p className="text-base xl:text-lg text-neutral-600 font-normal leading-snug">
+                Years of<br />Operations
+              </p>
+            </div>
+            <div className="h-[160px] xl:h-[170px] overflow-hidden">
+              <img 
+                src="/impact_machining_line.jpg" 
+                alt="Automated CNC Machining Line" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="h-[160px] xl:h-[170px] bg-white p-8 xl:p-10 flex flex-col justify-center">
+              <div className="text-5xl xl:text-6xl font-bold tracking-tight text-neutral-900 mb-2 leading-none">
+                <AnimatedCounter value={1700} suffix="+" />
+              </div>
+              <p className="text-base xl:text-lg text-neutral-600 font-normal leading-snug">
+                Qualified Parts
+              </p>
+            </div>
+
+            {/* Row 3 */}
+            <div className="h-[160px] xl:h-[170px]">
+              {/* Spacer matching reference layout */}
+            </div>
+            <div className="h-[160px] xl:h-[170px] flex">
+              <div className="w-[32%] bg-[#00A6FB] text-white p-6 xl:p-8 flex flex-col justify-center">
+                <div className="text-5xl xl:text-6xl font-bold tracking-tight text-white mb-2 leading-none">
+                  <AnimatedCounter value={3} prefix="0" />
+                </div>
+                <p className="text-base xl:text-lg text-white font-normal leading-snug">
+                  Sectors
+                </p>
+              </div>
+              <div className="w-[68%] bg-[#f1f1f1] p-6 xl:p-8 flex flex-col justify-center">
+                <div className="text-5xl xl:text-6xl font-bold tracking-tight text-neutral-900 mb-2 leading-none">
+                  <AnimatedCounter value={90} suffix="%" />
+                </div>
+                <p className="text-base xl:text-lg text-neutral-600 font-normal leading-snug">
+                  Exports
+                </p>
+              </div>
+            </div>
+            <div className="h-[160px] xl:h-[170px] overflow-hidden">
+              <img 
+                src="/impact_offshore.jpg" 
+                alt="Global Offshore and Energy Sector" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+
         </div>
-      </div>
+      </section>
 
       {/* Premium Genesis & Who We Are Section */}
       <div className="w-full bg-white relative py-32 overflow-hidden">
