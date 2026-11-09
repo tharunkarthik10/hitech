@@ -13,12 +13,6 @@ const mainNavigation = [
   { name: "Contact", path: "/contact" },
 ];
 
-const unitNavigation = [
-  { name: "Production", path: "/production", tag: "Turnkey Assembly" },
-  { name: "Manufacturing", path: "/manufacturing", tag: "Heavy Precision" },
-  { name: "Laser Cutting", path: "/laser-cutting", tag: "12kW Fiber Laser" },
-];
-
 export default function Header() {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -173,38 +167,6 @@ export default function Header() {
                         >
                           <span>{item.name}</span>
                           <ChevronRight className={`w-4 h-4 ${isActive ? 'text-blue-900' : 'text-gray-400'}`} />
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Division Direct Links */}
-                <div>
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 block mb-3">
-                    Manufacturing Units
-                  </span>
-                  <div className="grid grid-cols-1 gap-2">
-                    {unitNavigation.map((unit) => {
-                      const isActive = location.pathname === unit.path;
-                      return (
-                        <Link
-                          key={unit.name}
-                          to={unit.path}
-                          onClick={() => setIsMobileMenuOpen(false)}
-                          className={`p-3 rounded-xl border transition-all flex items-center justify-between ${
-                            isActive
-                              ? "bg-[#121212] text-white border-[#121212]"
-                              : "bg-gray-50 hover:bg-gray-100 text-[#121212] border-gray-200"
-                          }`}
-                        >
-                          <div>
-                            <div className="text-sm font-bold tracking-tight">{unit.name}</div>
-                            <div className={`text-[11px] ${isActive ? 'text-gray-300' : 'text-gray-500'}`}>
-                              {unit.tag}
-                            </div>
-                          </div>
-                          <ArrowUpRight className={`w-4 h-4 ${isActive ? 'text-white' : 'text-gray-400'}`} />
                         </Link>
                       );
                     })}
