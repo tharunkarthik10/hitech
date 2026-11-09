@@ -195,7 +195,7 @@ export default function AboutUs() {
       </section>
 
       {/* OUR IMPACT - Interlocking Bento Grid Section */}
-      <section className="w-full bg-white py-20 lg:py-28 overflow-hidden">
+      <section className="w-full bg-white py-10 lg:py-14 overflow-hidden">
         <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-6 md:px-12 lg:px-16">
           
           {/* Mobile & Tablet Layout (< lg) */}
@@ -352,7 +352,7 @@ export default function AboutUs() {
       </section>
 
       {/* Premium Genesis & Who We Are Section */}
-      <div className="w-full bg-white relative py-32 overflow-hidden">
+      <div className="w-full bg-white relative py-16 overflow-hidden">
         {/* Background Accent removed for full white background */}
         <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-8 lg:px-16 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
@@ -446,7 +446,7 @@ export default function AboutUs() {
       </div>
 
       {/* 3 MD Desk Sections for Leadership */}
-      <div className="w-full bg-white relative py-16 space-y-16 divide-y divide-gray-100 overflow-hidden">
+      <div className="w-full bg-white relative py-8 space-y-8 divide-y divide-gray-100 overflow-hidden">
         
         {/* ==================== MD 1: Strategic Vision & Leadership ==================== */}
         <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-8 lg:px-16 relative z-10 pt-4">
@@ -502,7 +502,7 @@ export default function AboutUs() {
         </div>
 
         {/* ==================== MD 2: Technology & R&D ==================== */}
-        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-8 lg:px-16 relative z-10 pt-16">
+        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-8 lg:px-16 relative z-10 pt-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
             {/* Left Column: Single Portrait Image (5 columns - Alternating Layout) */}
@@ -555,7 +555,7 @@ export default function AboutUs() {
         </div>
 
         {/* ==================== MD 3: Operations & Quality ==================== */}
-        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-8 lg:px-16 relative z-10 pt-16">
+        <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-8 lg:px-16 relative z-10 pt-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
             {/* Left Column: Content (7 columns) */}
@@ -609,8 +609,11 @@ export default function AboutUs() {
 
       </div>
 
+      {/* Cross-Sector Capabilities: Industries We Serve */}
+      <IndustriesWeServe variant="scroll" />
+
       {/* Infrastructure Gallery Section */}
-      <div className="bg-[#f4f7f9] py-24">
+      <div className="bg-[#f4f7f9] py-12">
         <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-4 md:px-8">
           
           <div className="text-center mb-10">
@@ -703,11 +706,8 @@ export default function AboutUs() {
         </div>
       </div>
 
-      {/* Cross-Sector Capabilities: Industries We Serve */}
-      <IndustriesWeServe variant="scroll" />
-
       {/* Premium Mission, Vision, Values */}
-      <div className="relative py-24 bg-[#f4f7f9] overflow-hidden">
+      <div className="relative py-12 bg-[#f4f7f9] overflow-hidden">
         <div className="max-w-[96%] 2xl:max-w-[1920px] mx-auto px-8 lg:px-16 relative z-10">
           <FadeIn className="text-center mb-16">
             <h2 className="text-sm font-medium tracking-tight text-[#64748b] mb-4">Core Principles</h2>
