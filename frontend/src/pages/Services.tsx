@@ -313,7 +313,7 @@ export default function Services() {
               viewport={{ once: false, amount: 0.2 }}
               whileHover={{ y: isDragging ? 0 : -8, transition: { duration: 0.3 } }}
               transition={{ duration: 0.6, delay: 0.05, ease: "easeOut" }}
-              className="w-[340px] sm:w-[390px] md:w-[420px] shrink-0 snap-start rounded-3xl bg-white border border-gray-200/90 p-6 sm:p-8 shadow-xs hover:shadow-xl transition-all flex flex-col justify-between group"
+              className="w-[310px] sm:w-[350px] shrink-0 snap-start rounded-3xl bg-white border border-gray-200/90 p-6 sm:p-7 shadow-xs hover:shadow-xl transition-all flex flex-col justify-between group"
             >
               <div className="space-y-5">
                 {/* Top Custom Notched Graphic Card */}
@@ -334,7 +334,7 @@ export default function Services() {
 
                 <div className="w-8 h-0.5 bg-gray-300" />
 
-                <p className="text-base sm:text-lg md:text-[19px] text-gray-800 font-normal leading-relaxed">
+                <p className="text-sm sm:text-base text-gray-700 font-normal leading-relaxed">
                   A comprehensive suite of capabilities that helps industrial leaders fabricate and scale by delivering sub-micron precision, 12kW fiber cutting, and seamless assembly integration.
                 </p>
               </div>
@@ -353,7 +353,7 @@ export default function Services() {
               viewport={{ once: false, amount: 0.2 }}
               whileHover={{ y: isDragging ? 0 : -8, transition: { duration: 0.3 } }}
               transition={{ duration: 0.6, delay: 0.12, ease: "easeOut" }}
-              className="w-[340px] sm:w-[390px] md:w-[420px] shrink-0 snap-start rounded-3xl bg-white border border-gray-200/90 p-6 sm:p-8 shadow-xs hover:shadow-xl transition-all flex flex-col justify-between group"
+              className="w-[310px] sm:w-[350px] shrink-0 snap-start rounded-3xl bg-white border border-gray-200/90 p-6 sm:p-7 shadow-xs hover:shadow-xl transition-all flex flex-col justify-between group"
             >
               <div className="space-y-5">
                 <h3 className="text-xl sm:text-2xl font-bold font-heading text-[#121212] leading-snug">
@@ -363,7 +363,7 @@ export default function Services() {
 
                 <div className="w-8 h-0.5 bg-gray-300" />
 
-                <p className="text-base sm:text-lg md:text-[19px] text-gray-800 font-normal leading-relaxed">
+                <p className="text-sm sm:text-base text-gray-700 font-normal leading-relaxed">
                   Streamline multi-axis CNC milling, eliminate cycle time bottlenecks, and improve structural component quality for high-volume automotive and aerospace runs.
                 </p>
               </div>
@@ -382,7 +382,7 @@ export default function Services() {
               viewport={{ once: false, amount: 0.2 }}
               whileHover={{ y: isDragging ? 0 : -8, transition: { duration: 0.3 } }}
               transition={{ duration: 0.6, delay: 0.19, ease: "easeOut" }}
-              className="w-[340px] sm:w-[390px] md:w-[420px] shrink-0 snap-start rounded-3xl bg-white border border-gray-200/90 p-6 sm:p-8 shadow-xs hover:shadow-xl transition-all flex flex-col justify-between group"
+              className="w-[310px] sm:w-[350px] shrink-0 snap-start rounded-3xl bg-white border border-gray-200/90 p-6 sm:p-7 shadow-xs hover:shadow-xl transition-all flex flex-col justify-between group"
             >
               <div className="space-y-5">
                 <h3 className="text-xl sm:text-2xl font-bold font-heading text-[#121212] leading-snug">
@@ -392,7 +392,7 @@ export default function Services() {
 
                 <div className="w-8 h-0.5 bg-gray-300" />
 
-                <p className="text-base sm:text-lg md:text-[19px] text-gray-800 font-normal leading-relaxed">
+                <p className="text-sm sm:text-base text-gray-700 font-normal leading-relaxed">
                   Directly import CAD models into our 5-axis CAM tooling pipelines with automated toolpath optimization and finite element load verification.
                 </p>
               </div>
@@ -411,7 +411,7 @@ export default function Services() {
               viewport={{ once: false, amount: 0.2 }}
               whileHover={{ y: isDragging ? 0 : -8, transition: { duration: 0.3 } }}
               transition={{ duration: 0.6, delay: 0.26, ease: "easeOut" }}
-              className="w-[340px] sm:w-[390px] md:w-[420px] shrink-0 snap-start rounded-3xl bg-white border border-gray-200/90 p-6 sm:p-8 shadow-xs hover:shadow-xl transition-all flex flex-col justify-between group"
+              className="w-[310px] sm:w-[350px] shrink-0 snap-start rounded-3xl bg-white border border-gray-200/90 p-6 sm:p-7 shadow-xs hover:shadow-xl transition-all flex flex-col justify-between group"
             >
               <div className="space-y-5">
                 <h3 className="text-xl sm:text-2xl font-bold font-heading text-[#121212] leading-snug">
@@ -421,7 +421,7 @@ export default function Services() {
 
                 <div className="w-8 h-0.5 bg-gray-300" />
 
-                <p className="text-base sm:text-lg md:text-[19px] text-gray-800 font-normal leading-relaxed">
+                <p className="text-sm sm:text-base text-gray-700 font-normal leading-relaxed">
                   Custom-built automated SPM workstations, indexing conveyors, and robotic handling cells delivering 24/7 reliability with 100% FAT sign-off.
                 </p>
               </div>
@@ -440,7 +440,7 @@ export default function Services() {
               viewport={{ once: false, amount: 0.2 }}
               whileHover={{ y: isDragging ? 0 : -8, transition: { duration: 0.3 } }}
               transition={{ duration: 0.6, delay: 0.33, ease: "easeOut" }}
-              className="w-[340px] sm:w-[390px] md:w-[420px] shrink-0 snap-start rounded-3xl bg-white border border-gray-200/90 p-6 sm:p-8 shadow-xs hover:shadow-xl transition-all flex flex-col justify-between group"
+              className="w-[310px] sm:w-[350px] shrink-0 snap-start rounded-3xl bg-white border border-gray-200/90 p-6 sm:p-7 shadow-xs hover:shadow-xl transition-all flex flex-col justify-between group"
             >
               <div className="space-y-5">
                 <h3 className="text-xl sm:text-2xl font-bold font-heading text-[#121212] leading-snug">
@@ -450,7 +450,7 @@ export default function Services() {
 
                 <div className="w-8 h-0.5 bg-gray-300" />
 
-                <p className="text-base sm:text-lg md:text-[19px] text-gray-800 font-normal leading-relaxed">
+                <p className="text-sm sm:text-base text-gray-700 font-normal leading-relaxed">
                   Climate-regulated coordinate inspection verifying 100% CAD compliance with certified digital MTR mill dossiers and heat traceability.
                 </p>
               </div>
@@ -527,11 +527,11 @@ export default function Services() {
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-6 space-y-6"
           >
-            <p className="text-lg sm:text-xl md:text-[22px] lg:text-[24px] text-gray-800 leading-relaxed font-normal">
+            <p className="text-base sm:text-lg md:text-[19px] text-gray-700 leading-relaxed font-normal">
               HiTech is an integrated precision engineering and contract manufacturing powerhouse engineered for industrial innovators. We unite high-precision mechanical fabrication, 12kW fiber laser cutting, and continuous 5-axis CNC machining under one single-roof plant.
             </p>
 
-            <p className="text-lg sm:text-xl md:text-[22px] lg:text-[24px] text-gray-800 leading-relaxed font-normal">
+            <p className="text-base sm:text-lg md:text-[19px] text-gray-700 leading-relaxed font-normal">
               Our infrastructure operates as a unified collaborative facility with zero defect tolerance, comprehensive 3D CMM metrology inspection, and dedicated technical leadership for every mission-critical project.
             </p>
 
