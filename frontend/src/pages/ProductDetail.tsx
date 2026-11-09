@@ -4,11 +4,8 @@ import { PRODUCTS } from '../data/products';
 import type { ProductDetailItem } from '../data/products';
 import { 
   ChevronRight, 
-  ChevronDown, 
   CheckCircle2, 
   Send, 
-  ShieldCheck, 
-  Layers, 
   Phone, 
   Mail, 
   User, 
@@ -16,11 +13,12 @@ import {
   FileText,
   AlertCircle,
   Sparkles,
-  ArrowRight
+  ArrowRight,
+  X
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// Curated pool of high-resolution industrial secondary images
+// Curated secondary images for 4 thumbnail views
 const SECONDARY_IMAGE_POOLS: Record<string, string[]> = {
   Pneumatics: [
     'https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=900&auto=format&fit=crop',
@@ -52,7 +50,6 @@ function getProductImages(product: ProductDetailItem): string[] {
   const primary = product.imageUrl;
   const pool = SECONDARY_IMAGE_POOLS[product.category] || SECONDARY_IMAGE_POOLS.default;
   
-  // Ensure we get 4 distinct secondary images
   const secondaries = pool.filter(img => img !== primary).slice(0, 4);
   while (secondaries.length < 4) {
     const fallback = SECONDARY_IMAGE_POOLS.default[secondaries.length % SECONDARY_IMAGE_POOLS.default.length];
@@ -66,13 +63,70 @@ function getProductImages(product: ProductDetailItem): string[] {
   return [primary, ...secondaries.slice(0, 4)];
 }
 
+interface DimensionRow {
+  param: string;
+  dimension: string;
+  notes: string;
+}
+
+// Generate realistic engineering dimensions tailored to product category
+function getProductDimensions(product: ProductDetailItem): DimensionRow[] {
+  const cat = (product.category || '').toLowerCase();
+  const title = (product.title || '').toLowerCase();
+
+  if (cat.includes('pneumatic') || title.includes('cylinder')) {
+    return [
+      { param: 'Standard Bore Diameters', dimension: 'Ø 32, 40, 50, 63, 80, 100, 125 mm', notes: 'ISO 15552 standard' },
+      { param: 'Standard Stroke Range', dimension: '25 mm – 1000 mm (Custom up to 2500 mm)', notes: '±0.5 mm stroke tolerance' },
+      { param: 'Piston Rod Diameter', dimension: 'Ø 12 mm – Ø 32 mm', notes: 'Hard chrome plated (f7)' },
+      { param: 'Operating Pressure', dimension: '1.0 to 10.0 Bar (14.5 to 145 PSI)', notes: 'Proof test: 15.0 Bar' },
+      { param: 'Port Thread Standards', dimension: 'G 1/8", G 1/4", G 3/8", G 1/2" BSPP', notes: 'Optional NPT available' },
+      { param: 'Operating Temperature', dimension: '-20°C to +80°C (Standard NBR / PU)', notes: 'Viton option up to 150°C' },
+    ];
+  }
+
+  if (cat.includes('hydraulic')) {
+    return [
+      { param: 'Cylinder Bore Range', dimension: 'Ø 40 mm to Ø 350 mm', notes: 'Honed seamless tubes (H8)' },
+      { param: 'Piston Rod Diameter', dimension: 'Ø 22 mm to Ø 180 mm', notes: 'Induction hardened chrome' },
+      { param: 'Stroke Capacity', dimension: 'Up to 3000 mm', notes: 'Cushioned end-caps' },
+      { param: 'Working Pressure Rating', dimension: 'Up to 350 Bar (5,000 PSI)', notes: 'Hydrostatic test 500 Bar' },
+      { param: 'Mounting Styles', dimension: 'Flange, Clevis, Trunnion, Foot, Lug', notes: 'ISO 6020-2 / DIN 24554' },
+      { param: 'Fluid Compatibility', dimension: 'Mineral oils (HL, HLP), Glycols', notes: 'FKM / Polyurethane seals' },
+    ];
+  }
+
+  if (cat.includes('actuator') || title.includes('actuator') || title.includes('linear')) {
+    return [
+      { param: 'Effective Stroke Length', dimension: '50 mm – 1500 mm', notes: 'Configurable in 5mm steps' },
+      { param: 'Max Thrust / Payload', dimension: '500 N to 15,000 N', notes: 'Dynamic load verified' },
+      { param: 'Positional Repeatability', dimension: '±0.02 mm (Ballscrew) / ±0.05 mm (Belt)', notes: 'Ground precision grade' },
+      { param: 'Max Linear Velocity', dimension: 'Up to 1.2 m/s', notes: 'Application dependent' },
+      { param: 'Motor Interface Flange', dimension: 'NEMA 23, 34, 42 / 60-130 mm Servo', notes: 'Direct or inline gear' },
+      { param: 'Duty Cycle', dimension: '100% Continuous Industrial Duty', notes: 'IP65 enclosed casing' },
+    ];
+  }
+
+  // Default Precision Engineering & CNC Parts
+  return [
+    { param: 'Machining Envelope', dimension: 'Up to 1500 × 800 × 750 mm', notes: '5-Axis VMC & CNC Turning' },
+    { param: 'Dimensional Tolerance', dimension: '±0.005 mm (5 Microns)', notes: 'CMM verified 100%' },
+    { param: 'Surface Roughness', dimension: 'Ra 0.4 µm to 1.6 µm', notes: 'Superfinished / ground' },
+    { param: 'Certified Materials', dimension: 'SS304/316, EN8, EN24, Al 6061-T6, Cast Iron', notes: 'Mill test certificates' },
+    { param: 'Heat & Surface Treatment', dimension: 'Nitriding, Anodizing, Induction Hardening', notes: '50-62 HRC' },
+    { param: 'Batch Production Volume', dimension: '10 to 10,000+ Units / Month', notes: 'Kanban JIT dispatch' },
+  ];
+}
+
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
   const product = PRODUCTS.find(p => p.id === id);
-  const [isExpanded, setIsExpanded] = useState(false);
 
-  // Gallery state: index 0 is the primary, indices 1-4 are the 4 secondary images
+  // Gallery: index 0 is primary, 1-4 are secondary
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+
+  // Modal State for "Send Product Enquiry"
+  const [isEnquiryModalOpen, setIsEnquiryModalOpen] = useState(false);
 
   // Enquiry Form State
   const [formData, setFormData] = useState({
@@ -89,12 +143,18 @@ export default function ProductDetail() {
   useEffect(() => {
     window.scrollTo(0, 0);
     setActiveImageIndex(0);
+    setIsEnquiryModalOpen(false);
     setSubmitted(false);
   }, [id]);
 
   const productImages = useMemo(() => {
     if (!product) return [];
     return getProductImages(product);
+  }, [product]);
+
+  const dimensions = useMemo(() => {
+    if (!product) return [];
+    return getProductDimensions(product);
   }, [product]);
 
   // Word count calculator for description (500 words limit)
@@ -108,7 +168,7 @@ export default function ProductDetail() {
 
   if (!product) {
     return (
-      <main className="bg-white min-h-screen pt-32 pb-20 px-4 sm:px-8 text-center">
+      <main className="bg-white min-h-screen pt-32 pb-20 px-4 sm:px-8 text-center font-sans">
         <h2 className="text-2xl font-bold text-gray-900 mb-4">Product Not Found</h2>
         <Link to="/products" className="text-[#00A6FB] hover:underline font-semibold">
           Return to Products
@@ -129,7 +189,6 @@ export default function ProductDetail() {
     if (isWordCountExceeded) return;
 
     setSubmitting(true);
-    // Simulate RFQ transmission & generate reference ID
     setTimeout(() => {
       setSubmitting(false);
       setSubmitted(true);
@@ -171,101 +230,82 @@ export default function ProductDetail() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
           
           {/* ========================================================================= */}
-          {/* LEFT SIDE: MAIN IMAGE + 4 SECONDARY IMAGES BELOW */}
+          {/* LEFT SIDE: MAIN IMAGE + 4 SECONDARY IMAGES BELOW (CLEAN, NO OVERLAYS) */}
           {/* ========================================================================= */}
           <div className="lg:col-span-6 xl:col-span-5 lg:sticky lg:top-28 lg:self-start space-y-3.5">
             
-            {/* Main Featured Image Display */}
-            <div className="bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 shadow-sm relative group aspect-[4/3] sm:aspect-[16/11] flex items-center justify-center">
+            {/* Main Featured Image Display (Clean) */}
+            <div className="bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 shadow-sm relative aspect-[4/3] sm:aspect-[16/11] flex items-center justify-center">
               <AnimatePresence mode="wait">
                 <motion.img 
                   key={productImages[activeImageIndex]}
                   src={productImages[activeImageIndex]} 
                   alt={`${product.title} view ${activeImageIndex + 1}`}
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.25, ease: 'easeOut' }}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover"
                 />
               </AnimatePresence>
-
-              {/* View Index Badge */}
-              <div className="absolute top-3.5 left-3.5 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-[11px] font-mono tracking-wider border border-white/20">
-                VIEW {activeImageIndex + 1} OF {productImages.length}
-              </div>
-
-              {/* Verified OEM Badge */}
-              <div className="absolute bottom-3.5 right-3.5 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-[#121212] text-[11px] font-bold tracking-tight shadow-sm border border-gray-200 flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#00A6FB]" />
-                <span>100% Quality Inspected</span>
-              </div>
             </div>
 
-            {/* 4 Secondary Images Below the Main Image */}
-            <div className="space-y-1.5">
-              <div className="flex items-center justify-between text-xs text-gray-500 font-semibold px-1">
-                <span>Select View ({productImages.length - 1} secondary angles)</span>
-                <span className="text-[#00A6FB] font-medium">Click thumbnail to inspect</span>
-              </div>
+            {/* 4 Secondary Images Below the Main Image (Clean grid) */}
+            <div className="grid grid-cols-4 gap-2.5 sm:gap-3">
+              {productImages.slice(1, 5).map((imgUrl, idx) => {
+                const secondaryRealIndex = idx + 1;
+                const isSelected = activeImageIndex === secondaryRealIndex;
 
-              <div className="grid grid-cols-4 gap-2.5 sm:gap-3">
-                {productImages.slice(1, 5).map((imgUrl, idx) => {
-                  const secondaryRealIndex = idx + 1;
-                  const isSelected = activeImageIndex === secondaryRealIndex;
-
-                  return (
-                    <button
-                      key={idx}
-                      type="button"
-                      onClick={() => setActiveImageIndex(secondaryRealIndex)}
-                      className={`relative aspect-[4/3] rounded-xl overflow-hidden border-2 transition-all duration-200 cursor-pointer group bg-gray-100 ${
-                        isSelected 
-                          ? 'border-[#00A6FB] ring-2 ring-[#00A6FB]/30 shadow-md scale-98' 
-                          : 'border-gray-200 hover:border-[#00A6FB]/70 opacity-75 hover:opacity-100'
-                      }`}
-                      aria-label={`Select angle ${secondaryRealIndex}`}
-                    >
-                      <img 
-                        src={imgUrl} 
-                        alt={`${product.title} angle ${secondaryRealIndex}`}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                      />
-                      {isSelected && (
-                        <div className="absolute inset-0 bg-[#00A6FB]/15 flex items-center justify-center">
-                          <div className="w-5 h-5 rounded-full bg-[#00A6FB] text-white flex items-center justify-center shadow-xs">
-                            <CheckCircle2 className="w-3.5 h-3.5" />
-                          </div>
-                        </div>
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Reset to Primary View Button if on secondary image */}
-              {activeImageIndex !== 0 && (
-                <div className="pt-1 text-center">
+                return (
                   <button
-                    onClick={() => setActiveImageIndex(0)}
-                    className="text-xs font-semibold text-[#00A6FB] hover:text-[#0088cc] underline transition-colors cursor-pointer"
+                    key={idx}
+                    type="button"
+                    onClick={() => setActiveImageIndex(secondaryRealIndex)}
+                    className={`relative aspect-[4/3] rounded-xl overflow-hidden border-2 transition-all duration-200 cursor-pointer group bg-gray-100 ${
+                      isSelected 
+                        ? 'border-[#00A6FB] ring-2 ring-[#00A6FB]/30 shadow-md scale-98' 
+                        : 'border-gray-200 hover:border-[#00A6FB]/70 opacity-80 hover:opacity-100'
+                    }`}
+                    aria-label={`Select angle ${secondaryRealIndex}`}
                   >
-                    ← Return to Default Main Product Image
+                    <img 
+                      src={imgUrl} 
+                      alt={`${product.title} angle ${secondaryRealIndex}`}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    {isSelected && (
+                      <div className="absolute inset-0 bg-[#00A6FB]/15 flex items-center justify-center">
+                        <div className="w-5 h-5 rounded-full bg-[#00A6FB] text-white flex items-center justify-center shadow-xs">
+                          <CheckCircle2 className="w-3.5 h-3.5" />
+                        </div>
+                      </div>
+                    )}
                   </button>
-                </div>
-              )}
+                );
+              })}
             </div>
 
+            {/* Return to Main Image Button if Secondary Selected */}
+            {activeImageIndex !== 0 && (
+              <div className="text-center pt-1">
+                <button
+                  onClick={() => setActiveImageIndex(0)}
+                  className="text-xs font-semibold text-[#00A6FB] hover:underline cursor-pointer"
+                >
+                  ← Return to Primary Product Image
+                </button>
+              </div>
+            )}
           </div>
 
           {/* ========================================================================= */}
-          {/* RIGHT SIDE: SCROLLABLE PRODUCT DETAILS & FINAL ENQUIRY CTA FORM */}
+          {/* RIGHT SIDE: PRODUCT DESCRIPTION + AVAILABLE DIMENSIONS TABLE + INQUIRE CTA */}
           {/* ========================================================================= */}
-          <div className="lg:col-span-6 xl:col-span-7 space-y-8">
+          <div className="lg:col-span-6 xl:col-span-7 space-y-6 sm:space-y-8">
             
-            {/* Header: Category Badge + Title */}
-            <div className="space-y-3 border-b border-gray-100 pb-6">
-              <div className="flex flex-wrap items-center gap-2.5">
+            {/* Header: Badges + Title */}
+            <div className="space-y-3">
+              <div className="flex flex-wrap items-center gap-2">
                 <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-[#00A6FB]/10 text-[#00A6FB] border border-[#00A6FB]/25">
                   {product.category}
                 </span>
@@ -274,84 +314,105 @@ export default function ProductDetail() {
                     {product.subGroup}
                   </span>
                 )}
-                <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                  In Production Run
-                </span>
               </div>
 
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#121212] tracking-tight leading-tight">
                 {product.title}
               </h1>
 
-              <p className="text-gray-600 text-sm sm:text-base leading-relaxed pt-1">
+              {/* Product Description */}
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed pt-1">
                 {product.description}
               </p>
-
-              {/* Quick Jump to Enquiry */}
-              <div className="pt-2">
-                <a 
-                  href="#enquiry-form"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#00A6FB] hover:bg-[#0095e0] text-white text-xs sm:text-sm font-bold tracking-tight shadow-sm shadow-[#00A6FB]/30 transition-all active:scale-95"
-                >
-                  <span>Inquire About This Product</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </a>
-              </div>
             </div>
 
-            {/* Key Specifications Card */}
-            <div className="bg-slate-50/90 rounded-2xl p-5 sm:p-6 border border-slate-200/80 space-y-4">
+            {/* Simple Tabular Column: Available Dimensions & Specifications */}
+            <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <h3 className="text-xs font-bold text-gray-900 uppercase tracking-wider flex items-center gap-2">
-                  <Layers className="w-4 h-4 text-[#00A6FB]" />
-                  <span>Key Specifications & Verification</span>
+                <h3 className="text-xs sm:text-sm font-bold text-gray-900 uppercase tracking-wider">
+                  Available Dimensions & Technical Specifications
                 </h3>
-                <span className="text-[11px] font-mono text-gray-500">ISO CERTIFIED</span>
+                <span className="text-[11px] font-mono text-gray-400">STANDARD & CUSTOM</span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {product.features?.map((feature, idx) => (
-                  <div key={idx} className="flex items-start gap-2.5 p-3 rounded-xl bg-white border border-gray-200/70 shadow-2xs">
-                    <CheckCircle2 className="w-4 h-4 text-[#00A6FB] shrink-0 mt-0.5" />
-                    <span className="text-xs sm:text-sm font-medium text-gray-800 leading-snug">{feature}</span>
-                  </div>
-                ))}
+              <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-2xs">
+                <table className="w-full text-left text-xs sm:text-sm border-collapse">
+                  <thead className="bg-[#f8f9fa] border-b border-gray-200 text-gray-600 font-bold uppercase tracking-wider text-[11px]">
+                    <tr>
+                      <th className="py-3 px-4 sm:px-5">Parameter</th>
+                      <th className="py-3 px-4 sm:px-5">Available Dimensions / Values</th>
+                      <th className="py-3 px-4 sm:px-5 hidden md:table-cell">Standard / Tolerance</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100 bg-white">
+                    {dimensions.map((row, idx) => (
+                      <tr key={idx} className="hover:bg-sky-50/40 transition-colors">
+                        <td className="py-3 px-4 sm:px-5 font-semibold text-gray-900 whitespace-nowrap">
+                          {row.param}
+                        </td>
+                        <td className="py-3 px-4 sm:px-5 text-[#00A6FB] font-medium">
+                          {row.dimension}
+                        </td>
+                        <td className="py-3 px-4 sm:px-5 text-gray-500 hidden md:table-cell">
+                          {row.notes}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
 
-            {/* Technical Accordion / Engineering Data */}
-            <div className="rounded-2xl border border-gray-200 overflow-hidden bg-white">
-              <button 
-                onClick={() => setIsExpanded(!isExpanded)}
-                className="w-full flex items-center justify-between p-4 sm:p-5 text-left font-bold text-gray-900 hover:bg-gray-50 transition-colors cursor-pointer"
+            {/* Inquire CTA Button: Opens the Send Product Enquiry Form */}
+            <div className="pt-2">
+              <button
+                type="button"
+                onClick={() => setIsEnquiryModalOpen(true)}
+                className="px-8 py-4 rounded-full bg-[#00A6FB] hover:bg-[#0095e0] text-white font-bold text-sm sm:text-base tracking-tight shadow-md shadow-[#00A6FB]/25 transition-all duration-200 flex items-center gap-2.5 cursor-pointer active:scale-95"
               >
-                <span className="text-xs sm:text-sm font-bold tracking-tight flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-[#00A6FB]" />
-                  <span>Engineering Tolerances & CAD Models (STEP / IGES)</span>
-                </span>
-                <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+                <span>Inquire About This Product</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* POPUP MODAL: "SEND PRODUCT ENQUIRY" (Opens when Inquire CTA is clicked) */}
+      {/* Mandatory: Name, Mail, Phone. Optional: Quantity, Description (500w) */}
+      {/* ========================================================================= */}
+      <AnimatePresence>
+        {isEnquiryModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/65 backdrop-blur-sm overflow-y-auto">
+            
+            {/* Backdrop click area */}
+            <div 
+              className="fixed inset-0" 
+              onClick={() => setIsEnquiryModalOpen(false)} 
+            />
+
+            {/* Modal Dialog Content */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 15 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="relative w-full max-w-xl bg-white rounded-3xl shadow-2xl border border-gray-200 p-6 sm:p-8 z-10 my-8 overflow-hidden"
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setIsEnquiryModalOpen(false)}
+                className="absolute top-5 right-5 w-9 h-9 rounded-full bg-gray-100 hover:bg-black hover:text-white flex items-center justify-center text-gray-500 transition-colors cursor-pointer"
+                aria-label="Close Enquiry Dialog"
+              >
+                <X className="w-4 h-4" />
               </button>
 
-              <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isExpanded ? 'max-h-[350px] opacity-100 border-t border-gray-100' : 'max-h-0 opacity-0'}`}>
-                <div className="p-4 sm:p-5 bg-gray-50/70 text-gray-700 text-xs sm:text-sm leading-relaxed space-y-3">
-                  <p>
-                    Precision manufactured to sub-micron machine tolerances. All cylinder shafts, mountings, valve bodies, and linear assemblies undergo metallurgical hardness testing and 100% pneumatic/hydraulic hydrostatic pressure hold verification.
-                  </p>
-                  <p className="text-gray-500 text-xs">
-                    Custom bore diameters, stroke options, seal materials (NBR, FKM, Viton), and CAD step files are made available directly to your engineering desk upon enquiry submission below.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* ========================================================================= */}
-            {/* FINAL CTA: SEND ENQUIRE FORM (Name, Mail, Phone, Quantity, Description 500w) */}
-            {/* ========================================================================= */}
-            <div id="enquiry-form" className="rounded-3xl border border-gray-200 bg-gradient-to-b from-white to-gray-50/50 p-6 sm:p-8 md:p-10 shadow-lg shadow-gray-200/50 space-y-6 scroll-mt-28">
-              
-              {/* Form Heading */}
-              <div className="space-y-1.5 border-b border-gray-100 pb-5">
+              {/* Form Header */}
+              <div className="space-y-1.5 border-b border-gray-100 pb-5 pr-10">
                 <div className="flex items-center gap-2 text-[#00A6FB]">
                   <Sparkles className="w-4 h-4" />
                   <span className="text-xs font-bold uppercase tracking-wider">Fast Turnaround RFQ</span>
@@ -360,42 +421,43 @@ export default function ProductDetail() {
                   Send Product Enquiry
                 </h3>
                 <p className="text-xs sm:text-sm text-gray-500">
-                  Request pricing, CAD step drawings, or sample runs for <strong className="text-gray-900">{product.title}</strong>.
+                  Enquiring for <strong className="text-gray-900">{product.title}</strong>
                 </p>
               </div>
 
-              {/* Success Notification */}
+              {/* Submission Result / Form Body */}
               {submitted ? (
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="p-6 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 space-y-3 text-center"
-                >
-                  <div className="w-12 h-12 rounded-full bg-emerald-500 text-white flex items-center justify-center mx-auto shadow-md">
-                    <CheckCircle2 className="w-6 h-6" />
+                <div className="py-6 text-center space-y-4">
+                  <div className="w-14 h-14 rounded-full bg-emerald-500 text-white flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/20">
+                    <CheckCircle2 className="w-7 h-7" />
                   </div>
-                  <h4 className="text-lg font-bold">Enquiry Received Successfully!</h4>
-                  <p className="text-xs sm:text-sm text-emerald-800 max-w-md mx-auto leading-relaxed">
-                    Thank you, <strong>{formData.name}</strong>. Your enquiry for <strong>{formData.quantity} units</strong> of <em>{product.title}</em> has been routed to our application desk.
+                  <h4 className="text-xl font-bold text-gray-900">Enquiry Received Successfully!</h4>
+                  <p className="text-xs sm:text-sm text-gray-600 max-w-md mx-auto leading-relaxed">
+                    Thank you, <strong>{formData.name}</strong>. Your enquiry for <em>{product.title}</em> has been transmitted to our engineering team. We will get back to you shortly.
                   </p>
-                  <div className="inline-block px-3.5 py-1 rounded-full bg-white text-emerald-900 font-mono text-xs font-bold border border-emerald-300">
+                  <div className="inline-block px-4 py-1.5 rounded-full bg-gray-100 text-gray-800 font-mono text-xs font-bold border border-gray-200">
                     REF ID: {refNumber}
                   </div>
-                  <div className="pt-2">
+                  <div className="pt-3 flex items-center justify-center gap-3">
                     <button
                       onClick={resetForm}
-                      className="px-5 py-2 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors cursor-pointer"
+                      className="px-5 py-2.5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-bold transition-colors cursor-pointer"
                     >
-                      Submit Another Enquiry
+                      Submit Another
+                    </button>
+                    <button
+                      onClick={() => setIsEnquiryModalOpen(false)}
+                      className="px-6 py-2.5 rounded-full bg-[#00A6FB] hover:bg-[#0095e0] text-white text-xs font-bold transition-colors shadow-sm cursor-pointer"
+                    >
+                      Done
                     </button>
                   </div>
-                </motion.div>
+                </div>
               ) : (
-                /* Enquiry Form */
-                <form onSubmit={handleEnquirySubmit} className="space-y-4">
+                <form onSubmit={handleEnquirySubmit} className="space-y-4 pt-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     
-                    {/* Name */}
+                    {/* Mandatory: Name */}
                     <div className="space-y-1.5">
                       <label className="text-xs font-bold text-gray-800 flex items-center gap-1.5">
                         <User className="w-3.5 h-3.5 text-gray-400" />
@@ -408,11 +470,11 @@ export default function ProductDetail() {
                         value={formData.name}
                         onChange={handleInputChange}
                         placeholder="e.g. John Doe / Company"
-                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#00A6FB] focus:ring-2 focus:ring-[#00A6FB]/20 transition-all shadow-2xs"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#00A6FB] focus:ring-2 focus:ring-[#00A6FB]/20 transition-all shadow-2xs"
                       />
                     </div>
 
-                    {/* Mail */}
+                    {/* Mandatory: Mail */}
                     <div className="space-y-1.5">
                       <label className="text-xs font-bold text-gray-800 flex items-center gap-1.5">
                         <Mail className="w-3.5 h-3.5 text-gray-400" />
@@ -425,11 +487,11 @@ export default function ProductDetail() {
                         value={formData.email}
                         onChange={handleInputChange}
                         placeholder="e.g. john@company.com"
-                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#00A6FB] focus:ring-2 focus:ring-[#00A6FB]/20 transition-all shadow-2xs"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#00A6FB] focus:ring-2 focus:ring-[#00A6FB]/20 transition-all shadow-2xs"
                       />
                     </div>
 
-                    {/* Phone Number */}
+                    {/* Mandatory: Phone */}
                     <div className="space-y-1.5">
                       <label className="text-xs font-bold text-gray-800 flex items-center gap-1.5">
                         <Phone className="w-3.5 h-3.5 text-gray-400" />
@@ -442,39 +504,38 @@ export default function ProductDetail() {
                         value={formData.phone}
                         onChange={handleInputChange}
                         placeholder="e.g. +91 98765 43210"
-                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#00A6FB] focus:ring-2 focus:ring-[#00A6FB]/20 transition-all shadow-2xs"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#00A6FB] focus:ring-2 focus:ring-[#00A6FB]/20 transition-all shadow-2xs"
                       />
                     </div>
 
-                    {/* Quantity */}
+                    {/* Optional: Quantity (no star) */}
                     <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-gray-800 flex items-center gap-1.5">
+                      <label className="text-xs font-medium text-gray-700 flex items-center gap-1.5">
                         <Hash className="w-3.5 h-3.5 text-gray-400" />
-                        <span>Required Quantity *</span>
+                        <span>Quantity (Optional)</span>
                       </label>
                       <input 
                         type="number" 
                         name="quantity" 
                         min="1" 
-                        required 
                         value={formData.quantity}
                         onChange={handleInputChange}
-                        placeholder="e.g. 50 units"
-                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#00A6FB] focus:ring-2 focus:ring-[#00A6FB]/20 transition-all shadow-2xs"
+                        placeholder="e.g. 50"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#00A6FB] focus:ring-2 focus:ring-[#00A6FB]/20 transition-all shadow-2xs"
                       />
                     </div>
 
                   </div>
 
-                  {/* Description (500 Words) */}
+                  {/* Optional: Description (500 Words, no star) */}
                   <div className="space-y-1.5 pt-1">
                     <div className="flex items-center justify-between">
-                      <label className="text-xs font-bold text-gray-800 flex items-center gap-1.5">
+                      <label className="text-xs font-medium text-gray-700 flex items-center gap-1.5">
                         <FileText className="w-3.5 h-3.5 text-gray-400" />
-                        <span>Description & Specifications (up to 500 words) *</span>
+                        <span>Description (Optional, up to 500 words)</span>
                       </label>
-                      <span className={`text-[11px] font-mono font-medium ${
-                        isWordCountExceeded ? 'text-rose-600 font-bold' : 'text-gray-500'
+                      <span className={`text-[11px] font-mono ${
+                        isWordCountExceeded ? 'text-rose-600 font-bold' : 'text-gray-400'
                       }`}>
                         {descriptionWordCount} / 500 words
                       </span>
@@ -482,12 +543,11 @@ export default function ProductDetail() {
 
                     <textarea 
                       name="description" 
-                      rows={5} 
-                      required 
+                      rows={4} 
                       value={formData.description}
                       onChange={handleInputChange}
-                      placeholder="Specify your application requirements, custom bore sizes, stroke configurations, preferred material grades, operating environment, or delivery timelines..."
-                      className={`w-full px-4 py-3 rounded-xl border bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none transition-all shadow-2xs resize-y ${
+                      placeholder="Specify your application requirements, custom dimensions, tolerances, or delivery timelines..."
+                      className={`w-full px-3.5 py-2.5 rounded-xl border bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none transition-all shadow-2xs resize-y ${
                         isWordCountExceeded 
                           ? 'border-rose-500 focus:ring-2 focus:ring-rose-500/20' 
                           : 'border-gray-200 focus:border-[#00A6FB] focus:ring-2 focus:ring-[#00A6FB]/20'
@@ -497,7 +557,7 @@ export default function ProductDetail() {
                     {isWordCountExceeded && (
                       <div className="flex items-center gap-1 text-xs text-rose-600 font-medium">
                         <AlertCircle className="w-3.5 h-3.5" />
-                        <span>Description exceeds the 500-word limit. Please trim your text.</span>
+                        <span>Description exceeds 500 words limit.</span>
                       </div>
                     )}
                   </div>
@@ -514,23 +574,21 @@ export default function ProductDetail() {
                       ) : (
                         <>
                           <Send className="w-4 h-4" />
-                          <span>Send Enquiry</span>
+                          <span>Send Product Enquiry</span>
                         </>
                       )}
                     </button>
                     <p className="text-[11px] text-gray-400 text-center mt-2.5">
-                      Guaranteed response within 24 hours. Your details remain confidential under standard NDA.
+                      Fast engineering response within 24 hours. Your details remain confidential under standard NDA.
                     </p>
                   </div>
                 </form>
               )}
 
-            </div>
-
+            </motion.div>
           </div>
-
-        </div>
-      </section>
+        )}
+      </AnimatePresence>
 
       {/* ========================================================================= */}
       {/* SIMILAR PRODUCTS / EXPLORE RELATED */}
