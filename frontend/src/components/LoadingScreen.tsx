@@ -10,27 +10,56 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onFinish }) => {
   const [shineActive, setShineActive] = useState(false);
 
   useEffect(() => {
-    // Lock scrolling during intro
+    // Lock scrolling while page resources are loading
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
 
-    // Start slow metallic shine after 250ms
+    // Start metallic shine
     const shineTimer = setTimeout(() => {
       setShineActive(true);
-    }, 250);
+    }, 150);
 
-    // Allow slow, majestic metallic glide (3.0s duration) then fade out gracefully
-    const exitTimer = setTimeout(() => {
-      setIsFadingOut(true);
-      setTimeout(() => {
-        setIsVisible(false);
-        if (onFinish) onFinish();
-      }, 700);
-    }, 3600);
+    let isPageLoaded = document.readyState === 'complete';
+    let minTimeElapsed = false;
+
+    const checkAndDismiss = () => {
+      if (isPageLoaded && minTimeElapsed) {
+        setIsFadingOut(true);
+        setTimeout(() => {
+          setIsVisible(false);
+          if (onFinish) onFinish();
+        }, 600);
+      }
+    };
+
+    const handleLoad = () => {
+      isPageLoaded = true;
+      checkAndDismiss();
+    };
+
+    if (!isPageLoaded) {
+      window.addEventListener('load', handleLoad);
+    }
+
+    // Minimum display time (1.2s) to prevent jarring 5ms visual flashes on cached visits,
+    // while ensuring the page never stays artificially blocked.
+    const minTimer = setTimeout(() => {
+      minTimeElapsed = true;
+      checkAndDismiss();
+    }, 1200);
+
+    // Maximum safety fallback (6s) in case external font/third-party script hangs
+    const safetyTimer = setTimeout(() => {
+      isPageLoaded = true;
+      minTimeElapsed = true;
+      checkAndDismiss();
+    }, 6000);
 
     return () => {
       clearTimeout(shineTimer);
-      clearTimeout(exitTimer);
+      clearTimeout(minTimer);
+      clearTimeout(safetyTimer);
+      window.removeEventListener('load', handleLoad);
       document.body.style.overflow = originalOverflow;
     };
   }, [onFinish]);
@@ -39,7 +68,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onFinish }) => {
 
   return (
     <div
-      className={`fixed inset-0 z-[99999] flex items-center justify-center bg-white transition-opacity duration-700 ease-out select-none ${
+      className={`fixed inset-0 z-[99999] flex items-center justify-center bg-white transition-opacity duration-600 ease-out select-none ${
         isFadingOut ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
       aria-label="Loading Hitech Engineering"
@@ -77,7 +106,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onFinish }) => {
         >
           {/* Primary High-Intensity Chrome Specular Beam */}
           <div
-            className={`absolute top-[-50%] bottom-[-50%] w-[130%] transform -skew-x-25 transition-transform duration-[3000ms] ease-[cubic-bezier(0.25,1,0.5,1)] ${
+            className={`absolute top-[-50%] bottom-[-50%] w-[130%] transform -skew-x-25 transition-transform duration-[2200ms] ease-[cubic-bezier(0.25,1,0.5,1)] ${
               shineActive ? 'translate-x-[230%]' : '-translate-x-[180%]'
             }`}
             style={{
@@ -100,7 +129,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onFinish }) => {
 
           {/* Secondary Specular Glint Line for Metallic Bevel Refraction */}
           <div
-            className={`absolute top-[-50%] bottom-[-50%] w-[45%] transform -skew-x-30 transition-transform duration-[3200ms] ease-[cubic-bezier(0.2,0.8,0.4,1)] delay-100 ${
+            className={`absolute top-[-50%] bottom-[-50%] w-[45%] transform -skew-x-30 transition-transform duration-[2400ms] ease-[cubic-bezier(0.2,0.8,0.4,1)] delay-75 ${
               shineActive ? 'translate-x-[420%]' : '-translate-x-[220%]'
             }`}
             style={{
