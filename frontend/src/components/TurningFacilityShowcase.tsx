@@ -1,25 +1,25 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { RotateCw, X, ArrowUpRight, CheckCircle2 } from 'lucide-react';
+import { RotateCw, X, ArrowUpRight, CheckCircle2, Sparkles } from 'lucide-react';
 
-interface FacilityItem {
+interface CardItem {
   id: string;
   title: string;
-  statNumber: string;
+  tag: string;
+  statNumber?: string;
   statUnit?: string;
-  statLabel: string;
   imageUrl: string;
   description: string;
   specs: string[];
 }
 
-const FACILITIES_DATA: FacilityItem[] = [
+const FACILITIES_DATA: CardItem[] = [
   {
     id: 'fll',
     title: 'Fast Loop Line (FLL)',
+    tag: 'Continuous Loop Bay',
     statNumber: '35',
     statUnit: 'MT/hr',
-    statLabel: 'Continuous mixer output capacity with IRIS pattern recognition',
     imageUrl: '/facilities/fast_loop_line.jpg',
     description: 'Fast Loop Line is equipped with new continuous mixer with 35 Metric Tonnes per hour capacity with IRIS (Intelligent Radio Information System) pattern recognition method.',
     specs: [
@@ -32,9 +32,9 @@ const FACILITIES_DATA: FacilityItem[] = [
   {
     id: 'sp',
     title: 'Sand Plant',
+    tag: 'Reclamation Unit',
     statNumber: '20',
     statUnit: 'MT/hr',
-    statLabel: 'Fluidized Bed Cooler classifier & thermal reclamation system',
     imageUrl: '/facilities/sand_plant.jpg',
     description: 'Fluidized Bed Cooler classifier-20 Metric Tonnes per hour & thermal reclamation with a capacity of (3 Metric Tonnes per hour) are in place.',
     specs: [
@@ -47,13 +47,13 @@ const FACILITIES_DATA: FacilityItem[] = [
   {
     id: 'hms',
     title: 'Hand Moulding Section (HMS)',
+    tag: 'Heavy Moulding Line',
     statNumber: '15',
     statUnit: 'MT/hr',
-    statLabel: 'Compaction table capacity across HMS-1 & HMS-2 heavy moulding bays',
     imageUrl: '/facilities/hand_moulding_section.jpg',
     description: 'Continuous mixers with capacity of 25 Metric Tonnes per hour and 20 Metric Tonnes per hour Compaction Table : 3000 x 3000 with 15 Metric Tonnes per hour capacity in HMS-2 & 3300 x 1600 with 7 Metric Tonnes capacity at HMS-1',
     specs: [
-      'Continuous mixers: 25 MT/hr & 20 MT/hr',
+      'Continuous mixers: 25 MT/hr & 20 MT/hr capacity',
       'Compaction Table HMS-2: 3000 x 3000 mm (15 MT/hr capacity)',
       'Compaction Table HMS-1: 3300 x 1600 mm (7 MT/hr capacity)',
       'Engineered for heavy-tonnage complex geometry castings'
@@ -62,9 +62,9 @@ const FACILITIES_DATA: FacilityItem[] = [
   {
     id: 'mml',
     title: 'Melting & Metallurgical Lab',
+    tag: 'Quality & Analysis',
     statNumber: '2500',
     statUnit: 'KW',
-    statLabel: 'Dual track medium frequency melting furnace power with thermal analysis',
     imageUrl: '/facilities/melting_metallurgical_lab.jpg',
     description: '2500 KW Dual track Medium frequency Melting furnace with 3 Metric Tonnes and 4 Metric Tonnes crucibles. Melting is also equipped with facility of Thermal Analysis of Molten Metal.',
     specs: [
@@ -76,208 +76,295 @@ const FACILITIES_DATA: FacilityItem[] = [
   }
 ];
 
+const PRODUCTS_DATA: CardItem[] = [
+  {
+    id: 'prd-hyd',
+    title: 'Heavy Hydraulic Cylinders',
+    tag: 'Linear Motion Actuators',
+    statNumber: '350',
+    statUnit: 'Bar',
+    imageUrl: 'https://motiequipments.com/assets/images/shop/grid/palette-1.jpg',
+    description: 'Heavy-duty tie rod and welded hydraulic cylinders manufactured to ISO 6020-2 standards. Featuring hard chrome plated rods, induction hardened surfaces, and high-pressure polyurethane seals.',
+    specs: [
+      'Operating pressure up to 350 bar continuous',
+      'Hard chrome plated piston rod (minimum 25 microns)',
+      'Adjustable end-position hydraulic cushioning',
+      '100% factory pressure & leak verification'
+    ]
+  },
+  {
+    id: 'prd-vmc',
+    title: 'VMC Precision Components',
+    tag: 'Sub-Micron Machining',
+    statNumber: '5',
+    statUnit: 'Axis CNC',
+    imageUrl: 'https://motiequipments.com/assets/images/shop/grid/flex-2.jpg',
+    description: 'Precision milled complex component geometries produced on high-speed vertical machining centres. Optimized for stringent aerospace, automotive, and industrial robotic assemblies.',
+    specs: [
+      'Tight tolerances held down to ±0.005 mm',
+      'Coordinate Measuring Machine (CMM) dimensional verification',
+      'Surface finish Ra 0.4 μm achievable on critical faces',
+      'Custom fixtures and serial batch repeatability'
+    ]
+  },
+  {
+    id: 'prd-laser',
+    title: 'CNC Laser Profiling Assemblies',
+    tag: 'High-Speed Profiling',
+    statNumber: '12',
+    statUnit: 'kW Laser',
+    imageUrl: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=800&q=80',
+    description: 'Laser cut and precision folded sheet metal enclosures, structural frames, and custom bracketry processed on state-of-the-art 12kW fiber laser systems with zero thermal distortion.',
+    specs: [
+      'High-speed nitrogen assist cut for oxide-free weld edges',
+      'Capable of sheet thickness up to 30mm steel & aluminum',
+      'Integrated CNC press brake multi-axis bending',
+      'Direct CAD/CAM nesting for minimal material waste'
+    ]
+  },
+  {
+    id: 'prd-cast',
+    title: 'Cast Alloy Tooling & Housings',
+    tag: 'Foundry Castings',
+    statNumber: '100',
+    statUnit: '% FAT',
+    imageUrl: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80',
+    description: 'Ductile iron and alloy castings produced in our high-capacity continuous mixer and hand moulding bays. Stress-relieved, finish-machined, and spectrographically verified.',
+    specs: [
+      'Castings up to 4 Metric Tonnes single pour capacity',
+      'Full grain structure & tensile strength lab certificates',
+      'Pre-machined and finish-ground mounting surfaces',
+      'Complete ultrasonic non-destructive testing (NDT)'
+    ]
+  }
+];
+
 interface TurningFacilityShowcaseProps {
   openQuoteModal?: (subject: string) => void;
 }
 
 export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacilityShowcaseProps) {
-  // Mode: 'metrics' (Image 1 layout) vs 'facilities' (Image 2 layout)
-  const [activeTab, setActiveTab] = useState<'facilities' | 'metrics'>('facilities');
-  const [isFlipped, setIsFlipped] = useState(false);
-  const [selectedFacility, setSelectedFacility] = useState<FacilityItem | null>(null);
+  // Tabs: 'facilities' vs 'products'
+  const [activeTab, setActiveTab] = useState<'facilities' | 'products'>('facilities');
 
-  // Toggle flip between Image 1 (Metrics Grid) and Image 2 (Facility Cards)
-  const handleToggleFlip = () => {
-    setIsFlipped(!isFlipped);
-    setActiveTab(isFlipped ? 'facilities' : 'metrics');
+  // Track flipped status for each individual card independently
+  const [flippedCards, setFlippedCards] = useState<Record<string, boolean>>({});
+  
+  // Modal state
+  const [selectedItem, setSelectedItem] = useState<CardItem | null>(null);
+
+  const currentData = activeTab === 'facilities' ? FACILITIES_DATA : PRODUCTS_DATA;
+
+  const toggleCardFlip = (id: string, e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setFlippedCards(prev => ({
+      ...prev,
+      [id]: !prev[id]
+    }));
   };
 
-  const handleSelectTab = (tab: 'facilities' | 'metrics') => {
-    setActiveTab(tab);
-    setIsFlipped(tab === 'metrics');
+  const flipAllCards = () => {
+    // If any card is not flipped, flip all; otherwise unflip all
+    const allFlipped = currentData.every(item => flippedCards[item.id]);
+    const newState: Record<string, boolean> = { ...flippedCards };
+    currentData.forEach(item => {
+      newState[item.id] = !allFlipped;
+    });
+    setFlippedCards(newState);
   };
 
   return (
     <section className="relative w-full my-12 lg:my-16">
       
-      {/* Tab Navigation (Matching Image 2 Reference) */}
-      <div className="flex items-center w-full max-w-[560px] mb-0 bg-[#e5e5e5] rounded-t-lg overflow-hidden border border-b-0 border-gray-300">
-        <button
-          onClick={() => handleSelectTab('facilities')}
-          className={`flex-1 py-3 px-6 text-xs sm:text-sm tracking-wider uppercase transition-all relative ${
-            activeTab === 'facilities'
-              ? 'bg-white text-gray-900 font-bold border-t-[3px] border-[#00A6FB] shadow-xs'
-              : 'text-gray-600 hover:text-gray-900 font-medium'
-          }`}
-        >
-          FACILITIES
-        </button>
-        <button
-          onClick={() => handleSelectTab('metrics')}
-          className={`flex-1 py-3 px-6 text-xs sm:text-sm tracking-wider uppercase transition-all relative ${
-            activeTab === 'metrics'
-              ? 'bg-white text-gray-900 font-bold border-t-[3px] border-[#00A6FB] shadow-xs'
-              : 'text-gray-600 hover:text-gray-900 font-medium'
-          }`}
-        >
-          CAPABILITIES & METRICS
-        </button>
+      {/* Top Header & Tabs Bar (Matching Reference) */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+        <div>
+          {/* Two Tabs at Top: FACILITIES and PRODUCTS */}
+          <div className="flex items-center w-full max-w-[460px] bg-[#e5e5e5] rounded-t-lg overflow-hidden border border-b-0 border-gray-300">
+            <button
+              onClick={() => setActiveTab('facilities')}
+              className={`flex-1 py-3 px-6 text-xs sm:text-sm tracking-wider uppercase transition-all relative ${
+                activeTab === 'facilities'
+                  ? 'bg-white text-gray-900 font-bold border-t-[3px] border-[#00A6FB] shadow-xs'
+                  : 'text-gray-600 hover:text-gray-900 font-medium'
+              }`}
+            >
+              FACILITIES
+            </button>
+            <button
+              onClick={() => setActiveTab('products')}
+              className={`flex-1 py-3 px-6 text-xs sm:text-sm tracking-wider uppercase transition-all relative ${
+                activeTab === 'products'
+                  ? 'bg-white text-gray-900 font-bold border-t-[3px] border-[#00A6FB] shadow-xs'
+                  : 'text-gray-600 hover:text-gray-900 font-medium'
+              }`}
+            >
+              PRODUCTS
+            </button>
+          </div>
+        </div>
+
+        {/* Global Flip All Toggle */}
+        <div className="flex items-center gap-2 self-end">
+          <span className="text-xs text-gray-400 font-medium hidden sm:inline">
+            Click any card to turn
+          </span>
+          <button
+            onClick={flipAllCards}
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-gray-300 hover:border-gray-900 text-xs font-bold text-gray-800 hover:text-black transition-all bg-white shadow-2xs group cursor-pointer"
+          >
+            <span>TURN ALL CARDS</span>
+            <RotateCw className="w-3.5 h-3.5 text-[#00A6FB] transition-transform group-hover:rotate-180 duration-500" />
+          </button>
+        </div>
       </div>
 
-      {/* Main 3D Card Turning Container */}
-      <div className="w-full relative [perspective:1400px]">
-        <motion.div
-          animate={{ rotateY: isFlipped ? 180 : 0 }}
-          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full relative [transform-style:preserve-3d]"
-        >
+      {/* 4 Individual Turning Card Templates Grid (2x2 on Desktop, 1-col on Mobile) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+        {currentData.map((item) => {
+          const isFlipped = !!flippedCards[item.id];
 
-          {/* ========================================================================= */}
-          {/* SIDE A: FACILITIES CARDS (Image 2 Exact Layout & Details)                  */}
-          {/* ========================================================================= */}
-          <div 
-            className={`w-full bg-white border border-gray-300 rounded-b-xl lg:rounded-tr-xl p-6 sm:p-8 lg:p-10 shadow-sm ${
-              isFlipped ? 'pointer-events-none invisible absolute inset-0' : 'relative visible'
-            }`}
-            style={{ backfaceVisibility: 'hidden' }}
-          >
-            {/* Top Toolbar with Flip action button */}
-            <div className="flex items-center justify-between pb-6 mb-6 border-b border-gray-200">
-              <div>
-                <span className="text-[11px] font-bold text-gray-400 tracking-wider uppercase">
-                  Manufacturing Plant Infrastructure
-                </span>
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight mt-0.5">
-                  High-Capacity Foundries & Heavy Precision Bays
-                </h3>
-              </div>
-
-              <button
-                onClick={handleToggleFlip}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-gray-300 hover:border-gray-900 text-xs font-bold text-gray-800 hover:text-black transition-all bg-gray-50 hover:bg-white shadow-2xs group cursor-pointer"
+          return (
+            <div
+              key={item.id}
+              onClick={() => toggleCardFlip(item.id)}
+              className="relative w-full h-[360px] sm:h-[340px] [perspective:1200px] cursor-pointer group"
+            >
+              <motion.div
+                animate={{ rotateY: isFlipped ? 180 : 0 }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                className="w-full h-full relative [transform-style:preserve-3d]"
               >
-                <span>VIEW STATS</span>
-                <RotateCw className="w-3.5 h-3.5 text-[#00A6FB] transition-transform group-hover:rotate-180 duration-500" />
-              </button>
-            </div>
-
-            {/* 2x2 Facility Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-              {FACILITIES_DATA.map((fac) => (
-                <div key={fac.id} className="flex flex-col sm:flex-row gap-5 items-start group">
-                  {/* Photo thumbnail */}
-                  <div className="w-full sm:w-48 lg:w-56 aspect-[4/3] sm:aspect-square shrink-0 rounded-lg overflow-hidden border border-gray-200 shadow-2xs bg-gray-100">
-                    <img
-                      src={fac.imageUrl}
-                      alt={fac.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-
-                  {/* Card Content */}
-                  <div className="flex-1 flex flex-col justify-between h-full space-y-3">
-                    <div>
-                      {/* Bright Blue Title Matching Services Section */}
-                      <h4 className="text-lg font-bold text-[#00A6FB] tracking-tight group-hover:text-[#0084c7] transition-colors">
-                        {fac.title}
-                      </h4>
-                      <p className="text-xs sm:text-[13px] text-gray-600 leading-relaxed mt-2 line-clamp-4">
-                        {fac.description}
-                      </p>
+                
+                {/* ========================================================= */}
+                {/* CARD FRONT: PHOTO, BRIGHT BLUE TITLE & QUICK DETAILS      */}
+                {/* ========================================================= */}
+                <div
+                  style={{ backfaceVisibility: 'hidden' }}
+                  className="absolute inset-0 bg-white border border-gray-200 rounded-xl overflow-hidden shadow-xs hover:border-[#00A6FB] hover:shadow-md transition-all flex flex-col justify-between"
+                >
+                  <div className="flex flex-col sm:flex-row h-full">
+                    {/* Thumbnail Image */}
+                    <div className="w-full sm:w-[45%] h-44 sm:h-full relative overflow-hidden bg-gray-100 shrink-0 border-b sm:border-b-0 sm:border-r border-gray-100">
+                      <img
+                        src={item.imageUrl}
+                        alt={item.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
+                        {item.tag}
+                      </div>
                     </div>
 
-                    <div>
+                    {/* Front Details */}
+                    <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+                      <div>
+                        {/* Bright Blue Title */}
+                        <h4 className="text-base sm:text-lg font-bold text-[#00A6FB] group-hover:text-[#0084c7] transition-colors leading-snug">
+                          {item.title}
+                        </h4>
+                        
+                        <p className="text-xs text-gray-600 line-clamp-3 mt-2 leading-relaxed">
+                          {item.description}
+                        </p>
+                      </div>
+
+                      {/* Bottom Footer on Front */}
+                      <div className="pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
+                        {item.statNumber && (
+                          <span className="font-semibold text-gray-500">
+                            Cap: <strong className="text-gray-900 font-bold">{item.statNumber} {item.statUnit}</strong>
+                          </span>
+                        )}
+
+                        <span className="inline-flex items-center gap-1 text-[#00A6FB] font-bold group-hover:underline ml-auto">
+                          <span>Click to Turn</span>
+                          <RotateCw className="w-3 h-3 transition-transform group-hover:rotate-180 duration-500" />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* ========================================================= */}
+                {/* CARD BACK: FULL DESCRIPTION, SPECIFICATIONS & ACTIONS    */}
+                {/* ========================================================= */}
+                <div
+                  style={{ 
+                    transform: 'rotateY(180deg)',
+                    backfaceVisibility: 'hidden' 
+                  }}
+                  className="absolute inset-0 bg-white border-2 border-[#00A6FB]/60 rounded-xl overflow-hidden shadow-md p-5 sm:p-6 flex flex-col justify-between"
+                >
+                  <div>
+                    {/* Header on Back */}
+                    <div className="flex items-start justify-between gap-3 pb-2.5 border-b border-gray-100">
+                      <div>
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">
+                          Full Specifications
+                        </span>
+                        <h4 className="text-base sm:text-lg font-bold text-[#00A6FB] leading-snug">
+                          {item.title}
+                        </h4>
+                      </div>
+
                       <button
-                        onClick={() => setSelectedFacility(fac)}
-                        className="px-4 py-1.5 border border-gray-300 hover:border-gray-900 rounded-sm text-xs font-semibold text-gray-800 hover:text-black transition-all hover:bg-gray-50 cursor-pointer shadow-2xs inline-flex items-center gap-1"
+                        onClick={(e) => toggleCardFlip(item.id, e)}
+                        className="p-1 rounded-full text-gray-400 hover:text-black hover:bg-gray-100 transition-colors"
+                        title="Turn back"
                       >
-                        <span>Read More</span>
-                        <ArrowUpRight className="w-3 h-3 text-gray-400 group-hover:text-black" />
+                        <RotateCw className="w-3.5 h-3.5" />
                       </button>
                     </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
 
-          {/* ========================================================================= */}
-          {/* SIDE B: TURNING STATS PANEL (Image 1 Exact Layout & Typography)           */}
-          {/* ========================================================================= */}
-          <div 
-            className={`w-full bg-white border border-gray-300 rounded-b-xl lg:rounded-tr-xl shadow-sm overflow-hidden ${
-              !isFlipped ? 'pointer-events-none invisible absolute inset-0' : 'relative visible'
-            }`}
-            style={{ 
-              transform: 'rotateY(180deg)',
-              backfaceVisibility: 'hidden' 
-            }}
-          >
-            <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[500px]">
-              
-              {/* Left Column: Bold Architectural Headline & Narrative */}
-              <div className="lg:col-span-5 p-8 sm:p-12 lg:p-14 border-b lg:border-b-0 lg:border-r border-gray-200 flex flex-col justify-between bg-white">
-                <div>
-                  <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-black tracking-tight text-[#121212] uppercase leading-[1.08] mb-8">
-                    FROM FIRST IDEA TO A PLACE THAT BREATHES.
-                  </h2>
-                </div>
-
-                <div className="pt-8 flex flex-col sm:flex-row sm:items-end justify-between gap-6">
-                  <p className="text-xs sm:text-[13px] text-gray-600 leading-relaxed max-w-sm">
-                    We believe that precision engineering is measured not only in microns — but in meaning and reliability. These numbers reflect the care, consistency, and vision we bring into every project.
-                  </p>
-
-                  {/* Exact Flip Button from Image 1 */}
-                  <button
-                    onClick={handleToggleFlip}
-                    className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-[#00A6FB] hover:text-[#0084c7] transition-colors shrink-0 cursor-pointer group"
-                  >
-                    <span>FLIP</span>
-                    <RotateCw className="w-3.5 h-3.5 transition-transform group-hover:rotate-180 duration-500" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Right Column: 2x2 Grid with Thin Dividing Borders */}
-              <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 bg-white">
-                {FACILITIES_DATA.map((fac, idx) => (
-                  <div
-                    key={fac.id}
-                    onClick={() => setSelectedFacility(fac)}
-                    className={`p-8 sm:p-10 flex flex-col justify-between hover:bg-slate-50/70 transition-colors cursor-pointer group ${
-                      idx === 0 ? 'border-b border-r-0 sm:border-r border-gray-200' :
-                      idx === 1 ? 'border-b border-gray-200' :
-                      idx === 2 ? 'border-b sm:border-b-0 border-r-0 sm:border-r border-gray-200' : ''
-                    }`}
-                  >
-                    <p className="text-xs sm:text-[13px] text-gray-600 leading-relaxed max-w-[200px] mb-8 group-hover:text-gray-900 transition-colors">
-                      {fac.statLabel}
+                    {/* Detailed Description */}
+                    <p className="text-xs text-gray-700 leading-relaxed mt-3">
+                      {item.description}
                     </p>
 
-                    <div className="flex items-baseline justify-end gap-1">
-                      <span className="text-5xl sm:text-6xl font-light tracking-tight text-gray-950 font-sans group-hover:scale-105 transition-transform">
-                        {fac.statNumber}
-                      </span>
-                      {fac.statUnit && (
-                        <span className="text-xs font-bold uppercase text-gray-400">
-                          {fac.statUnit}
-                        </span>
-                      )}
-                    </div>
+                    {/* Bullet Specs */}
+                    <ul className="mt-3 space-y-1.5">
+                      {item.specs.slice(0, 3).map((spec, i) => (
+                        <li key={i} className="flex items-start gap-1.5 text-[11px] sm:text-xs text-gray-600">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#00A6FB] shrink-0 mt-0.5" />
+                          <span className="line-clamp-1">{spec}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                ))}
-              </div>
 
+                  {/* Actions on Back */}
+                  <div className="pt-3 border-t border-gray-100 flex items-center justify-between gap-3">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedItem(item);
+                      }}
+                      className="text-xs font-bold text-[#00A6FB] hover:text-[#0084c7] hover:underline inline-flex items-center gap-1"
+                    >
+                      <span>Read More</span>
+                      <ArrowUpRight className="w-3 h-3" />
+                    </button>
+
+                    <button
+                      onClick={(e) => toggleCardFlip(item.id, e)}
+                      className="px-3 py-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold transition-colors inline-flex items-center gap-1"
+                    >
+                      <span>Flip to Front</span>
+                      <RotateCw className="w-3 h-3" />
+                    </button>
+                  </div>
+                </div>
+
+              </motion.div>
             </div>
-          </div>
-
-        </motion.div>
+          );
+        })}
       </div>
 
-      {/* Facility Detail Modal (When clicking 'Read More') */}
+      {/* Detail Modal (When clicking 'Read More' on back of any card) */}
       <AnimatePresence>
-        {selectedFacility && (
+        {selectedItem && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -287,7 +374,7 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
             >
               {/* Close Button */}
               <button
-                onClick={() => setSelectedFacility(null)}
+                onClick={() => setSelectedItem(null)}
                 className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-black/60 text-white hover:bg-black flex items-center justify-center transition-colors"
               >
                 <X className="w-4 h-4" />
@@ -296,17 +383,17 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
               {/* Photo Banner */}
               <div className="w-full h-56 sm:h-64 bg-gray-900 relative overflow-hidden">
                 <img
-                  src={selectedFacility.imageUrl}
-                  alt={selectedFacility.title}
+                  src={selectedItem.imageUrl}
+                  alt={selectedItem.title}
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-6">
                   <div>
                     <span className="text-[11px] font-bold text-[#00A6FB] uppercase tracking-widest">
-                      Facility Engineering Detail
+                      {activeTab === 'facilities' ? 'Facility Infrastructure Detail' : 'Precision Product Specification'}
                     </span>
                     <h3 className="text-2xl font-bold text-white tracking-tight mt-1">
-                      {selectedFacility.title}
+                      {selectedItem.title}
                     </h3>
                   </div>
                 </div>
@@ -319,7 +406,7 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
                     Overview
                   </h4>
                   <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                    {selectedFacility.description}
+                    {selectedItem.description}
                   </p>
                 </div>
 
@@ -328,7 +415,7 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
                     Technical Specifications & Highlights
                   </h4>
                   <ul className="space-y-2">
-                    {selectedFacility.specs.map((spec, i) => (
+                    {selectedItem.specs.map((spec, i) => (
                       <li key={i} className="flex items-start gap-2 text-xs sm:text-sm text-gray-700">
                         <CheckCircle2 className="w-4 h-4 text-[#00A6FB] shrink-0 mt-0.5" />
                         <span>{spec}</span>
@@ -340,12 +427,12 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
                 {/* Bottom Actions */}
                 <div className="pt-4 border-t border-gray-100 flex items-center justify-between gap-4">
                   <div className="text-xs text-gray-500">
-                    Key Capacity: <strong className="text-gray-900 font-bold">{selectedFacility.statNumber} {selectedFacility.statUnit}</strong>
+                    Rating: <strong className="text-gray-900 font-bold">{selectedItem.statNumber} {selectedItem.statUnit}</strong>
                   </div>
 
                   <div className="flex items-center gap-3">
                     <button
-                      onClick={() => setSelectedFacility(null)}
+                      onClick={() => setSelectedItem(null)}
                       className="px-4 py-2 rounded-lg text-xs font-semibold text-gray-600 hover:text-gray-900 transition-colors"
                     >
                       Close
@@ -353,13 +440,13 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
                     {openQuoteModal && (
                       <button
                         onClick={() => {
-                          const title = selectedFacility.title;
-                          setSelectedFacility(null);
-                          openQuoteModal(`Facility Inquiry: ${title}`);
+                          const title = selectedItem.title;
+                          setSelectedItem(null);
+                          openQuoteModal(`Inquiry: ${title}`);
                         }}
                         className="px-5 py-2 rounded-lg bg-[#00A6FB] hover:bg-[#0084c7] text-white text-xs font-bold transition-colors shadow-sm inline-flex items-center gap-1.5"
                       >
-                        <span>Request Specs</span>
+                        <span>Request Quote / Specs</span>
                         <ArrowUpRight className="w-3.5 h-3.5" />
                       </button>
                     )}
@@ -374,4 +461,3 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
     </section>
   );
 }
-
