@@ -41,9 +41,9 @@ export default function Header() {
         {/* Left: Logo */}
         <Link to="/" className="flex items-center gap-4 group z-10">
           <img 
-            src="/Remove background project - July 20, 2026 at 11.47.52.png" 
+            src="/logo.png" 
             alt="Hitech" 
-            className="h-20 w-auto object-contain scale-125 origin-left translate-y-1 transition-all duration-500"
+            className="h-11 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105"
           />
         </Link>
 
@@ -118,9 +118,9 @@ export default function Header() {
               <div className="h-20 flex items-center justify-between px-5 border-b border-gray-100 bg-white">
                 <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>
                   <img 
-                    src="/Remove background project - July 20, 2026 at 11.47.52.png" 
+                    src="/logo.png" 
                     alt="Hitech" 
-                    className="h-16 w-auto object-contain scale-110 origin-left"
+                    className="h-11 w-auto object-contain"
                   />
                 </Link>
                 <button
