@@ -15,15 +15,15 @@ interface ScrollSectionProps {
 }
 
 function ScrollSection({ children, direction = 'left', delay = 0 }: ScrollSectionProps) {
-  const xOffset = direction === 'left' ? -90 : 90;
+  const xOffset = direction === 'left' ? -120 : 120;
 
   return (
     <motion.div
       initial={{ opacity: 0, x: xOffset }}
       whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
+      viewport={{ once: true, amount: 0.2, margin: '0px 0px -120px 0px' }}
       transition={{ 
-        duration: 1.4, 
+        duration: 1.2, 
         delay, 
         ease: [0.16, 1, 0.3, 1] 
       }}
