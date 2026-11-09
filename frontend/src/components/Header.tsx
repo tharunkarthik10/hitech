@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ArrowUpRight, ChevronRight, Phone, Send } from 'lucide-react';
+import { X, ChevronRight, Send } from 'lucide-react';
 
 const mainNavigation = [
   { name: "Home", path: "/" },
@@ -68,17 +68,6 @@ export default function Header() {
               </Link>
             );
           })}
-        </div>
-
-        {/* Right Desktop: CTA */}
-        <div className="hidden md:flex items-center justify-end gap-6 z-10">
-          <Link
-            to="/contact"
-            className="px-5 py-2.5 rounded-full bg-[#121212] hover:bg-black text-white text-xs font-semibold tracking-tight transition-all active:scale-95 flex items-center gap-2"
-          >
-            <span>Get in touch</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </Link>
         </div>
 
         {/* Right Mobile: Three Rows of Small Lines (Hamburger Menu Button) */}
