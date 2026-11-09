@@ -4,7 +4,6 @@ import AboutSection from '../components/AboutSection'
 import Technologies from '../components/Technologies'
 import FeaturedSolutions from '../components/FeaturedSolutions'
 import Clients from '../components/Clients'
-import IndustriesWeServe from '../components/IndustriesWeServe'
 import FeaturedVideo from '../components/FeaturedVideo'
 import CTA from '../components/CTA'
 
@@ -18,7 +17,6 @@ export default function Home() {
       <FeaturedSolutions />
       <Technologies />
       <FeaturedVideo />
-      <IndustriesWeServe variant="marquee" />
       <CTA />
     </main>
   );
