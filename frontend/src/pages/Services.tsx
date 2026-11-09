@@ -114,25 +114,8 @@ export default function Services() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full overflow-hidden pt-1 pb-6 sm:pb-8 border-b border-gray-200/90"
+          className="relative w-full overflow-hidden pb-6 sm:pb-8 border-b border-gray-200/90"
         >
-          
-
-
-          {/* Top Breadcrumb */}
-          <div className="mb-4 sm:mb-5">
-            <motion.div 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-gray-400"
-            >
-              <a href="/" className="hover:text-black transition-colors">Home</a>
-              <span className="text-gray-300">/</span>
-              <span className="text-[#00A6FB] font-bold">Our Services</span>
-            </motion.div>
-          </div>
-
           {/* Hero Main Content Row with Widened Horizontal Video & Right-to-Left Fade */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-10 items-center">
             
@@ -156,32 +139,6 @@ export default function Services() {
               >
                 Pioneering engineering excellence, 12kW fiber laser cutting, 5-axis CNC machining, and automated SPM production lines engineered for micron tolerances and industrial scale.
               </motion.p>
-
-              {/* Signature Pill CTAs with Minimal Blue */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-wrap items-center gap-4 pt-1"
-              >
-                <button 
-                  onClick={() => openQuoteModal("Services Hero RFQ")}
-                  className="px-7 py-3 rounded-full bg-[#00A6FB] hover:bg-[#0095e0] text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md shadow-[#00A6FB]/20 flex items-center gap-2 group cursor-pointer active:scale-95"
-                >
-                  <span>Request a Quote</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                </button>
-
-                <button 
-                  onClick={() => setIsVideoModalOpen(true)}
-                  className="px-7 py-3 rounded-full bg-white border border-gray-300 hover:border-[#00A6FB] hover:text-[#00A6FB] text-gray-800 font-bold text-xs uppercase tracking-wider transition-all shadow-2xs flex items-center gap-2 group cursor-pointer active:scale-95"
-                >
-                  <div className="w-5 h-5 rounded-full bg-gray-100 group-hover:bg-[#00A6FB]/10 flex items-center justify-center transition-colors">
-                    <Play className="w-2.5 h-2.5 fill-current ml-0.5 text-[#00A6FB]" />
-                  </div>
-                  <span>Watch Facility Reel</span>
-                </button>
-              </motion.div>
             </div>
 
             {/* Right Column (7 cols): Horizontal Video widened by 3cm (~114px) and fading out from right to left */}
@@ -534,15 +491,6 @@ export default function Services() {
             <p className="text-base sm:text-lg md:text-[19px] text-gray-700 leading-relaxed font-normal">
               Our infrastructure operates as a unified collaborative facility with zero defect tolerance, comprehensive 3D CMM metrology inspection, and dedicated technical leadership for every mission-critical project.
             </p>
-
-            <div className="pt-2">
-              <button
-                onClick={() => openQuoteModal("Ecosystem Capabilities")}
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#00A6FB] hover:bg-[#0095e0] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-md shadow-[#00A6FB]/20 active:scale-95"
-              >
-                <span>More Details +</span>
-              </button>
-            </div>
           </motion.div>
 
         </section>
@@ -688,9 +636,6 @@ export default function Services() {
                   <p className="text-base sm:text-lg md:text-xl text-gray-700 font-normal leading-relaxed max-w-lg">
                     We believe that precision engineering is measured not only in microns — but in meaning and reliability. These numbers reflect the care, consistency, and vision we bring into every project.
                   </p>
-                  <span className="text-[11px] font-mono tracking-widest text-[#00A6FB] uppercase font-semibold hidden sm:inline-flex items-center gap-1 shrink-0 group-hover:translate-x-1 transition-transform">
-                    Flip ↻
-                  </span>
                 </div>
               </div>
 
@@ -749,9 +694,6 @@ export default function Services() {
                 
                 {/* Front Face */}
                 <div className="flip-card-front relative w-full h-full p-8 sm:p-10 md:p-12 lg:p-14 bg-white flex flex-col justify-end">
-                  <span className="text-[10px] font-mono tracking-widest text-[#00A6FB] uppercase font-semibold absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                    Turn ↻
-                  </span>
                   <div className="flex items-end justify-between gap-4 w-full">
                     <span className="text-sm sm:text-base md:text-[17px] text-gray-700 font-medium leading-snug max-w-[190px]">
                       Completed residential and commercial projects
@@ -795,9 +737,6 @@ export default function Services() {
                 
                 {/* Front Face */}
                 <div className="flip-card-front relative w-full h-full p-8 sm:p-10 md:p-12 lg:p-14 bg-white flex flex-col justify-end">
-                  <span className="text-[10px] font-mono tracking-widest text-[#00A6FB] uppercase font-semibold absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                    Turn ↻
-                  </span>
                   <div className="flex items-end justify-between gap-4 w-full">
                     <span className="text-sm sm:text-base md:text-[17px] text-gray-700 font-medium leading-snug max-w-[190px]">
                       Years of architectural practice
@@ -841,9 +780,6 @@ export default function Services() {
                 
                 {/* Front Face */}
                 <div className="flip-card-front relative w-full h-full p-8 sm:p-10 md:p-12 lg:p-14 bg-white flex flex-col justify-end">
-                  <span className="text-[10px] font-mono tracking-widest text-[#00A6FB] uppercase font-semibold absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                    Turn ↻
-                  </span>
                   <div className="flex items-end justify-between gap-4 w-full">
                     <span className="text-sm sm:text-base md:text-[17px] text-gray-700 font-medium leading-snug max-w-[190px]">
                       Countries with built spaces
@@ -887,9 +823,6 @@ export default function Services() {
                 
                 {/* Front Face */}
                 <div className="flip-card-front relative w-full h-full p-8 sm:p-10 md:p-12 lg:p-14 bg-white flex flex-col justify-end">
-                  <span className="text-[10px] font-mono tracking-widest text-[#00A6FB] uppercase font-semibold absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                    Turn ↻
-                  </span>
                   <div className="flex items-end justify-between gap-4 w-full">
                     <span className="text-sm sm:text-base md:text-[17px] text-gray-700 font-medium leading-snug max-w-[190px]">
                       Custom concepts for every client
