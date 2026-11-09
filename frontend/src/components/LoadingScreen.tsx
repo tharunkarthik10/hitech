@@ -47,8 +47,8 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onFinish }) => {
       {/* Subtle radial ambient atmosphere */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,166,251,0.04)_0%,transparent_60%)] pointer-events-none" />
 
-      {/* Reduced compact size: 170px - 220px max width */}
-      <div className="relative w-full max-w-[170px] sm:max-w-[200px] md:max-w-[220px] px-4 flex items-center justify-center">
+      {/* Ultra-compact minimalist size */}
+      <div className="relative w-full max-w-[110px] sm:max-w-[130px] md:max-w-[145px] flex items-center justify-center">
         {/* Base Logo with Subtle Metallic Contrast */}
         <picture className="w-full h-auto block select-none">
           <source srcSet="/hitech-full-logo-optimized.webp" type="image/webp" />
@@ -63,7 +63,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onFinish }) => {
 
         {/* Realistic Multi-Band Metallic Chrome Light Sweep Mask */}
         <div
-          className="absolute inset-0 px-4 pointer-events-none overflow-hidden"
+          className="absolute inset-0 pointer-events-none overflow-hidden"
           style={{
             maskImage: 'url(/hitech-full-logo-optimized.webp)',
             WebkitMaskImage: 'url(/hitech-full-logo-optimized.webp)',
