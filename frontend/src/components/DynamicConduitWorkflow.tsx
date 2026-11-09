@@ -392,7 +392,7 @@ export default function DynamicConduitWorkflow({
                             `Production Inquiry: ${step.badge} - ${step.title}`
                           )
                         }
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#121212] hover:bg-black text-white text-xs sm:text-sm font-medium tracking-tight transition-all active:scale-95 cursor-pointer shadow-2xs"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#00A6FB] hover:bg-[#0095e0] text-white text-xs sm:text-sm font-semibold tracking-tight transition-all active:scale-95 cursor-pointer shadow-md shadow-[#00A6FB]/20"
                       >
                         <span>Initiate This Step</span>
                         <ArrowUpRight className="w-3.5 h-3.5" />

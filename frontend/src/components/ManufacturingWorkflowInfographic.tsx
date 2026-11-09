@@ -101,7 +101,7 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
         {openQuoteModal && (
           <button
             onClick={() => openQuoteModal("Workflow Consultation")}
-            className="self-start md:self-end px-5 py-2.5 rounded-full bg-[#121212] hover:bg-black text-white text-xs font-medium tracking-tight transition-all shadow-xs flex items-center gap-2 cursor-pointer active:scale-95 shrink-0"
+            className="self-start md:self-end px-5 py-2.5 rounded-full bg-[#00A6FB] hover:bg-[#0095e0] text-white text-xs font-semibold tracking-tight transition-all shadow-md shadow-[#00A6FB]/20 flex items-center gap-2 cursor-pointer active:scale-95 shrink-0"
           >
             <span>Consult Engineering Team</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -235,7 +235,7 @@ export const ManufacturingWorkflowInfographic: React.FC<ManufacturingWorkflowInf
                                   e.stopPropagation();
                                   openQuoteModal(`Stage ${stage.step}: ${stage.title} Consultation`);
                                 }}
-                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#121212] hover:bg-black text-white text-xs font-medium tracking-tight transition-all active:scale-95 shadow-xs cursor-pointer"
+                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#00A6FB] hover:bg-[#0095e0] text-white text-xs font-semibold tracking-tight transition-all active:scale-95 shadow-md shadow-[#00A6FB]/20 cursor-pointer"
                               >
                                 <span>Initiate Stage {stage.step}</span>
                                 <ArrowRight className="w-3.5 h-3.5" />

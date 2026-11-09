@@ -204,7 +204,7 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          background: #0f1222;
+          background: #00A6FB;
           color: #ffffff;
           font-size: 0.95cqw;
           padding: 0.7cqw 1.35cqw;
@@ -212,13 +212,13 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
           text-decoration: none;
           font-weight: 600;
           cursor: pointer;
-          box-shadow: 0 4px 14px rgba(15, 18, 34, 0.16);
+          box-shadow: 0 4px 14px rgba(0, 166, 251, 0.25);
           transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
         }
         .facility-archive-stage .facility-archive-header .btn:hover {
-          background: #000000;
+          background: #0095e0;
           transform: translateY(-1px) scale(1.02);
-          box-shadow: 0 6px 20px rgba(15, 18, 34, 0.24);
+          box-shadow: 0 6px 20px rgba(0, 166, 251, 0.35);
         }
         @media (prefers-color-scheme: dark) {
           .facility-archive-sec:not([data-theme="light"]) .facility-archive-header h2 {

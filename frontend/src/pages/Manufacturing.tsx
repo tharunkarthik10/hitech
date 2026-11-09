@@ -133,10 +133,10 @@ export default function Manufacturing() {
               <div className="pt-2">
                 <button
                   onClick={() => openQuoteModal("Turnkey Assembly Consultation")}
-                  className="px-6 py-3 rounded-full bg-[#121212] hover:bg-black text-white font-medium text-sm tracking-tight transition-all shadow-xs flex items-center gap-2.5 cursor-pointer active:scale-95"
+                  className="px-6 py-3 rounded-full bg-[#00A6FB] hover:bg-[#0095e0] text-white font-medium text-sm tracking-tight transition-all shadow-md shadow-[#00A6FB]/20 flex items-center gap-2.5 cursor-pointer active:scale-95"
                 >
                   <span>Get in touch</span>
-                  <div className="w-5 h-5 rounded-full bg-white text-black flex items-center justify-center">
+                  <div className="w-5 h-5 rounded-full bg-white text-[#00A6FB] flex items-center justify-center">
                     <ArrowRight className="w-3 h-3" />
                   </div>
                 </button>
@@ -303,7 +303,7 @@ export default function Manufacturing() {
 
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-full bg-[#121212] hover:bg-black text-white font-medium text-sm tracking-tight transition-all shadow-md mt-2 flex items-center justify-center gap-2 cursor-pointer active:scale-95"
+                  className="w-full py-3.5 rounded-full bg-[#00A6FB] hover:bg-[#0095e0] text-white font-medium text-sm tracking-tight transition-all shadow-md shadow-[#00A6FB]/20 mt-2 flex items-center justify-center gap-2 cursor-pointer active:scale-95"
                 >
                   <Send className="w-3.5 h-3.5" />
                   <span>Submit Production Inquiry</span>

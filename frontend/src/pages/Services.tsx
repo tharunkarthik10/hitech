@@ -139,17 +139,6 @@ export default function Services() {
             {/* Left Column (5 cols): Display Typography, Sub-headline & Clean Pill CTAs */}
             <div className="lg:col-span-5 space-y-4 sm:space-y-5">
               
-              {/* Subtle Blue Status Kicker */}
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00A6FB]/10 border border-[#00A6FB]/25 text-[#00A6FB] text-xs font-bold uppercase tracking-wider"
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00A6FB] animate-pulse" />
-                <span>Advanced Industrial Capabilities</span>
-              </motion.div>
-
               <motion.h1 
                 initial={{ opacity: 0, y: 25 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -284,7 +273,7 @@ export default function Services() {
               <div>
                 <button
                   onClick={() => openQuoteModal("What We Do Inquiry")}
-                  className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-gray-300 text-xs font-semibold text-gray-800 hover:border-[#00A6FB] hover:text-[#00A6FB] transition-all shadow-2xs active:scale-95"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#00A6FB] hover:bg-[#0095e0] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-md shadow-[#00A6FB]/20 active:scale-95"
                 >
                   <span>About Us</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -351,7 +340,7 @@ export default function Services() {
               </div>
 
               <div className="pt-6 flex justify-end">
-                <div className="w-8 h-8 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-600 group-hover:bg-[#121212] group-hover:text-white transition-colors">
+                <div className="w-8 h-8 rounded-full bg-[#00A6FB]/10 border border-[#00A6FB]/25 flex items-center justify-center text-[#00A6FB] group-hover:bg-[#00A6FB] group-hover:text-white transition-all shadow-2xs">
                   <Box className="w-3.5 h-3.5" />
                 </div>
               </div>
@@ -380,7 +369,7 @@ export default function Services() {
               </div>
 
               <div className="pt-8 flex justify-end">
-                <div className="w-8 h-8 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-600 group-hover:bg-[#121212] group-hover:text-white transition-colors">
+                <div className="w-8 h-8 rounded-full bg-[#00A6FB]/10 border border-[#00A6FB]/25 flex items-center justify-center text-[#00A6FB] group-hover:bg-[#00A6FB] group-hover:text-white transition-all shadow-2xs">
                   <Sliders className="w-3.5 h-3.5" />
                 </div>
               </div>
@@ -409,7 +398,7 @@ export default function Services() {
               </div>
 
               <div className="pt-8 flex justify-end">
-                <div className="w-8 h-8 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-600 group-hover:bg-[#121212] group-hover:text-white transition-colors">
+                <div className="w-8 h-8 rounded-full bg-[#00A6FB]/10 border border-[#00A6FB]/25 flex items-center justify-center text-[#00A6FB] group-hover:bg-[#00A6FB] group-hover:text-white transition-all shadow-2xs">
                   <Layers className="w-3.5 h-3.5" />
                 </div>
               </div>
@@ -438,7 +427,7 @@ export default function Services() {
               </div>
 
               <div className="pt-8 flex justify-end">
-                <div className="w-8 h-8 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-600 group-hover:bg-[#121212] group-hover:text-white transition-colors">
+                <div className="w-8 h-8 rounded-full bg-[#00A6FB]/10 border border-[#00A6FB]/25 flex items-center justify-center text-[#00A6FB] group-hover:bg-[#00A6FB] group-hover:text-white transition-all shadow-2xs">
                   <Cpu className="w-3.5 h-3.5" />
                 </div>
               </div>
@@ -467,7 +456,7 @@ export default function Services() {
               </div>
 
               <div className="pt-8 flex justify-end">
-                <div className="w-8 h-8 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-600 group-hover:bg-[#121212] group-hover:text-white transition-colors">
+                <div className="w-8 h-8 rounded-full bg-[#00A6FB]/10 border border-[#00A6FB]/25 flex items-center justify-center text-[#00A6FB] group-hover:bg-[#00A6FB] group-hover:text-white transition-all shadow-2xs">
                   <ShieldCheck className="w-3.5 h-3.5" />
                 </div>
               </div>
@@ -549,7 +538,7 @@ export default function Services() {
             <div className="pt-2">
               <button
                 onClick={() => openQuoteModal("Ecosystem Capabilities")}
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#121212] hover:bg-black text-white text-xs font-semibold uppercase tracking-wider transition-all shadow-sm active:scale-95"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#00A6FB] hover:bg-[#0095e0] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-md shadow-[#00A6FB]/20 active:scale-95"
               >
                 <span>More Details +</span>
               </button>
@@ -653,7 +642,7 @@ export default function Services() {
 
                 <button
                   onClick={() => openQuoteModal("Premium Fleet Consultation")}
-                  className="w-10 h-10 rounded-full bg-white text-[#121212] flex items-center justify-center hover:scale-110 transition-transform shadow-md shrink-0 active:scale-95"
+                  className="w-10 h-10 rounded-full bg-[#00A6FB] text-white hover:bg-[#0095e0] flex items-center justify-center hover:scale-110 transition-all shadow-md shrink-0 active:scale-95"
                   title="Explore Specifications"
                 >
                   <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
@@ -975,7 +964,7 @@ export default function Services() {
               <div>
                 <button
                   onClick={() => openQuoteModal("All Engineering Solutions")}
-                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#121212] hover:bg-black text-white text-xs font-semibold tracking-wide transition-all shadow-sm active:scale-95"
+                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#00A6FB] hover:bg-[#0095e0] text-white text-xs font-bold tracking-wide transition-all shadow-md shadow-[#00A6FB]/20 active:scale-95"
                 >
                   <span>Explore All Capabilities →</span>
                 </button>
