@@ -148,11 +148,11 @@ export default function ProductDetail() {
   // Modal State for "Send Product Enquiry"
   const [isEnquiryModalOpen, setIsEnquiryModalOpen] = useState(false);
 
-  // Enquiry Form State with global location & region code
+  // Enquiry Form State with global location & typable country code
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    regionCode: '+91',
+    countryCode: '91',
     phone: '',
     country: 'India',
     state: '',
@@ -225,7 +225,7 @@ export default function ProductDetail() {
     setFormData({
       name: '',
       email: '',
-      regionCode: '+91',
+      countryCode: '91',
       phone: '',
       country: 'India',
       state: '',
@@ -379,12 +379,12 @@ export default function ProductDetail() {
               </div>
             </div>
 
-            {/* Inquire CTA Button: Sleek Black/Grey */}
+            {/* Inquire CTA Button: Bright Blue Accent */}
             <div className="pt-2">
               <button
                 type="button"
                 onClick={() => setIsEnquiryModalOpen(true)}
-                className="px-8 py-3.5 rounded-full bg-[#121212] hover:bg-black text-white font-bold text-sm sm:text-base tracking-tight shadow-md transition-all duration-200 flex items-center gap-2.5 cursor-pointer active:scale-95"
+                className="px-8 py-3.5 rounded-full bg-[#00A6FB] hover:bg-[#0095e0] text-white font-bold text-sm sm:text-base tracking-tight shadow-md shadow-[#00A6FB]/25 transition-all duration-200 flex items-center gap-2.5 cursor-pointer active:scale-95"
               >
                 <span>Inquire About This Product</span>
                 <ArrowRight className="w-4 h-4" />
@@ -398,8 +398,7 @@ export default function ProductDetail() {
 
       {/* ========================================================================= */}
       {/* POPUP MODAL: "SEND PRODUCT ENQUIRY" (Opens when Inquire CTA is clicked) */}
-      {/* Uniform Black & Grey. Region Dial Code Selector + Country, State, City */}
-      {/* Mandatory (*): Name, Mail, Phone, Country. Optional: State, City, Quantity, Description */}
+      {/* Blue CTA & Minimal Blue Accents. Typable Country Dial Code with + */}
       {/* ========================================================================= */}
       <AnimatePresence>
         {isEnquiryModalOpen && (
@@ -428,20 +427,20 @@ export default function ProductDetail() {
                 <X className="w-4 h-4" />
               </button>
 
-              {/* Form Header (No "Fast Turnaround RFQ", clean title) */}
+              {/* Form Header with minimal blue accent */}
               <div className="space-y-1 border-b border-gray-100 pb-4 pr-10">
                 <h3 className="text-xl sm:text-2xl font-extrabold text-[#121212] tracking-tight">
                   Send Product Enquiry
                 </h3>
                 <p className="text-xs sm:text-sm text-gray-500">
-                  Enquiring for <strong className="text-gray-900">{product.title}</strong>
+                  Enquiring for <strong className="text-[#00A6FB] font-semibold">{product.title}</strong>
                 </p>
               </div>
 
               {/* Submission Result / Form Body */}
               {submitted ? (
                 <div className="py-6 text-center space-y-4">
-                  <div className="w-14 h-14 rounded-full bg-gray-900 text-white flex items-center justify-center mx-auto shadow-lg shadow-black/15">
+                  <div className="w-14 h-14 rounded-full bg-[#00A6FB] text-white flex items-center justify-center mx-auto shadow-lg shadow-[#00A6FB]/25">
                     <CheckCircle2 className="w-7 h-7" />
                   </div>
                   <h4 className="text-xl font-bold text-gray-900">Enquiry Received Successfully!</h4>
@@ -460,7 +459,7 @@ export default function ProductDetail() {
                     </button>
                     <button
                       onClick={() => setIsEnquiryModalOpen(false)}
-                      className="px-6 py-2.5 rounded-full bg-[#121212] hover:bg-black text-white text-xs font-bold transition-colors shadow-sm cursor-pointer"
+                      className="px-6 py-2.5 rounded-full bg-[#00A6FB] hover:bg-[#0095e0] text-white text-xs font-bold transition-colors shadow-sm cursor-pointer"
                     >
                       Done
                     </button>
@@ -473,7 +472,7 @@ export default function ProductDetail() {
                     {/* Mandatory: Name */}
                     <div className="space-y-1">
                       <label className="text-xs font-bold text-gray-900 flex items-center gap-1.5">
-                        <User className="w-3.5 h-3.5 text-gray-500" />
+                        <User className="w-3.5 h-3.5 text-[#00A6FB]" />
                         <span>Your Name *</span>
                       </label>
                       <input 
@@ -483,14 +482,14 @@ export default function ProductDetail() {
                         value={formData.name}
                         onChange={handleInputChange}
                         placeholder="e.g. Rajesh Kumar"
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-black focus:ring-2 focus:ring-black/5 transition-all shadow-2xs"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#00A6FB] focus:ring-2 focus:ring-[#00A6FB]/20 transition-all shadow-2xs"
                       />
                     </div>
 
                     {/* Mandatory: Mail */}
                     <div className="space-y-1">
                       <label className="text-xs font-bold text-gray-900 flex items-center gap-1.5">
-                        <Mail className="w-3.5 h-3.5 text-gray-500" />
+                        <Mail className="w-3.5 h-3.5 text-[#00A6FB]" />
                         <span>Business Mail *</span>
                       </label>
                       <input 
@@ -500,44 +499,44 @@ export default function ProductDetail() {
                         value={formData.email}
                         onChange={handleInputChange}
                         placeholder="e.g. rajesh.kumar@company.in"
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-black focus:ring-2 focus:ring-black/5 transition-all shadow-2xs"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#00A6FB] focus:ring-2 focus:ring-[#00A6FB]/20 transition-all shadow-2xs"
                       />
                     </div>
 
                   </div>
 
-                  {/* Mandatory: Phone Number with Region Selector */}
+                  {/* Mandatory: Phone Number with Typable Region/Country Code */}
                   <div className="space-y-1">
                     <label className="text-xs font-bold text-gray-900 flex items-center gap-1.5">
-                      <Phone className="w-3.5 h-3.5 text-gray-500" />
+                      <Phone className="w-3.5 h-3.5 text-[#00A6FB]" />
                       <span>Phone / Mobile Number *</span>
                     </label>
-                    <div className="grid grid-cols-12 gap-2">
-                      <div className="col-span-5 sm:col-span-4">
-                        <select
-                          name="regionCode"
-                          value={formData.regionCode}
-                          onChange={handleInputChange}
-                          className="w-full px-2.5 py-2.5 rounded-xl border border-gray-300 bg-gray-50 text-xs sm:text-sm font-semibold text-gray-900 focus:outline-none focus:border-black focus:ring-2 focus:ring-black/5 transition-all"
-                        >
-                          {REGION_CODES.map((r) => (
-                            <option key={r.code} value={r.code}>
-                              {r.code} ({r.country})
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      <div className="col-span-7 sm:col-span-8">
+                    <div className="flex gap-2">
+                      {/* Typable Country / Region Code with fixed + */}
+                      <div className="relative w-24 shrink-0 flex items-center">
+                        <span className="absolute left-3 text-gray-500 font-bold text-sm select-none pointer-events-none">+</span>
                         <input 
-                          type="tel" 
-                          name="phone" 
-                          required 
-                          value={formData.phone}
+                          type="text" 
+                          name="countryCode" 
+                          value={formData.countryCode}
                           onChange={handleInputChange}
-                          placeholder="e.g. 98765 43210"
-                          className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-black focus:ring-2 focus:ring-black/5 transition-all shadow-2xs"
+                          placeholder="91"
+                          maxLength={5}
+                          aria-label="Country dial code"
+                          className="w-full pl-7 pr-2.5 py-2.5 rounded-xl border border-gray-300 bg-white text-sm font-semibold text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#00A6FB] focus:ring-2 focus:ring-[#00A6FB]/20 transition-all shadow-2xs text-center"
                         />
                       </div>
+
+                      {/* Phone Number Input */}
+                      <input 
+                        type="tel" 
+                        name="phone" 
+                        required 
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        placeholder="e.g. 98765 43210"
+                        className="flex-1 px-3.5 py-2.5 rounded-xl border border-gray-300 bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#00A6FB] focus:ring-2 focus:ring-[#00A6FB]/20 transition-all shadow-2xs"
+                      />
                     </div>
                   </div>
 
@@ -547,7 +546,7 @@ export default function ProductDetail() {
                     {/* Country */}
                     <div className="space-y-1">
                       <label className="text-xs font-bold text-gray-900 flex items-center gap-1.5">
-                        <Globe className="w-3.5 h-3.5 text-gray-500" />
+                        <Globe className="w-3.5 h-3.5 text-[#00A6FB]" />
                         <span>Country *</span>
                       </label>
                       <input 
@@ -557,14 +556,14 @@ export default function ProductDetail() {
                         value={formData.country}
                         onChange={handleInputChange}
                         placeholder="e.g. India"
-                        className="w-full px-3 py-2 rounded-xl border border-gray-300 bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-black focus:ring-2 focus:ring-black/5 transition-all shadow-2xs"
+                        className="w-full px-3 py-2 rounded-xl border border-gray-300 bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#00A6FB] focus:ring-2 focus:ring-[#00A6FB]/20 transition-all shadow-2xs"
                       />
                     </div>
 
                     {/* State / Province */}
                     <div className="space-y-1">
                       <label className="text-xs font-bold text-gray-900 flex items-center gap-1.5">
-                        <Building className="w-3.5 h-3.5 text-gray-500" />
+                        <Building className="w-3.5 h-3.5 text-[#00A6FB]" />
                         <span>State / Province</span>
                       </label>
                       <input 
@@ -573,14 +572,14 @@ export default function ProductDetail() {
                         value={formData.state}
                         onChange={handleInputChange}
                         placeholder="e.g. Tamil Nadu"
-                        className="w-full px-3 py-2 rounded-xl border border-gray-300 bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-black focus:ring-2 focus:ring-black/5 transition-all shadow-2xs"
+                        className="w-full px-3 py-2 rounded-xl border border-gray-300 bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#00A6FB] focus:ring-2 focus:ring-[#00A6FB]/20 transition-all shadow-2xs"
                       />
                     </div>
 
                     {/* City */}
                     <div className="space-y-1">
                       <label className="text-xs font-bold text-gray-900 flex items-center gap-1.5">
-                        <MapPin className="w-3.5 h-3.5 text-gray-500" />
+                        <MapPin className="w-3.5 h-3.5 text-[#00A6FB]" />
                         <span>City</span>
                       </label>
                       <input 
@@ -589,7 +588,7 @@ export default function ProductDetail() {
                         value={formData.city}
                         onChange={handleInputChange}
                         placeholder="e.g. Coimbatore"
-                        className="w-full px-3 py-2 rounded-xl border border-gray-300 bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-black focus:ring-2 focus:ring-black/5 transition-all shadow-2xs"
+                        className="w-full px-3 py-2 rounded-xl border border-gray-300 bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#00A6FB] focus:ring-2 focus:ring-[#00A6FB]/20 transition-all shadow-2xs"
                       />
                     </div>
 
@@ -598,7 +597,7 @@ export default function ProductDetail() {
                   {/* Quantity (no star, no "Optional" text) */}
                   <div className="space-y-1">
                     <label className="text-xs font-bold text-gray-900 flex items-center gap-1.5">
-                      <Hash className="w-3.5 h-3.5 text-gray-500" />
+                      <Hash className="w-3.5 h-3.5 text-[#00A6FB]" />
                       <span>Quantity</span>
                     </label>
                     <input 
@@ -608,7 +607,7 @@ export default function ProductDetail() {
                       value={formData.quantity}
                       onChange={handleInputChange}
                       placeholder="e.g. 50"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-black focus:ring-2 focus:ring-black/5 transition-all shadow-2xs"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#00A6FB] focus:ring-2 focus:ring-[#00A6FB]/20 transition-all shadow-2xs"
                     />
                   </div>
 
@@ -616,7 +615,7 @@ export default function ProductDetail() {
                   <div className="space-y-1">
                     <div className="flex items-center justify-between">
                       <label className="text-xs font-bold text-gray-900 flex items-center gap-1.5">
-                        <FileText className="w-3.5 h-3.5 text-gray-500" />
+                        <FileText className="w-3.5 h-3.5 text-[#00A6FB]" />
                         <span>Description</span>
                       </label>
                       <span className={`text-[11px] font-mono ${
@@ -635,7 +634,7 @@ export default function ProductDetail() {
                       className={`w-full px-3.5 py-2.5 rounded-xl border bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none transition-all shadow-2xs resize-y ${
                         isWordCountExceeded 
                           ? 'border-rose-500 focus:ring-2 focus:ring-rose-500/20' 
-                          : 'border-gray-300 focus:border-black focus:ring-2 focus:ring-black/5'
+                          : 'border-gray-300 focus:border-[#00A6FB] focus:ring-2 focus:ring-[#00A6FB]/20'
                       }`}
                     />
 
@@ -647,12 +646,12 @@ export default function ProductDetail() {
                     )}
                   </div>
 
-                  {/* Submit Button (Uniform Black & Grey, no NDA text) */}
+                  {/* Submit Button (Bright Blue Accent) */}
                   <div className="pt-2">
                     <button
                       type="submit"
                       disabled={submitting || isWordCountExceeded}
-                      className="w-full py-3.5 px-6 rounded-full bg-[#121212] hover:bg-black text-white font-bold text-sm tracking-tight transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer active:scale-98 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full py-3.5 px-6 rounded-full bg-[#00A6FB] hover:bg-[#0095e0] text-white font-bold text-sm tracking-tight transition-all duration-200 shadow-md shadow-[#00A6FB]/25 flex items-center justify-center gap-2 cursor-pointer active:scale-98 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {submitting ? (
                         <span>Transmitting Enquiry...</span>
