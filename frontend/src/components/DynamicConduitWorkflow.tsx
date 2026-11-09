@@ -367,7 +367,7 @@ export default function DynamicConduitWorkflow({
                     </h3>
 
                     {/* Description */}
-                    <p className="text-sm sm:text-base text-[#475569] font-normal leading-relaxed">
+                    <p className="text-base sm:text-lg md:text-xl text-[#334155] font-normal leading-relaxed">
                       {step.desc}
                     </p>
 
@@ -376,7 +376,7 @@ export default function DynamicConduitWorkflow({
                       {step.bullets.map((b, i) => (
                         <div
                           key={i}
-                          className="flex items-start gap-2.5 text-xs sm:text-sm text-[#1e293b]"
+                          className="flex items-start gap-2.5 text-sm sm:text-base text-gray-800 font-medium"
                         >
                           <CheckCircle2 className="w-4 h-4 text-[#006494] shrink-0 mt-0.5" />
                           <span>{b}</span>
@@ -471,7 +471,7 @@ export default function DynamicConduitWorkflow({
             <h4 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
               Ready to architect your serial manufacturing line?
             </h4>
-            <p className="text-xs sm:text-sm text-white/80 max-w-xl">
+            <p className="text-sm sm:text-base md:text-lg text-white/90 max-w-xl font-normal">
               Get direct engineering access, takt-time analysis, and custom tooling
               quotation within 24 hours.
             </p>
