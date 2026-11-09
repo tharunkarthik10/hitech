@@ -72,12 +72,21 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
         }
         const d = parseFloat(el.style.getPropertyValue("--d")) || 0;
         const t = ease(clamp((p - d * 0.45) / 0.55));
-        // On mobile, keep travel strictly bounded to avoid overflowing into adjacent sections
-        const travel = isMobile ? Math.min(vw, 120) * 0.4 : Math.max(vw, vh) * 1.25;
-        const dx = travel * (1 - t);
-        const dy = travel * (1 - t);
-        el.style.transform = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0)`;
-        el.style.opacity = isMobile ? Math.min(1, Math.max(0, t * 1.8)).toFixed(2) : "1";
+
+        if (isMobile) {
+          // Mobile: Zero vertical travel so cards NEVER push downward into Section 06
+          // Gentle horizontal slide with smooth opacity fade
+          const dx = (vw * 0.12) * (1 - t);
+          el.style.transform = `translate3d(${dx.toFixed(1)}px, 0px, 0)`;
+          el.style.opacity = Math.min(1, Math.max(0, t * 1.6)).toFixed(2);
+        } else {
+          // Desktop: full parallel diagonal reveal
+          const travel = Math.max(vw, vh) * 1.25;
+          const dx = travel * (1 - t);
+          const dy = travel * (1 - t);
+          el.style.transform = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0)`;
+          el.style.opacity = "1";
+        }
       });
     }
 
@@ -309,24 +318,53 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
         @media (max-width: 768px) {
           .facility-archive-sec {
             overflow: hidden !important;
-            margin-bottom: 2rem;
+            margin-bottom: 4.5rem !important;
+            padding-bottom: 2rem !important;
           }
           .facility-archive-stage {
-            aspect-ratio: 1 / 1.05;
+            aspect-ratio: 1 / 1.55 !important;
           }
           .facility-archive-stage .facility-archive-header {
-            width: 30% !important;
+            width: 20% !important;
+            max-width: 20% !important;
+            padding-top: 0 !important;
           }
-          .facility-archive-stage .facility-archive-header .eyebrow { font-size: 8.5px; }
-          .facility-archive-stage .facility-archive-header h2 { font-size: 18px; }
-          .facility-archive-stage .facility-archive-header p { font-size: 8.5px; line-height: 1.4; margin: 6px 0 8px 0; }
-          .facility-archive-stage .facility-archive-header .btn { font-size: 8px; padding: 5px 10px; }
-          .facility-archive-stage .txt { font-size: 7.5px; }
-          .facility-archive-stage .eyebrow { font-size: 8px; }
-          .facility-archive-stage h2 { font-size: 16px; }
-          .facility-archive-stage .txt p { font-size: 7.5px; }
-          .facility-archive-stage .btn { font-size: 7.5px; padding: 4px 9px; }
-          .facility-archive-stage .cta { font-size: 7.5px; }
+          .facility-archive-stage .facility-archive-header .eyebrow {
+            font-size: 7px !important;
+            line-height: 1.1 !important;
+          }
+          .facility-archive-stage .facility-archive-header h2 {
+            font-size: 13px !important;
+            line-height: 1.1 !important;
+            margin: 3px 0 0 !important;
+            word-break: break-word;
+          }
+          .facility-archive-stage .facility-archive-header h2 span {
+            font-size: 13px !important;
+            color: #64748b;
+          }
+          .facility-archive-stage .facility-archive-header p {
+            font-size: 7px !important;
+            line-height: 1.2 !important;
+            margin: 2px 0 4px 0 !important;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+          }
+          .facility-archive-stage .facility-archive-header .btn {
+            font-size: 7px !important;
+            padding: 3px 6px !important;
+            gap: 2px !important;
+            white-space: nowrap !important;
+          }
+          .facility-archive-stage .txt { font-size: 7px !important; }
+          .facility-archive-stage .eyebrow { font-size: 7.5px !important; }
+          .facility-archive-stage h2 { font-size: 13px !important; }
+          .facility-archive-stage .txt p { font-size: 7px !important; }
+          .facility-archive-stage .btn { font-size: 7px !important; padding: 3px 6px !important; }
+          .facility-archive-stage .cta { font-size: 7px !important; margin-top: 2px !important; }
+          .facility-archive-stage ul.list { line-height: 1.4 !important; }
         }
       `}</style>
 

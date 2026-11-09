@@ -67,7 +67,7 @@ export default function SplitTriptychShowcase({
   const scene3Opacity = useTransform(smoothProgress, [0.63, 0.65, 1.00], [0, 1, 1], { clamp: true });
 
   return (
-    <div id="infrastructure" className={`w-full relative z-10 ${className}`}>
+    <div id="infrastructure" className={`w-full relative z-10 pt-4 sm:pt-8 ${className}`}>
       {/* ========================================================================= */}
       {/* 1. Header Title Block - SCROLLS NORMALLY UP BEHIND THE NAVBAR */}
       {/* ========================================================================= */}
