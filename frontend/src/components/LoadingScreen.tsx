@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Volume2, VolumeX, FastForward } from 'lucide-react';
 
 interface LoadingScreenProps {
   onFinish?: () => void;
@@ -6,186 +7,117 @@ interface LoadingScreenProps {
 
 export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onFinish }) => {
   const [isVisible, setIsVisible] = useState(true);
-  const [isFadingOut, setIsFadingOut] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const hasFinishedRef = useRef(false);
+
+  const handleClose = () => {
+    if (hasFinishedRef.current) return;
+    hasFinishedRef.current = true;
+    setIsClosing(true);
+
+    // After the right-to-left slide transition completes, unmount completely
+    setTimeout(() => {
+      setIsVisible(false);
+      if (onFinish) onFinish();
+    }, 1000);
+  };
 
   useEffect(() => {
-    // Lock scrolling while page resources are loading
+    // Lock scrolling while intro is playing
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
 
-    let isPageLoaded = document.readyState === 'complete';
-    let minTimeElapsed = false;
-
-    const checkAndDismiss = () => {
-      if (isPageLoaded && minTimeElapsed) {
-        setIsFadingOut(true);
-        setTimeout(() => {
-          setIsVisible(false);
-          if (onFinish) onFinish();
-        }, 600);
-      }
-    };
-
-    const handleLoad = () => {
-      isPageLoaded = true;
-      checkAndDismiss();
-    };
-
-    if (!isPageLoaded) {
-      window.addEventListener('load', handleLoad);
+    // Start video playback immediately on mount
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {
+        // Fallback if browser restricts
+      });
     }
 
-    // Minimum display time (1.2s) to prevent jarring visual flashes on cached visits,
-    // while ensuring the page never stays artificially blocked.
-    const minTimer = setTimeout(() => {
-      minTimeElapsed = true;
-      checkAndDismiss();
-    }, 1200);
-
-    // Maximum safety fallback (7s) in case an external font/analytics script hangs
-    const safetyTimer = setTimeout(() => {
-      isPageLoaded = true;
-      minTimeElapsed = true;
-      checkAndDismiss();
-    }, 7000);
+    // Safety fallback timeout slightly past video duration (6.2s)
+    const fallbackTimer = setTimeout(() => {
+      handleClose();
+    }, 6400);
 
     return () => {
-      clearTimeout(minTimer);
-      clearTimeout(safetyTimer);
-      window.removeEventListener('load', handleLoad);
+      clearTimeout(fallbackTimer);
       document.body.style.overflow = originalOverflow;
     };
-  }, [onFinish]);
+  }, []);
+
+  const toggleSound = () => {
+    if (videoRef.current) {
+      const nextMuted = !isMuted;
+      videoRef.current.muted = nextMuted;
+      setIsMuted(nextMuted);
+    }
+  };
 
   if (!isVisible) return null;
 
   return (
     <div
-      className={`fixed inset-0 z-[99999] flex items-center justify-center bg-white transition-opacity duration-600 ease-out select-none ${
-        isFadingOut ? 'opacity-0 pointer-events-none' : 'opacity-100'
+      className={`fixed inset-0 z-[99999] flex items-center justify-center bg-[#07090e] transition-transform duration-1000 ease-[cubic-bezier(0.77,0,0.175,1)] select-none overflow-hidden ${
+        isClosing ? '-translate-x-full pointer-events-none' : 'translate-x-0'
       }`}
-      aria-label="Loading Hitech Engineering"
+      aria-label="Laser Cutting Intro"
     >
-      <style>{`
-        @keyframes metallicSweepInfinite {
-          0% {
-            transform: translateX(-190%) skewX(-25deg);
-            opacity: 0;
-          }
-          15% {
-            opacity: 1;
-          }
-          85% {
-            opacity: 1;
-          }
-          100% {
-            transform: translateX(240%) skewX(-25deg);
-            opacity: 0;
-          }
-        }
+      {/* Laser edge trailing glow beam on the right edge as it sweeps away */}
+      <div className="absolute top-0 bottom-0 right-0 w-[2px] bg-gradient-to-b from-[#00A6FB]/20 via-[#00A6FB] to-[#00A6FB]/20 shadow-[0_0_25px_#00A6FB,0_0_50px_#00A6FB] pointer-events-none z-30" />
 
-        @keyframes metallicGlintInfinite {
-          0% {
-            transform: translateX(-240%) skewX(-30deg);
-            opacity: 0;
-          }
-          20% {
-            opacity: 0.9;
-          }
-          80% {
-            opacity: 0.9;
-          }
-          100% {
-            transform: translateX(400%) skewX(-30deg);
-            opacity: 0;
-          }
-        }
+      {/* Atmospheric dark background vignette */}
+      <div className="absolute inset-0 bg-radial-vignette opacity-80 pointer-events-none z-10" />
 
-        @keyframes logoAmbientPulse {
-          0%, 100% {
-            transform: scale(1);
-            filter: drop-shadow(0 4px 14px rgba(0,0,0,0.07));
-          }
-          50% {
-            transform: scale(1.02);
-            filter: drop-shadow(0 6px 18px rgba(0,166,251,0.18));
-          }
-        }
-
-        .animate-metallic-sweep {
-          animation: metallicSweepInfinite 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-        }
-
-        .animate-metallic-glint {
-          animation: metallicGlintInfinite 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite 0.15s;
-        }
-
-        .animate-logo-pulse {
-          animation: logoAmbientPulse 3.0s ease-in-out infinite;
-        }
-      `}</style>
-
-      {/* Subtle radial ambient atmosphere */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,166,251,0.05)_0%,transparent_60%)] pointer-events-none" />
-
-      {/* Ultra-compact minimalist size with infinite breathing animation */}
-      <div className="relative w-full max-w-[110px] sm:max-w-[130px] md:max-w-[145px] flex items-center justify-center animate-logo-pulse">
-        {/* Base Logo with Subtle Metallic Contrast */}
-        <picture className="w-full h-auto block select-none">
-          <source srcSet="/hitech-full-logo-optimized.webp" type="image/webp" />
-          <img
-            src="/hitech-full-logo-optimized.png"
-            alt="Hitech Engineering"
-            loading="eager"
-            decoding="sync"
-            className="w-full h-auto object-contain filter contrast-[1.06]"
-          />
-        </picture>
-
-        {/* Realistic Multi-Band Metallic Chrome Light Sweep Mask */}
-        <div
-          className="absolute inset-0 pointer-events-none overflow-hidden"
-          style={{
-            maskImage: 'url(/hitech-full-logo-optimized.webp)',
-            WebkitMaskImage: 'url(/hitech-full-logo-optimized.webp)',
-            maskSize: 'contain',
-            WebkitMaskSize: 'contain',
-            maskRepeat: 'no-repeat',
-            WebkitMaskRepeat: 'no-repeat',
-            maskPosition: 'center',
-            WebkitMaskPosition: 'center',
-          }}
+      {/* Full-screen Cinematic Video Presentation */}
+      <div className="relative w-full h-full flex items-center justify-center">
+        <video
+          ref={videoRef}
+          autoPlay
+          muted={isMuted}
+          playsInline
+          preload="auto"
+          poster="/videos/laser-poster.webp"
+          onEnded={handleClose}
+          className="w-full h-full max-w-[1460px] object-contain pointer-events-none z-0"
         >
-          {/* Primary High-Intensity Chrome Specular Beam (Infinite Loop) */}
-          <div
-            className="absolute top-[-50%] bottom-[-50%] w-[130%] animate-metallic-sweep"
-            style={{
-              background: `linear-gradient(
-                115deg,
-                transparent 15%,
-                rgba(255, 255, 255, 0.05) 25%,
-                rgba(180, 220, 255, 0.35) 35%,
-                rgba(255, 255, 255, 0.9) 45%,
-                rgba(255, 255, 255, 1) 48%,
-                rgba(200, 245, 255, 0.95) 52%,
-                rgba(0, 166, 251, 0.6) 58%,
-                rgba(255, 255, 255, 0.25) 66%,
-                transparent 80%
-              )`,
-              filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 18px rgba(0, 166, 251, 0.7))',
-              mixBlendMode: 'screen',
-            }}
-          />
+          <source src="/videos/laser-cutting-intro.webm" type="video/webm" />
+          <source src="/videos/laser-cutting-intro.mp4" type="video/mp4" />
+        </video>
+      </div>
 
-          {/* Secondary Specular Glint Line for Metallic Bevel Refraction (Infinite Loop) */}
-          <div
-            className="absolute top-[-50%] bottom-[-50%] w-[45%] animate-metallic-glint"
-            style={{
-              background: 'linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.75) 50%, transparent 80%)',
-              mixBlendMode: 'overlay',
-            }}
-          />
-        </div>
+      {/* Interactive Controls Overlay */}
+      <div className="absolute top-6 right-6 z-40 flex items-center gap-3">
+        {/* Sound toggle button */}
+        <button
+          type="button"
+          onClick={toggleSound}
+          className="flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase text-white/80 hover:text-white bg-black/50 hover:bg-black/75 backdrop-blur-md border border-white/10 shadow-lg transition-all duration-200"
+          title={isMuted ? "Unmute audio" : "Mute audio"}
+        >
+          {isMuted ? (
+            <>
+              <VolumeX className="w-3.5 h-3.5 text-[#00A6FB]" />
+              <span>Unmute</span>
+            </>
+          ) : (
+            <>
+              <Volume2 className="w-3.5 h-3.5 text-[#00A6FB] animate-pulse" />
+              <span>Sound On</span>
+            </>
+          )}
+        </button>
+
+        {/* Skip button that triggers right-to-left slide */}
+        <button
+          type="button"
+          onClick={handleClose}
+          className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase text-white/90 hover:text-white bg-black/60 hover:bg-[#00A6FB]/20 backdrop-blur-md border border-white/15 hover:border-[#00A6FB]/60 shadow-lg transition-all duration-200 group"
+        >
+          <span>Skip</span>
+          <FastForward className="w-3.5 h-3.5 text-[#00A6FB] transition-transform group-hover:translate-x-0.5" />
+        </button>
       </div>
     </div>
   );
