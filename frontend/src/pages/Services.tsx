@@ -129,7 +129,7 @@ export default function Services() {
             >
               <a href="/" className="hover:text-black transition-colors">Home</a>
               <span className="text-gray-300">/</span>
-              <span className="text-[#121212]">Our Services</span>
+              <span className="text-[#00A6FB] font-bold">Our Services</span>
             </motion.div>
           </div>
 
@@ -138,6 +138,18 @@ export default function Services() {
             
             {/* Left Column (5 cols): Display Typography, Sub-headline & Clean Pill CTAs */}
             <div className="lg:col-span-5 space-y-4 sm:space-y-5">
+              
+              {/* Subtle Blue Status Kicker */}
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00A6FB]/10 border border-[#00A6FB]/25 text-[#00A6FB] text-xs font-bold uppercase tracking-wider"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-[#00A6FB] animate-pulse" />
+                <span>Advanced Industrial Capabilities</span>
+              </motion.div>
+
               <motion.h1 
                 initial={{ opacity: 0, y: 25 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -156,7 +168,7 @@ export default function Services() {
                 Pioneering engineering excellence, 12kW fiber laser cutting, 5-axis CNC machining, and automated SPM production lines engineered for micron tolerances and industrial scale.
               </motion.p>
 
-              {/* Signature Pill CTAs */}
+              {/* Signature Pill CTAs with Minimal Blue */}
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -165,7 +177,7 @@ export default function Services() {
               >
                 <button 
                   onClick={() => openQuoteModal("Services Hero RFQ")}
-                  className="px-7 py-3 rounded-full bg-[#121212] hover:bg-black text-white font-bold text-xs uppercase tracking-wider transition-all shadow-sm flex items-center gap-2 group cursor-pointer active:scale-95"
+                  className="px-7 py-3 rounded-full bg-[#00A6FB] hover:bg-[#0095e0] text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md shadow-[#00A6FB]/20 flex items-center gap-2 group cursor-pointer active:scale-95"
                 >
                   <span>Request a Quote</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -173,10 +185,10 @@ export default function Services() {
 
                 <button 
                   onClick={() => setIsVideoModalOpen(true)}
-                  className="px-7 py-3 rounded-full bg-white border border-gray-300 hover:bg-black hover:text-white hover:border-black text-gray-800 font-bold text-xs uppercase tracking-wider transition-all shadow-2xs flex items-center gap-2 group cursor-pointer active:scale-95"
+                  className="px-7 py-3 rounded-full bg-white border border-gray-300 hover:border-[#00A6FB] hover:text-[#00A6FB] text-gray-800 font-bold text-xs uppercase tracking-wider transition-all shadow-2xs flex items-center gap-2 group cursor-pointer active:scale-95"
                 >
-                  <div className="w-5 h-5 rounded-full bg-gray-100 group-hover:bg-white/20 flex items-center justify-center transition-colors">
-                    <Play className="w-2.5 h-2.5 fill-current ml-0.5 text-gray-800 group-hover:text-white" />
+                  <div className="w-5 h-5 rounded-full bg-gray-100 group-hover:bg-[#00A6FB]/10 flex items-center justify-center transition-colors">
+                    <Play className="w-2.5 h-2.5 fill-current ml-0.5 text-[#00A6FB]" />
                   </div>
                   <span>Watch Facility Reel</span>
                 </button>
@@ -213,7 +225,7 @@ export default function Services() {
 
                 {/* Subtle dark overlay and frosted play button on hover */}
                 <div className="absolute inset-0 bg-black/5 group-hover:bg-black/20 transition-colors flex items-center justify-center pl-8 sm:pl-14">
-                  <div className="w-16 h-16 rounded-full bg-white/25 backdrop-blur-md border border-white/40 text-white flex items-center justify-center shadow-xl group-hover:scale-110 group-hover:bg-white group-hover:text-[#121212] transition-all duration-300">
+                  <div className="w-16 h-16 rounded-full bg-white/25 backdrop-blur-md border border-white/40 text-white flex items-center justify-center shadow-xl group-hover:scale-110 group-hover:bg-[#00A6FB] group-hover:border-[#00A6FB] group-hover:text-white transition-all duration-300">
                     <Play className="w-6 h-6 fill-current ml-0.5" />
                   </div>
                 </div>
@@ -264,6 +276,7 @@ export default function Services() {
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
               className="lg:col-span-5 space-y-4"
             >
+              <span className="text-[#00A6FB] text-xs font-bold uppercase tracking-widest block">✦ Core Capabilities</span>
               <h2 className="text-4xl sm:text-5xl lg:text-[56px] font-extrabold tracking-tight text-[#121212] leading-[1.08] font-heading">
                 What We Do
               </h2>
@@ -271,7 +284,7 @@ export default function Services() {
               <div>
                 <button
                   onClick={() => openQuoteModal("What We Do Inquiry")}
-                  className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-gray-300 text-xs font-semibold text-gray-800 hover:bg-black hover:text-white hover:border-black transition-all shadow-2xs active:scale-95"
+                  className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-gray-300 text-xs font-semibold text-gray-800 hover:border-[#00A6FB] hover:text-[#00A6FB] transition-all shadow-2xs active:scale-95"
                 >
                   <span>About Us</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -488,7 +501,7 @@ export default function Services() {
                 <div
                   key={i}
                   className={`h-0.5 rounded-full transition-all duration-300 ${
-                    currentSlide === i ? 'w-8 bg-gray-900' : 'w-4 bg-gray-300'
+                    currentSlide === i ? 'w-8 bg-[#00A6FB]' : 'w-4 bg-gray-300'
                   }`}
                 />
               ))}
@@ -508,8 +521,9 @@ export default function Services() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-6"
+            className="lg:col-span-6 space-y-2"
           >
+            <span className="text-xs font-bold uppercase tracking-widest text-[#00A6FB] block">✦ Integrated Infrastructure</span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-extrabold text-[#121212] tracking-tight leading-[1.12] font-heading">
               About HiTech <br className="hidden sm:inline" />
               Ecosystem
@@ -993,7 +1007,7 @@ export default function Services() {
                     className="hover:bg-gray-100/70 transition-colors cursor-pointer group"
                   >
                     <td className="py-5 pr-6">
-                      <div className="text-base sm:text-lg font-bold text-[#121212] font-heading group-hover:text-blue-900 transition-colors">
+                      <div className="text-base sm:text-lg font-bold text-[#121212] font-heading group-hover:text-[#00A6FB] transition-colors">
                         {row.title}
                       </div>
                       <span className="text-[11px] text-gray-500 font-medium">
@@ -1014,7 +1028,7 @@ export default function Services() {
                     </td>
 
                     <td className="py-5 pl-6 text-right whitespace-nowrap">
-                      <div className="inline-flex w-8 h-8 rounded-full bg-gray-200 group-hover:bg-[#121212] group-hover:text-white items-center justify-center transition-all">
+                      <div className="inline-flex w-8 h-8 rounded-full bg-gray-200 group-hover:bg-[#00A6FB] group-hover:text-white items-center justify-center transition-all">
                         <ArrowUpRight className="w-4 h-4" />
                       </div>
                     </td>
@@ -1160,7 +1174,7 @@ export default function Services() {
 
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-full bg-[#121212] hover:bg-black text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md mt-2"
+                  className="w-full py-3.5 rounded-full bg-[#00A6FB] hover:bg-[#0095e0] text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md shadow-[#00A6FB]/25 mt-2 cursor-pointer active:scale-98"
                 >
                   Submit Inquiry
                 </button>
