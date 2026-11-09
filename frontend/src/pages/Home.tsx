@@ -16,11 +16,11 @@ interface ScrollSectionProps {
 function ScrollSection({ children, delay = 0 }: ScrollSectionProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40, filter: 'blur(4px)' }}
+      initial={{ opacity: 0, y: 48, filter: 'blur(5px)' }}
       whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-      viewport={{ once: true, margin: '-50px' }}
+      viewport={{ once: true, margin: '-60px' }}
       transition={{ 
-        duration: 1.4, 
+        duration: 2.4, 
         delay, 
         ease: [0.16, 1, 0.3, 1] 
       }}
@@ -38,7 +38,7 @@ export default function Home() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1.2, ease: 'easeOut' }}
+        transition={{ duration: 2.0, ease: 'easeOut' }}
       >
         <HeroSlider />
       </motion.div>
