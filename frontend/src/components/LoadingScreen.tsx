@@ -7,17 +7,11 @@ interface LoadingScreenProps {
 export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onFinish }) => {
   const [isVisible, setIsVisible] = useState(true);
   const [isFadingOut, setIsFadingOut] = useState(false);
-  const [shineActive, setShineActive] = useState(false);
 
   useEffect(() => {
     // Lock scrolling while page resources are loading
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-
-    // Start metallic shine
-    const shineTimer = setTimeout(() => {
-      setShineActive(true);
-    }, 150);
 
     let isPageLoaded = document.readyState === 'complete';
     let minTimeElapsed = false;
@@ -41,22 +35,21 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onFinish }) => {
       window.addEventListener('load', handleLoad);
     }
 
-    // Minimum display time (1.2s) to prevent jarring 5ms visual flashes on cached visits,
+    // Minimum display time (1.2s) to prevent jarring visual flashes on cached visits,
     // while ensuring the page never stays artificially blocked.
     const minTimer = setTimeout(() => {
       minTimeElapsed = true;
       checkAndDismiss();
     }, 1200);
 
-    // Maximum safety fallback (6s) in case external font/third-party script hangs
+    // Maximum safety fallback (7s) in case an external font/analytics script hangs
     const safetyTimer = setTimeout(() => {
       isPageLoaded = true;
       minTimeElapsed = true;
       checkAndDismiss();
-    }, 6000);
+    }, 7000);
 
     return () => {
-      clearTimeout(shineTimer);
       clearTimeout(minTimer);
       clearTimeout(safetyTimer);
       window.removeEventListener('load', handleLoad);
@@ -73,11 +66,70 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onFinish }) => {
       }`}
       aria-label="Loading Hitech Engineering"
     >
-      {/* Subtle radial ambient atmosphere */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,166,251,0.04)_0%,transparent_60%)] pointer-events-none" />
+      <style>{`
+        @keyframes metallicSweepInfinite {
+          0% {
+            transform: translateX(-190%) skewX(-25deg);
+            opacity: 0;
+          }
+          15% {
+            opacity: 1;
+          }
+          85% {
+            opacity: 1;
+          }
+          100% {
+            transform: translateX(240%) skewX(-25deg);
+            opacity: 0;
+          }
+        }
 
-      {/* Ultra-compact minimalist size */}
-      <div className="relative w-full max-w-[110px] sm:max-w-[130px] md:max-w-[145px] flex items-center justify-center">
+        @keyframes metallicGlintInfinite {
+          0% {
+            transform: translateX(-240%) skewX(-30deg);
+            opacity: 0;
+          }
+          20% {
+            opacity: 0.9;
+          }
+          80% {
+            opacity: 0.9;
+          }
+          100% {
+            transform: translateX(400%) skewX(-30deg);
+            opacity: 0;
+          }
+        }
+
+        @keyframes logoAmbientPulse {
+          0%, 100% {
+            transform: scale(1);
+            filter: drop-shadow(0 4px 14px rgba(0,0,0,0.07));
+          }
+          50% {
+            transform: scale(1.02);
+            filter: drop-shadow(0 6px 18px rgba(0,166,251,0.18));
+          }
+        }
+
+        .animate-metallic-sweep {
+          animation: metallicSweepInfinite 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        .animate-metallic-glint {
+          animation: metallicGlintInfinite 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite 0.15s;
+        }
+
+        .animate-logo-pulse {
+          animation: logoAmbientPulse 3.0s ease-in-out infinite;
+        }
+      `}</style>
+
+      {/* Subtle radial ambient atmosphere */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,166,251,0.05)_0%,transparent_60%)] pointer-events-none" />
+
+      {/* Ultra-compact minimalist size with infinite breathing animation */}
+      <div className="relative w-full max-w-[110px] sm:max-w-[130px] md:max-w-[145px] flex items-center justify-center animate-logo-pulse">
         {/* Base Logo with Subtle Metallic Contrast */}
         <picture className="w-full h-auto block select-none">
           <source srcSet="/hitech-full-logo-optimized.webp" type="image/webp" />
@@ -86,7 +138,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onFinish }) => {
             alt="Hitech Engineering"
             loading="eager"
             decoding="sync"
-            className="w-full h-auto object-contain drop-shadow-[0_4px_14px_rgba(0,0,0,0.07)] filter contrast-[1.06]"
+            className="w-full h-auto object-contain filter contrast-[1.06]"
           />
         </picture>
 
@@ -104,11 +156,9 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onFinish }) => {
             WebkitMaskPosition: 'center',
           }}
         >
-          {/* Primary High-Intensity Chrome Specular Beam */}
+          {/* Primary High-Intensity Chrome Specular Beam (Infinite Loop) */}
           <div
-            className={`absolute top-[-50%] bottom-[-50%] w-[130%] transform -skew-x-25 transition-transform duration-[2200ms] ease-[cubic-bezier(0.25,1,0.5,1)] ${
-              shineActive ? 'translate-x-[230%]' : '-translate-x-[180%]'
-            }`}
+            className="absolute top-[-50%] bottom-[-50%] w-[130%] animate-metallic-sweep"
             style={{
               background: `linear-gradient(
                 115deg,
@@ -127,11 +177,9 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onFinish }) => {
             }}
           />
 
-          {/* Secondary Specular Glint Line for Metallic Bevel Refraction */}
+          {/* Secondary Specular Glint Line for Metallic Bevel Refraction (Infinite Loop) */}
           <div
-            className={`absolute top-[-50%] bottom-[-50%] w-[45%] transform -skew-x-30 transition-transform duration-[2400ms] ease-[cubic-bezier(0.2,0.8,0.4,1)] delay-75 ${
-              shineActive ? 'translate-x-[420%]' : '-translate-x-[220%]'
-            }`}
+            className="absolute top-[-50%] bottom-[-50%] w-[45%] animate-metallic-glint"
             style={{
               background: 'linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.75) 50%, transparent 80%)',
               mixBlendMode: 'overlay',
