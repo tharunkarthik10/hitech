@@ -21,9 +21,9 @@ function ScrollSection({ children, direction = 'left', delay = 0 }: ScrollSectio
     <motion.div
       initial={{ opacity: 0, x: xOffset }}
       whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, amount: 0.2, margin: '0px 0px -120px 0px' }}
+      viewport={{ once: true, amount: 0.4 }}
       transition={{ 
-        duration: 1.2, 
+        duration: 2.0, 
         delay, 
         ease: [0.16, 1, 0.3, 1] 
       }}
@@ -37,14 +37,8 @@ function ScrollSection({ children, direction = 'left', delay = 0 }: ScrollSectio
 export default function Home() {
   return (
     <main className="overflow-x-clip">
-      {/* Hero Section: Smooth initial entrance */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.5, ease: 'easeOut' }}
-      >
-        <HeroSlider />
-      </motion.div>
+      {/* Hero Section: Rendered directly without blur or entrance transitions */}
+      <HeroSlider />
 
       {/* Clients Section - enters from Left */}
       <ScrollSection direction="left">
