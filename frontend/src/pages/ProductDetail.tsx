@@ -220,7 +220,34 @@ export default function ProductDetail() {
     );
   }
 
-  const similarProducts = productsList.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
+  // Similar products with Tier 1 (Same Category) as highest priority,
+  // falling back to same department, then general catalog to guarantee 4 recommendations
+  const similarProducts = useMemo(() => {
+    if (!product) return [];
+
+    const otherProducts = productsList.filter(p => p.id !== product.id);
+
+    // Tier 1: Exact Same Category (e.g., Cylinders)
+    const tier1SameCategory = otherProducts.filter(p => 
+      p.category && product.category && 
+      p.category.trim().toLowerCase() === product.category.trim().toLowerCase()
+    );
+
+    // Tier 2: Same Department (e.g., other Pneumatics products)
+    const tier2SameDept = otherProducts.filter(p => 
+      p.department && product.department &&
+      p.department.trim().toLowerCase() === product.department.trim().toLowerCase() &&
+      !tier1SameCategory.some(sc => sc.id === p.id)
+    );
+
+    // Tier 3: Other catalog items to fill up to 4
+    const tier3Remaining = otherProducts.filter(p => 
+      !tier1SameCategory.some(sc => sc.id === p.id) &&
+      !tier2SameDept.some(sd => sd.id === p.id)
+    );
+
+    return [...tier1SameCategory, ...tier2SameDept, ...tier3Remaining].slice(0, 4);
+  }, [product, productsList]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -753,12 +780,17 @@ export default function ProductDetail() {
                 <div className={`bg-white border rounded-2xl overflow-hidden mb-3 transition-all duration-300 ${
                   isCurrent ? 'border-gray-900 shadow-md ring-2 ring-gray-900/10' : 'border-gray-200 group-hover:border-gray-900 group-hover:shadow-md'
                 }`}>
-                  <div className="aspect-[4/3] sm:h-48 w-full bg-gray-100 overflow-hidden flex items-center justify-center">
+                  <div className="aspect-[4/3] sm:h-48 w-full bg-gray-100 overflow-hidden flex items-center justify-center relative">
                     <img 
-                      src={p.imageUrl} 
+                      src={p.imageUrl || (p.images && p.images[0]) || ''} 
                       alt={p.title}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
+                    {p.images && p.images.length > 1 && (
+                      <span className="absolute bottom-2 right-2 bg-black/75 backdrop-blur-xs text-white text-[10px] font-mono px-1.5 py-0.5 rounded font-semibold flex items-center gap-1 shadow">
+                        📷 {p.images.length}
+                      </span>
+                    )}
                   </div>
                   <div className="p-4 text-left">
                     <span className="text-[10px] sm:text-xs font-semibold text-gray-500 uppercase tracking-wider block mb-1">
