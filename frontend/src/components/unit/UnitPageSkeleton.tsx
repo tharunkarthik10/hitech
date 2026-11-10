@@ -73,7 +73,7 @@ export default function UnitPageSkeleton({ data }: UnitPageSkeletonProps) {
               {tagline}
             </p>
 
-            <div className="pt-6 md:pt-8">
+            <div className="pt-6 md:pt-8 flex justify-end md:justify-start">
               <Link
                 to="/contact"
                 className="inline-flex items-center gap-3 px-8 py-3.5 rounded-full border-[1.5px] border-white/80 text-white font-body-md font-medium text-[17px] hover:bg-white hover:text-black transition-all duration-300 group"
@@ -503,7 +503,7 @@ export default function UnitPageSkeleton({ data }: UnitPageSkeletonProps) {
             </div>
 
             {/* CTA Button matching Home Page rounded-full Pill Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-4 relative z-10">
+            <div className="flex flex-col sm:flex-row items-end sm:items-center justify-end sm:justify-center gap-6 pt-4 relative z-10">
               <Link
                 to="/contact"
                 className={`px-10 py-4 rounded-full font-bold text-base tracking-wider uppercase flex items-center gap-3 transition-all duration-300 shadow-2xl ${theme.buttonBg} hover:scale-105 active:scale-95 group`}

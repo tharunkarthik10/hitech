@@ -168,7 +168,7 @@ export default function AboutUs() {
                   Pioneering engineering excellence, micron-level machining precision, and integrated automation across 3 specialized manufacturing units.
                 </p>
 
-                <div className="pt-2 flex flex-wrap items-center gap-3">
+                <div className="pt-2 flex flex-wrap items-center justify-end sm:justify-start gap-3">
                   <Link 
                     to="/career"
                     className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white hover:bg-gray-100 text-[#121212] font-medium text-xs sm:text-sm tracking-tight transition-all shadow-lg group"

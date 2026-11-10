@@ -436,7 +436,7 @@ export default function Career() {
                   </div>
                 </div>
 
-                <div className="shrink-0 pt-4 lg:pt-0 flex flex-col sm:flex-row gap-3">
+                <div className="shrink-0 pt-4 lg:pt-0 flex flex-col sm:flex-row items-end sm:items-center justify-end gap-3">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -474,7 +474,7 @@ export default function Career() {
             </p>
           </div>
 
-          <div className="relative z-10 shrink-0">
+          <div className="relative z-10 shrink-0 w-full lg:w-auto flex justify-end lg:justify-start">
             <button 
               onClick={handleOpenGeneralApply}
               className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#00A6FB] text-white hover:bg-[#008ecc] text-xs md:text-sm font-bold uppercase tracking-widest transition-all shadow-xl shadow-[#00A6FB]/30 cursor-pointer"

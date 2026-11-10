@@ -26,7 +26,7 @@ export default function ContactBanner() {
           </div>
 
           {/* Button */}
-          <div className="mt-8 md:mt-0 z-20 shrink-0">
+          <div className="mt-8 md:mt-0 z-20 shrink-0 w-full md:w-auto flex justify-end md:justify-start">
             <button className="px-8 py-3 border-2 border-stark-white text-stark-white font-label-caps uppercase tracking-wider font-bold hover:bg-stark-white hover:text-[#051923] transition-colors duration-300">
               Contact Us
             </button>

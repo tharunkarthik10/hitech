@@ -458,7 +458,7 @@ export default function ProductDetail() {
             </div>
 
             {/* Inquire CTA Button: Bright Blue Accent */}
-            <div className="pt-2">
+            <div className="pt-2 flex justify-end sm:justify-start">
               <button
                 type="button"
                 onClick={() => setIsEnquiryModalOpen(true)}
@@ -753,7 +753,7 @@ export default function ProductDetail() {
       {/* SIMILAR PRODUCTS / EXPLORE RELATED (Uniform Black & Grey) */}
       {/* ========================================================================= */}
       <section className="py-12 sm:py-16 px-4 sm:px-8 md:px-12 max-w-[1920px] mx-auto border-t border-gray-200 mt-6">
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
             <h3 className="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">Similar Products</h3>
             <p className="text-xs sm:text-sm text-gray-500 mt-0.5">Explore related {product.category} hardware manufactured by HiTech</p>
@@ -761,7 +761,7 @@ export default function ProductDetail() {
           <Link 
             to="/products" 
             state={{ category: product.category }}
-            className="bg-[#121212] hover:bg-black text-white px-5 py-2.5 text-xs sm:text-sm font-semibold transition-colors flex items-center gap-1.5 rounded-full shadow-sm"
+            className="self-end sm:self-auto bg-[#121212] hover:bg-black text-white px-5 py-2.5 text-xs sm:text-sm font-semibold transition-colors flex items-center gap-1.5 rounded-full shadow-sm"
           >
             <span>View All in {product.category}</span>
             <span className="font-bold">→</span>

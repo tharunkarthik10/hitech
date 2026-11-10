@@ -108,7 +108,7 @@ export default function Technologies() {
             </div>
 
             {/* Explore More Button */}
-            <div>
+            <div className="flex justify-end sm:justify-start">
               <button className="flex items-center justify-center gap-3 px-6 py-3 rounded-full border border-white/30 text-white hover:bg-white hover:text-black transition-colors font-medium text-sm">
                 Explore more 
                 <span className="material-symbols-outlined text-[18px]">north_east</span>

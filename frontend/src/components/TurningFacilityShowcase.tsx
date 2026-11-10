@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { RotateCw, X, ArrowUpRight, CheckCircle2 } from 'lucide-react';
+import { X, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 
 interface CardItem {
   id: string;
@@ -146,28 +146,16 @@ interface TurningFacilityShowcaseProps {
 export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacilityShowcaseProps) {
   // Tabs: 'facilities' vs 'products'
   const [activeTab, setActiveTab] = useState<'facilities' | 'products'>('facilities');
-
-  // Track flipped status for each individual card independently
-  const [flippedCards, setFlippedCards] = useState<Record<string, boolean>>({});
   
   // Modal state
   const [selectedItem, setSelectedItem] = useState<CardItem | null>(null);
 
   const currentData = activeTab === 'facilities' ? FACILITIES_DATA : PRODUCTS_DATA;
 
-  const toggleCardFlip = (id: string, e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    setFlippedCards(prev => ({
-      ...prev,
-      [id]: !prev[id]
-    }));
-  };
-
-
   return (
     <section className="relative w-full my-12 lg:my-16">
       
-      {/* Top Header & Tabs Bar (Matching Reference) */}
+      {/* Top Header & Tabs Bar */}
       <div className="flex items-center justify-between mb-6">
         {/* Two Tabs at Top: FACILITIES and PRODUCTS */}
         <div className="flex items-center w-full max-w-[460px] bg-[#e5e5e5] rounded-t-lg overflow-hidden border border-b-0 border-gray-300">
@@ -194,113 +182,44 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
         </div>
       </div>
 
-      {/* 4 Individual Turning Card Templates Grid (2x2 on Desktop, 1-col on Mobile) */}
+      {/* 4 Individual Facility/Product Card Grid (2x2 on Desktop, 1-col on Mobile) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
         {currentData.map((item) => {
-          const isFlipped = !!flippedCards[item.id];
-
           return (
             <div
               key={item.id}
-              onClick={() => toggleCardFlip(item.id)}
-              className="relative w-full h-[360px] sm:h-[340px] [perspective:1200px] cursor-pointer group"
+              onClick={() => setSelectedItem(item)}
+              className="relative w-full sm:h-[340px] bg-white border border-gray-200 rounded-xl overflow-hidden shadow-xs hover:border-[#00A6FB] hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between"
             >
-              <motion.div
-                animate={{ rotateY: isFlipped ? 180 : 0 }}
-                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                className="w-full h-full relative [transform-style:preserve-3d]"
-              >
-                
-                {/* ========================================================= */}
-                {/* CARD FRONT: PHOTO, BRIGHT BLUE TITLE & QUICK DETAILS      */}
-                {/* ========================================================= */}
-                <div
-                  style={{ backfaceVisibility: 'hidden' }}
-                  className="absolute inset-0 bg-white border border-gray-200 rounded-xl overflow-hidden shadow-xs hover:border-[#00A6FB] hover:shadow-md transition-all flex flex-col justify-between"
-                >
-                  <div className="flex flex-col sm:flex-row h-full">
-                    {/* Thumbnail Image */}
-                    <div className="w-full sm:w-[45%] h-44 sm:h-full relative overflow-hidden bg-gray-100 shrink-0 border-b sm:border-b-0 sm:border-r border-gray-100">
-                      <img
-                        src={item.imageUrl}
-                        alt={item.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <div className="absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
-                        {item.tag}
-                      </div>
-                    </div>
-
-                    {/* Front Details */}
-                    <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
-                      <div>
-                        {/* Bright Blue Title */}
-                        <h4 className="text-base sm:text-lg font-bold text-[#00A6FB] group-hover:text-[#0084c7] transition-colors leading-snug">
-                          {item.title}
-                        </h4>
-                        
-                        <p className="text-xs text-gray-600 line-clamp-3 mt-2 leading-relaxed">
-                          {item.description}
-                        </p>
-                      </div>
-
-                      {/* Bottom Footer on Front */}
-                      <div className="pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
-                        {item.statNumber && (
-                          <span className="font-semibold text-gray-500">
-                            Cap: <strong className="text-gray-900 font-bold">{item.statNumber} {item.statUnit}</strong>
-                          </span>
-                        )}
-
-                        <span className="inline-flex items-center gap-1 text-[#00A6FB] font-bold group-hover:underline ml-auto">
-                          <span>Click to Turn</span>
-                          <RotateCw className="w-3 h-3 transition-transform group-hover:rotate-180 duration-500" />
-                        </span>
-                      </div>
-                    </div>
+              <div className="flex flex-col sm:flex-row h-full">
+                {/* Thumbnail Image */}
+                <div className="w-full sm:w-[45%] h-48 sm:h-full relative overflow-hidden bg-gray-100 shrink-0 border-b sm:border-b-0 sm:border-r border-gray-100">
+                  <img
+                    src={item.imageUrl}
+                    alt={item.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
+                    {item.tag}
                   </div>
                 </div>
 
-                {/* ========================================================= */}
-                {/* CARD BACK: FULL DESCRIPTION, SPECIFICATIONS & ACTIONS    */}
-                {/* ========================================================= */}
-                <div
-                  style={{ 
-                    transform: 'rotateY(180deg)',
-                    backfaceVisibility: 'hidden' 
-                  }}
-                  className="absolute inset-0 bg-white border-2 border-[#00A6FB]/60 rounded-xl overflow-hidden shadow-md p-5 sm:p-6 flex flex-col justify-between"
-                >
+                {/* Details */}
+                <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
                   <div>
-                    {/* Header on Back */}
-                    <div className="flex items-start justify-between gap-3 pb-2.5 border-b border-gray-100">
-                      <div>
-                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">
-                          Full Specifications
-                        </span>
-                        <h4 className="text-base sm:text-lg font-bold text-[#00A6FB] leading-snug">
-                          {item.title}
-                        </h4>
-                      </div>
-
-                      <button
-                        onClick={(e) => toggleCardFlip(item.id, e)}
-                        className="p-1 rounded-full text-gray-400 hover:text-black hover:bg-gray-100 transition-colors"
-                        title="Turn back"
-                      >
-                        <RotateCw className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-
-                    {/* Detailed Description */}
-                    <p className="text-xs text-gray-700 leading-relaxed mt-3">
+                    {/* Bright Blue Title */}
+                    <h4 className="text-base sm:text-lg font-bold text-[#00A6FB] group-hover:text-[#0084c7] transition-colors leading-snug">
+                      {item.title}
+                    </h4>
+                    
+                    <p className="text-xs text-gray-600 line-clamp-3 mt-2 leading-relaxed">
                       {item.description}
                     </p>
 
-                    {/* Bullet Specs */}
-                    <ul className="mt-3 space-y-1.5">
-                      {item.specs.slice(0, 3).map((spec, i) => (
-                        <li key={i} className="flex items-start gap-1.5 text-[11px] sm:text-xs text-gray-600">
+                    {/* Quick Specs preview */}
+                    <ul className="mt-3 space-y-1.5 hidden sm:block">
+                      {item.specs.slice(0, 2).map((spec, i) => (
+                        <li key={i} className="flex items-start gap-1.5 text-[11px] text-gray-500">
                           <CheckCircle2 className="w-3.5 h-3.5 text-[#00A6FB] shrink-0 mt-0.5" />
                           <span className="line-clamp-1">{spec}</span>
                         </li>
@@ -308,30 +227,21 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
                     </ul>
                   </div>
 
-                  {/* Actions on Back */}
-                  <div className="pt-3 border-t border-gray-100 flex items-center justify-between gap-3">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setSelectedItem(item);
-                      }}
-                      className="text-xs font-bold text-[#00A6FB] hover:text-[#0084c7] hover:underline inline-flex items-center gap-1"
-                    >
-                      <span>Read More</span>
-                      <ArrowUpRight className="w-3 h-3" />
-                    </button>
+                  {/* Bottom Footer */}
+                  <div className="pt-3 border-t border-gray-100 flex items-center justify-between text-xs mt-3 sm:mt-0">
+                    {item.statNumber ? (
+                      <span className="font-semibold text-gray-500">
+                        Cap: <strong className="text-gray-900 font-bold">{item.statNumber} {item.statUnit}</strong>
+                      </span>
+                    ) : <span />}
 
-                    <button
-                      onClick={(e) => toggleCardFlip(item.id, e)}
-                      className="px-3 py-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold transition-colors inline-flex items-center gap-1"
-                    >
-                      <span>Flip to Front</span>
-                      <RotateCw className="w-3 h-3" />
-                    </button>
+                    <span className="inline-flex items-center gap-1 text-xs font-bold text-[#00A6FB] group-hover:text-[#0084c7] transition-colors ml-auto">
+                      <span>View Specs</span>
+                      <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </span>
                   </div>
                 </div>
-
-              </motion.div>
+              </div>
             </div>
           );
         })}
@@ -400,12 +310,14 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
                 </div>
 
                 {/* Bottom Actions */}
-                <div className="pt-4 border-t border-gray-100 flex items-center justify-between gap-4">
+                <div className="pt-4 border-t border-gray-100 flex flex-wrap items-center justify-between gap-4">
                   <div className="text-xs text-gray-500">
-                    Rating: <strong className="text-gray-900 font-bold">{selectedItem.statNumber} {selectedItem.statUnit}</strong>
+                    {selectedItem.statNumber && (
+                      <>Rating: <strong className="text-gray-900 font-bold">{selectedItem.statNumber} {selectedItem.statUnit}</strong></>
+                    )}
                   </div>
 
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center justify-end gap-3 ml-auto">
                     <button
                       onClick={() => setSelectedItem(null)}
                       className="px-4 py-2 rounded-lg text-xs font-semibold text-gray-600 hover:text-gray-900 transition-colors"

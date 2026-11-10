@@ -82,7 +82,7 @@ export default function AboutSection() {
             </div>
 
             {/* Explore Button */}
-            <div className="mt-8 lg:mt-12">
+            <div className="mt-8 lg:mt-12 flex justify-end sm:justify-start">
               <button className="inline-flex items-center gap-2 px-7 py-3 rounded-full border border-white/80 text-white hover:bg-white hover:text-black transition-all duration-300 font-medium text-sm tracking-tight cursor-pointer active:scale-95">
                 <span>Explore more</span>
                 <span className="material-symbols-outlined text-[16px]">north_east</span>

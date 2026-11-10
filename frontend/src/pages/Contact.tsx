@@ -328,7 +328,7 @@ export default function Contact() {
                   </div>
 
                   {/* Submit CTA in Blue */}
-                  <div className="pt-2">
+                  <div className="pt-2 flex justify-end sm:justify-start">
                     <button 
                       type="submit"
                       disabled={submitting}

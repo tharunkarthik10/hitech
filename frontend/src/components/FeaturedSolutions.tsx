@@ -54,7 +54,7 @@ function SolutionCard({ service, idx }: { service: any; idx: number }) {
         <p className="font-normal text-sm sm:text-base text-[#475569] leading-relaxed mb-6 line-clamp-3">
           {service.desc}
         </p>
-        <div className="mt-auto">
+        <div className="mt-auto flex justify-end sm:justify-start">
           <button className="text-[#121212] font-semibold text-sm tracking-tight uppercase underline underline-offset-4 decoration-1 hover:text-black transition-colors">
             VISIT US
           </button>

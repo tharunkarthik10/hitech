@@ -45,7 +45,7 @@ export default function HeroSlider({
             {description}
           </p>
 
-          <div className="pt-2 sm:pt-4">
+          <div className="pt-2 sm:pt-4 flex justify-end sm:justify-start">
             <button className="inline-flex items-center gap-2 px-6 py-2.5 sm:px-7 sm:py-3 rounded-full border border-white/80 bg-white/10 hover:bg-white hover:text-black text-white font-medium text-xs sm:text-sm tracking-tight backdrop-blur-xs transition-all duration-300 cursor-pointer active:scale-95">
               <span>{buttonText}</span>
               <span className="material-symbols-outlined text-[16px] sm:text-[18px]">north_east</span>

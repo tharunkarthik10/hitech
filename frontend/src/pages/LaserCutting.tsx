@@ -129,7 +129,7 @@ export default function LaserCutting() {
                 Turnkey contract manufacturing eliminates capital expenditure risks, operator line balancing hurdles, and staging overhead. HiTech provides dedicated workstations, automated torque logging, and continuous Kanban replenishment backed by 100% FAT verification.
               </p>
 
-              <div className="pt-2">
+              <div className="pt-2 flex justify-end sm:justify-start">
                 <button
                   onClick={() => openQuoteModal("Turnkey Assembly Consultation")}
                   className="px-6 py-3 rounded-full bg-[#00A6FB] hover:bg-[#0095e0] text-white font-medium text-sm tracking-tight transition-all shadow-md shadow-[#00A6FB]/20 flex items-center gap-2.5 cursor-pointer active:scale-95"
