@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ArrowUpRight, CheckCircle2 } from 'lucide-react';
+import { X, ArrowUpRight, CheckCircle2, RotateCw } from 'lucide-react';
 
 interface CardItem {
   id: string;
@@ -146,11 +146,22 @@ interface TurningFacilityShowcaseProps {
 export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacilityShowcaseProps) {
   // Tabs: 'facilities' vs 'products'
   const [activeTab, setActiveTab] = useState<'facilities' | 'products'>('facilities');
+
+  // Track flipped status for each card (click/tap to flip)
+  const [flippedCards, setFlippedCards] = useState<Record<string, boolean>>({});
   
   // Modal state
   const [selectedItem, setSelectedItem] = useState<CardItem | null>(null);
 
   const currentData = activeTab === 'facilities' ? FACILITIES_DATA : PRODUCTS_DATA;
+
+  const toggleCardFlip = (id: string, e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setFlippedCards(prev => ({
+      ...prev,
+      [id]: !prev[id]
+    }));
+  };
 
   return (
     <section className="relative w-full my-12 lg:my-16">
@@ -160,7 +171,10 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
         {/* Two Tabs at Top: FACILITIES and PRODUCTS */}
         <div className="flex items-center w-full max-w-[460px] bg-[#e5e5e5] rounded-t-lg overflow-hidden border border-b-0 border-gray-300">
           <button
-            onClick={() => setActiveTab('facilities')}
+            onClick={() => {
+              setActiveTab('facilities');
+              setFlippedCards({});
+            }}
             className={`flex-1 py-3 px-6 text-xs sm:text-sm tracking-wider uppercase transition-all relative ${
               activeTab === 'facilities'
                 ? 'bg-white text-gray-900 font-bold border-t-[3px] border-[#00A6FB] shadow-xs'
@@ -170,7 +184,10 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
             FACILITIES
           </button>
           <button
-            onClick={() => setActiveTab('products')}
+            onClick={() => {
+              setActiveTab('products');
+              setFlippedCards({});
+            }}
             className={`flex-1 py-3 px-6 text-xs sm:text-sm tracking-wider uppercase transition-all relative ${
               activeTab === 'products'
                 ? 'bg-white text-gray-900 font-bold border-t-[3px] border-[#00A6FB] shadow-xs'
@@ -182,44 +199,113 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
         </div>
       </div>
 
-      {/* 4 Individual Facility/Product Card Grid (2x2 on Desktop, 1-col on Mobile) */}
+      {/* 4 Individual Facility/Product 3D Flip Cards Grid (2x2 on Desktop, 1-col on Mobile) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
         {currentData.map((item) => {
+          const isFlipped = !!flippedCards[item.id];
+
           return (
             <div
               key={item.id}
-              onClick={() => setSelectedItem(item)}
-              className="relative w-full sm:h-[340px] bg-white border border-gray-200 rounded-xl overflow-hidden shadow-xs hover:border-[#00A6FB] hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between"
+              onClick={() => toggleCardFlip(item.id)}
+              className={`flip-card-container relative w-full h-[390px] sm:h-[340px] cursor-pointer group ${
+                isFlipped ? 'flipped' : ''
+              }`}
             >
-              <div className="flex flex-col sm:flex-row h-full">
-                {/* Thumbnail Image */}
-                <div className="w-full sm:w-[45%] h-48 sm:h-full relative overflow-hidden bg-gray-100 shrink-0 border-b sm:border-b-0 sm:border-r border-gray-100">
-                  <img
-                    src={item.imageUrl}
-                    alt={item.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
-                    {item.tag}
+              <div className="flip-card-inner">
+                {/* ========================================================= */}
+                {/* CARD FRONT: PHOTO, BRIGHT BLUE TITLE & QUICK DETAILS      */}
+                {/* ========================================================= */}
+                <div className="flip-card-front absolute inset-0 bg-white border border-gray-200 rounded-xl overflow-hidden shadow-xs hover:border-[#00A6FB] hover:shadow-md transition-all flex flex-col justify-between">
+                  <div className="flex flex-col sm:flex-row h-full">
+                    {/* Thumbnail Image */}
+                    <div className="w-full sm:w-[45%] h-44 sm:h-full relative overflow-hidden bg-gray-100 shrink-0 border-b sm:border-b-0 sm:border-r border-gray-100">
+                      <img
+                        src={item.imageUrl}
+                        alt={item.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
+                        {item.tag}
+                      </div>
+                    </div>
+
+                    {/* Front Details */}
+                    <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+                      <div>
+                        {/* Bright Blue Title */}
+                        <h4 className="text-base sm:text-lg font-bold text-[#00A6FB] group-hover:text-[#0084c7] transition-colors leading-snug">
+                          {item.title}
+                        </h4>
+                        
+                        <p className="text-xs text-gray-600 line-clamp-3 mt-2 leading-relaxed">
+                          {item.description}
+                        </p>
+
+                        {/* Quick Specs preview */}
+                        <ul className="mt-3 space-y-1.5 hidden sm:block">
+                          {item.specs.slice(0, 2).map((spec, i) => (
+                            <li key={i} className="flex items-start gap-1.5 text-[11px] text-gray-500">
+                              <CheckCircle2 className="w-3.5 h-3.5 text-[#00A6FB] shrink-0 mt-0.5" />
+                              <span className="line-clamp-1">{spec}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* Bottom Footer on Front */}
+                      <div className="pt-3 border-t border-gray-100 flex items-center justify-between text-xs mt-3 sm:mt-0">
+                        {item.statNumber ? (
+                          <span className="font-semibold text-gray-500">
+                            Cap: <strong className="text-gray-900 font-bold">{item.statNumber} {item.statUnit}</strong>
+                          </span>
+                        ) : <span />}
+
+                        <span className="inline-flex items-center gap-1 text-xs font-bold text-[#00A6FB] group-hover:text-[#0084c7] transition-colors ml-auto">
+                          <span>View Specs</span>
+                          <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                {/* Details */}
-                <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+                {/* ========================================================= */}
+                {/* CARD BACK: 3D REVERSED FULL SPECS & DETAILS              */}
+                {/* ========================================================= */}
+                <div className="flip-card-back bg-white border-2 border-[#00A6FB]/60 rounded-xl overflow-hidden shadow-md p-5 sm:p-6 flex flex-col justify-between">
                   <div>
-                    {/* Bright Blue Title */}
-                    <h4 className="text-base sm:text-lg font-bold text-[#00A6FB] group-hover:text-[#0084c7] transition-colors leading-snug">
-                      {item.title}
-                    </h4>
-                    
-                    <p className="text-xs text-gray-600 line-clamp-3 mt-2 leading-relaxed">
+                    {/* Header on Back */}
+                    <div className="flex items-start justify-between gap-3 pb-2.5 border-b border-gray-100">
+                      <div>
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">
+                          Full Specifications
+                        </span>
+                        <h4 className="text-base sm:text-lg font-bold text-[#00A6FB] leading-snug">
+                          {item.title}
+                        </h4>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={(e) => toggleCardFlip(item.id, e)}
+                        className="p-1.5 rounded-full text-gray-400 hover:text-black hover:bg-gray-100 transition-colors"
+                        title="Flip back"
+                        aria-label="Flip back"
+                      >
+                        <RotateCw className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+
+                    {/* Detailed Description */}
+                    <p className="text-xs text-gray-700 leading-relaxed mt-3 line-clamp-2 sm:line-clamp-3">
                       {item.description}
                     </p>
 
-                    {/* Quick Specs preview */}
-                    <ul className="mt-3 space-y-1.5 hidden sm:block">
-                      {item.specs.slice(0, 2).map((spec, i) => (
-                        <li key={i} className="flex items-start gap-1.5 text-[11px] text-gray-500">
+                    {/* Bullet Specs */}
+                    <ul className="mt-3 space-y-1.5">
+                      {item.specs.slice(0, 4).map((spec, i) => (
+                        <li key={i} className="flex items-start gap-1.5 text-[11px] sm:text-xs text-gray-600">
                           <CheckCircle2 className="w-3.5 h-3.5 text-[#00A6FB] shrink-0 mt-0.5" />
                           <span className="line-clamp-1">{spec}</span>
                         </li>
@@ -227,20 +313,30 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
                     </ul>
                   </div>
 
-                  {/* Bottom Footer */}
-                  <div className="pt-3 border-t border-gray-100 flex items-center justify-between text-xs mt-3 sm:mt-0">
+                  {/* Actions on Back */}
+                  <div className="pt-3 border-t border-gray-100 flex items-center justify-between gap-3">
                     {item.statNumber ? (
-                      <span className="font-semibold text-gray-500">
+                      <span className="font-semibold text-xs text-gray-500">
                         Cap: <strong className="text-gray-900 font-bold">{item.statNumber} {item.statUnit}</strong>
                       </span>
                     ) : <span />}
 
-                    <span className="inline-flex items-center gap-1 text-xs font-bold text-[#00A6FB] group-hover:text-[#0084c7] transition-colors ml-auto">
-                      <span>View Specs</span>
-                      <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                    </span>
+                    <div className="flex items-center gap-2 ml-auto">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedItem(item);
+                        }}
+                        className="px-3.5 py-1.5 rounded-lg bg-[#00A6FB] hover:bg-[#0084c7] text-white text-xs font-bold transition-colors shadow-xs inline-flex items-center gap-1.5"
+                      >
+                        <span>View Full Specs</span>
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
                   </div>
                 </div>
+
               </div>
             </div>
           );
