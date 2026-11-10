@@ -116,3 +116,4 @@ Whenever you or your team make code changes in the frontend:
    firebase deploy --only hosting
    ```
 4. Changes will be live immediately at [https://hitech-6a9b3.web.app](https://hitech-6a9b3.web.app).
+
