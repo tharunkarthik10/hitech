@@ -93,7 +93,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="w-full flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/10 text-[13px] text-gray-500 font-medium pb-4">
-          <p>© <a href="#" className="underline hover:text-white">Hitech Engineering</a> 2026. All rights reserved.</p>
+          <p>© <Link to="/admin/login" className="underline hover:text-white cursor-pointer transition-colors" title="Administrative Access">Hitech Engineering</Link> 2026. All rights reserved.</p>
           <div className="flex gap-4 mt-4 md:mt-0">
             <a href="#" className="hover:text-white underline decoration-gray-500 underline-offset-2">Terms of use</a>
             <a href="#" className="hover:text-white underline decoration-gray-500 underline-offset-2">Privacy Policy</a>

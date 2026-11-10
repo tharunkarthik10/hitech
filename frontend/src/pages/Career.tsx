@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Briefcase, 
@@ -12,30 +12,14 @@ import {
   ShieldCheck, 
   GraduationCap, 
   HeartPulse, 
-  Search,
-  ChevronRight,
-  Send,
-  FileText,
-  Sliders
+  Search, 
+  ChevronRight, 
+  Send, 
+  FileText, 
+  Sliders 
 } from 'lucide-react';
-
-interface JobSpecification {
-  label: string;
-  value: string;
-}
-
-interface JobPosition {
-  id: string;
-  title: string;
-  department: string;
-  location: string;
-  type: string;
-  experience: string;
-  description: string;
-  overview: string;
-  highlights: string[];
-  specifications: JobSpecification[];
-}
+import { getStoredJobs, submitStoredApplication } from '../data/adminStore';
+import type { JobPosition } from '../data/careers';
 
 const JOB_POSITIONS: JobPosition[] = [
   {
@@ -194,6 +178,15 @@ const GENERAL_APPLICATION_JOB: JobPosition = {
 export default function Career() {
   const [selectedDept, setSelectedDept] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
+  const [jobsList, setJobsList] = useState<JobPosition[]>(() => 
+    getStoredJobs().filter(j => j.status !== 'paused')
+  );
+
+  useEffect(() => {
+    const refresh = () => setJobsList(getStoredJobs().filter(j => j.status !== 'paused'));
+    window.addEventListener('hitech-jobs-updated', refresh);
+    return () => window.removeEventListener('hitech-jobs-updated', refresh);
+  }, []);
   
   // Active Modals state
   const [selectedJob, setSelectedJob] = useState<JobPosition | null>(null);
@@ -210,7 +203,7 @@ export default function Career() {
 
   const departments = ['All', 'Manufacturing', 'Fabrication', 'R&D / Systems', 'Quality Control', 'Engineering'];
 
-  const filteredJobs = JOB_POSITIONS.filter(job => {
+  const filteredJobs = jobsList.filter(job => {
     const matchesDept = selectedDept === 'All' || job.department === selectedDept;
     const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
                           job.description.toLowerCase().includes(searchTerm.toLowerCase());
@@ -242,10 +235,23 @@ export default function Career() {
   const handleApplySubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
+    
+    // Save to stored applications for admin portal
+    submitStoredApplication({
+      jobId: selectedJob?.id || 'general-application',
+      jobTitle: selectedJob?.title || 'General Talent Pool',
+      candidateName: applicantName,
+      email: applicantEmail,
+      phone: applicantPhone,
+      experience: 'Applicant Direct Submission',
+      resumeFileName: resumeName || 'Candidate_Resume.pdf',
+      coverLetter: applicantCover
+    });
+
     setTimeout(() => {
       setSubmitting(false);
       setSubmitted(true);
-    }, 1200);
+    }, 700);
   };
 
   const closeModal = () => {

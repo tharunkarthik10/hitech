@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState, useMemo } from 'react';
-import { PRODUCTS } from '../data/products';
+import { getStoredProducts } from '../data/adminStore';
 import type { ProductDetailItem } from '../data/products';
 import { 
   ChevronRight, 
@@ -140,7 +140,15 @@ const REGION_CODES = [
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
-  const product = PRODUCTS.find(p => p.id === id);
+  const [productsList, setProductsList] = useState<ProductDetailItem[]>(getStoredProducts);
+
+  useEffect(() => {
+    const refresh = () => setProductsList(getStoredProducts());
+    window.addEventListener('hitech-products-updated', refresh);
+    return () => window.removeEventListener('hitech-products-updated', refresh);
+  }, []);
+
+  const product = productsList.find(p => p.id === id);
 
   // Gallery: index 0 is primary, 1-4 are secondary
   const [activeImageIndex, setActiveImageIndex] = useState(0);
@@ -201,7 +209,7 @@ export default function ProductDetail() {
     );
   }
 
-  const similarProducts = PRODUCTS.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
+  const similarProducts = productsList.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;

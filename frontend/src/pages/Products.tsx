@@ -1,10 +1,18 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { PRODUCTS, CATALOG_DATA } from '../data/products';
+import { CATALOG_DATA } from '../data/products';
+import { getStoredProducts } from '../data/adminStore';
 import { Search, X, ArrowRight, ChevronDown, ChevronUp } from 'lucide-react';
 
 export default function Products() {
   const location = useLocation();
+  const [allProducts, setAllProducts] = useState(getStoredProducts);
+
+  useEffect(() => {
+    const refresh = () => setAllProducts(getStoredProducts());
+    window.addEventListener('hitech-products-updated', refresh);
+    return () => window.removeEventListener('hitech-products-updated', refresh);
+  }, []);
 
   // Desktop & Tablet State (Previous Design)
   const [activeDepartment, setActiveDepartment] = useState<string>('Factory Automation');
@@ -85,7 +93,7 @@ export default function Products() {
 
   // Mobile filtered products
   const mobileFilteredProducts = useMemo(() => {
-    return PRODUCTS.filter(p => {
+    return allProducts.filter(p => {
       if (mobileDept !== 'All' && p.department && p.department !== mobileDept) {
         return false;
       }
