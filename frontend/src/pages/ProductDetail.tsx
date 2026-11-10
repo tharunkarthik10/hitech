@@ -4,6 +4,7 @@ import { getStoredProducts } from '../data/adminStore';
 import type { ProductDetailItem } from '../data/products';
 import { 
   ChevronRight, 
+  ChevronLeft,
   CheckCircle2, 
   Send, 
   Phone, 
@@ -276,16 +277,16 @@ export default function ProductDetail() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
           
           {/* ========================================================================= */}
-          {/* LEFT SIDE: MAIN IMAGE + 4 SECONDARY IMAGES BELOW (CLEAN MONOCHROME) */}
+          {/* LEFT SIDE: MAIN IMAGE + ALL GALLERY THUMBNAILS WITH PREV/NEXT CONTROLS */}
           {/* ========================================================================= */}
           <div className="lg:col-span-6 xl:col-span-5 lg:sticky lg:top-28 lg:self-start space-y-3.5">
             
             {/* Main Featured Image Display */}
-            <div className="bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 shadow-sm relative aspect-[4/3] sm:aspect-[16/11] flex items-center justify-center">
+            <div className="bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 shadow-sm relative aspect-[4/3] sm:aspect-[16/11] flex items-center justify-center group">
               <AnimatePresence mode="wait">
                 <motion.img 
-                  key={productImages[activeImageIndex]}
-                  src={productImages[activeImageIndex]} 
+                  key={productImages[activeImageIndex] || activeImageIndex}
+                  src={productImages[activeImageIndex] || product.imageUrl} 
                   alt={`${product.title} view ${activeImageIndex + 1}`}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -294,52 +295,84 @@ export default function ProductDetail() {
                   className="w-full h-full object-cover"
                 />
               </AnimatePresence>
-            </div>
 
-            {/* 4 Secondary Images Below the Main Image */}
-            <div className="grid grid-cols-4 gap-2.5 sm:gap-3">
-              {productImages.slice(1, 5).map((imgUrl, idx) => {
-                const secondaryRealIndex = idx + 1;
-                const isSelected = activeImageIndex === secondaryRealIndex;
-
-                return (
+              {/* Prev / Next Arrows */}
+              {productImages.length > 1 && (
+                <>
                   <button
-                    key={idx}
                     type="button"
-                    onClick={() => setActiveImageIndex(secondaryRealIndex)}
-                    className={`relative aspect-[4/3] rounded-xl overflow-hidden border-2 transition-all duration-200 cursor-pointer group bg-gray-100 ${
-                      isSelected 
-                        ? 'border-gray-900 ring-2 ring-gray-900/20 shadow-md scale-98' 
-                        : 'border-gray-200 hover:border-gray-400 opacity-80 hover:opacity-100'
-                    }`}
-                    aria-label={`Select angle ${secondaryRealIndex}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveImageIndex((prev) => (prev - 1 + productImages.length) % productImages.length);
+                    }}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 hover:bg-white text-gray-800 shadow-md flex items-center justify-center opacity-80 sm:opacity-0 group-hover:opacity-100 transition-all hover:scale-110 cursor-pointer z-10"
+                    title="Previous Photo"
                   >
-                    <img 
-                      src={imgUrl} 
-                      alt={`${product.title} angle ${secondaryRealIndex}`}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    {isSelected && (
-                      <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
-                        <div className="w-5 h-5 rounded-full bg-gray-900 text-white flex items-center justify-center shadow-xs">
-                          <CheckCircle2 className="w-3.5 h-3.5" />
-                        </div>
-                      </div>
-                    )}
+                    <ChevronLeft className="w-5 h-5" />
                   </button>
-                );
-              })}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveImageIndex((prev) => (prev + 1) % productImages.length);
+                    }}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 hover:bg-white text-gray-800 shadow-md flex items-center justify-center opacity-80 sm:opacity-0 group-hover:opacity-100 transition-all hover:scale-110 cursor-pointer z-10"
+                    title="Next Photo"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+
+                  {/* Counter Badge */}
+                  <span className="absolute bottom-3 right-3 bg-black/75 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-mono text-white font-semibold shadow">
+                    {activeImageIndex + 1} / {productImages.length}
+                  </span>
+                </>
+              )}
             </div>
 
-            {/* Return to Main Image Button if Secondary Selected */}
-            {activeImageIndex !== 0 && (
-              <div className="text-center pt-1">
-                <button
-                  onClick={() => setActiveImageIndex(0)}
-                  className="text-xs font-semibold text-gray-700 hover:text-black underline cursor-pointer"
-                >
-                  ← Return to Primary Product Image
-                </button>
+            {/* Gallery Thumbnails (Shows ALL uploaded photos) */}
+            {productImages.length > 1 && (
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-2.5 overflow-x-auto pb-1 scrollbar-thin">
+                  {productImages.map((imgUrl, idx) => {
+                    const isSelected = activeImageIndex === idx;
+
+                    return (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => setActiveImageIndex(idx)}
+                        className={`relative w-20 h-16 sm:w-24 sm:h-20 rounded-xl overflow-hidden border-2 shrink-0 transition-all duration-200 cursor-pointer group bg-gray-100 ${
+                          isSelected 
+                            ? 'border-[#00A6FB] ring-2 ring-[#00A6FB]/30 shadow-md scale-98' 
+                            : 'border-gray-200 hover:border-gray-400 opacity-75 hover:opacity-100'
+                        }`}
+                        aria-label={`View photo ${idx + 1}`}
+                      >
+                        <img 
+                          src={imgUrl} 
+                          alt={`${product.title} angle ${idx + 1}`}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                        {isSelected && (
+                          <div className="absolute top-1 right-1">
+                            <div className="w-4 h-4 rounded-full bg-[#00A6FB] text-white flex items-center justify-center shadow-xs text-[10px] font-bold">
+                              ✓
+                            </div>
+                          </div>
+                        )}
+                        {idx === 0 && (
+                          <span className="absolute bottom-1 left-1 bg-black/70 backdrop-blur-xs text-white text-[9px] px-1 py-0.2 rounded font-semibold">
+                            Main
+                          </span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+                <p className="text-[11px] text-gray-500 font-medium">
+                  Click any thumbnail to preview angle ({productImages.length} photos available)
+                </p>
               </div>
             )}
           </div>

@@ -485,6 +485,11 @@ export default function Products() {
                       loading="lazy"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
+                    {product.images && product.images.length > 1 && (
+                      <span className="absolute bottom-1.5 right-1.5 bg-black/75 backdrop-blur-xs text-white text-[9px] px-1.5 py-0.5 rounded font-mono font-semibold flex items-center gap-1 shadow">
+                        📷 {product.images.length}
+                      </span>
+                    )}
                   </div>
 
                   {/* Product Details */}

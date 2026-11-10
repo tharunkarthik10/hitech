@@ -10,19 +10,28 @@ const PRODUCTS_KEY = 'hitech_products_v1';
 const JOBS_KEY = 'hitech_jobs_v1';
 const APPLICATIONS_KEY = 'hitech_applications_v1';
 
+// In-memory fallback in case localStorage hits storage quota limits
+let memoryProductsCache: ProductDetailItem[] | null = null;
+
 // --- PRODUCTS ---
 export function getStoredProducts(): ProductDetailItem[] {
+  if (memoryProductsCache && memoryProductsCache.length > 0) {
+    return memoryProductsCache;
+  }
   try {
     const raw = localStorage.getItem(PRODUCTS_KEY);
     if (!raw) {
       localStorage.setItem(PRODUCTS_KEY, JSON.stringify(DEFAULT_PRODUCTS));
+      memoryProductsCache = DEFAULT_PRODUCTS;
       return DEFAULT_PRODUCTS;
     }
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) && parsed.length > 0 ? parsed : DEFAULT_PRODUCTS;
+    const result = Array.isArray(parsed) && parsed.length > 0 ? parsed : DEFAULT_PRODUCTS;
+    memoryProductsCache = result;
+    return result;
   } catch (e) {
     console.error('Error loading stored products:', e);
-    return DEFAULT_PRODUCTS;
+    return memoryProductsCache || DEFAULT_PRODUCTS;
   }
 }
 
@@ -36,7 +45,12 @@ export function saveStoredProduct(product: ProductDetailItem): ProductDetailItem
   } else {
     updated = [product, ...current];
   }
-  localStorage.setItem(PRODUCTS_KEY, JSON.stringify(updated));
+  memoryProductsCache = updated;
+  try {
+    localStorage.setItem(PRODUCTS_KEY, JSON.stringify(updated));
+  } catch (e) {
+    console.warn('LocalStorage quota warning - saved to runtime memory cache:', e);
+  }
   window.dispatchEvent(new Event('hitech-products-updated'));
   return updated;
 }
@@ -44,13 +58,23 @@ export function saveStoredProduct(product: ProductDetailItem): ProductDetailItem
 export function deleteStoredProduct(id: string): ProductDetailItem[] {
   const current = getStoredProducts();
   const updated = current.filter(p => p.id !== id);
-  localStorage.setItem(PRODUCTS_KEY, JSON.stringify(updated));
+  memoryProductsCache = updated;
+  try {
+    localStorage.setItem(PRODUCTS_KEY, JSON.stringify(updated));
+  } catch (e) {
+    console.warn('LocalStorage error on delete:', e);
+  }
   window.dispatchEvent(new Event('hitech-products-updated'));
   return updated;
 }
 
 export function resetStoredProducts(): ProductDetailItem[] {
-  localStorage.setItem(PRODUCTS_KEY, JSON.stringify(DEFAULT_PRODUCTS));
+  memoryProductsCache = DEFAULT_PRODUCTS;
+  try {
+    localStorage.setItem(PRODUCTS_KEY, JSON.stringify(DEFAULT_PRODUCTS));
+  } catch (e) {
+    console.warn('LocalStorage error on reset:', e);
+  }
   window.dispatchEvent(new Event('hitech-products-updated'));
   return DEFAULT_PRODUCTS;
 }

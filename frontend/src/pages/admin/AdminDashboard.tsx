@@ -39,8 +39,11 @@ import {
   HelpCircle,
   Image as ImageIcon,
   Sparkles,
-  Link2
+  Link2,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
+import { compressImage } from '../../utils/imageCompressor';
 
 const SAMPLE_CSV_CONTENT = `Parameter,Available Dimensions / Values,Standard / Tolerance
 Standard Bore Range,Ø 32 / 40 / 50 / 63 / 80 / 100 mm,ISO 15552 standard
@@ -169,6 +172,8 @@ export const AdminDashboard: React.FC = () => {
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [showUrlFallback, setShowUrlFallback] = useState(false);
   const [isDraggingImage, setIsDraggingImage] = useState(false);
+  const [isProcessingImages, setIsProcessingImages] = useState(false);
+  const [cardActiveImage, setCardActiveImage] = useState<Record<string, number>>({});
 
   // Custom Dropdown Fallback States
   const [isCustomDept, setIsCustomDept] = useState(false);
@@ -321,37 +326,43 @@ export const AdminDashboard: React.FC = () => {
     }
   };
 
-  // --- MULTI-IMAGE FILE UPLOAD & MANAGEMENT ---
-  const processImageFiles = (files: FileList | File[]) => {
+  // --- MULTI-IMAGE FILE UPLOAD & MANAGEMENT (AUTO COMPRESSION) ---
+  const processImageFiles = async (files: FileList | File[]) => {
     const fileList = Array.from(files).filter(f => f.type.startsWith('image/'));
     if (fileList.length === 0) {
       alert('Please select valid image files (PNG, JPG, WEBP, or SVG).');
       return;
     }
 
-    const readers = fileList.map(file => {
-      return new Promise<string>((resolve) => {
-        const reader = new FileReader();
-        reader.onload = (e) => resolve((e.target?.result as string) || '');
-        reader.readAsDataURL(file);
-      });
-    });
+    setIsProcessingImages(true);
+    try {
+      // Compress each image to HD ~70KB WebP/JPEG so multiple images never exceed storage limits
+      const compressedUrls = await Promise.all(
+        fileList.map(file => compressImage(file, 1280, 1280, 0.82))
+      );
 
-    Promise.all(readers).then((newUrls) => {
-      const validUrls = newUrls.filter(Boolean);
-      if (validUrls.length > 0 && editingProduct) {
-        const existingImages = editingProduct.images && editingProduct.images.length > 0 
-          ? editingProduct.images 
-          : (editingProduct.imageUrl ? [editingProduct.imageUrl] : []);
-        const combined = [...existingImages, ...validUrls];
-        setEditingProduct({
-          ...editingProduct,
-          imageUrl: combined[0] || '',
-          images: combined
+      const validUrls = compressedUrls.filter(Boolean);
+      if (validUrls.length > 0) {
+        setEditingProduct((prev) => {
+          if (!prev) return null;
+          const existingImages = prev.images && prev.images.length > 0 
+            ? prev.images 
+            : (prev.imageUrl ? [prev.imageUrl] : []);
+          const combined = [...existingImages, ...validUrls];
+          return {
+            ...prev,
+            imageUrl: combined[0] || '',
+            images: combined
+          };
         });
-        showToast(`Added ${validUrls.length} image(s). Total: ${combined.length}`);
+        showToast(`Uploaded & optimized ${validUrls.length} image(s).`);
       }
-    });
+    } catch (err) {
+      console.error('Error processing images:', err);
+      alert('Failed to process image files.');
+    } finally {
+      setIsProcessingImages(false);
+    }
   };
 
   const handleImageFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -370,49 +381,57 @@ export const AdminDashboard: React.FC = () => {
   };
 
   const handleRemoveImage = (indexToRemove: number) => {
-    if (!editingProduct) return;
-    const existing = editingProduct.images && editingProduct.images.length > 0
-      ? [...editingProduct.images]
-      : (editingProduct.imageUrl ? [editingProduct.imageUrl] : []);
+    setEditingProduct((prev) => {
+      if (!prev) return null;
+      const existing = prev.images && prev.images.length > 0
+        ? [...prev.images]
+        : (prev.imageUrl ? [prev.imageUrl] : []);
 
-    existing.splice(indexToRemove, 1);
-    const newPrimary = existing[0] || '';
-    setEditingProduct({
-      ...editingProduct,
-      imageUrl: newPrimary,
-      images: existing
+      existing.splice(indexToRemove, 1);
+      const newPrimary = existing[0] || '';
+      return {
+        ...prev,
+        imageUrl: newPrimary,
+        images: existing
+      };
     });
     showToast('Image removed.');
   };
 
   const handleSetPrimaryImage = (index: number) => {
-    if (!editingProduct) return;
-    const existing = editingProduct.images && editingProduct.images.length > 0
-      ? [...editingProduct.images]
-      : (editingProduct.imageUrl ? [editingProduct.imageUrl] : []);
+    setEditingProduct((prev) => {
+      if (!prev) return null;
+      const existing = prev.images && prev.images.length > 0
+        ? [...prev.images]
+        : (prev.imageUrl ? [prev.imageUrl] : []);
 
-    if (index >= 0 && index < existing.length) {
-      const selected = existing.splice(index, 1)[0];
-      const reordered = [selected, ...existing];
-      setEditingProduct({
-        ...editingProduct,
-        imageUrl: selected,
-        images: reordered
-      });
-      showToast('Set as main product photo.');
-    }
+      if (index >= 0 && index < existing.length) {
+        const selected = existing.splice(index, 1)[0];
+        const reordered = [selected, ...existing];
+        return {
+          ...prev,
+          imageUrl: selected,
+          images: reordered
+        };
+      }
+      return prev;
+    });
+    showToast('Set as main product photo.');
   };
 
   const handleAddImageUrl = (urlToAdd: string) => {
-    if (!urlToAdd.trim() || !editingProduct) return;
-    const existing = editingProduct.images && editingProduct.images.length > 0
-      ? [...editingProduct.images]
-      : (editingProduct.imageUrl ? [editingProduct.imageUrl] : []);
-    const updated = [...existing, urlToAdd.trim()];
-    setEditingProduct({
-      ...editingProduct,
-      imageUrl: updated[0] || '',
-      images: updated
+    if (!urlToAdd.trim()) return;
+    setEditingProduct((prev) => {
+      if (!prev) return null;
+      const existing = prev.images && prev.images.length > 0
+        ? [...prev.images]
+        : (prev.imageUrl ? [prev.imageUrl] : []);
+      const updated = [...existing, urlToAdd.trim()];
+      return {
+        ...prev,
+        imageUrl: updated[0] || '',
+        images: updated
+      };
     });
     showToast('Image link added.');
   };
@@ -822,32 +841,101 @@ export const AdminDashboard: React.FC = () => {
                   key={prod.id}
                   className="bg-white border border-slate-200 rounded-2xl overflow-hidden flex flex-col group hover:border-[#00A6FB] hover:shadow-lg hover:shadow-slate-200/50 transition-all shadow-sm"
                 >
-                  <div className="h-44 w-full relative overflow-hidden bg-slate-100 flex items-center justify-center">
-                    {prod.imageUrl ? (
-                      <img
-                        src={prod.imageUrl}
-                        alt={prod.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                    ) : (
-                      <div className="flex flex-col items-center justify-center text-slate-400">
-                        <ImageIcon className="w-10 h-10 mb-1" />
-                        <span className="text-xs">No image uploaded</span>
-                      </div>
-                    )}
-                    <span className="absolute top-3 left-3 bg-white/95 backdrop-blur-md border border-slate-200/80 px-2.5 py-0.5 rounded-full text-[10px] font-mono text-[#0086c9] uppercase tracking-wider font-bold shadow-sm">
-                      {prod.category}
-                    </span>
-                    <span className="absolute top-3 right-3 bg-slate-900/80 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono text-white">
-                      ID: {prod.id}
-                    </span>
-                    {prod.images && prod.images.length > 1 && (
-                      <span className="absolute bottom-3 right-3 bg-slate-900/85 backdrop-blur-md px-2 py-0.5 rounded-full text-[10px] text-white flex items-center gap-1 font-medium shadow">
-                        <ImageIcon className="w-3 h-3 text-[#00A6FB]" />
-                        {prod.images.length} photos
-                      </span>
-                    )}
-                  </div>
+                  {(() => {
+                    const allImages = prod.images && prod.images.length > 0 ? prod.images : (prod.imageUrl ? [prod.imageUrl] : []);
+                    const activeIdx = (cardActiveImage[prod.id] || 0) % (allImages.length || 1);
+                    const currentImg = allImages[activeIdx] || prod.imageUrl;
+
+                    return (
+                      <>
+                        <div className="h-44 w-full relative overflow-hidden bg-slate-100 flex items-center justify-center">
+                          {currentImg ? (
+                            <img
+                              src={currentImg}
+                              alt={prod.title}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            />
+                          ) : (
+                            <div className="flex flex-col items-center justify-center text-slate-400">
+                              <ImageIcon className="w-10 h-10 mb-1" />
+                              <span className="text-xs">No image uploaded</span>
+                            </div>
+                          )}
+                          <span className="absolute top-3 left-3 bg-white/95 backdrop-blur-md border border-slate-200/80 px-2.5 py-0.5 rounded-full text-[10px] font-mono text-[#0086c9] uppercase tracking-wider font-bold shadow-sm">
+                            {prod.category}
+                          </span>
+                          <span className="absolute top-3 right-3 bg-slate-900/80 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono text-white">
+                            ID: {prod.id}
+                          </span>
+
+                          {/* Interactive arrows on the card to browse all images */}
+                          {allImages.length > 1 && (
+                            <>
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  setCardActiveImage(prev => ({
+                                    ...prev,
+                                    [prod.id]: (activeIdx - 1 + allImages.length) % allImages.length
+                                  }));
+                                }}
+                                className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-slate-900/70 hover:bg-slate-900 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10 cursor-pointer"
+                                title="Previous photo"
+                              >
+                                <ChevronLeft className="w-4 h-4" />
+                              </button>
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  setCardActiveImage(prev => ({
+                                    ...prev,
+                                    [prod.id]: (activeIdx + 1) % allImages.length
+                                  }));
+                                }}
+                                className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-slate-900/70 hover:bg-slate-900 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10 cursor-pointer"
+                                title="Next photo"
+                              >
+                                <ChevronRight className="w-4 h-4" />
+                              </button>
+                              <span className="absolute bottom-2.5 right-2.5 bg-slate-900/85 backdrop-blur-md px-2 py-0.5 rounded-full text-[10px] text-white flex items-center gap-1 font-medium shadow">
+                                <ImageIcon className="w-3 h-3 text-[#00A6FB]" />
+                                {activeIdx + 1} / {allImages.length}
+                              </span>
+                            </>
+                          )}
+                        </div>
+
+                        {/* Mini thumbnail strip on posting side card */}
+                        {allImages.length > 1 && (
+                          <div className="px-3 py-1.5 bg-slate-50 border-b border-slate-100 flex items-center gap-1.5 overflow-x-auto scrollbar-thin">
+                            {allImages.map((img, i) => (
+                              <button
+                                key={i}
+                                type="button"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  setCardActiveImage(prev => ({ ...prev, [prod.id]: i }));
+                                }}
+                                className={`w-7 h-7 rounded-md overflow-hidden shrink-0 border transition-all cursor-pointer ${
+                                  activeIdx === i ? 'border-[#00A6FB] ring-2 ring-[#00A6FB]/40' : 'border-slate-200 opacity-60 hover:opacity-100'
+                                }`}
+                              >
+                                <img src={img} alt="" className="w-full h-full object-cover" />
+                              </button>
+                            ))}
+                            <span className="text-[10px] font-mono text-slate-400 ml-auto shrink-0">
+                              {allImages.length} photos
+                            </span>
+                          </div>
+                        )}
+                      </>
+                    );
+                  })()}
 
                   <div className="p-5 flex-1 flex flex-col justify-between">
                     <div>
@@ -1294,7 +1382,14 @@ export const AdminDashboard: React.FC = () => {
               </div>
 
               {/* ----------------- MULTI-IMAGE UPLOAD SECTION ----------------- */}
-              <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200">
+              <div 
+                onDragOver={(e) => { e.preventDefault(); setIsDraggingImage(true); }}
+                onDragLeave={() => setIsDraggingImage(false)}
+                onDrop={handleImageDrop}
+                className={`bg-slate-50 p-4 sm:p-5 rounded-2xl border transition-all ${
+                  isDraggingImage ? 'border-[#00A6FB] bg-blue-50/60 ring-2 ring-[#00A6FB]/20' : 'border-slate-200'
+                }`}
+              >
                 <div className="flex items-center justify-between mb-3">
                   <div>
                     <label className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
@@ -1320,6 +1415,14 @@ export const AdminDashboard: React.FC = () => {
                   </button>
                 </div>
 
+                {/* Processing State */}
+                {isProcessingImages && (
+                  <div className="mb-3 p-3 bg-blue-50 border border-blue-200 rounded-xl flex items-center gap-2 text-xs text-[#0086c9] font-semibold animate-pulse">
+                    <Sparkles className="w-4 h-4 animate-spin text-[#00A6FB]" />
+                    Optimizing & uploading images for crisp display...
+                  </div>
+                )}
+
                 {/* Hidden Multi-File Input */}
                 <input
                   type="file"
@@ -1331,10 +1434,10 @@ export const AdminDashboard: React.FC = () => {
                 />
 
                 {/* Thumbnails Gallery */}
-                {editingProduct.images && editingProduct.images.length > 0 ? (
+                {((editingProduct.images && editingProduct.images.length > 0) || editingProduct.imageUrl) ? (
                   <div className="space-y-3">
                     <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-3">
-                      {editingProduct.images.map((imgSrc, idx) => (
+                      {(editingProduct.images && editingProduct.images.length > 0 ? editingProduct.images : [editingProduct.imageUrl]).map((imgSrc, idx) => (
                         <div
                           key={idx}
                           className="relative group rounded-xl overflow-hidden border-2 border-slate-200 bg-white aspect-square shadow-2xs hover:border-[#00A6FB] transition-all"
@@ -1368,7 +1471,7 @@ export const AdminDashboard: React.FC = () => {
                               e.stopPropagation();
                               handleRemoveImage(idx);
                             }}
-                            className="absolute top-1.5 right-1.5 w-6 h-6 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center shadow-md hover:scale-110 active:scale-95 transition-all z-10"
+                            className="absolute top-1.5 right-1.5 w-6 h-6 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center shadow-md hover:scale-110 active:scale-95 transition-all z-10 cursor-pointer"
                             title="Remove this image"
                           >
                             <X className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -1388,7 +1491,7 @@ export const AdminDashboard: React.FC = () => {
                     </div>
 
                     <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1">
-                      <span>Drag more images into the box or click "+ Add Photos"</span>
+                      <span>Drag more images into this area or click "+ Add Photos"</span>
                       <button
                         type="button"
                         onClick={() => {
@@ -1396,7 +1499,7 @@ export const AdminDashboard: React.FC = () => {
                             setEditingProduct({ ...editingProduct, imageUrl: '', images: [] });
                           }
                         }}
-                        className="text-red-500 hover:text-red-700 hover:underline"
+                        className="text-red-500 hover:text-red-700 hover:underline cursor-pointer"
                       >
                         Clear All Photos
                       </button>
