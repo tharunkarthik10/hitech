@@ -773,30 +773,34 @@ export default function AboutUs() {
 
           <div className="relative max-w-[96%] 2xl:max-w-[1920px] mx-auto">
             {/* Custom Timeline Track */}
-            <div className="relative flex items-center justify-between mb-16 px-4 md:px-12">
+            <div className="relative flex items-center justify-between mb-10 md:mb-16 px-1 sm:px-4 md:px-12">
               {/* Animated Gradient Line */}
-              <div className="absolute top-1/2 left-10 right-10 h-[2px] bg-gray-200 -translate-y-1/2 hidden md:block rounded-full">
+              <div className="absolute top-4 md:top-1/2 left-8 right-8 md:left-14 md:right-14 h-[2px] bg-gray-200 -translate-y-1/2 rounded-full z-0">
                 <div 
                   className="absolute top-0 left-0 h-full bg-gradient-to-r from-[#00A6FB] to-[#051923] transition-all duration-500 rounded-full"
                   style={{ width: `${(activeTimeline / (timelineData.length - 1)) * 100}%` }}
                 ></div>
               </div>
               
-              <ChevronLeft 
+              <button
+                type="button"
                 onClick={handlePrevTimeline}
-                className={`hidden md:block w-8 h-8 z-10 bg-white rounded-full shadow-md p-1 transition-all cursor-pointer ${
-                  activeTimeline === 0 ? 'text-gray-300 shadow-none cursor-not-allowed' : 'text-[#051923] hover:text-[#00A6FB] hover:scale-110'
-                }`} 
-                strokeWidth={2} 
-              />
+                disabled={activeTimeline === 0}
+                className={`w-7 h-7 sm:w-8 sm:h-8 z-20 bg-white rounded-full shadow-md flex items-center justify-center transition-all cursor-pointer shrink-0 ${
+                  activeTimeline === 0 ? 'text-gray-300 opacity-40 cursor-not-allowed' : 'text-[#051923] hover:text-[#00A6FB] hover:scale-110 active:scale-95'
+                }`}
+                aria-label="Previous milestone"
+              >
+                <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.5} />
+              </button>
               
-              {/* Timeline points */}
-              <div className="flex flex-col md:flex-row justify-between w-full relative z-10 px-4 md:px-12 hide-scrollbar">
+              {/* Timeline points (Horizontal row on both mobile and desktop) */}
+              <div className="flex flex-row justify-between w-full relative z-10 px-2 sm:px-4 md:px-8">
                 {timelineData.map((item, index) => (
                   <div 
                     key={index}
                     onClick={() => setActiveTimeline(index)}
-                    className="flex flex-col items-center cursor-pointer group relative"
+                    className="flex flex-col items-center cursor-pointer group relative py-1 text-center"
                   >
                     <div className="relative flex items-center justify-center w-6 h-6">
                       {/* Glow effect for active */}
@@ -813,9 +817,9 @@ export default function AboutUs() {
                       }`} />
                     </div>
                     
-                    <span className={`absolute top-8 text-sm font-medium tracking-tight transition-all duration-300 ${
+                    <span className={`text-[10px] sm:text-xs md:text-sm font-semibold tracking-tight mt-1.5 transition-all duration-300 select-none ${
                       activeTimeline === index 
-                        ? 'text-[#00A6FB] scale-110' 
+                        ? 'text-[#00A6FB] scale-110 font-bold' 
                         : 'text-gray-400 group-hover:text-gray-600'
                     }`}>
                       {item.year}
@@ -824,19 +828,23 @@ export default function AboutUs() {
                 ))}
               </div>
 
-              <ChevronRight 
+              <button
+                type="button"
                 onClick={handleNextTimeline}
-                className={`hidden md:block w-8 h-8 z-10 bg-white rounded-full shadow-md p-1 transition-all cursor-pointer ${
-                  activeTimeline === timelineData.length - 1 ? 'text-gray-300 shadow-none cursor-not-allowed' : 'text-[#051923] hover:text-[#00A6FB] hover:scale-110'
-                }`} 
-                strokeWidth={2} 
-              />
+                disabled={activeTimeline === timelineData.length - 1}
+                className={`w-7 h-7 sm:w-8 sm:h-8 z-20 bg-white rounded-full shadow-md flex items-center justify-center transition-all cursor-pointer shrink-0 ${
+                  activeTimeline === timelineData.length - 1 ? 'text-gray-300 opacity-40 cursor-not-allowed' : 'text-[#051923] hover:text-[#00A6FB] hover:scale-110 active:scale-95'
+                }`}
+                aria-label="Next milestone"
+              >
+                <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.5} />
+              </button>
             </div>
 
             {/* Timeline Content */}
-            <div className="relative max-w-5xl mx-auto h-[450px]">
+            <div className="relative max-w-5xl mx-auto min-h-[500px] md:h-[450px]">
               {/* Massive Watermark Year */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[150px] md:text-[280px] font-black text-gray-50/60 leading-none z-0 select-none pointer-events-none transition-all duration-700">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[120px] sm:text-[180px] md:text-[280px] font-black text-gray-50/60 leading-none z-0 select-none pointer-events-none transition-all duration-700">
                 {timelineData[activeTimeline].year}
               </div>
 
@@ -847,10 +855,10 @@ export default function AboutUs() {
                   animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
                   exit={{ opacity: 0, scale: 1.05, filter: 'blur(10px)' }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="flex flex-col md:flex-row items-center relative z-10 h-full"
+                  className="flex flex-col md:flex-row items-center relative z-10 h-full pb-6 md:pb-0"
                 >
                   {/* Left: Image */}
-                  <div className="w-full md:w-[60%] h-[350px] md:h-[450px] rounded-2xl overflow-hidden shadow-2xl relative group">
+                  <div className="w-full md:w-[60%] h-[240px] sm:h-[320px] md:h-[450px] rounded-2xl overflow-hidden shadow-2xl relative group">
                     <div className="absolute inset-0 bg-[#051923]/10 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
                     <img 
                       src={timelineData[activeTimeline].image} 
@@ -860,21 +868,48 @@ export default function AboutUs() {
                   </div>
                   
                   {/* Right: Overlapping Content Card */}
-                  <div className="w-[90%] md:w-[45%] -mt-16 md:mt-0 md:-ml-[10%] bg-white/95 backdrop-blur-xl p-8 md:p-12 rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.08)] border border-white relative z-20">
-                    <div className="flex items-center gap-4 mb-6">
+                  <div className="w-[94%] sm:w-[90%] md:w-[45%] -mt-10 sm:-mt-16 md:mt-0 md:-ml-[10%] bg-white/95 backdrop-blur-xl p-5 sm:p-8 md:p-12 rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.08)] border border-white relative z-20">
+                    <div className="flex items-center gap-4 mb-4 md:mb-6">
                       <div className="h-[2px] w-8 bg-[#00A6FB]"></div>
-                      <span className="text-[#00A6FB] font-bold text-2xl tracking-tight">{timelineData[activeTimeline].year}</span>
+                      <span className="text-[#00A6FB] font-bold text-xl sm:text-2xl tracking-tight">{timelineData[activeTimeline].year}</span>
                     </div>
-                    <h3 className="text-2xl md:text-3xl font-bold text-[#121212] mb-4 tracking-tight leading-tight">
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#121212] mb-3 md:mb-4 tracking-tight leading-tight">
                       {timelineData[activeTimeline].year === "1977" ? "The Foundation" : 
                        timelineData[activeTimeline].year === "1987" ? "Global Expansion" :
                        timelineData[activeTimeline].year === "1995" ? "Technological Leap" :
                        timelineData[activeTimeline].year === "2005" ? "Industry Leaders" :
                        timelineData[activeTimeline].year === "2015" ? "Sustainable Future" : "Next Generation"}
                     </h3>
-                    <p className="text-sm sm:text-base text-[#475569] leading-relaxed">
+                    <p className="text-xs sm:text-sm md:text-base text-[#475569] leading-relaxed">
                       {timelineData[activeTimeline].description}
                     </p>
+
+                    {/* Mobile Navigation Controls */}
+                    <div className="flex md:hidden items-center justify-between pt-4 mt-4 border-t border-slate-100">
+                      <button
+                        type="button"
+                        onClick={handlePrevTimeline}
+                        disabled={activeTimeline === 0}
+                        className={`text-xs font-semibold flex items-center gap-1 ${
+                          activeTimeline === 0 ? 'text-gray-300' : 'text-[#051923] hover:text-[#00A6FB]'
+                        }`}
+                      >
+                        <ChevronLeft className="w-3.5 h-3.5" /> Prev
+                      </button>
+                      <span className="text-[11px] font-mono text-gray-400 font-semibold">
+                        {activeTimeline + 1} / {timelineData.length}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={handleNextTimeline}
+                        disabled={activeTimeline === timelineData.length - 1}
+                        className={`text-xs font-semibold flex items-center gap-1 ${
+                          activeTimeline === timelineData.length - 1 ? 'text-gray-300' : 'text-[#051923] hover:text-[#00A6FB]'
+                        }`}
+                      >
+                        Next <ChevronRight className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
                   </div>
                 </motion.div>
               </AnimatePresence>
