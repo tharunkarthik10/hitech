@@ -652,27 +652,27 @@ export const AdminDashboard: React.FC = () => {
   });
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col font-sans">
+    <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col font-sans w-full max-w-full overflow-x-hidden">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed top-20 right-6 z-50 bg-[#00A6FB] text-white font-semibold text-sm px-4 py-3 rounded-xl shadow-xl flex items-center gap-2 border border-blue-400 animate-bounce">
-          <CheckCircle className="w-4 h-4" />
-          {toastMessage}
+        <div className="fixed top-20 right-4 sm:right-6 z-50 bg-[#00A6FB] text-white font-semibold text-xs sm:text-sm px-4 py-3 rounded-xl shadow-xl flex items-center gap-2 border border-blue-400 animate-bounce max-w-[90vw]">
+          <CheckCircle className="w-4 h-4 shrink-0" />
+          <span className="truncate">{toastMessage}</span>
         </div>
       )}
 
       {/* Top Navbar */}
-      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 sm:px-8 py-3.5 flex items-center justify-between shadow-sm">
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-3">
-            <span className="w-8 h-8 rounded-lg bg-[#00A6FB] text-white font-black flex items-center justify-center font-heading text-lg shadow-sm">
+      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 px-3 sm:px-8 py-3 sm:py-3.5 flex items-center justify-between shadow-sm w-full max-w-full">
+        <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+            <span className="w-8 h-8 rounded-lg bg-[#00A6FB] text-white font-black flex items-center justify-center font-heading text-lg shadow-sm shrink-0">
               H
             </span>
-            <div>
-              <span className="font-heading font-black tracking-wider text-sm sm:text-base text-slate-900 block">
+            <div className="min-w-0">
+              <span className="font-heading font-black tracking-wider text-xs sm:text-base text-slate-900 block truncate">
                 HITECH ENGINEERING
               </span>
-              <span className="text-[10px] text-[#0086c9] tracking-widest uppercase font-mono block font-bold">
+              <span className="text-[9px] sm:text-[10px] text-[#0086c9] tracking-widest uppercase font-mono block font-bold truncate">
                 Administrative Control Console
               </span>
             </div>
@@ -680,7 +680,7 @@ export const AdminDashboard: React.FC = () => {
         </div>
 
         {/* User Badge & Actions */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-slate-100 border border-slate-200 rounded-full text-xs">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span className="text-slate-700 font-mono text-[11px] font-medium">
@@ -704,30 +704,31 @@ export const AdminDashboard: React.FC = () => {
 
           <button
             onClick={handleSignOut}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-xs font-semibold transition-colors shadow-sm"
+            className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-xs font-semibold transition-colors shadow-sm cursor-pointer"
           >
             <LogOut className="w-3.5 h-3.5" />
-            <span>Sign Out</span>
+            <span className="hidden xs:inline">Sign Out</span>
           </button>
         </div>
       </header>
 
       {/* Main Container */}
-      <div className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-8 py-8">
-        {/* Navigation Tabs */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-8 border-b border-slate-200 pb-4">
-          <div className="flex items-center gap-2">
+      <div className="flex-1 max-w-7xl w-full mx-auto px-3.5 sm:px-6 lg:px-8 py-4 sm:py-8 min-w-0">
+        {/* Navigation Tabs & Actions Bar */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 sm:mb-8 border-b border-slate-200 pb-3 sm:pb-4">
+          {/* Scrollable Tabs Bar on Mobile */}
+          <div className="w-full sm:w-auto overflow-x-auto pb-1.5 sm:pb-0 no-scrollbar flex items-center gap-1.5 sm:gap-2 -mx-1 px-1">
             <button
               onClick={() => setActiveTab('products')}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all ${
+              className={`shrink-0 flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all whitespace-nowrap cursor-pointer ${
                 activeTab === 'products'
                   ? 'bg-[#00A6FB] text-white shadow-md shadow-[#00A6FB]/25'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
             >
-              <Package className="w-4 h-4" />
+              <Package className="w-4 h-4 shrink-0" />
               <span>Products Catalog</span>
-              <span className={`text-[11px] px-2 py-0.5 rounded-full font-bold ${
+              <span className={`text-[10px] sm:text-[11px] px-2 py-0.5 rounded-full font-bold ${
                 activeTab === 'products' ? 'bg-white/25 text-white' : 'bg-slate-200 text-slate-700'
               }`}>
                 {products.length}
@@ -736,15 +737,15 @@ export const AdminDashboard: React.FC = () => {
 
             <button
               onClick={() => setActiveTab('careers')}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all ${
+              className={`shrink-0 flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all whitespace-nowrap cursor-pointer ${
                 activeTab === 'careers'
                   ? 'bg-[#00A6FB] text-white shadow-md shadow-[#00A6FB]/25'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
             >
-              <Briefcase className="w-4 h-4" />
+              <Briefcase className="w-4 h-4 shrink-0" />
               <span>Job Openings</span>
-              <span className={`text-[11px] px-2 py-0.5 rounded-full font-bold ${
+              <span className={`text-[10px] sm:text-[11px] px-2 py-0.5 rounded-full font-bold ${
                 activeTab === 'careers' ? 'bg-white/25 text-white' : 'bg-slate-200 text-slate-700'
               }`}>
                 {jobs.length}
@@ -753,15 +754,15 @@ export const AdminDashboard: React.FC = () => {
 
             <button
               onClick={() => setActiveTab('applications')}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all ${
+              className={`shrink-0 flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all whitespace-nowrap cursor-pointer ${
                 activeTab === 'applications'
                   ? 'bg-[#00A6FB] text-white shadow-md shadow-[#00A6FB]/25'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
             >
-              <FileText className="w-4 h-4" />
+              <FileText className="w-4 h-4 shrink-0" />
               <span>Candidate Resumes</span>
-              <span className={`text-[11px] px-2 py-0.5 rounded-full font-bold ${
+              <span className={`text-[10px] sm:text-[11px] px-2 py-0.5 rounded-full font-bold ${
                 activeTab === 'applications' ? 'bg-white/25 text-white' : 'bg-slate-200 text-slate-700'
               }`}>
                 {applications.length}
@@ -769,32 +770,32 @@ export const AdminDashboard: React.FC = () => {
             </button>
           </div>
 
-          {/* Action Button depending on tab */}
-          <div>
+          {/* Action Button depending on tab - Sized and aligned on mobile */}
+          <div className="flex items-center justify-between sm:justify-end gap-2 w-full sm:w-auto">
             {activeTab === 'products' && (
-              <div className="flex items-center gap-2">
+              <>
                 <button
                   onClick={handleResetProducts}
-                  className="px-3 py-2 rounded-xl bg-white hover:bg-slate-100 text-xs text-slate-600 hover:text-slate-900 border border-slate-200 transition-colors shadow-sm font-medium"
+                  className="flex-1 sm:flex-none text-center px-3 py-2 rounded-xl bg-white hover:bg-slate-100 text-xs text-slate-600 hover:text-slate-900 border border-slate-200 transition-colors shadow-xs font-medium cursor-pointer"
                 >
                   Reset Defaults
                 </button>
                 <button
                   onClick={handleOpenNewProduct}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#00A6FB] hover:bg-[#0095e0] text-white font-bold text-xs shadow-md shadow-[#00A6FB]/20 transition-all"
+                  className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-[#00A6FB] hover:bg-[#0095e0] text-white font-bold text-xs shadow-md shadow-[#00A6FB]/20 transition-all cursor-pointer"
                 >
-                  <Plus className="w-4 h-4" />
-                  Add New Product
+                  <Plus className="w-4 h-4 shrink-0" />
+                  <span>Add New Product</span>
                 </button>
-              </div>
+              </>
             )}
             {activeTab === 'careers' && (
               <button
                 onClick={handleOpenNewJob}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#00A6FB] hover:bg-[#0095e0] text-white font-bold text-xs shadow-md shadow-[#00A6FB]/20 transition-all"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-[#00A6FB] hover:bg-[#0095e0] text-white font-bold text-xs shadow-md shadow-[#00A6FB]/20 transition-all cursor-pointer"
               >
                 <Plus className="w-4 h-4" />
-                Post New Opening
+                <span>Post New Opening</span>
               </button>
             )}
           </div>
@@ -802,9 +803,9 @@ export const AdminDashboard: React.FC = () => {
 
         {/* ================= PRODUCTS TAB ================= */}
         {activeTab === 'products' && (
-          <div className="space-y-6">
+          <div className="space-y-5 sm:space-y-6">
             {/* Filter Bar */}
-            <div className="flex flex-col md:flex-row gap-4 justify-between items-center bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+            <div className="flex flex-col md:flex-row gap-3 sm:gap-4 justify-between items-stretch md:items-center bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200 shadow-xs">
               <div className="relative w-full md:w-80">
                 <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
@@ -817,14 +818,14 @@ export const AdminDashboard: React.FC = () => {
               </div>
 
               {/* Category Pills */}
-              <div className="flex flex-wrap gap-2 w-full md:w-auto">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 w-full md:w-auto">
                 {categories.map((cat) => (
                   <button
                     key={cat}
                     onClick={() => setProductCategoryFilter(cat)}
-                    className={`px-3 py-1.5 rounded-lg text-xs transition-colors ${
+                    className={`px-3 py-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
                       productCategoryFilter === cat
-                        ? 'bg-[#00A6FB] text-white font-bold shadow-sm'
+                        ? 'bg-[#00A6FB] text-white font-bold shadow-xs'
                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900 font-medium'
                     }`}
                   >
@@ -835,7 +836,7 @@ export const AdminDashboard: React.FC = () => {
             </div>
 
             {/* Product Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
               {filteredProducts.map((prod) => (
                 <div
                   key={prod.id}
@@ -861,10 +862,10 @@ export const AdminDashboard: React.FC = () => {
                               <span className="text-xs">No image uploaded</span>
                             </div>
                           )}
-                          <span className="absolute top-3 left-3 bg-white/95 backdrop-blur-md border border-slate-200/80 px-2.5 py-0.5 rounded-full text-[10px] font-mono text-[#0086c9] uppercase tracking-wider font-bold shadow-sm">
+                          <span className="absolute top-2.5 left-2.5 bg-white/95 backdrop-blur-md border border-slate-200/80 px-2 py-0.5 rounded-full text-[10px] font-mono text-[#0086c9] uppercase tracking-wider font-bold shadow-xs max-w-[55%] truncate">
                             {prod.category}
                           </span>
-                          <span className="absolute top-3 right-3 bg-slate-900/80 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono text-white">
+                          <span className="absolute top-2.5 right-2.5 bg-slate-900/80 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono text-white max-w-[42%] truncate">
                             ID: {prod.id}
                           </span>
 
@@ -937,7 +938,7 @@ export const AdminDashboard: React.FC = () => {
                     );
                   })()}
 
-                  <div className="p-5 flex-1 flex flex-col justify-between">
+                  <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
                     <div>
                       <div className="text-[11px] font-mono text-slate-400 uppercase tracking-wider mb-1 font-semibold">
                         {prod.department ? `${prod.department} • ${prod.category}` : prod.category}
@@ -1205,7 +1206,7 @@ export const AdminDashboard: React.FC = () => {
                   </div>
 
                   {/* Actions & Status Dropdown */}
-                  <div className="flex items-center gap-2.5 shrink-0">
+                  <div className="flex items-center justify-end gap-2.5 shrink-0 w-full md:w-auto pt-2.5 md:pt-0 border-t md:border-t-0 border-slate-100">
                     <select
                       value={app.status}
                       onChange={(e) => handleStatusChange(app.id, e.target.value as any)}
@@ -1250,8 +1251,8 @@ export const AdminDashboard: React.FC = () => {
 
       {/* ================= EDIT / ADD PRODUCT MODAL ================= */}
       {isProductModalOpen && editingProduct && (
-        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white border border-slate-200 rounded-2xl max-w-4xl w-full p-6 sm:p-8 shadow-2xl relative my-8 text-slate-800 max-h-[92vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-2.5 sm:p-4 overflow-y-auto">
+          <div className="bg-white border border-slate-200 rounded-2xl max-w-4xl w-full p-4 sm:p-8 shadow-2xl relative my-auto sm:my-8 text-slate-800 max-h-[94vh] sm:max-h-[92vh] overflow-y-auto">
             {/* Modal Header */}
             <div className="flex items-center justify-between pb-4 border-b border-slate-200 mb-6">
               <div>
@@ -1654,7 +1655,7 @@ export const AdminDashboard: React.FC = () => {
 
                 {/* Interactive Table */}
                 <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-2xs">
-                  <table className="w-full text-left text-xs border-collapse">
+                  <table className="w-full text-left text-xs border-collapse min-w-[560px]">
                     <thead className="bg-slate-100 border-b border-slate-200 text-slate-700 font-bold uppercase tracking-wider text-[11px]">
                       <tr>
                         <th className="py-2.5 px-3 w-1/3">Parameter</th>
@@ -1782,8 +1783,8 @@ export const AdminDashboard: React.FC = () => {
 
       {/* ================= EDIT / ADD JOB OPENING MODAL ================= */}
       {isJobModalOpen && editingJob && (
-        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white border border-slate-200 rounded-2xl max-w-2xl w-full p-6 shadow-2xl relative my-8 text-slate-800">
+        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-2.5 sm:p-4 overflow-y-auto">
+          <div className="bg-white border border-slate-200 rounded-2xl max-w-2xl w-full p-4 sm:p-6 shadow-2xl relative my-auto sm:my-8 text-slate-800">
             <div className="flex items-center justify-between pb-4 border-b border-slate-200 mb-4">
               <h2 className="text-lg font-bold font-heading text-slate-900 flex items-center gap-2">
                 <Briefcase className="w-5 h-5 text-[#00A6FB]" />
@@ -2005,8 +2006,8 @@ export const AdminDashboard: React.FC = () => {
 
       {/* ================= VIEW CANDIDATE APPLICATION MODAL ================= */}
       {viewingApp && (
-        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white border border-slate-200 rounded-2xl max-w-lg w-full p-6 shadow-2xl relative text-slate-800">
+        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-2.5 sm:p-4 overflow-y-auto">
+          <div className="bg-white border border-slate-200 rounded-2xl max-w-lg w-full p-4 sm:p-6 shadow-2xl relative my-auto text-slate-800">
             <div className="flex items-center justify-between pb-4 border-b border-slate-200 mb-4">
               <div>
                 <span className="text-[10px] font-mono uppercase text-[#0086c9] font-bold">Candidate Profile</span>
