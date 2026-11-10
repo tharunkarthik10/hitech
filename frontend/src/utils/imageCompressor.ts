@@ -52,12 +52,21 @@ export async function compressImage(
           return;
         }
 
-        // Fill white background for transparent PNGs converted to JPEG
+        // Fill white background for transparent PNGs converted to JPEG/WebP
         ctx.fillStyle = '#ffffff';
         ctx.fillRect(0, 0, width, height);
         ctx.drawImage(img, 0, 0, width, height);
 
-        const compressed = canvas.toDataURL('image/jpeg', quality);
+        // Silent high-efficiency compression: WebP with automatic JPEG fallback
+        let compressed = '';
+        try {
+          compressed = canvas.toDataURL('image/webp', quality);
+          if (!compressed.startsWith('data:image/webp')) {
+            compressed = canvas.toDataURL('image/jpeg', quality);
+          }
+        } catch {
+          compressed = canvas.toDataURL('image/jpeg', quality);
+        }
         resolve(compressed);
       };
 
