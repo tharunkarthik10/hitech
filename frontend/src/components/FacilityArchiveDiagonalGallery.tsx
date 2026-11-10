@@ -6,6 +6,41 @@ interface FacilityArchiveDiagonalGalleryProps {
   openQuoteModal: (source: string) => void;
 }
 
+const ARCHIVE_PHOTOS = [
+  {
+    title: "Heavy Structural Gantry Milling",
+    src: "https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    title: "5-Axis Aerospace Spindle Milling",
+    src: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    title: "Continuous 5-Axis Impeller",
+    src: "/gear_flower_bloom.jpg",
+  },
+  {
+    title: "Precision CNC Lathe Turning",
+    src: "https://images.unsplash.com/photo-1616401784845-180882ba9ba8?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    title: "High-Power Fiber Laser Cutting",
+    src: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    title: "Zeiss Bridge CMM Probe",
+    src: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    title: "Hydraulic Press Brake Forming",
+    src: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    title: "Automated TIG/MIG Cell",
+    src: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800",
+  },
+];
+
 export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGalleryProps> = ({
   openQuoteModal,
 }) => {
@@ -59,10 +94,12 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
 
     function render() {
       raf = 0;
-      const p = progress();
       const vw = window.innerWidth;
-      const vh = window.innerHeight;
       const isMobile = vw < 768;
+      if (isMobile) return;
+
+      const p = progress();
+      const vh = window.innerHeight;
 
       items.forEach((el) => {
         if (reduce) {
@@ -73,20 +110,12 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
         const d = parseFloat(el.style.getPropertyValue("--d")) || 0;
         const t = ease(clamp((p - d * 0.45) / 0.55));
 
-        if (isMobile) {
-          // Mobile: Zero vertical travel so cards NEVER push downward into Section 06
-          // Gentle horizontal slide with smooth opacity fade
-          const dx = (vw * 0.12) * (1 - t);
-          el.style.transform = `translate3d(${dx.toFixed(1)}px, 0px, 0)`;
-          el.style.opacity = Math.min(1, Math.max(0, t * 1.6)).toFixed(2);
-        } else {
-          // Desktop: full parallel diagonal reveal
-          const travel = Math.max(vw, vh) * 1.25;
-          const dx = travel * (1 - t);
-          const dy = travel * (1 - t);
-          el.style.transform = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0)`;
-          el.style.opacity = "1";
-        }
+        // Desktop: full parallel diagonal reveal
+        const travel = Math.max(vw, vh) * 1.25;
+        const dx = travel * (1 - t);
+        const dy = travel * (1 - t);
+        el.style.transform = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0)`;
+        el.style.opacity = "1";
       });
     }
 
@@ -314,61 +343,63 @@ export const FacilityArchiveDiagonalGallery: React.FC<FacilityArchiveDiagonalGal
         .facility-archive-stage .cta:hover {
           text-decoration: underline;
         }
-
-        @media (max-width: 768px) {
-          .facility-archive-sec {
-            overflow: hidden !important;
-            margin-bottom: 4.5rem !important;
-            padding-bottom: 2rem !important;
-          }
-          .facility-archive-stage {
-            aspect-ratio: 1 / 1.55 !important;
-          }
-          .facility-archive-stage .facility-archive-header {
-            width: 20% !important;
-            max-width: 20% !important;
-            padding-top: 0 !important;
-          }
-          .facility-archive-stage .facility-archive-header .eyebrow {
-            font-size: 7px !important;
-            line-height: 1.1 !important;
-          }
-          .facility-archive-stage .facility-archive-header h2 {
-            font-size: 13px !important;
-            line-height: 1.1 !important;
-            margin: 3px 0 0 !important;
-            word-break: break-word;
-          }
-          .facility-archive-stage .facility-archive-header h2 span {
-            font-size: 13px !important;
-            color: #64748b;
-          }
-          .facility-archive-stage .facility-archive-header p {
-            font-size: 7px !important;
-            line-height: 1.2 !important;
-            margin: 2px 0 4px 0 !important;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-          }
-          .facility-archive-stage .facility-archive-header .btn {
-            font-size: 7px !important;
-            padding: 3px 6px !important;
-            gap: 2px !important;
-            white-space: nowrap !important;
-          }
-          .facility-archive-stage .txt { font-size: 7px !important; }
-          .facility-archive-stage .eyebrow { font-size: 7.5px !important; }
-          .facility-archive-stage h2 { font-size: 13px !important; }
-          .facility-archive-stage .txt p { font-size: 7px !important; }
-          .facility-archive-stage .btn { font-size: 7px !important; padding: 3px 6px !important; }
-          .facility-archive-stage .cta { font-size: 7px !important; margin-top: 2px !important; }
-          .facility-archive-stage ul.list { line-height: 1.4 !important; }
-        }
       `}</style>
 
-      <section ref={secRef} id="gallery" className="facility-archive-sec my-12 sm:my-16">
+      {/* Mobile View: Clean, Fully-Responsive Modern Grid */}
+      <section className="md:hidden w-full my-8 space-y-4">
+        {/* Header Block */}
+        <div className="space-y-2">
+          <span className="text-xs font-medium tracking-tight text-[#64748b]">
+            ✦ Section 05 — Facility Archive
+          </span>
+          <h2 className="text-2xl font-bold tracking-tight text-[#121212] leading-[1.15]">
+            Beyond Limits.<br />
+            <span className="font-normal text-[#64748b]">Pure Precision.</span>
+          </h2>
+          <p className="text-xs sm:text-sm text-[#475569] font-normal leading-relaxed">
+            Vibrant factory snapshots capturing micron machining, robotic welding, and high-speed laser profiling in full color.
+          </p>
+          {/* Right-aligned CTA */}
+          <div className="flex justify-end pt-1">
+            <button
+              onClick={() => openQuoteModal("Section 05 — Facility Archive Stories")}
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#00A6FB] text-white text-xs font-bold shadow-xs hover:bg-[#0095e0] transition-colors cursor-pointer"
+              type="button"
+            >
+              <span>See the Stories</span>
+              <span className="text-sm">↗</span>
+            </button>
+          </div>
+        </div>
+
+        {/* 2-Column Responsive Image Grid */}
+        <div className="grid grid-cols-2 gap-2.5 pt-1">
+          {ARCHIVE_PHOTOS.map((item, i) => (
+            <div
+              key={i}
+              onClick={() => setSelectedImage({ src: item.src, alt: item.title })}
+              className="relative aspect-[4/3] rounded-xl overflow-hidden bg-gray-100 border border-gray-200/90 shadow-xs active:scale-[0.98] transition-transform cursor-pointer group"
+            >
+              <img
+                src={item.src}
+                alt={item.title}
+                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-80" />
+              <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between">
+                <span className="text-[10px] font-medium text-white truncate max-w-[85%] drop-shadow-xs">
+                  {item.title}
+                </span>
+                <span className="text-[10px] text-[#00A6FB] font-bold">↗</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Desktop View: Full Parallel Diagonal Gallery */}
+      <section ref={secRef} id="gallery" className="facility-archive-sec hidden md:block my-12 sm:my-16">
         <div ref={gridRef} onClick={handleGridClick} className="facility-archive-stage" id="grid">
           {/* ITEM 1: Title & Lead Text (Static, Moved to Border of Section, Safe Width Avoiding Any Card) */}
           <div
