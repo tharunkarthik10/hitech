@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { 
@@ -14,7 +14,7 @@ import {
   updateStoredApplicationStatus,
   deleteStoredApplication
 } from '../../data/adminStore';
-import type { ProductDetailItem } from '../../data/products';
+import type { ProductDetailItem, ProductDimensionRow } from '../../data/products';
 import type { JobPosition, CandidateApplication } from '../../data/careers';
 import { 
   Package, 
@@ -31,8 +31,24 @@ import {
   X, 
   Eye, 
   Phone, 
-  Mail 
+  Mail,
+  UploadCloud,
+  FileSpreadsheet,
+  Download,
+  Table,
+  HelpCircle,
+  Image as ImageIcon,
+  Sparkles,
+  Link2
 } from 'lucide-react';
+
+const SAMPLE_CSV_CONTENT = `Parameter,Available Dimensions / Values,Standard / Tolerance
+Standard Bore Range,Ø 32 / 40 / 50 / 63 / 80 / 100 mm,ISO 15552 standard
+Standard Stroke Range,25 mm – 1000 mm (Custom up to 2500 mm),±0.5 mm stroke tolerance
+Piston Rod Diameter,Ø 12 mm – Ø 32 mm,Hard chrome plated (f7)
+Operating Pressure,1.0 to 10.0 Bar (14.5 to 145 PSI),Proof test: 15.0 Bar
+Port Thread Standards,G 1/8", G 1/4", G 3/8", G 1/2" BSPP,Optional NPT available
+Operating Temperature,-20°C to +80°C (Standard NBR / PU),Viton option up to 150°C`;
 
 export const AdminDashboard: React.FC = () => {
   const { currentUser, logout } = useAuth();
@@ -47,6 +63,12 @@ export const AdminDashboard: React.FC = () => {
   const [productCategoryFilter, setProductCategoryFilter] = useState('All');
   const [editingProduct, setEditingProduct] = useState<ProductDetailItem | null>(null);
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
+  const [showUrlFallback, setShowUrlFallback] = useState(false);
+  const [isDraggingImage, setIsDraggingImage] = useState(false);
+
+  // File Upload Refs
+  const imageFileInputRef = useRef<HTMLInputElement | null>(null);
+  const csvFileInputRef = useRef<HTMLInputElement | null>(null);
 
   // Careers State
   const [jobs, setJobs] = useState<JobPosition[]>([]);
@@ -65,7 +87,7 @@ export const AdminDashboard: React.FC = () => {
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
-    setTimeout(() => setToastMessage(null), 3000);
+    setTimeout(() => setToastMessage(null), 3500);
   };
 
   // Sync initial data and listen for storage updates
@@ -94,7 +116,7 @@ export const AdminDashboard: React.FC = () => {
     navigate('/admin/login');
   };
 
-  // Product Actions
+  // --- PRODUCT MANAGEMENT ---
   const handleOpenNewProduct = () => {
     setEditingProduct({
       id: `prod-${Date.now()}`,
@@ -104,13 +126,29 @@ export const AdminDashboard: React.FC = () => {
       department: 'Factory Automation',
       description: '',
       features: ['High durability precision finish', 'ISO standard certified tolerances'],
-      imageUrl: 'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=800&auto=format&fit=crop'
+      imageUrl: 'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=800&auto=format&fit=crop',
+      dimensions: [
+        { param: 'Standard Bore Range', dimension: 'Ø 32, 40, 50, 63, 80 mm', notes: 'ISO 15552' },
+        { param: 'Operating Pressure', dimension: '1.0 to 10.0 Bar', notes: 'Proof test: 15 Bar' },
+        { param: 'Operating Temperature', dimension: '-20°C to +80°C', notes: 'PU / NBR Seals' }
+      ]
     });
+    setShowUrlFallback(false);
     setIsProductModalOpen(true);
   };
 
   const handleEditProduct = (prod: ProductDetailItem) => {
-    setEditingProduct({ ...prod });
+    setEditingProduct({ 
+      ...prod,
+      dimensions: prod.dimensions && prod.dimensions.length > 0 
+        ? prod.dimensions 
+        : [
+            { param: 'Standard Bore Range', dimension: 'Ø 32, 40, 50, 63, 80 mm', notes: 'ISO 15552' },
+            { param: 'Operating Pressure', dimension: '1.0 to 10.0 Bar', notes: 'Proof test: 15 Bar' },
+            { param: 'Operating Temperature', dimension: '-20°C to +80°C', notes: 'PU / NBR Seals' }
+          ]
+    });
+    setShowUrlFallback(false);
     setIsProductModalOpen(true);
   };
 
@@ -138,7 +176,168 @@ export const AdminDashboard: React.FC = () => {
     }
   };
 
-  // Job Actions
+  // --- IMAGE FILE UPLOAD HANDLING ---
+  const processImageFile = (file: File) => {
+    if (!file.type.startsWith('image/')) {
+      alert('Please select an image file (PNG, JPG, WEBP, or SVG).');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const dataUrl = e.target?.result as string;
+      if (dataUrl && editingProduct) {
+        setEditingProduct({
+          ...editingProduct,
+          imageUrl: dataUrl
+        });
+        showToast('Image uploaded and preview updated.');
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleImageFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      processImageFile(e.target.files[0]);
+    }
+  };
+
+  const handleImageDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDraggingImage(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      processImageFile(e.dataTransfer.files[0]);
+    }
+  };
+
+  // --- TABULAR COLUMN (DIMENSIONS) HANDLING ---
+  const handleAddDimensionRow = () => {
+    if (!editingProduct) return;
+    const currentDims = editingProduct.dimensions || [];
+    setEditingProduct({
+      ...editingProduct,
+      dimensions: [...currentDims, { param: '', dimension: '', notes: '' }]
+    });
+  };
+
+  const handleUpdateDimensionRow = (index: number, field: keyof ProductDimensionRow, value: string) => {
+    if (!editingProduct) return;
+    const currentDims = [...(editingProduct.dimensions || [])];
+    currentDims[index] = {
+      ...currentDims[index],
+      [field]: value
+    };
+    setEditingProduct({
+      ...editingProduct,
+      dimensions: currentDims
+    });
+  };
+
+  const handleRemoveDimensionRow = (index: number) => {
+    if (!editingProduct) return;
+    const currentDims = [...(editingProduct.dimensions || [])];
+    currentDims.splice(index, 1);
+    setEditingProduct({
+      ...editingProduct,
+      dimensions: currentDims
+    });
+  };
+
+  const handleCsvUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const text = event.target?.result as string;
+      if (!text) return;
+
+      const lines = text.split(/\r\n|\n/).filter(line => line.trim().length > 0);
+      const parsedRows: ProductDimensionRow[] = [];
+
+      // Check if header row exists
+      const hasHeader = lines[0].toLowerCase().includes('param') || lines[0].toLowerCase().includes('dimension');
+      const startIdx = hasHeader ? 1 : 0;
+
+      for (let i = startIdx; i < lines.length; i++) {
+        const separator = lines[i].includes('\t') ? '\t' : (lines[i].includes(';') ? ';' : ',');
+        const parts = lines[i].split(separator).map(s => s.trim().replace(/^["']|["']$/g, ''));
+        if (parts.length >= 2) {
+          parsedRows.push({
+            param: parts[0] || '',
+            dimension: parts[1] || '',
+            notes: parts[2] || ''
+          });
+        }
+      }
+
+      if (parsedRows.length > 0 && editingProduct) {
+        setEditingProduct({
+          ...editingProduct,
+          dimensions: parsedRows
+        });
+        showToast(`Imported ${parsedRows.length} tabular specification rows from CSV.`);
+      } else {
+        alert('Could not parse rows from CSV. Please ensure the format is: Parameter, Dimension, Notes');
+      }
+    };
+    reader.readAsText(file);
+    // Reset input
+    e.target.value = '';
+  };
+
+  const handleDownloadSampleCsv = () => {
+    const blob = new Blob([SAMPLE_CSV_CONTENT], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'hitech_product_specifications_template.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast('Downloaded sample specifications CSV template.');
+  };
+
+  const handleLoadPresetTemplate = (templateName: 'pneumatics' | 'hydraulics' | 'actuator') => {
+    if (!editingProduct) return;
+    let templateRows: ProductDimensionRow[] = [];
+
+    if (templateName === 'pneumatics') {
+      templateRows = [
+        { param: 'Standard Bore Diameters', dimension: 'Ø 32, 40, 50, 63, 80, 100, 125 mm', notes: 'ISO 15552 standard' },
+        { param: 'Standard Stroke Range', dimension: '25 mm – 1000 mm (Custom up to 2500 mm)', notes: '±0.5 mm stroke tolerance' },
+        { param: 'Piston Rod Diameter', dimension: 'Ø 12 mm – Ø 32 mm', notes: 'Hard chrome plated (f7)' },
+        { param: 'Operating Pressure', dimension: '1.0 to 10.0 Bar (14.5 to 145 PSI)', notes: 'Proof test: 15.0 Bar' },
+        { param: 'Port Thread Standards', dimension: 'G 1/8", G 1/4", G 3/8", G 1/2" BSPP', notes: 'Optional NPT available' },
+        { param: 'Operating Temperature', dimension: '-20°C to +80°C (Standard NBR / PU)', notes: 'Viton option up to 150°C' }
+      ];
+    } else if (templateName === 'hydraulics') {
+      templateRows = [
+        { param: 'Cylinder Bore Range', dimension: 'Ø 40 mm to Ø 350 mm', notes: 'Honed seamless tubes (H8)' },
+        { param: 'Piston Rod Diameter', dimension: 'Ø 22 mm to Ø 180 mm', notes: 'Induction hardened chrome' },
+        { param: 'Stroke Capacity', dimension: 'Up to 3000 mm', notes: 'Cushioned end-caps' },
+        { param: 'Working Pressure Rating', dimension: 'Up to 350 Bar (5,000 PSI)', notes: 'Hydrostatic test 500 Bar' },
+        { param: 'Mounting Styles', dimension: 'Flange, Clevis, Trunnion, Foot, Lug', notes: 'ISO 6020-2 / DIN 24554' },
+        { param: 'Fluid Compatibility', dimension: 'Mineral oils (HL, HLP), Glycols', notes: 'FKM / Polyurethane seals' }
+      ];
+    } else {
+      templateRows = [
+        { param: 'Effective Stroke Length', dimension: '50 mm – 1500 mm', notes: 'Configurable in 5mm steps' },
+        { param: 'Max Thrust / Payload', dimension: '500 N to 15,000 N', notes: 'Dynamic load verified' },
+        { param: 'Positional Repeatability', dimension: '±0.02 mm (Ballscrew) / ±0.05 mm (Belt)', notes: 'Ground precision grade' },
+        { param: 'Max Linear Velocity', dimension: 'Up to 1.2 m/s', notes: 'Application dependent' },
+        { param: 'Duty Cycle', dimension: '100% Continuous Industrial Duty', notes: 'IP65 enclosed casing' }
+      ];
+    }
+
+    setEditingProduct({
+      ...editingProduct,
+      dimensions: templateRows
+    });
+    showToast(`Loaded ${templateName.toUpperCase()} technical specifications.`);
+  };
+
+  // --- JOB ACTIONS ---
   const handleOpenNewJob = () => {
     setEditingJob({
       id: `job-${Date.now()}`,
@@ -186,7 +385,7 @@ export const AdminDashboard: React.FC = () => {
     showToast('Job status updated.');
   };
 
-  // Application Actions
+  // --- APPLICATION ACTIONS ---
   const handleStatusChange = (id: string, status: CandidateApplication['status']) => {
     updateStoredApplicationStatus(id, status);
     showToast(`Candidate status set to ${status}.`);
@@ -416,12 +615,19 @@ export const AdminDashboard: React.FC = () => {
                   key={prod.id}
                   className="bg-white border border-slate-200 rounded-2xl overflow-hidden flex flex-col group hover:border-[#00A6FB] hover:shadow-lg hover:shadow-slate-200/50 transition-all shadow-sm"
                 >
-                  <div className="h-44 w-full relative overflow-hidden bg-slate-100">
-                    <img
-                      src={prod.imageUrl}
-                      alt={prod.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
+                  <div className="h-44 w-full relative overflow-hidden bg-slate-100 flex items-center justify-center">
+                    {prod.imageUrl ? (
+                      <img
+                        src={prod.imageUrl}
+                        alt={prod.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className="flex flex-col items-center justify-center text-slate-400">
+                        <ImageIcon className="w-10 h-10 mb-1" />
+                        <span className="text-xs">No image uploaded</span>
+                      </div>
+                    )}
                     <span className="absolute top-3 left-3 bg-white/95 backdrop-blur-md border border-slate-200/80 px-2.5 py-0.5 rounded-full text-[10px] font-mono text-[#0086c9] uppercase tracking-wider font-bold shadow-sm">
                       {prod.category}
                     </span>
@@ -442,8 +648,16 @@ export const AdminDashboard: React.FC = () => {
                         {prod.description}
                       </p>
 
+                      {/* Specs Badge */}
+                      <div className="mt-3 flex items-center gap-2">
+                        <span className="inline-flex items-center gap-1 text-[11px] font-medium bg-blue-50 text-[#0086c9] px-2 py-0.5 rounded border border-blue-200">
+                          <Table className="w-3 h-3" />
+                          {prod.dimensions?.length || 6} Tabular Specs
+                        </span>
+                      </div>
+
                       {/* Feature tags */}
-                      <div className="mt-3 flex flex-wrap gap-1.5">
+                      <div className="mt-2.5 flex flex-wrap gap-1.5">
                         {prod.features.slice(0, 2).map((feat, i) => (
                           <span
                             key={i}
@@ -468,7 +682,7 @@ export const AdminDashboard: React.FC = () => {
                         <button
                           onClick={() => handleEditProduct(prod)}
                           className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 transition-colors shadow-sm"
-                          title="Edit Product"
+                          title="Edit Product & Specs"
                         >
                           <Edit3 className="w-3.5 h-3.5" />
                         </button>
@@ -736,42 +950,49 @@ export const AdminDashboard: React.FC = () => {
       {/* ================= EDIT / ADD PRODUCT MODAL ================= */}
       {isProductModalOpen && editingProduct && (
         <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white border border-slate-200 rounded-2xl max-w-2xl w-full p-6 shadow-2xl relative my-8 text-slate-800">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-200 mb-4">
-              <h2 className="text-lg font-bold font-heading text-slate-900 flex items-center gap-2">
-                <Package className="w-5 h-5 text-[#00A6FB]" />
-                {products.some(p => p.id === editingProduct.id) ? 'Edit Product Details' : 'Add New Product'}
-              </h2>
+          <div className="bg-white border border-slate-200 rounded-2xl max-w-4xl w-full p-6 sm:p-8 shadow-2xl relative my-8 text-slate-800 max-h-[92vh] overflow-y-auto">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between pb-4 border-b border-slate-200 mb-6">
+              <div>
+                <h2 className="text-xl font-bold font-heading text-slate-900 flex items-center gap-2">
+                  <Package className="w-6 h-6 text-[#00A6FB]" />
+                  {products.some(p => p.id === editingProduct.id) ? 'Edit Product & Technical Specifications' : 'Add New Industrial Product'}
+                </h2>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Manage product specifications, photo upload, and engineering tabular columns.
+                </p>
+              </div>
               <button
                 onClick={() => setIsProductModalOpen(false)}
-                className="text-slate-400 hover:text-slate-700 p-1 rounded-lg"
+                className="text-slate-400 hover:text-slate-700 p-1.5 rounded-lg hover:bg-slate-100 transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <form onSubmit={handleSaveProduct} className="space-y-4">
+            <form onSubmit={handleSaveProduct} className="space-y-6">
+              {/* Basic Fields */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Product Title</label>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Product Title *</label>
                   <input
                     type="text"
                     value={editingProduct.title}
                     onChange={(e) => setEditingProduct({ ...editingProduct, title: e.target.value })}
                     required
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
-                    placeholder="e.g. 5-Port Solenoid Valve"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
+                    placeholder="e.g. Tie Rod Pneumatic Cylinder (ISO 15552)"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Category</label>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Category *</label>
                   <input
                     type="text"
                     value={editingProduct.category}
                     onChange={(e) => setEditingProduct({ ...editingProduct, category: e.target.value })}
                     required
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
-                    placeholder="e.g. Pneumatics, Hydraulics"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
+                    placeholder="e.g. Pneumatics, Hydraulics, Actuators"
                   />
                 </div>
               </div>
@@ -783,8 +1004,8 @@ export const AdminDashboard: React.FC = () => {
                     type="text"
                     value={editingProduct.subGroup || ''}
                     onChange={(e) => setEditingProduct({ ...editingProduct, subGroup: e.target.value })}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
-                    placeholder="e.g. Cylinders, Directional Valves"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
+                    placeholder="e.g. Cylinders, Directional Valves, FRL Units"
                   />
                 </div>
                 <div>
@@ -793,38 +1014,275 @@ export const AdminDashboard: React.FC = () => {
                     type="text"
                     value={editingProduct.department || ''}
                     onChange={(e) => setEditingProduct({ ...editingProduct, department: e.target.value })}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
-                    placeholder="e.g. Factory Automation"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
+                    placeholder="e.g. Factory Automation, Heavy Machinery"
                   />
                 </div>
               </div>
 
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">Image URL</label>
+              {/* ----------------- IMAGE UPLOAD SECTION ----------------- */}
+              <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                <div className="flex items-center justify-between mb-2">
+                  <label className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                    <ImageIcon className="w-4 h-4 text-[#00A6FB]" />
+                    Product Photo (Upload File)
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setShowUrlFallback(!showUrlFallback)}
+                    className="text-[11px] text-[#0086c9] hover:underline flex items-center gap-1 font-semibold"
+                  >
+                    <Link2 className="w-3 h-3" />
+                    {showUrlFallback ? 'Hide URL paste' : 'Or paste image URL instead'}
+                  </button>
+                </div>
+
+                {/* Hidden File Input */}
                 <input
-                  type="url"
-                  value={editingProduct.imageUrl}
-                  onChange={(e) => setEditingProduct({ ...editingProduct, imageUrl: e.target.value })}
-                  required
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
-                  placeholder="https://images.unsplash.com/..."
+                  type="file"
+                  accept="image/*"
+                  ref={imageFileInputRef}
+                  onChange={handleImageFileChange}
+                  className="hidden"
                 />
+
+                {/* Drag & Drop Upload Zone */}
+                <div
+                  onDragOver={(e) => { e.preventDefault(); setIsDraggingImage(true); }}
+                  onDragLeave={() => setIsDraggingImage(false)}
+                  onDrop={handleImageDrop}
+                  onClick={() => imageFileInputRef.current?.click()}
+                  className={`border-2 border-dashed rounded-xl p-5 text-center cursor-pointer transition-all ${
+                    isDraggingImage 
+                      ? 'border-[#00A6FB] bg-blue-50/50' 
+                      : 'border-slate-300 hover:border-[#00A6FB] bg-white hover:bg-slate-50'
+                  }`}
+                >
+                  {editingProduct.imageUrl ? (
+                    <div className="flex flex-col sm:flex-row items-center gap-4 justify-center">
+                      <div className="w-24 h-24 rounded-xl overflow-hidden border border-slate-200 shadow-sm bg-slate-100 shrink-0">
+                        <img
+                          src={editingProduct.imageUrl}
+                          alt="Preview"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="text-left space-y-1">
+                        <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                          <CheckCircle className="w-3.5 h-3.5" />
+                          Photo Ready
+                        </span>
+                        <p className="text-xs text-slate-700 font-medium">Click or drag a new image here to replace this photo.</p>
+                        <p className="text-[11px] text-slate-400">Supports PNG, JPG, WEBP, SVG</p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      <div className="w-12 h-12 rounded-full bg-blue-50 text-[#00A6FB] flex items-center justify-center mx-auto">
+                        <UploadCloud className="w-6 h-6" />
+                      </div>
+                      <p className="text-xs font-bold text-slate-800">
+                        Click to upload product image or drag & drop file here
+                      </p>
+                      <p className="text-[11px] text-slate-500">
+                        High-resolution PNG, JPG, WEBP or SVG
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Optional URL Paste input */}
+                {showUrlFallback && (
+                  <div className="mt-3 pt-3 border-t border-slate-200">
+                    <label className="block text-[11px] font-semibold text-slate-600 mb-1">
+                      Direct Image Web Link
+                    </label>
+                    <input
+                      type="url"
+                      value={editingProduct.imageUrl}
+                      onChange={(e) => setEditingProduct({ ...editingProduct, imageUrl: e.target.value })}
+                      className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-[#00A6FB]"
+                      placeholder="https://images.unsplash.com/photo-..."
+                    />
+                  </div>
+                )}
               </div>
 
+              {/* ----------------- TABULAR COLUMN SPECIFICATIONS SECTION ----------------- */}
+              <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200 space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div>
+                    <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                      <Table className="w-4 h-4 text-[#00A6FB]" />
+                      Available Dimensions & Technical Specifications (Tabular Column)
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      This table is rendered directly on the public product page for clients and engineers.
+                    </p>
+                  </div>
+
+                  {/* Hidden CSV Input */}
+                  <input
+                    type="file"
+                    accept=".csv,.txt"
+                    ref={csvFileInputRef}
+                    onChange={handleCsvUpload}
+                    className="hidden"
+                  />
+
+                  {/* Table Actions Toolbar */}
+                  <div className="flex flex-wrap items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => csvFileInputRef.current?.click()}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-bold border border-emerald-200 transition-colors shadow-2xs"
+                      title="Upload CSV exported from Excel or Google Sheets"
+                    >
+                      <FileSpreadsheet className="w-3.5 h-3.5" />
+                      Import CSV
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={handleDownloadSampleCsv}
+                      className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-100 text-slate-600 text-xs font-medium border border-slate-200 transition-colors shadow-2xs"
+                      title="Download a template CSV to fill in Excel"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      Sample CSV
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={handleAddDimensionRow}
+                      className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#00A6FB] hover:bg-[#0095e0] text-white text-xs font-bold shadow-2xs transition-colors"
+                    >
+                      <Plus className="w-3.5 h-3.5" />
+                      Add Row
+                    </button>
+                  </div>
+                </div>
+
+                {/* Quick Presets Bar */}
+                <div className="flex flex-wrap items-center gap-2 pt-1 text-xs text-slate-600 border-t border-slate-200/60">
+                  <span className="font-semibold text-slate-500">Quick Templates:</span>
+                  <button
+                    type="button"
+                    onClick={() => handleLoadPresetTemplate('pneumatics')}
+                    className="px-2.5 py-1 rounded-md bg-white hover:bg-blue-50 text-[#0086c9] border border-slate-200 font-medium text-[11px] transition-colors"
+                  >
+                    Pneumatics Preset
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleLoadPresetTemplate('hydraulics')}
+                    className="px-2.5 py-1 rounded-md bg-white hover:bg-blue-50 text-[#0086c9] border border-slate-200 font-medium text-[11px] transition-colors"
+                  >
+                    Hydraulics Preset
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleLoadPresetTemplate('actuator')}
+                    className="px-2.5 py-1 rounded-md bg-white hover:bg-blue-50 text-[#0086c9] border border-slate-200 font-medium text-[11px] transition-colors"
+                  >
+                    Linear Actuators Preset
+                  </button>
+                </div>
+
+                {/* Interactive Table */}
+                <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-2xs">
+                  <table className="w-full text-left text-xs border-collapse">
+                    <thead className="bg-slate-100 border-b border-slate-200 text-slate-700 font-bold uppercase tracking-wider text-[11px]">
+                      <tr>
+                        <th className="py-2.5 px-3 w-1/3">Parameter</th>
+                        <th className="py-2.5 px-3 w-1/3">Available Dimensions / Values</th>
+                        <th className="py-2.5 px-3">Standard / Tolerance</th>
+                        <th className="py-2.5 px-2 text-center w-12">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {(editingProduct.dimensions && editingProduct.dimensions.length > 0) ? (
+                        editingProduct.dimensions.map((row, idx) => (
+                          <tr key={idx} className="hover:bg-slate-50/70 transition-colors">
+                            <td className="p-2">
+                              <input
+                                type="text"
+                                value={row.param}
+                                onChange={(e) => handleUpdateDimensionRow(idx, 'param', e.target.value)}
+                                placeholder="e.g. Standard Bore Range"
+                                className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
+                              />
+                            </td>
+                            <td className="p-2">
+                              <input
+                                type="text"
+                                value={row.dimension}
+                                onChange={(e) => handleUpdateDimensionRow(idx, 'dimension', e.target.value)}
+                                placeholder="e.g. Ø 32, 40, 50, 63, 80 mm"
+                                className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
+                              />
+                            </td>
+                            <td className="p-2">
+                              <input
+                                type="text"
+                                value={row.notes || ''}
+                                onChange={(e) => handleUpdateDimensionRow(idx, 'notes', e.target.value)}
+                                placeholder="e.g. ISO 15552 / ±0.5 mm"
+                                className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-600 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
+                              />
+                            </td>
+                            <td className="p-2 text-center">
+                              <button
+                                type="button"
+                                onClick={() => handleRemoveDimensionRow(idx)}
+                                className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                title="Remove row"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan={4} className="py-6 text-center text-slate-400 italic">
+                            No specification rows added yet. Click "+ Add Row", "Import CSV", or select a Quick Template above.
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Helpful Guide Note */}
+                <div className="bg-blue-50/70 border border-blue-200/80 rounded-xl p-3 flex items-start gap-2.5 text-xs text-blue-900">
+                  <HelpCircle className="w-4 h-4 text-[#00A6FB] shrink-0 mt-0.5" />
+                  <div>
+                    <strong>How to manage tabular columns:</strong>
+                    <ul className="list-disc list-inside mt-1 space-y-0.5 text-blue-800 text-[11px]">
+                      <li><strong>Inline editing:</strong> Simply type into the cells above and click <em>"+ Add Row"</em> to add new specs.</li>
+                      <li><strong>CSV Upload:</strong> Click <em>"Import CSV"</em> to upload an Excel file exported as <code>.csv</code> (Columns: Parameter, Dimensions, Notes).</li>
+                      <li><strong>Download template:</strong> Use <em>"Sample CSV"</em> to get a pre-formatted file ready for spreadsheet tools.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Description & Features */}
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">Engineering Description</label>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Engineering Description *</label>
                 <textarea
                   rows={3}
                   value={editingProduct.description}
                   onChange={(e) => setEditingProduct({ ...editingProduct, description: e.target.value })}
                   required
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
                   placeholder="Detailed technical description and operating characteristics..."
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">Key Features (One per line)</label>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Key Features (One bullet per line)</label>
                 <textarea
                   rows={3}
                   value={editingProduct.features.join('\n')}
@@ -832,24 +1290,26 @@ export const AdminDashboard: React.FC = () => {
                     ...editingProduct, 
                     features: e.target.value.split('\n').filter(f => f.trim().length > 0) 
                   })}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
                   placeholder="ISO 15552 standard compliance&#10;Hard chrome-plated rod&#10;Factory tested to 10 bar"
                 />
               </div>
 
-              <div className="pt-4 border-t border-slate-200 flex justify-end gap-3">
+              {/* Modal Buttons */}
+              <div className="pt-4 border-t border-slate-200 flex justify-end gap-3 sticky bottom-0 bg-white py-2">
                 <button
                   type="button"
                   onClick={() => setIsProductModalOpen(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-slate-700 transition-colors"
+                  className="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-slate-700 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-[#00A6FB] hover:bg-[#0095e0] text-white text-xs font-bold shadow-md shadow-[#00A6FB]/20 transition-all"
+                  className="px-6 py-2.5 rounded-xl bg-[#00A6FB] hover:bg-[#0095e0] text-white text-xs font-bold shadow-md shadow-[#00A6FB]/20 transition-all flex items-center gap-2"
                 >
-                  Save Product
+                  <CheckCircle className="w-4 h-4" />
+                  Save Product & Specifications
                 </button>
               </div>
             </form>

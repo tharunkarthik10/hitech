@@ -22,6 +22,12 @@ export interface CatalogDepartment {
   categories: CatalogCategory[];
 }
 
+export interface ProductDimensionRow {
+  param: string;
+  dimension: string;
+  notes?: string;
+}
+
 export interface ProductDetailItem {
   id: string;
   title: string;
@@ -31,6 +37,7 @@ export interface ProductDetailItem {
   description: string;
   features: string[];
   imageUrl: string;
+  dimensions?: ProductDimensionRow[];
 }
 
 export const CATALOG_DATA: CatalogDepartment[] = [

@@ -186,6 +186,13 @@ export default function ProductDetail() {
 
   const dimensions = useMemo(() => {
     if (!product) return [];
+    if (product.dimensions && product.dimensions.length > 0) {
+      return product.dimensions.map(d => ({
+        param: d.param,
+        dimension: d.dimension,
+        notes: d.notes || ''
+      }));
+    }
     return getProductDimensions(product);
   }, [product]);
 
