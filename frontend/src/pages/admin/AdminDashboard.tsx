@@ -33,10 +33,7 @@ import {
   Phone, 
   Mail,
   UploadCloud,
-  FileSpreadsheet,
-  Download,
   Table,
-  HelpCircle,
   Image as ImageIcon,
   Sparkles,
   Link2,
@@ -44,14 +41,6 @@ import {
   ChevronRight
 } from 'lucide-react';
 import { compressImage } from '../../utils/imageCompressor';
-
-const SAMPLE_CSV_CONTENT = `Parameter,Available Dimensions / Values,Standard / Tolerance
-Standard Bore Range,Ø 32 / 40 / 50 / 63 / 80 / 100 mm,ISO 15552 standard
-Standard Stroke Range,25 mm – 1000 mm (Custom up to 2500 mm),±0.5 mm stroke tolerance
-Piston Rod Diameter,Ø 12 mm – Ø 32 mm,Hard chrome plated (f7)
-Operating Pressure,1.0 to 10.0 Bar (14.5 to 145 PSI),Proof test: 15.0 Bar
-Port Thread Standards,G 1/8", G 1/4", G 3/8", G 1/2" BSPP,Optional NPT available
-Operating Temperature,-20°C to +80°C (Standard NBR / PU),Viton option up to 150°C`;
 
 const PRESET_DEPARTMENTS = [
   'Pneumatics',
@@ -167,7 +156,6 @@ export const AdminDashboard: React.FC = () => {
   // Products State
   const [products, setProducts] = useState<ProductDetailItem[]>([]);
   const [productSearch, setProductSearch] = useState('');
-  const [productCategoryFilter, setProductCategoryFilter] = useState('All');
   const [editingProduct, setEditingProduct] = useState<ProductDetailItem | null>(null);
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [showUrlFallback, setShowUrlFallback] = useState(false);
@@ -185,7 +173,6 @@ export const AdminDashboard: React.FC = () => {
 
   // File Upload Refs
   const imageFileInputRef = useRef<HTMLInputElement | null>(null);
-  const csvFileInputRef = useRef<HTMLInputElement | null>(null);
 
   // Careers State
   const [jobs, setJobs] = useState<JobPosition[]>([]);
@@ -243,6 +230,12 @@ export const AdminDashboard: React.FC = () => {
 
   // --- PRODUCT MANAGEMENT ---
   const handleOpenNewProduct = () => {
+    const defaultHeaders = ['Parameter', 'Available Dimensions / Values', 'Standard / Tolerance'];
+    const defaultDims: ProductDimensionRow[] = [
+      { param: 'Standard Bore Range', dimension: 'Ø 32, 40, 50, 63, 80 mm', notes: 'ISO 15552', values: ['Standard Bore Range', 'Ø 32, 40, 50, 63, 80 mm', 'ISO 15552'] },
+      { param: 'Operating Pressure', dimension: '1.0 to 10.0 Bar', notes: 'Proof test: 15 Bar', values: ['Operating Pressure', '1.0 to 10.0 Bar', 'Proof test: 15 Bar'] },
+      { param: 'Operating Temperature', dimension: '-20°C to +80°C', notes: 'PU / NBR Seals', values: ['Operating Temperature', '-20°C to +80°C', 'PU / NBR Seals'] }
+    ];
     setEditingProduct({
       id: `prod-${Date.now()}`,
       title: '',
@@ -253,11 +246,8 @@ export const AdminDashboard: React.FC = () => {
       features: ['High durability precision finish', 'ISO standard certified tolerances'],
       imageUrl: '',
       images: [],
-      dimensions: [
-        { param: 'Standard Bore Range', dimension: 'Ø 32, 40, 50, 63, 80 mm', notes: 'ISO 15552' },
-        { param: 'Operating Pressure', dimension: '1.0 to 10.0 Bar', notes: 'Proof test: 15 Bar' },
-        { param: 'Operating Temperature', dimension: '-20°C to +80°C', notes: 'PU / NBR Seals' }
-      ]
+      dimensionHeaders: defaultHeaders,
+      dimensions: defaultDims
     });
     setIsCustomDept(false);
     setIsCustomCategory(false);
@@ -272,18 +262,39 @@ export const AdminDashboard: React.FC = () => {
       ? prod.images 
       : (prod.imageUrl ? [prod.imageUrl] : []);
 
+    const headers = prod.dimensionHeaders && prod.dimensionHeaders.length > 0
+      ? prod.dimensionHeaders
+      : ['Parameter', 'Available Dimensions / Values', 'Standard / Tolerance'];
+
+    const rawDims = prod.dimensions && prod.dimensions.length > 0
+      ? prod.dimensions
+      : [
+          { param: 'Standard Bore Range', dimension: 'Ø 32, 40, 50, 63, 80 mm', notes: 'ISO 15552' },
+          { param: 'Operating Pressure', dimension: '1.0 to 10.0 Bar', notes: 'Proof test: 15 Bar' },
+          { param: 'Operating Temperature', dimension: '-20°C to +80°C', notes: 'PU / NBR Seals' }
+        ];
+
+    const normalizedDims = rawDims.map(row => {
+      const vals = row.values && row.values.length > 0
+        ? [...row.values]
+        : [row.param || '', row.dimension || '', row.notes || ''];
+      while (vals.length < headers.length) vals.push('');
+      return {
+        ...row,
+        param: vals[0] || '',
+        dimension: vals[1] || '',
+        notes: vals[2] || '',
+        values: vals
+      };
+    });
+
     setEditingProduct({ 
       ...prod,
       department: prod.department || 'Pneumatics',
       imageUrl: prod.imageUrl || (initialImages[0] || ''),
       images: initialImages,
-      dimensions: prod.dimensions && prod.dimensions.length > 0 
-        ? prod.dimensions 
-        : [
-            { param: 'Standard Bore Range', dimension: 'Ø 32, 40, 50, 63, 80 mm', notes: 'ISO 15552' },
-            { param: 'Operating Pressure', dimension: '1.0 to 10.0 Bar', notes: 'Proof test: 15 Bar' },
-            { param: 'Operating Temperature', dimension: '-20°C to +80°C', notes: 'PU / NBR Seals' }
-          ]
+      dimensionHeaders: headers,
+      dimensions: normalizedDims
     });
     setIsCustomDept(isCustomD);
     setIsCustomCategory(isCustomC);
@@ -299,11 +310,31 @@ export const AdminDashboard: React.FC = () => {
       ? editingProduct.images
       : (editingProduct.imageUrl ? [editingProduct.imageUrl] : []);
 
+    const headers = editingProduct.dimensionHeaders && editingProduct.dimensionHeaders.length > 0
+      ? editingProduct.dimensionHeaders
+      : ['Parameter', 'Available Dimensions / Values', 'Standard / Tolerance'];
+
+    const cleanDims = (editingProduct.dimensions || []).map(row => {
+      const vals = row.values && row.values.length > 0
+        ? [...row.values]
+        : [row.param || '', row.dimension || '', row.notes || ''];
+      while (vals.length < headers.length) vals.push('');
+      return {
+        ...row,
+        param: vals[0] || '',
+        dimension: vals[1] || '',
+        notes: vals[2] || '',
+        values: vals
+      };
+    });
+
     const productToSave: ProductDetailItem = {
       ...editingProduct,
       imageUrl: images[0] || editingProduct.imageUrl || '',
       images: images,
-      subGroup: editingProduct.category
+      subGroup: editingProduct.category,
+      dimensionHeaders: headers,
+      dimensions: cleanDims
     };
 
     saveStoredProduct(productToSave);
@@ -437,130 +468,141 @@ export const AdminDashboard: React.FC = () => {
   };
 
   // --- TABULAR COLUMN (DIMENSIONS) HANDLING ---
-  const handleAddDimensionRow = () => {
+  const handleAddColumn = () => {
     if (!editingProduct) return;
-    const currentDims = editingProduct.dimensions || [];
+    const currentHeaders = editingProduct.dimensionHeaders && editingProduct.dimensionHeaders.length > 0
+      ? [...editingProduct.dimensionHeaders]
+      : ['Parameter', 'Available Dimensions / Values', 'Standard / Tolerance'];
+    
+    const newColName = `Column ${currentHeaders.length + 1}`;
+    const nextHeaders = [...currentHeaders, newColName];
+
+    const nextDims = (editingProduct.dimensions || []).map(row => {
+      const vals = row.values && row.values.length > 0
+        ? [...row.values]
+        : [row.param || '', row.dimension || '', row.notes || ''];
+      vals.push('');
+      return {
+        ...row,
+        param: vals[0] || '',
+        dimension: vals[1] || '',
+        notes: vals[2] || '',
+        values: vals
+      };
+    });
+
     setEditingProduct({
       ...editingProduct,
-      dimensions: [...currentDims, { param: '', dimension: '', notes: '' }]
+      dimensionHeaders: nextHeaders,
+      dimensions: nextDims
+    });
+    showToast(`Added new column "${newColName}".`);
+  };
+
+  const handleRemoveColumn = (colIndex: number) => {
+    if (!editingProduct) return;
+    const currentHeaders = editingProduct.dimensionHeaders && editingProduct.dimensionHeaders.length > 0
+      ? [...editingProduct.dimensionHeaders]
+      : ['Parameter', 'Available Dimensions / Values', 'Standard / Tolerance'];
+    
+    if (currentHeaders.length <= 1) {
+      alert('The table must have at least one column.');
+      return;
+    }
+
+    const colName = currentHeaders[colIndex];
+    const nextHeaders = currentHeaders.filter((_, i) => i !== colIndex);
+
+    const nextDims = (editingProduct.dimensions || []).map(row => {
+      const vals = row.values && row.values.length > 0
+        ? [...row.values]
+        : [row.param || '', row.dimension || '', row.notes || ''];
+      const filteredVals = vals.filter((_, i) => i !== colIndex);
+      return {
+        ...row,
+        param: filteredVals[0] || '',
+        dimension: filteredVals[1] || '',
+        notes: filteredVals[2] || '',
+        values: filteredVals
+      };
+    });
+
+    setEditingProduct({
+      ...editingProduct,
+      dimensionHeaders: nextHeaders,
+      dimensions: nextDims
+    });
+    showToast(`Removed column "${colName}".`);
+  };
+
+  const handleUpdateColumnHeader = (colIndex: number, newTitle: string) => {
+    if (!editingProduct) return;
+    const currentHeaders = editingProduct.dimensionHeaders && editingProduct.dimensionHeaders.length > 0
+      ? [...editingProduct.dimensionHeaders]
+      : ['Parameter', 'Available Dimensions / Values', 'Standard / Tolerance'];
+    
+    currentHeaders[colIndex] = newTitle;
+    setEditingProduct({
+      ...editingProduct,
+      dimensionHeaders: currentHeaders
     });
   };
 
-  const handleUpdateDimensionRow = (index: number, field: keyof ProductDimensionRow, value: string) => {
-    if (!editingProduct) return;
-    const currentDims = [...(editingProduct.dimensions || [])];
-    currentDims[index] = {
-      ...currentDims[index],
-      [field]: value
+  const handleUpdateCell = (rowIndex: number, colIndex: number, value: string) => {
+    if (!editingProduct || !editingProduct.dimensions) return;
+    const currentHeaders = editingProduct.dimensionHeaders && editingProduct.dimensionHeaders.length > 0
+      ? editingProduct.dimensionHeaders
+      : ['Parameter', 'Available Dimensions / Values', 'Standard / Tolerance'];
+
+    const nextDims = [...editingProduct.dimensions];
+    const row = nextDims[rowIndex];
+    const vals = row.values && row.values.length > 0
+      ? [...row.values]
+      : [row.param || '', row.dimension || '', row.notes || ''];
+    
+    while (vals.length < currentHeaders.length) vals.push('');
+    vals[colIndex] = value;
+
+    nextDims[rowIndex] = {
+      ...row,
+      param: vals[0] || '',
+      dimension: vals[1] || '',
+      notes: vals[2] || '',
+      values: vals
     };
+
     setEditingProduct({
       ...editingProduct,
-      dimensions: currentDims
+      dimensions: nextDims
+    });
+  };
+
+  const handleAddDimensionRow = () => {
+    if (!editingProduct) return;
+    const currentHeaders = editingProduct.dimensionHeaders && editingProduct.dimensionHeaders.length > 0
+      ? editingProduct.dimensionHeaders
+      : ['Parameter', 'Available Dimensions / Values', 'Standard / Tolerance'];
+
+    const emptyVals = new Array(currentHeaders.length).fill('');
+    const newRow: ProductDimensionRow = {
+      param: '',
+      dimension: '',
+      notes: '',
+      values: emptyVals
+    };
+
+    setEditingProduct({
+      ...editingProduct,
+      dimensions: [...(editingProduct.dimensions || []), newRow]
     });
   };
 
   const handleRemoveDimensionRow = (index: number) => {
-    if (!editingProduct) return;
-    const currentDims = [...(editingProduct.dimensions || [])];
-    currentDims.splice(index, 1);
+    if (!editingProduct || !editingProduct.dimensions) return;
     setEditingProduct({
       ...editingProduct,
-      dimensions: currentDims
+      dimensions: editingProduct.dimensions.filter((_, i) => i !== index)
     });
-  };
-
-  const handleCsvUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const text = event.target?.result as string;
-      if (!text) return;
-
-      const lines = text.split(/\r\n|\n/).filter(line => line.trim().length > 0);
-      const parsedRows: ProductDimensionRow[] = [];
-
-      // Check if header row exists
-      const hasHeader = lines[0].toLowerCase().includes('param') || lines[0].toLowerCase().includes('dimension');
-      const startIdx = hasHeader ? 1 : 0;
-
-      for (let i = startIdx; i < lines.length; i++) {
-        const separator = lines[i].includes('\t') ? '\t' : (lines[i].includes(';') ? ';' : ',');
-        const parts = lines[i].split(separator).map(s => s.trim().replace(/^["']|["']$/g, ''));
-        if (parts.length >= 2) {
-          parsedRows.push({
-            param: parts[0] || '',
-            dimension: parts[1] || '',
-            notes: parts[2] || ''
-          });
-        }
-      }
-
-      if (parsedRows.length > 0 && editingProduct) {
-        setEditingProduct({
-          ...editingProduct,
-          dimensions: parsedRows
-        });
-        showToast(`Imported ${parsedRows.length} tabular specification rows from CSV.`);
-      } else {
-        alert('Could not parse rows from CSV. Please ensure the format is: Parameter, Dimension, Notes');
-      }
-    };
-    reader.readAsText(file);
-    // Reset input
-    e.target.value = '';
-  };
-
-  const handleDownloadSampleCsv = () => {
-    const blob = new Blob([SAMPLE_CSV_CONTENT], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', 'hitech_product_specifications_template.csv');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    showToast('Downloaded sample specifications CSV template.');
-  };
-
-  const handleLoadPresetTemplate = (templateName: 'pneumatics' | 'hydraulics' | 'actuator') => {
-    if (!editingProduct) return;
-    let templateRows: ProductDimensionRow[] = [];
-
-    if (templateName === 'pneumatics') {
-      templateRows = [
-        { param: 'Standard Bore Diameters', dimension: 'Ø 32, 40, 50, 63, 80, 100, 125 mm', notes: 'ISO 15552 standard' },
-        { param: 'Standard Stroke Range', dimension: '25 mm – 1000 mm (Custom up to 2500 mm)', notes: '±0.5 mm stroke tolerance' },
-        { param: 'Piston Rod Diameter', dimension: 'Ø 12 mm – Ø 32 mm', notes: 'Hard chrome plated (f7)' },
-        { param: 'Operating Pressure', dimension: '1.0 to 10.0 Bar (14.5 to 145 PSI)', notes: 'Proof test: 15.0 Bar' },
-        { param: 'Port Thread Standards', dimension: 'G 1/8", G 1/4", G 3/8", G 1/2" BSPP', notes: 'Optional NPT available' },
-        { param: 'Operating Temperature', dimension: '-20°C to +80°C (Standard NBR / PU)', notes: 'Viton option up to 150°C' }
-      ];
-    } else if (templateName === 'hydraulics') {
-      templateRows = [
-        { param: 'Cylinder Bore Range', dimension: 'Ø 40 mm to Ø 350 mm', notes: 'Honed seamless tubes (H8)' },
-        { param: 'Piston Rod Diameter', dimension: 'Ø 22 mm to Ø 180 mm', notes: 'Induction hardened chrome' },
-        { param: 'Stroke Capacity', dimension: 'Up to 3000 mm', notes: 'Cushioned end-caps' },
-        { param: 'Working Pressure Rating', dimension: 'Up to 350 Bar (5,000 PSI)', notes: 'Hydrostatic test 500 Bar' },
-        { param: 'Mounting Styles', dimension: 'Flange, Clevis, Trunnion, Foot, Lug', notes: 'ISO 6020-2 / DIN 24554' },
-        { param: 'Fluid Compatibility', dimension: 'Mineral oils (HL, HLP), Glycols', notes: 'FKM / Polyurethane seals' }
-      ];
-    } else {
-      templateRows = [
-        { param: 'Effective Stroke Length', dimension: '50 mm – 1500 mm', notes: 'Configurable in 5mm steps' },
-        { param: 'Max Thrust / Payload', dimension: '500 N to 15,000 N', notes: 'Dynamic load verified' },
-        { param: 'Positional Repeatability', dimension: '±0.02 mm (Ballscrew) / ±0.05 mm (Belt)', notes: 'Ground precision grade' },
-        { param: 'Max Linear Velocity', dimension: 'Up to 1.2 m/s', notes: 'Application dependent' },
-        { param: 'Duty Cycle', dimension: '100% Continuous Industrial Duty', notes: 'IP65 enclosed casing' }
-      ];
-    }
-
-    setEditingProduct({
-      ...editingProduct,
-      dimensions: templateRows
-    });
-    showToast(`Loaded ${templateName.toUpperCase()} technical specifications.`);
   };
 
   // --- JOB ACTIONS ---
@@ -626,13 +668,13 @@ export const AdminDashboard: React.FC = () => {
   };
 
   // Filtered Products
-  const categories = ['All', ...Array.from(new Set(products.map(p => p.category)))];
   const filteredProducts = products.filter(p => {
-    const matchesSearch = p.title.toLowerCase().includes(productSearch.toLowerCase()) || 
-                          p.category.toLowerCase().includes(productSearch.toLowerCase()) ||
-                          p.description.toLowerCase().includes(productSearch.toLowerCase());
-    const matchesCategory = productCategoryFilter === 'All' || p.category === productCategoryFilter;
-    return matchesSearch && matchesCategory;
+    const q = productSearch.toLowerCase().trim();
+    if (!q) return true;
+    return p.title.toLowerCase().includes(q) || 
+           p.category.toLowerCase().includes(q) ||
+           (p.department && p.department.toLowerCase().includes(q)) ||
+           p.description.toLowerCase().includes(q);
   });
 
   // Filtered Jobs
@@ -684,7 +726,7 @@ export const AdminDashboard: React.FC = () => {
           <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-slate-100 border border-slate-200 rounded-full text-xs">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span className="text-slate-700 font-mono text-[11px] font-medium">
-              {currentUser?.email || 'admin@hitechengineering.com'}
+              {currentUser?.email || 'contact@hitechengineering.works'}
             </span>
             {currentUser?.isLocalFallback && (
               <span className="text-[9px] uppercase px-1.5 py-0.5 rounded bg-blue-100 text-[#0086c9] font-bold">
@@ -805,33 +847,16 @@ export const AdminDashboard: React.FC = () => {
         {activeTab === 'products' && (
           <div className="space-y-5 sm:space-y-6">
             {/* Filter Bar */}
-            <div className="flex flex-col md:flex-row gap-3 sm:gap-4 justify-between items-stretch md:items-center bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200 shadow-xs">
-              <div className="relative w-full md:w-80">
+            <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200 shadow-xs">
+              <div className="relative w-full">
                 <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
                   type="text"
                   value={productSearch}
                   onChange={(e) => setProductSearch(e.target.value)}
-                  placeholder="Search products by title, category, spec..."
-                  className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
+                  placeholder="Search products by title, category, department, or specs..."
+                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-[#00A6FB] transition-colors"
                 />
-              </div>
-
-              {/* Category Pills */}
-              <div className="flex flex-wrap gap-1.5 sm:gap-2 w-full md:w-auto">
-                {categories.map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => setProductCategoryFilter(cat)}
-                    className={`px-3 py-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
-                      productCategoryFilter === cat
-                        ? 'bg-[#00A6FB] text-white font-bold shadow-xs'
-                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900 font-medium'
-                    }`}
-                  >
-                    {cat}
-                  </button>
-                ))}
               </div>
             </div>
 
@@ -1007,10 +1032,10 @@ export const AdminDashboard: React.FC = () => {
                 <Package className="w-12 h-12 text-slate-300 mx-auto mb-3" />
                 <p className="text-slate-600 text-sm font-semibold">No products found matching your filter.</p>
                 <button
-                  onClick={() => { setProductSearch(''); setProductCategoryFilter('All'); }}
+                  onClick={() => setProductSearch('')}
                   className="mt-3 text-xs text-[#00A6FB] font-semibold hover:underline"
                 >
-                  Clear search filters
+                  Clear search
                 </button>
               </div>
             )}
@@ -1585,41 +1610,23 @@ export const AdminDashboard: React.FC = () => {
                     </p>
                   </div>
 
-                  {/* Hidden CSV Input */}
-                  <input
-                    type="file"
-                    accept=".csv,.txt"
-                    ref={csvFileInputRef}
-                    onChange={handleCsvUpload}
-                    className="hidden"
-                  />
-
-                  {/* Table Actions Toolbar */}
+                  {/* Table Actions Toolbar: Add Column & Add Row */}
                   <div className="flex flex-wrap items-center gap-2">
                     <button
                       type="button"
-                      onClick={() => csvFileInputRef.current?.click()}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-bold border border-emerald-200 transition-colors shadow-2xs"
-                      title="Upload CSV exported from Excel or Google Sheets"
+                      onClick={handleAddColumn}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-bold border border-emerald-200 transition-colors shadow-2xs cursor-pointer"
+                      title="Add a new column to the table"
                     >
-                      <FileSpreadsheet className="w-3.5 h-3.5" />
-                      Import CSV
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={handleDownloadSampleCsv}
-                      className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-100 text-slate-600 text-xs font-medium border border-slate-200 transition-colors shadow-2xs"
-                      title="Download a template CSV to fill in Excel"
-                    >
-                      <Download className="w-3.5 h-3.5" />
-                      Sample CSV
+                      <Plus className="w-3.5 h-3.5" />
+                      Add Column
                     </button>
 
                     <button
                       type="button"
                       onClick={handleAddDimensionRow}
-                      className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#00A6FB] hover:bg-[#0095e0] text-white text-xs font-bold shadow-2xs transition-colors"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#00A6FB] hover:bg-[#0095e0] text-white text-xs font-bold shadow-2xs transition-colors cursor-pointer"
+                      title="Add a new row to the table"
                     >
                       <Plus className="w-3.5 h-3.5" />
                       Add Row
@@ -1627,109 +1634,89 @@ export const AdminDashboard: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Quick Presets Bar */}
-                <div className="flex flex-wrap items-center gap-2 pt-1 text-xs text-slate-600 border-t border-slate-200/60">
-                  <span className="font-semibold text-slate-500">Quick Templates:</span>
-                  <button
-                    type="button"
-                    onClick={() => handleLoadPresetTemplate('pneumatics')}
-                    className="px-2.5 py-1 rounded-md bg-white hover:bg-blue-50 text-[#0086c9] border border-slate-200 font-medium text-[11px] transition-colors"
-                  >
-                    Pneumatics Preset
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleLoadPresetTemplate('hydraulics')}
-                    className="px-2.5 py-1 rounded-md bg-white hover:bg-blue-50 text-[#0086c9] border border-slate-200 font-medium text-[11px] transition-colors"
-                  >
-                    Hydraulics Preset
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleLoadPresetTemplate('actuator')}
-                    className="px-2.5 py-1 rounded-md bg-white hover:bg-blue-50 text-[#0086c9] border border-slate-200 font-medium text-[11px] transition-colors"
-                  >
-                    Linear Actuators Preset
-                  </button>
-                </div>
+                {/* Interactive Dynamic Column & Row Table */}
+                {(() => {
+                  const headers = editingProduct.dimensionHeaders && editingProduct.dimensionHeaders.length > 0
+                    ? editingProduct.dimensionHeaders
+                    : ['Parameter', 'Available Dimensions / Values', 'Standard / Tolerance'];
 
-                {/* Interactive Table */}
-                <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-2xs">
-                  <table className="w-full text-left text-xs border-collapse min-w-[560px]">
-                    <thead className="bg-slate-100 border-b border-slate-200 text-slate-700 font-bold uppercase tracking-wider text-[11px]">
-                      <tr>
-                        <th className="py-2.5 px-3 w-1/3">Parameter</th>
-                        <th className="py-2.5 px-3 w-1/3">Available Dimensions / Values</th>
-                        <th className="py-2.5 px-3">Standard / Tolerance</th>
-                        <th className="py-2.5 px-2 text-center w-12">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100">
-                      {(editingProduct.dimensions && editingProduct.dimensions.length > 0) ? (
-                        editingProduct.dimensions.map((row, idx) => (
-                          <tr key={idx} className="hover:bg-slate-50/70 transition-colors">
-                            <td className="p-2">
-                              <input
-                                type="text"
-                                value={row.param}
-                                onChange={(e) => handleUpdateDimensionRow(idx, 'param', e.target.value)}
-                                placeholder="e.g. Standard Bore Range"
-                                className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
-                              />
-                            </td>
-                            <td className="p-2">
-                              <input
-                                type="text"
-                                value={row.dimension}
-                                onChange={(e) => handleUpdateDimensionRow(idx, 'dimension', e.target.value)}
-                                placeholder="e.g. Ø 32, 40, 50, 63, 80 mm"
-                                className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
-                              />
-                            </td>
-                            <td className="p-2">
-                              <input
-                                type="text"
-                                value={row.notes || ''}
-                                onChange={(e) => handleUpdateDimensionRow(idx, 'notes', e.target.value)}
-                                placeholder="e.g. ISO 15552 / ±0.5 mm"
-                                className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-600 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
-                              />
-                            </td>
-                            <td className="p-2 text-center">
-                              <button
-                                type="button"
-                                onClick={() => handleRemoveDimensionRow(idx)}
-                                className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                                title="Remove row"
-                              >
-                                <Trash2 className="w-4 h-4" />
-                              </button>
-                            </td>
+                  return (
+                    <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-2xs">
+                      <table className="w-full text-left text-xs border-collapse min-w-[560px]">
+                        <thead className="bg-slate-100 border-b border-slate-200 text-slate-700 font-bold uppercase tracking-wider text-[11px]">
+                          <tr>
+                            {headers.map((h, colIdx) => (
+                              <th key={colIdx} className="py-2.5 px-3 min-w-[170px]">
+                                <div className="flex items-center gap-1.5 group">
+                                  <input
+                                    type="text"
+                                    value={h}
+                                    onChange={(e) => handleUpdateColumnHeader(colIdx, e.target.value)}
+                                    placeholder={`Column ${colIdx + 1}`}
+                                    className="w-full bg-transparent border-b border-transparent hover:border-slate-300 focus:border-[#00A6FB] px-1 py-0.5 font-bold uppercase text-[11px] text-slate-800 focus:outline-none transition-colors"
+                                    title="Click to rename column header"
+                                  />
+                                  {headers.length > 1 && (
+                                    <button
+                                      type="button"
+                                      onClick={() => handleRemoveColumn(colIdx)}
+                                      className="opacity-40 group-hover:opacity-100 p-1 text-slate-400 hover:text-red-600 rounded transition-opacity cursor-pointer shrink-0"
+                                      title="Delete this column"
+                                    >
+                                      <X className="w-3.5 h-3.5" />
+                                    </button>
+                                  )}
+                                </div>
+                              </th>
+                            ))}
+                            <th className="py-2.5 px-2 text-center w-12 shrink-0">Action</th>
                           </tr>
-                        ))
-                      ) : (
-                        <tr>
-                          <td colSpan={4} className="py-6 text-center text-slate-400 italic">
-                            No specification rows added yet. Click "+ Add Row", "Import CSV", or select a Quick Template above.
-                          </td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100">
+                          {(editingProduct.dimensions && editingProduct.dimensions.length > 0) ? (
+                            editingProduct.dimensions.map((row, rowIdx) => {
+                              const cells = row.values && row.values.length > 0
+                                ? row.values
+                                : [row.param || '', row.dimension || '', row.notes || ''];
 
-                {/* Helpful Guide Note */}
-                <div className="bg-blue-50/70 border border-blue-200/80 rounded-xl p-3 flex items-start gap-2.5 text-xs text-blue-900">
-                  <HelpCircle className="w-4 h-4 text-[#00A6FB] shrink-0 mt-0.5" />
-                  <div>
-                    <strong>How to manage tabular columns:</strong>
-                    <ul className="list-disc list-inside mt-1 space-y-0.5 text-blue-800 text-[11px]">
-                      <li><strong>Inline editing:</strong> Simply type into the cells above and click <em>"+ Add Row"</em> to add new specs.</li>
-                      <li><strong>CSV Upload:</strong> Click <em>"Import CSV"</em> to upload an Excel file exported as <code>.csv</code> (Columns: Parameter, Dimensions, Notes).</li>
-                      <li><strong>Download template:</strong> Use <em>"Sample CSV"</em> to get a pre-formatted file ready for spreadsheet tools.</li>
-                    </ul>
-                  </div>
-                </div>
+                              return (
+                                <tr key={rowIdx} className="hover:bg-slate-50/70 transition-colors">
+                                  {headers.map((_, colIdx) => (
+                                    <td key={colIdx} className="p-2">
+                                      <input
+                                        type="text"
+                                        value={cells[colIdx] || ''}
+                                        onChange={(e) => handleUpdateCell(rowIdx, colIdx, e.target.value)}
+                                        placeholder={`Enter ${headers[colIdx]}...`}
+                                        className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
+                                      />
+                                    </td>
+                                  ))}
+                                  <td className="p-2 text-center shrink-0">
+                                    <button
+                                      type="button"
+                                      onClick={() => handleRemoveDimensionRow(rowIdx)}
+                                      className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
+                                      title="Remove row"
+                                    >
+                                      <Trash2 className="w-4 h-4" />
+                                    </button>
+                                  </td>
+                                </tr>
+                              );
+                            })
+                          ) : (
+                            <tr>
+                              <td colSpan={headers.length + 1} className="py-6 text-center text-slate-400 italic">
+                                No specification rows added yet. Click "+ Add Row" or "+ Add Column" to build your table.
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                  );
+                })()}
               </div>
 
               {/* Description & Features */}

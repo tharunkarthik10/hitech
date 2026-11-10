@@ -73,6 +73,7 @@ interface DimensionRow {
   param: string;
   dimension: string;
   notes: string;
+  values?: string[];
 }
 
 // Engineering dimensions formatted in uniform black/grey
@@ -194,7 +195,8 @@ export default function ProductDetail() {
       return product.dimensions.map(d => ({
         param: d.param,
         dimension: d.dimension,
-        notes: d.notes || ''
+        notes: d.notes || '',
+        values: d.values
       }));
     }
     return getProductDimensions(product);
@@ -429,32 +431,47 @@ export default function ProductDetail() {
                 </h3>
               </div>
 
-              <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-2xs">
-                <table className="w-full text-left text-xs sm:text-sm border-collapse">
-                  <thead className="bg-[#f8f9fa] border-b border-gray-200 text-gray-700 font-bold uppercase tracking-wider text-[11px]">
-                    <tr>
-                      <th className="py-3.5 px-4 sm:px-5">Parameter</th>
-                      <th className="py-3.5 px-4 sm:px-5">Available Dimensions / Values</th>
-                      <th className="py-3.5 px-4 sm:px-5 hidden md:table-cell">Standard / Tolerance</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-100 bg-white">
-                    {dimensions.map((row, idx) => (
-                      <tr key={idx} className="hover:bg-gray-50 transition-colors">
-                        <td className="py-3 px-4 sm:px-5 font-semibold text-gray-900 whitespace-nowrap">
-                          {row.param}
-                        </td>
-                        <td className="py-3 px-4 sm:px-5 font-medium text-gray-900">
-                          {row.dimension}
-                        </td>
-                        <td className="py-3 px-4 sm:px-5 text-gray-600 hidden md:table-cell">
-                          {row.notes}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              {(() => {
+                const headers = product.dimensionHeaders && product.dimensionHeaders.length > 0
+                  ? product.dimensionHeaders
+                  : ['Parameter', 'Available Dimensions / Values', 'Standard / Tolerance'];
+
+                return (
+                  <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-2xs">
+                    <table className="w-full text-left text-xs sm:text-sm border-collapse min-w-[500px]">
+                      <thead className="bg-[#f8f9fa] border-b border-gray-200 text-gray-700 font-bold uppercase tracking-wider text-[11px]">
+                        <tr>
+                          {headers.map((h, i) => (
+                            <th key={i} className="py-3.5 px-4 sm:px-5 whitespace-nowrap">
+                              {h}
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-100 bg-white">
+                        {dimensions.map((row, idx) => {
+                          const cells = row.values && row.values.length > 0
+                            ? row.values
+                            : [row.param, row.dimension, row.notes || ''];
+
+                          return (
+                            <tr key={idx} className="hover:bg-gray-50 transition-colors">
+                              {headers.map((_, colIdx) => (
+                                <td
+                                  key={colIdx}
+                                  className={`py-3 px-4 sm:px-5 ${colIdx === 0 ? 'font-semibold text-gray-900 whitespace-nowrap' : 'font-medium text-gray-700'}`}
+                                >
+                                  {cells[colIdx] || '—'}
+                                </td>
+                              ))}
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                );
+              })()}
             </div>
 
             {/* Inquire CTA Button: Bright Blue Accent */}

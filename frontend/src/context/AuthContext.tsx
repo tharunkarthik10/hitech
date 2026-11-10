@@ -73,7 +73,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const loginWithEmail = async (email: string, pass: string): Promise<{ success: boolean; error?: string }> => {
-    // Try Firebase Auth first
+    // Check target admin credentials first
+    const isTargetAdmin = email.trim().toLowerCase() === 'contact@hitechengineering.works' && pass === 'bennetbennet';
+    if (isTargetAdmin) {
+      const user: AdminUser = {
+        uid: 'hitech-admin-official',
+        email: 'contact@hitechengineering.works',
+        displayName: 'Hitech Administrator',
+        role: 'admin',
+        isLocalFallback: true
+      };
+      setCurrentUser(user);
+      localStorage.setItem(LOCAL_ADMIN_KEY, JSON.stringify(user));
+      return { success: true };
+    }
+
+    // Try Firebase Auth
     try {
       const cred = await signInWithEmailAndPassword(auth, email, pass);
       const user: AdminUser = {
@@ -87,12 +102,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       localStorage.setItem(LOCAL_ADMIN_KEY, JSON.stringify(user));
       return { success: true };
     } catch (fbErr: any) {
-      console.warn('Firebase signIn failed, evaluating master credentials fallback:', fbErr);
+      console.warn('Firebase signIn failed, evaluating fallback:', fbErr);
       
-      // Fallback check: Allow standard admin credentials or master admin access
       const isMasterAdmin = (email.trim().toLowerCase() === 'admin@hitechengineering.com' && pass === 'admin123') ||
-                            (email.trim().toLowerCase() === 'admin@hitech.com' && pass === 'admin123') ||
-                            (email.includes('admin') && pass.length >= 6);
+                            (email.trim().toLowerCase() === 'admin@hitech.com' && pass === 'admin123');
 
       if (isMasterAdmin) {
         const fallbackUser: AdminUser = {
@@ -107,11 +120,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { success: true };
       }
 
-      let message = fbErr.message || 'Authentication failed. Please verify credentials.';
+      let message = 'Invalid email or password. Please check your credentials.';
       if (fbErr.code === 'auth/invalid-credential' || fbErr.code === 'auth/wrong-password' || fbErr.code === 'auth/user-not-found') {
-        message = 'Invalid email or password. Use your Firebase credentials or master admin: admin@hitechengineering.com / admin123';
-      } else if (fbErr.code === 'auth/operation-not-allowed') {
-        message = 'Email/password sign-in is disabled in Firebase Console. You can use master admin login: admin@hitechengineering.com / admin123.';
+        message = 'Invalid email or password. Please use authorized credentials.';
       }
 
       return { success: false, error: message };
@@ -141,7 +152,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const loginAsDemoAdmin = () => {
     const demo: AdminUser = {
       uid: 'demo-admin-id',
-      email: 'admin@hitechengineering.com',
+      email: 'contact@hitechengineering.works',
       displayName: 'Hitech Lead Admin',
       role: 'admin',
       isLocalFallback: true

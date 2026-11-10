@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { Shield, Lock, Mail, ArrowRight, Eye, EyeOff, AlertCircle, ArrowLeft, KeyRound } from 'lucide-react';
+import { Shield, Lock, Mail, ArrowRight, Eye, EyeOff, AlertCircle, ArrowLeft } from 'lucide-react';
 
 const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -9,7 +9,7 @@ const AdminLogin: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const { loginWithEmail, loginAsDemoAdmin, currentUser } = useAuth();
+  const { loginWithEmail, currentUser } = useAuth();
   const navigate = useNavigate();
 
   // If already logged in, redirect directly to dashboard
@@ -38,11 +38,6 @@ const AdminLogin: React.FC = () => {
     }
   };
 
-  const handleQuickDemo = () => {
-    loginAsDemoAdmin();
-    navigate('/admin');
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-blue-50/40 text-slate-800 flex flex-col justify-center items-center px-4 py-12 relative overflow-hidden select-none font-sans">
       {/* Background Decorative Grid */}
@@ -59,9 +54,6 @@ const AdminLogin: React.FC = () => {
           <ArrowLeft className="w-4 h-4 text-slate-600" />
           Back to Hitech Engineering
         </Link>
-        <span className="text-[11px] font-mono uppercase tracking-wider text-[#0086c9] bg-blue-50 px-3 py-1 rounded-full border border-blue-200/80 font-semibold shadow-sm">
-          Firebase Auth v11
-        </span>
       </div>
 
       {/* Login Card */}
@@ -99,7 +91,7 @@ const AdminLogin: React.FC = () => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@hitechengineering.com"
+                placeholder="contact@hitechengineering.works"
                 required
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:bg-white focus:border-[#00A6FB] focus:ring-2 focus:ring-[#00A6FB]/20 transition-all"
               />
@@ -150,35 +142,6 @@ const AdminLogin: React.FC = () => {
             )}
           </button>
         </form>
-
-        {/* Divider */}
-        <div className="relative my-6">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-slate-200" />
-          </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white px-3 text-slate-400 font-mono tracking-wider font-semibold">
-              Or Instant Access
-            </span>
-          </div>
-        </div>
-
-        {/* 1-Click Master Admin Access */}
-        <button
-          type="button"
-          onClick={handleQuickDemo}
-          className="w-full py-2.5 bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 hover:text-slate-900 text-xs font-semibold rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm"
-        >
-          <KeyRound className="w-3.5 h-3.5 text-[#00A6FB]" />
-          Instant Admin Access (Demo / Master Mode)
-        </button>
-
-        {/* Security badge footer */}
-        <div className="mt-6 pt-4 border-t border-slate-100 text-center">
-          <p className="text-[11px] text-slate-400 font-mono">
-            Secure 256-bit AES Authenticated Session
-          </p>
-        </div>
       </div>
     </div>
   );
