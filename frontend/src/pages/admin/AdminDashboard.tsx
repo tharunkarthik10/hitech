@@ -50,6 +50,115 @@ Operating Pressure,1.0 to 10.0 Bar (14.5 to 145 PSI),Proof test: 15.0 Bar
 Port Thread Standards,G 1/8", G 1/4", G 3/8", G 1/2" BSPP,Optional NPT available
 Operating Temperature,-20°C to +80°C (Standard NBR / PU),Viton option up to 150°C`;
 
+const PRESET_DEPARTMENTS = [
+  'Factory Automation',
+  'Didactics (Skilling & Education)',
+  'Heavy Engineering',
+  'Custom Department...'
+];
+
+const PRESET_CATEGORIES_BY_DEPT: Record<string, string[]> = {
+  'Factory Automation': [
+    'Pneumatics',
+    'Electric Actuators',
+    'Robotics',
+    'Vacuum',
+    'Hydraulics',
+    'Electric',
+    'Servo Systems & Gearbox'
+  ],
+  'Didactics (Skilling & Education)': [
+    'Educational Test Rigs',
+    'Training Benches',
+    'Cut-Section Working Models'
+  ],
+  'Heavy Engineering': [
+    'Heavy Fabrication',
+    '5-Axis Precision Machining',
+    'Laser Cut Components'
+  ]
+};
+
+const PRESET_SUBGROUPS_BY_CAT: Record<string, string[]> = {
+  Pneumatics: [
+    'Cylinders',
+    'Air Preparation Unit',
+    'Directional Control Valve',
+    'One Touch Fittings',
+    'Compact Valves',
+    'Pneumatic Grippers',
+    'Mountings & Accessories'
+  ],
+  Hydraulics: [
+    'Hydraulic Power Units',
+    'Control Components',
+    'Hydraulic Cylinders',
+    'Proportional Valves'
+  ],
+  'Electric Actuators': [
+    'Linear Actuators',
+    'Motion Drive Modules',
+    'Rodless Cylinders',
+    'Precision Slides'
+  ],
+  Robotics: [
+    '6-Axis Robots',
+    'SCARA Robots',
+    'Delta Robots',
+    'Robotic Grippers'
+  ],
+  Vacuum: [
+    'Vacuum Generators & Cups',
+    'Suction Pads',
+    'Ejectors',
+    'Vacuum Switches'
+  ],
+  Electric: [
+    'AC Drives & Inverters',
+    'Servo Motors',
+    'Sensors & Transducers'
+  ],
+  'Servo Systems & Gearbox': [
+    'Planetary Gearboxes',
+    'Servo Drives',
+    'Precision Reducers'
+  ],
+  'Educational Test Rigs': [
+    'Pneumatics Trainers',
+    'Hydraulics Cut-Section Rigs',
+    'PLC Automation Panels'
+  ]
+};
+
+const JOB_DEPARTMENTS = [
+  'Manufacturing',
+  'Fabrication',
+  'R&D / Systems',
+  'Quality Control',
+  'Engineering',
+  'Operations & Supply Chain',
+  'Custom Department...'
+];
+
+const JOB_LOCATIONS = [
+  'Coimbatore Facility (Unit 1)',
+  'Coimbatore Facility (Unit 2 - Fast Loop)',
+  'Coimbatore Facility (Unit 3 - Machine Shop)',
+  'Coimbatore Tech Park (R&D Center)',
+  'Custom Location...'
+];
+
+const JOB_EXPERIENCES = [
+  'Fresher / Entry-Level',
+  '1-2 Years',
+  '2+ Years',
+  '3+ Years',
+  '4+ Years',
+  '5+ Years',
+  '8+ Years (Lead / Principal)',
+  'Custom Experience...'
+];
+
 export const AdminDashboard: React.FC = () => {
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
@@ -65,6 +174,15 @@ export const AdminDashboard: React.FC = () => {
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [showUrlFallback, setShowUrlFallback] = useState(false);
   const [isDraggingImage, setIsDraggingImage] = useState(false);
+
+  // Custom Dropdown Fallback States
+  const [isCustomDept, setIsCustomDept] = useState(false);
+  const [isCustomCategory, setIsCustomCategory] = useState(false);
+  const [isCustomSubGroup, setIsCustomSubGroup] = useState(false);
+
+  const [isCustomJobDept, setIsCustomJobDept] = useState(false);
+  const [isCustomJobLocation, setIsCustomJobLocation] = useState(false);
+  const [isCustomJobExp, setIsCustomJobExp] = useState(false);
 
   // File Upload Refs
   const imageFileInputRef = useRef<HTMLInputElement | null>(null);
@@ -116,28 +234,51 @@ export const AdminDashboard: React.FC = () => {
     navigate('/admin/login');
   };
 
+  // Dynamic categories based on selected department
+  const currentDeptCategories = React.useMemo(() => {
+    const dept = editingProduct?.department || 'Factory Automation';
+    const presets = PRESET_CATEGORIES_BY_DEPT[dept] || PRESET_CATEGORIES_BY_DEPT['Factory Automation'];
+    const existing = products.filter(p => p.department === dept).map(p => p.category);
+    return Array.from(new Set([...presets, ...existing]));
+  }, [editingProduct?.department, products]);
+
+  // Dynamic subgroups based on selected category
+  const currentCategorySubgroups = React.useMemo(() => {
+    const cat = editingProduct?.category || 'Pneumatics';
+    const presets = PRESET_SUBGROUPS_BY_CAT[cat] || [];
+    const existing = products.filter(p => p.category === cat && p.subGroup).map(p => p.subGroup as string);
+    return Array.from(new Set([...presets, ...existing]));
+  }, [editingProduct?.category, products]);
+
   // --- PRODUCT MANAGEMENT ---
   const handleOpenNewProduct = () => {
     setEditingProduct({
       id: `prod-${Date.now()}`,
       title: '',
       category: 'Pneumatics',
-      subGroup: 'General Components',
+      subGroup: 'Cylinders',
       department: 'Factory Automation',
       description: '',
       features: ['High durability precision finish', 'ISO standard certified tolerances'],
-      imageUrl: 'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=800&auto=format&fit=crop',
+      imageUrl: '',
       dimensions: [
         { param: 'Standard Bore Range', dimension: 'Ø 32, 40, 50, 63, 80 mm', notes: 'ISO 15552' },
         { param: 'Operating Pressure', dimension: '1.0 to 10.0 Bar', notes: 'Proof test: 15 Bar' },
         { param: 'Operating Temperature', dimension: '-20°C to +80°C', notes: 'PU / NBR Seals' }
       ]
     });
+    setIsCustomDept(false);
+    setIsCustomCategory(false);
+    setIsCustomSubGroup(false);
     setShowUrlFallback(false);
     setIsProductModalOpen(true);
   };
 
   const handleEditProduct = (prod: ProductDetailItem) => {
+    const isCustomD = !PRESET_DEPARTMENTS.slice(0, 3).includes(prod.department || '');
+    const isCustomC = !Object.values(PRESET_CATEGORIES_BY_DEPT).flat().includes(prod.category || '');
+    const isCustomS = prod.subGroup ? !Object.values(PRESET_SUBGROUPS_BY_CAT).flat().includes(prod.subGroup) : false;
+
     setEditingProduct({ 
       ...prod,
       dimensions: prod.dimensions && prod.dimensions.length > 0 
@@ -148,6 +289,9 @@ export const AdminDashboard: React.FC = () => {
             { param: 'Operating Temperature', dimension: '-20°C to +80°C', notes: 'PU / NBR Seals' }
           ]
     });
+    setIsCustomDept(isCustomD);
+    setIsCustomCategory(isCustomC);
+    setIsCustomSubGroup(isCustomS);
     setShowUrlFallback(false);
     setIsProductModalOpen(true);
   };
@@ -641,10 +785,10 @@ export const AdminDashboard: React.FC = () => {
                       <div className="text-[11px] font-mono text-slate-400 uppercase tracking-wider mb-1 font-semibold">
                         {prod.subGroup || prod.department || 'Industrial Automation'}
                       </div>
-                      <h3 className="font-heading font-bold text-base text-slate-900 group-hover:text-[#00A6FB] transition-colors line-clamp-1">
+                      <h3 className="font-heading font-bold text-base text-slate-900 group-hover:text-[#00A6FB] transition-colors line-clamp-1 break-words [overflow-wrap:anywhere]">
                         {prod.title}
                       </h3>
-                      <p className="text-xs text-slate-600 mt-2 line-clamp-2 leading-relaxed">
+                      <p className="text-xs text-slate-600 mt-2 line-clamp-2 leading-relaxed break-words [overflow-wrap:anywhere] whitespace-pre-line">
                         {prod.description}
                       </p>
 
@@ -984,39 +1128,142 @@ export const AdminDashboard: React.FC = () => {
                     placeholder="e.g. Tie Rod Pneumatic Cylinder (ISO 15552)"
                   />
                 </div>
+
+                {/* Department Dropdown */}
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Category *</label>
-                  <input
-                    type="text"
-                    value={editingProduct.category}
-                    onChange={(e) => setEditingProduct({ ...editingProduct, category: e.target.value })}
-                    required
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
-                    placeholder="e.g. Pneumatics, Hydraulics, Actuators"
-                  />
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-xs font-semibold text-slate-700">Department *</label>
+                    <button
+                      type="button"
+                      onClick={() => setIsCustomDept(!isCustomDept)}
+                      className="text-[11px] text-[#0086c9] hover:underline"
+                    >
+                      {isCustomDept ? 'Choose from list' : '+ Custom Department'}
+                    </button>
+                  </div>
+                  {isCustomDept ? (
+                    <input
+                      type="text"
+                      value={editingProduct.department || ''}
+                      onChange={(e) => setEditingProduct({ ...editingProduct, department: e.target.value })}
+                      required
+                      className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-[#00A6FB]"
+                      placeholder="Type custom department name..."
+                    />
+                  ) : (
+                    <select
+                      value={editingProduct.department || 'Factory Automation'}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        if (val === 'Custom Department...') {
+                          setIsCustomDept(true);
+                        } else {
+                          const cats = PRESET_CATEGORIES_BY_DEPT[val] || [];
+                          setEditingProduct({
+                            ...editingProduct,
+                            department: val,
+                            category: cats[0] || editingProduct.category
+                          });
+                        }
+                      }}
+                      className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
+                    >
+                      {PRESET_DEPARTMENTS.map(d => (
+                        <option key={d} value={d}>{d}</option>
+                      ))}
+                    </select>
+                  )}
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Category Dropdown */}
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Sub-Group / Series</label>
-                  <input
-                    type="text"
-                    value={editingProduct.subGroup || ''}
-                    onChange={(e) => setEditingProduct({ ...editingProduct, subGroup: e.target.value })}
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
-                    placeholder="e.g. Cylinders, Directional Valves, FRL Units"
-                  />
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-xs font-semibold text-slate-700">Category *</label>
+                    <button
+                      type="button"
+                      onClick={() => setIsCustomCategory(!isCustomCategory)}
+                      className="text-[11px] text-[#0086c9] hover:underline"
+                    >
+                      {isCustomCategory ? 'Choose from list' : '+ Custom Category'}
+                    </button>
+                  </div>
+                  {isCustomCategory ? (
+                    <input
+                      type="text"
+                      value={editingProduct.category}
+                      onChange={(e) => setEditingProduct({ ...editingProduct, category: e.target.value })}
+                      required
+                      className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-[#00A6FB]"
+                      placeholder="Type custom category name..."
+                    />
+                  ) : (
+                    <select
+                      value={editingProduct.category}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        if (val === '__custom__') {
+                          setIsCustomCategory(true);
+                        } else {
+                          const sgs = PRESET_SUBGROUPS_BY_CAT[val] || [];
+                          setEditingProduct({
+                            ...editingProduct,
+                            category: val,
+                            subGroup: sgs[0] || editingProduct.subGroup
+                          });
+                        }
+                      }}
+                      className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
+                    >
+                      {currentDeptCategories.map(cat => (
+                        <option key={cat} value={cat}>{cat}</option>
+                      ))}
+                      <option value="__custom__">+ Custom Category...</option>
+                    </select>
+                  )}
                 </div>
+
+                {/* SubGroup Dropdown */}
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Department</label>
-                  <input
-                    type="text"
-                    value={editingProduct.department || ''}
-                    onChange={(e) => setEditingProduct({ ...editingProduct, department: e.target.value })}
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
-                    placeholder="e.g. Factory Automation, Heavy Machinery"
-                  />
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-xs font-semibold text-slate-700">Sub-Group / Series</label>
+                    <button
+                      type="button"
+                      onClick={() => setIsCustomSubGroup(!isCustomSubGroup)}
+                      className="text-[11px] text-[#0086c9] hover:underline"
+                    >
+                      {isCustomSubGroup ? 'Choose from list' : '+ Custom Sub-Group'}
+                    </button>
+                  </div>
+                  {isCustomSubGroup ? (
+                    <input
+                      type="text"
+                      value={editingProduct.subGroup || ''}
+                      onChange={(e) => setEditingProduct({ ...editingProduct, subGroup: e.target.value })}
+                      className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-[#00A6FB]"
+                      placeholder="Type custom subgroup / series..."
+                    />
+                  ) : (
+                    <select
+                      value={editingProduct.subGroup || ''}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        if (val === '__custom__') {
+                          setIsCustomSubGroup(true);
+                        } else {
+                          setEditingProduct({ ...editingProduct, subGroup: val });
+                        }
+                      }}
+                      className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
+                    >
+                      <option value="">-- Select Sub-Group --</option>
+                      {currentCategorySubgroups.map(sg => (
+                        <option key={sg} value={sg}>{sg}</option>
+                      ))}
+                      <option value="__custom__">+ Custom Sub-Group...</option>
+                    </select>
+                  )}
                 </div>
               </div>
 
@@ -1272,11 +1519,11 @@ export const AdminDashboard: React.FC = () => {
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">Engineering Description *</label>
                 <textarea
-                  rows={3}
+                  rows={4}
                   value={editingProduct.description}
                   onChange={(e) => setEditingProduct({ ...editingProduct, description: e.target.value })}
                   required
-                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB] leading-relaxed resize-y break-words [overflow-wrap:anywhere]"
                   placeholder="Detailed technical description and operating characteristics..."
                 />
               </div>
@@ -1337,7 +1584,7 @@ export const AdminDashboard: React.FC = () => {
             <form onSubmit={handleSaveJob} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Job Title</label>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Job Title *</label>
                   <input
                     type="text"
                     value={editingJob.title}
@@ -1348,29 +1595,85 @@ export const AdminDashboard: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Department</label>
-                  <input
-                    type="text"
-                    value={editingJob.department}
-                    onChange={(e) => setEditingJob({ ...editingJob, department: e.target.value })}
-                    required
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
-                    placeholder="Manufacturing / Fabrication / R&D"
-                  />
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-xs font-semibold text-slate-700">Department *</label>
+                    <button
+                      type="button"
+                      onClick={() => setIsCustomJobDept(!isCustomJobDept)}
+                      className="text-[11px] text-[#0086c9] hover:underline"
+                    >
+                      {isCustomJobDept ? 'Choose from list' : '+ Custom Department'}
+                    </button>
+                  </div>
+                  {isCustomJobDept ? (
+                    <input
+                      type="text"
+                      value={editingJob.department}
+                      onChange={(e) => setEditingJob({ ...editingJob, department: e.target.value })}
+                      required
+                      className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-[#00A6FB]"
+                      placeholder="Type custom department..."
+                    />
+                  ) : (
+                    <select
+                      value={editingJob.department}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        if (val === 'Custom Department...') {
+                          setIsCustomJobDept(true);
+                        } else {
+                          setEditingJob({ ...editingJob, department: val });
+                        }
+                      }}
+                      className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
+                    >
+                      {JOB_DEPARTMENTS.map(d => (
+                        <option key={d} value={d}>{d}</option>
+                      ))}
+                    </select>
+                  )}
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Location</label>
-                  <input
-                    type="text"
-                    value={editingJob.location}
-                    onChange={(e) => setEditingJob({ ...editingJob, location: e.target.value })}
-                    required
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
-                    placeholder="Coimbatore Facility"
-                  />
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-xs font-semibold text-slate-700">Location *</label>
+                    <button
+                      type="button"
+                      onClick={() => setIsCustomJobLocation(!isCustomJobLocation)}
+                      className="text-[11px] text-[#0086c9] hover:underline"
+                    >
+                      {isCustomJobLocation ? 'Choose from list' : '+ Custom Location'}
+                    </button>
+                  </div>
+                  {isCustomJobLocation ? (
+                    <input
+                      type="text"
+                      value={editingJob.location}
+                      onChange={(e) => setEditingJob({ ...editingJob, location: e.target.value })}
+                      required
+                      className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-[#00A6FB]"
+                      placeholder="Type custom location..."
+                    />
+                  ) : (
+                    <select
+                      value={editingJob.location}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        if (val === 'Custom Location...') {
+                          setIsCustomJobLocation(true);
+                        } else {
+                          setEditingJob({ ...editingJob, location: val });
+                        }
+                      }}
+                      className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
+                    >
+                      {JOB_LOCATIONS.map(l => (
+                        <option key={l} value={l}>{l}</option>
+                      ))}
+                    </select>
+                  )}
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">Employment Type</label>
@@ -1386,15 +1689,43 @@ export const AdminDashboard: React.FC = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Experience</label>
-                  <input
-                    type="text"
-                    value={editingJob.experience}
-                    onChange={(e) => setEditingJob({ ...editingJob, experience: e.target.value })}
-                    required
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
-                    placeholder="3+ Years"
-                  />
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-xs font-semibold text-slate-700">Experience *</label>
+                    <button
+                      type="button"
+                      onClick={() => setIsCustomJobExp(!isCustomJobExp)}
+                      className="text-[11px] text-[#0086c9] hover:underline"
+                    >
+                      {isCustomJobExp ? 'Choose from list' : '+ Custom'}
+                    </button>
+                  </div>
+                  {isCustomJobExp ? (
+                    <input
+                      type="text"
+                      value={editingJob.experience}
+                      onChange={(e) => setEditingJob({ ...editingJob, experience: e.target.value })}
+                      required
+                      className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-[#00A6FB]"
+                      placeholder="Type custom experience..."
+                    />
+                  ) : (
+                    <select
+                      value={editingJob.experience}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        if (val === 'Custom Experience...') {
+                          setIsCustomJobExp(true);
+                        } else {
+                          setEditingJob({ ...editingJob, experience: val });
+                        }
+                      }}
+                      className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
+                    >
+                      {JOB_EXPERIENCES.map(exp => (
+                        <option key={exp} value={exp}>{exp}</option>
+                      ))}
+                    </select>
+                  )}
                 </div>
               </div>
 

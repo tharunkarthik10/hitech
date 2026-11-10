@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { CATALOG_DATA } from '../data/products';
 import { getStoredProducts } from '../data/adminStore';
-import { Search, X, ArrowRight, ChevronDown, ChevronUp } from 'lucide-react';
+import { Search, X, ArrowRight, ArrowLeft, ChevronDown, ChevronUp } from 'lucide-react';
 
 export default function Products() {
   const location = useLocation();
@@ -17,6 +17,29 @@ export default function Products() {
   // Desktop & Tablet State (Previous Design)
   const [activeDepartment, setActiveDepartment] = useState<string>('Factory Automation');
   const [activeCategory, setActiveCategory] = useState<string>('Pneumatics');
+  const [viewAllDomain, setViewAllDomain] = useState<{
+    type: 'department' | 'category' | 'subgroup';
+    name: string;
+  } | null>(null);
+
+  // Products under selected "View All" domain
+  const domainProducts = useMemo(() => {
+    if (!viewAllDomain) return [];
+    const target = viewAllDomain.name.toLowerCase().trim();
+    return allProducts.filter(p => {
+      if (viewAllDomain.type === 'department') {
+        return (p.department || '').toLowerCase().trim() === target;
+      }
+      if (viewAllDomain.type === 'category') {
+        return (p.category || '').toLowerCase().trim() === target;
+      }
+      if (viewAllDomain.type === 'subgroup') {
+        return (p.subGroup || '').toLowerCase().trim() === target ||
+               p.title.toLowerCase().includes(target);
+      }
+      return true;
+    });
+  }, [allProducts, viewAllDomain]);
 
   // Mobile State (Simplified Two-Filter + Card Grid Design)
   const [mobileDept, setMobileDept] = useState<string>('All');
@@ -162,30 +185,40 @@ export default function Products() {
                         return (
                           <button
                             key={cat.name}
-                            onClick={() => setActiveCategory(cat.name)}
+                            onClick={() => {
+                              setActiveCategory(cat.name);
+                              setViewAllDomain(null);
+                            }}
                             className={`w-full text-left pl-12 pr-6 py-3 text-[15px] transition-all duration-300 flex items-center gap-3 relative group ${
-                              isCatActive
+                              isCatActive && !viewAllDomain
                                 ? 'font-bold text-[#121212] bg-[#f1f5f9]'
                                 : 'font-medium text-[#64748b] hover:text-[#121212] hover:bg-gray-50'
                             }`}
                           >
                             {/* Animated Left Border Indicator */}
                             <div className={`absolute left-6 top-1 bottom-1 transition-all duration-300 rounded-full ${
-                              isCatActive ? 'w-1 bg-[#00A6FB] opacity-100' : 'w-0 bg-gray-200 opacity-0 group-hover:w-1 group-hover:opacity-100'
+                              isCatActive && !viewAllDomain ? 'w-1 bg-[#00A6FB] opacity-100' : 'w-0 bg-gray-200 opacity-0 group-hover:w-1 group-hover:opacity-100'
                             }`}></div>
                             
                             <CatIcon className={`w-4 h-4 transition-all duration-700 group-hover:rotate-[360deg] group-hover:scale-110 ${
-                              isCatActive ? 'text-[#00A6FB]' : 'text-[#64748b] group-hover:text-[#121212]'
-                            }`} strokeWidth={isCatActive ? 2 : 1.5} />
+                              isCatActive && !viewAllDomain ? 'text-[#00A6FB]' : 'text-[#64748b] group-hover:text-[#121212]'
+                            }`} strokeWidth={isCatActive && !viewAllDomain ? 2 : 1.5} />
                             
                             <span className="relative z-10 tracking-tight">{cat.name}</span>
                           </button>
                         );
                       })}
                       <div className="pl-12 pr-6 py-3 mt-1">
-                        <Link to="#" className="text-sm font-semibold tracking-tight text-[#00A6FB] hover:underline">
+                        <button
+                          onClick={() => setViewAllDomain({ type: 'department', name: dept.name })}
+                          className={`text-sm font-semibold tracking-tight transition-colors ${
+                            viewAllDomain?.type === 'department' && viewAllDomain?.name === dept.name
+                              ? 'text-gray-900 font-bold underline'
+                              : 'text-[#00A6FB] hover:underline'
+                          }`}
+                        >
                           View All
-                        </Link>
+                        </button>
                       </div>
                     </div>
                   )}
@@ -195,9 +228,86 @@ export default function Products() {
           </div>
         </aside>
 
-        {/* Right Content - Hierarchical List */}
+        {/* Right Content - Hierarchical List OR View All Domain Products */}
         <div className="w-full flex-1 bg-white px-6 pt-2 pb-8 lg:px-10 lg:pt-2 lg:pb-10">
-          {currentCategoryData ? (
+          {viewAllDomain ? (
+            <div>
+              {/* Header with back button */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-gray-100">
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <button
+                      onClick={() => setViewAllDomain(null)}
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#00A6FB] hover:text-[#0086c9] bg-blue-50 hover:bg-blue-100 px-3 py-1 rounded-full transition-colors cursor-pointer"
+                    >
+                      <ArrowLeft className="w-3.5 h-3.5" />
+                      Back to Catalog
+                    </button>
+                    <span className="text-[11px] font-mono text-gray-400 uppercase tracking-wider font-semibold">
+                      {viewAllDomain.type} Catalog
+                    </span>
+                  </div>
+                  <h2 className="text-2xl sm:text-3xl font-bold text-[#121212] tracking-tight">
+                    All Products under {viewAllDomain.name}
+                  </h2>
+                </div>
+                <div className="text-xs font-semibold text-gray-500 bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-200">
+                  Showing <strong className="text-gray-900">{domainProducts.length}</strong> Products
+                </div>
+              </div>
+
+              {/* Products Grid */}
+              {domainProducts.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {domainProducts.map((prod) => (
+                    <Link
+                      to={`/products/${prod.id}`}
+                      key={prod.id}
+                      className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-gray-900 hover:shadow-lg transition-all flex flex-col"
+                    >
+                      <div className="aspect-[4/3] bg-gray-50 overflow-hidden relative">
+                        <img
+                          src={prod.imageUrl}
+                          alt={prod.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <span className="absolute top-2.5 left-2.5 bg-white/95 backdrop-blur-sm text-[10px] font-mono text-[#0086c9] font-bold px-2 py-0.5 rounded-full border border-gray-200">
+                          {prod.category}
+                        </span>
+                      </div>
+                      <div className="p-4 flex-1 flex flex-col justify-between">
+                        <div>
+                          <span className="text-[10px] uppercase font-mono text-gray-400 font-semibold block mb-1">
+                            {prod.subGroup || prod.department || 'Component'}
+                          </span>
+                          <h3 className="font-bold text-sm text-gray-900 group-hover:text-[#00A6FB] transition-colors line-clamp-1 break-words">
+                            {prod.title}
+                          </h3>
+                          <p className="text-xs text-gray-600 mt-1 line-clamp-2 leading-relaxed break-words">
+                            {prod.description}
+                          </p>
+                        </div>
+                        <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs text-[#00A6FB] font-semibold group-hover:underline">
+                          <span>View Details</span>
+                          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-20 bg-gray-50 rounded-2xl border border-gray-200">
+                  <p className="text-sm font-semibold text-gray-600">No products found under this section.</p>
+                  <button
+                    onClick={() => setViewAllDomain(null)}
+                    className="mt-3 text-xs text-[#00A6FB] font-bold hover:underline"
+                  >
+                    Return to Catalog
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : currentCategoryData ? (
             <div>
               {/* Category Header */}
               <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-100">
@@ -205,9 +315,12 @@ export default function Products() {
                   {currentCategoryData.name}
                 </h2>
                 <span className="text-gray-300">|</span>
-                <Link to="#" className="text-sm font-semibold tracking-tight text-[#00A6FB] hover:underline">
+                <button 
+                  onClick={() => setViewAllDomain({ type: 'category', name: currentCategoryData.name })}
+                  className="text-sm font-semibold tracking-tight text-[#00A6FB] hover:underline cursor-pointer"
+                >
                   View All
-                </Link>
+                </button>
               </div>
 
               {/* Grid of SubGroups */}
@@ -233,9 +346,12 @@ export default function Products() {
                           </li>
                         ))}
                       </ul>
-                      <Link to="#" className="text-sm font-medium tracking-tight text-[#00A6FB] hover:underline mt-5">
+                      <button 
+                        onClick={() => setViewAllDomain({ type: 'subgroup', name: subGroup.name })}
+                        className="text-sm font-medium tracking-tight text-[#00A6FB] hover:underline mt-5 text-left cursor-pointer"
+                      >
                         View All
-                      </Link>
+                      </button>
                     </div>
                   ))}
                 </div>

@@ -347,13 +347,13 @@ export default function ProductDetail() {
           <div className="lg:col-span-6 xl:col-span-7 space-y-6 sm:space-y-8">
             
             {/* Header: Title & Description Only */}
-            <div className="space-y-3">
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#121212] tracking-tight leading-tight">
+            <div className="space-y-3 max-w-full overflow-hidden">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#121212] tracking-tight leading-tight break-words [overflow-wrap:anywhere]">
                 {product.title}
               </h1>
 
               {/* Product Description */}
-              <p className="text-gray-700 text-sm sm:text-base leading-relaxed pt-1">
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed pt-1 break-words whitespace-pre-line [overflow-wrap:anywhere]">
                 {product.description}
               </p>
             </div>
