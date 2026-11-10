@@ -9,6 +9,7 @@ const scenes = [
   {
     id: "01",
     tag: "01 • Plant Logistics",
+    shortTitle: "Logistics",
     color: "bg-emerald-400",
     cols: [
       { src: "/infra_facility_slice_1.png", label: "Unit 01 • Plant Exterior" },
@@ -19,6 +20,7 @@ const scenes = [
   {
     id: "02",
     tag: "02 • Robotic Arc Cell",
+    shortTitle: "Robotic Arc",
     color: "bg-orange-400",
     cols: [
       { src: "/infra_robot_slice_1.png", label: "Cell 01 • Arc Station" },
@@ -29,6 +31,7 @@ const scenes = [
   {
     id: "03",
     tag: "03 • High-Bay Assembly",
+    shortTitle: "High-Bay",
     color: "bg-blue-400",
     cols: [
       { src: "/infra_bay_slice_1.png", label: "Bay 01 • Parts Storage" },
@@ -94,11 +97,6 @@ export default function SplitTriptychShowcase({
     { ease: smoothStep, clamp: true }
   );
 
-  // Dynamic scene tag indicator for desktop
-  const scene1Opacity = useTransform(smoothProgress, [0.00, 0.25, 0.27], [1, 1, 0], { clamp: true });
-  const scene2Opacity = useTransform(smoothProgress, [0.27, 0.29, 0.61, 0.63], [0, 1, 1, 0], { clamp: true });
-  const scene3Opacity = useTransform(smoothProgress, [0.63, 0.65, 1.00], [0, 1, 1], { clamp: true });
-
   return (
     <div id="infrastructure" className={`w-full relative z-10 pt-4 sm:pt-6 ${className}`}>
       {/* ========================================================================= */}
@@ -122,22 +120,27 @@ export default function SplitTriptychShowcase({
           Multi-bay manufacturing units equipped with heavy manual welding enclosures, high-tonnage gantry beds, and serialized robotic automation lines engineered for uninterrupted OEM output.
         </p>
 
-        {/* Interactive Scene Selector Pills */}
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
-          {scenes.map((scene, idx) => (
-            <button
-              key={scene.id}
-              onClick={() => setMobileScene(idx)}
-              className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono transition-all duration-300 whitespace-nowrap shrink-0 cursor-pointer ${
-                mobileScene === idx
-                  ? "bg-black text-white shadow-md font-bold border border-black"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-200"
-              }`}
-            >
-              <span className={`w-1.5 h-1.5 rounded-full ${scene.color}`} />
-              {scene.tag}
-            </button>
-          ))}
+        {/* Modern Mobile Segmented Tabs */}
+        <div className="w-full p-1 bg-gray-100/90 rounded-xl border border-gray-200/90 flex items-center gap-1">
+          {scenes.map((scene, idx) => {
+            const isActive = mobileScene === idx;
+            return (
+              <button
+                key={scene.id}
+                onClick={() => setMobileScene(idx)}
+                className={`flex-1 py-2 px-1 text-center rounded-lg text-xs font-semibold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer ${
+                  isActive
+                    ? "bg-white text-gray-950 font-bold shadow-xs border border-gray-200/70"
+                    : "text-gray-500 hover:text-gray-800"
+                }`}
+              >
+                <span className={`w-2 h-2 rounded-full ${scene.color} shrink-0`} />
+                <span className="truncate text-xs">
+                  {scene.shortTitle}
+                </span>
+              </button>
+            );
+          })}
         </div>
 
         {/* 3-Column Split Grid with Smooth Cascade Transition */}
@@ -173,6 +176,29 @@ export default function SplitTriptychShowcase({
             ))}
           </div>
         </div>
+
+        {/* Mobile Active Scene Info & Dot Indicators */}
+        <div className="flex items-center justify-between text-xs px-1 pt-1">
+          <div className="flex items-center gap-2">
+            <span className={`w-2 h-2 rounded-full ${scenes[mobileScene].color}`} />
+            <span className="font-semibold text-gray-900 text-xs tracking-tight">
+              {scenes[mobileScene].tag}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-1.5">
+            {scenes.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setMobileScene(i)}
+                className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                  mobileScene === i ? "w-6 bg-[#00A6FB]" : "w-1.5 bg-gray-300"
+                }`}
+                aria-label={`Go to slide ${i + 1}`}
+              />
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* ========================================================================= */}
@@ -182,41 +208,10 @@ export default function SplitTriptychShowcase({
         {/* Pinned Viewport: Freezes exactly below the navbar */}
         <div className="sticky top-20 sm:top-24 w-full pt-1 pb-6 space-y-4">
           {/* Subtitle directly above the image, visible in pinned state */}
-          <div className="flex flex-row items-end justify-between gap-3">
-            <p className="text-sm md:text-base text-[#475569] font-normal leading-relaxed max-w-2xl">
+          <div>
+            <p className="text-sm md:text-base text-[#475569] font-normal leading-relaxed max-w-3xl">
               Multi-bay manufacturing units equipped with heavy manual welding enclosures, high-tonnage gantry beds, and serialized robotic automation lines engineered for uninterrupted OEM output.
             </p>
-
-            {/* Dynamic Active Scene Pill */}
-            <div className="relative h-7 min-w-[210px] shrink-0">
-              <motion.div
-                style={{ opacity: scene1Opacity }}
-                className="absolute inset-0 flex items-center justify-end"
-              >
-                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/80 text-white text-xs font-mono backdrop-blur-md border border-white/10 shadow-sm">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                  01 • Plant Logistics
-                </span>
-              </motion.div>
-              <motion.div
-                style={{ opacity: scene2Opacity }}
-                className="absolute inset-0 flex items-center justify-end"
-              >
-                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/80 text-white text-xs font-mono backdrop-blur-md border border-white/10 shadow-sm">
-                  <span className="w-1.5 h-1.5 rounded-full bg-orange-400" />
-                  02 • Robotic Arc Cell
-                </span>
-              </motion.div>
-              <motion.div
-                style={{ opacity: scene3Opacity }}
-                className="absolute inset-0 flex items-center justify-end"
-              >
-                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/80 text-white text-xs font-mono backdrop-blur-md border border-white/10 shadow-sm">
-                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-                  03 • High-Bay Assembly
-                </span>
-              </motion.div>
-            </div>
           </div>
 
           {/* 3-Column Split Grid with Hardware-Accelerated Transforms */}

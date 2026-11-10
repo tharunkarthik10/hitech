@@ -207,16 +207,30 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
           return (
             <div
               key={item.id}
-              onClick={() => toggleCardFlip(item.id)}
-              className={`flip-card-container relative w-full h-[390px] sm:h-[340px] cursor-pointer group ${
-                isFlipped ? 'flipped' : ''
-              }`}
+              onClick={(e) => toggleCardFlip(item.id, e)}
+              className="relative w-full h-[400px] sm:h-[340px] cursor-pointer select-none touch-manipulation group"
+              style={{ perspective: 1200, WebkitPerspective: 1200 }}
             >
-              <div className="flip-card-inner">
+              <motion.div
+                animate={{ rotateY: isFlipped ? 180 : 0 }}
+                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                className="w-full h-full relative"
+                style={{ transformStyle: 'preserve-3d', WebkitTransformStyle: 'preserve-3d' }}
+              >
                 {/* ========================================================= */}
                 {/* CARD FRONT: PHOTO, BRIGHT BLUE TITLE & QUICK DETAILS      */}
                 {/* ========================================================= */}
-                <div className="flip-card-front absolute inset-0 bg-white border border-gray-200 rounded-xl overflow-hidden shadow-xs hover:border-[#00A6FB] hover:shadow-md transition-all flex flex-col justify-between">
+                <div
+                  style={{
+                    backfaceVisibility: 'hidden',
+                    WebkitBackfaceVisibility: 'hidden',
+                    transform: 'rotateY(0deg)',
+                    WebkitTransform: 'rotateY(0deg)',
+                  }}
+                  className={`absolute inset-0 bg-white border border-gray-200 rounded-xl overflow-hidden shadow-xs hover:border-[#00A6FB] hover:shadow-md transition-all flex flex-col justify-between ${
+                    isFlipped ? 'pointer-events-none z-0' : 'pointer-events-auto z-10'
+                  }`}
+                >
                   <div className="flex flex-col sm:flex-row h-full">
                     {/* Thumbnail Image */}
                     <div className="w-full sm:w-[45%] h-44 sm:h-full relative overflow-hidden bg-gray-100 shrink-0 border-b sm:border-b-0 sm:border-r border-gray-100">
@@ -273,7 +287,17 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
                 {/* ========================================================= */}
                 {/* CARD BACK: 3D REVERSED FULL SPECS & DETAILS              */}
                 {/* ========================================================= */}
-                <div className="flip-card-back bg-white border-2 border-[#00A6FB]/60 rounded-xl overflow-hidden shadow-md p-5 sm:p-6 flex flex-col justify-between">
+                <div
+                  style={{
+                    backfaceVisibility: 'hidden',
+                    WebkitBackfaceVisibility: 'hidden',
+                    transform: 'rotateY(180deg)',
+                    WebkitTransform: 'rotateY(180deg)',
+                  }}
+                  className={`absolute inset-0 bg-white border-2 border-[#00A6FB]/60 rounded-xl overflow-hidden shadow-md p-5 sm:p-6 flex flex-col justify-between ${
+                    isFlipped ? 'pointer-events-auto z-10' : 'pointer-events-none z-0'
+                  }`}
+                >
                   <div>
                     {/* Header on Back */}
                     <div className="flex items-start justify-between gap-3 pb-2.5 border-b border-gray-100">
@@ -337,7 +361,7 @@ export default function TurningFacilityShowcase({ openQuoteModal }: TurningFacil
                   </div>
                 </div>
 
-              </div>
+              </motion.div>
             </div>
           );
         })}
