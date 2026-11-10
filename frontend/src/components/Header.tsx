@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronRight, Send } from 'lucide-react';
+import { X, ChevronRight } from 'lucide-react';
 
 const mainNavigation = [
   { name: "Home", path: "/" },
@@ -9,7 +9,6 @@ const mainNavigation = [
   { name: "Services", path: "/services" },
   { name: "About Us", path: "/about" },
   { name: "Blog", path: "/blog" },
-  { name: "Career", path: "/career" },
   { name: "Contact", path: "/contact" },
 ];
 
@@ -54,7 +53,7 @@ export default function Header() {
 
         {/* Center: Main Links (Desktop) */}
         <div className="hidden md:flex items-center justify-center flex-1 gap-2 lg:gap-3">
-          {mainNavigation.filter(item => item.name !== "Career").map((item) => {
+          {mainNavigation.map((item) => {
             const isActive = item.path !== "#" && (
               location.pathname === item.path || 
               (item.path !== "/" && location.pathname.startsWith(`${item.path}/`))
@@ -170,18 +169,6 @@ export default function Header() {
                     })}
                   </div>
                 </div>
-              </div>
-
-              {/* Bottom Quick Contact Bar */}
-              <div className="p-4 bg-gray-50 border-t border-gray-100">
-                <Link
-                  to="/contact"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="w-full py-3 rounded-xl bg-[#121212] hover:bg-black text-white font-semibold text-sm tracking-tight flex items-center justify-center gap-2 transition-all shadow-md active:scale-98"
-                >
-                  <Send className="w-4 h-4" />
-                  <span>Request a Fast Quote</span>
-                </Link>
               </div>
             </motion.div>
           </div>
