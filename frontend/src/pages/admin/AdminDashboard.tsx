@@ -51,82 +51,77 @@ Port Thread Standards,G 1/8", G 1/4", G 3/8", G 1/2" BSPP,Optional NPT available
 Operating Temperature,-20°C to +80°C (Standard NBR / PU),Viton option up to 150°C`;
 
 const PRESET_DEPARTMENTS = [
-  'Factory Automation',
-  'Didactics (Skilling & Education)',
-  'Heavy Engineering',
+  'Pneumatics',
+  'Electric Actuators',
+  'Robotics',
+  'Vacuum',
+  'Hydraulics',
+  'Electric',
+  'Servo Systems & Gearbox',
+  'Training Benches',
   'Custom Department...'
 ];
 
 const PRESET_CATEGORIES_BY_DEPT: Record<string, string[]> = {
-  'Factory Automation': [
-    'Pneumatics',
-    'Electric Actuators',
-    'Robotics',
-    'Vacuum',
-    'Hydraulics',
-    'Electric',
-    'Servo Systems & Gearbox'
-  ],
-  'Didactics (Skilling & Education)': [
-    'Educational Test Rigs',
-    'Training Benches',
-    'Cut-Section Working Models'
-  ],
-  'Heavy Engineering': [
-    'Heavy Fabrication',
-    '5-Axis Precision Machining',
-    'Laser Cut Components'
-  ]
-};
-
-const PRESET_SUBGROUPS_BY_CAT: Record<string, string[]> = {
-  Pneumatics: [
+  'Pneumatics': [
     'Cylinders',
     'Air Preparation Unit',
     'Directional Control Valve',
     'One Touch Fittings',
     'Compact Valves',
     'Pneumatic Grippers',
+    'Tubing & Connectors',
     'Mountings & Accessories'
-  ],
-  Hydraulics: [
-    'Hydraulic Power Units',
-    'Control Components',
-    'Hydraulic Cylinders',
-    'Proportional Valves'
   ],
   'Electric Actuators': [
     'Linear Actuators',
     'Motion Drive Modules',
     'Rodless Cylinders',
-    'Precision Slides'
+    'Precision Slides',
+    'Electric Cylinders'
   ],
-  Robotics: [
-    '6-Axis Robots',
+  'Robotics': [
+    'Robotic Automation',
+    '6-Axis Articulated Robots',
     'SCARA Robots',
     'Delta Robots',
-    'Robotic Grippers'
+    'Robotic Grippers',
+    'Welding Automation Cells'
   ],
-  Vacuum: [
+  'Vacuum': [
     'Vacuum Generators & Cups',
     'Suction Pads',
-    'Ejectors',
-    'Vacuum Switches'
+    'Vacuum Ejectors',
+    'Vacuum Switches & Sensors'
   ],
-  Electric: [
+  'Hydraulics': [
+    'Hydraulic Power Units',
+    'Control Components',
+    'Hydraulic Cylinders',
+    'Proportional Valves',
+    'Pumps & Motors'
+  ],
+  'Electric': [
     'AC Drives & Inverters',
     'Servo Motors',
-    'Sensors & Transducers'
+    'Sensors & Proximity Switches',
+    'PLC & HMI Controllers',
+    'Control Components'
   ],
   'Servo Systems & Gearbox': [
     'Planetary Gearboxes',
     'Servo Drives',
-    'Precision Reducers'
+    'Precision Reducers',
+    'Right Angle Gearboxes',
+    'Motion Drive Modules'
   ],
-  'Educational Test Rigs': [
-    'Pneumatics Trainers',
-    'Hydraulics Cut-Section Rigs',
-    'PLC Automation Panels'
+  'Training Benches': [
+    'Pneumatic Training Benches',
+    'Hydraulic Training Benches',
+    'PLC Automation Trainer Benches',
+    'Educational Test Rigs',
+    'Cut-Section Working Models',
+    'Sensorics Training Modules'
   ]
 };
 
@@ -178,7 +173,6 @@ export const AdminDashboard: React.FC = () => {
   // Custom Dropdown Fallback States
   const [isCustomDept, setIsCustomDept] = useState(false);
   const [isCustomCategory, setIsCustomCategory] = useState(false);
-  const [isCustomSubGroup, setIsCustomSubGroup] = useState(false);
 
   const [isCustomJobDept, setIsCustomJobDept] = useState(false);
   const [isCustomJobLocation, setIsCustomJobLocation] = useState(false);
@@ -236,31 +230,24 @@ export const AdminDashboard: React.FC = () => {
 
   // Dynamic categories based on selected department
   const currentDeptCategories = React.useMemo(() => {
-    const dept = editingProduct?.department || 'Factory Automation';
-    const presets = PRESET_CATEGORIES_BY_DEPT[dept] || PRESET_CATEGORIES_BY_DEPT['Factory Automation'];
+    const dept = editingProduct?.department || 'Pneumatics';
+    const presets = PRESET_CATEGORIES_BY_DEPT[dept] || PRESET_CATEGORIES_BY_DEPT['Pneumatics'] || [];
     const existing = products.filter(p => p.department === dept).map(p => p.category);
     return Array.from(new Set([...presets, ...existing]));
   }, [editingProduct?.department, products]);
-
-  // Dynamic subgroups based on selected category
-  const currentCategorySubgroups = React.useMemo(() => {
-    const cat = editingProduct?.category || 'Pneumatics';
-    const presets = PRESET_SUBGROUPS_BY_CAT[cat] || [];
-    const existing = products.filter(p => p.category === cat && p.subGroup).map(p => p.subGroup as string);
-    return Array.from(new Set([...presets, ...existing]));
-  }, [editingProduct?.category, products]);
 
   // --- PRODUCT MANAGEMENT ---
   const handleOpenNewProduct = () => {
     setEditingProduct({
       id: `prod-${Date.now()}`,
       title: '',
-      category: 'Pneumatics',
+      department: 'Pneumatics',
+      category: 'Cylinders',
       subGroup: 'Cylinders',
-      department: 'Factory Automation',
       description: '',
       features: ['High durability precision finish', 'ISO standard certified tolerances'],
       imageUrl: '',
+      images: [],
       dimensions: [
         { param: 'Standard Bore Range', dimension: 'Ø 32, 40, 50, 63, 80 mm', notes: 'ISO 15552' },
         { param: 'Operating Pressure', dimension: '1.0 to 10.0 Bar', notes: 'Proof test: 15 Bar' },
@@ -269,18 +256,22 @@ export const AdminDashboard: React.FC = () => {
     });
     setIsCustomDept(false);
     setIsCustomCategory(false);
-    setIsCustomSubGroup(false);
     setShowUrlFallback(false);
     setIsProductModalOpen(true);
   };
 
   const handleEditProduct = (prod: ProductDetailItem) => {
-    const isCustomD = !PRESET_DEPARTMENTS.slice(0, 3).includes(prod.department || '');
+    const isCustomD = !PRESET_DEPARTMENTS.slice(0, 8).includes(prod.department || '');
     const isCustomC = !Object.values(PRESET_CATEGORIES_BY_DEPT).flat().includes(prod.category || '');
-    const isCustomS = prod.subGroup ? !Object.values(PRESET_SUBGROUPS_BY_CAT).flat().includes(prod.subGroup) : false;
+    const initialImages = prod.images && prod.images.length > 0 
+      ? prod.images 
+      : (prod.imageUrl ? [prod.imageUrl] : []);
 
     setEditingProduct({ 
       ...prod,
+      department: prod.department || 'Pneumatics',
+      imageUrl: prod.imageUrl || (initialImages[0] || ''),
+      images: initialImages,
       dimensions: prod.dimensions && prod.dimensions.length > 0 
         ? prod.dimensions 
         : [
@@ -291,7 +282,6 @@ export const AdminDashboard: React.FC = () => {
     });
     setIsCustomDept(isCustomD);
     setIsCustomCategory(isCustomC);
-    setIsCustomSubGroup(isCustomS);
     setShowUrlFallback(false);
     setIsProductModalOpen(true);
   };
@@ -300,7 +290,18 @@ export const AdminDashboard: React.FC = () => {
     e.preventDefault();
     if (!editingProduct || !editingProduct.title.trim()) return;
 
-    saveStoredProduct(editingProduct);
+    const images = editingProduct.images && editingProduct.images.length > 0
+      ? editingProduct.images
+      : (editingProduct.imageUrl ? [editingProduct.imageUrl] : []);
+
+    const productToSave: ProductDetailItem = {
+      ...editingProduct,
+      imageUrl: images[0] || editingProduct.imageUrl || '',
+      images: images,
+      subGroup: editingProduct.category
+    };
+
+    saveStoredProduct(productToSave);
     setIsProductModalOpen(false);
     setEditingProduct(null);
     showToast('Product successfully saved to catalog.');
@@ -320,38 +321,100 @@ export const AdminDashboard: React.FC = () => {
     }
   };
 
-  // --- IMAGE FILE UPLOAD HANDLING ---
-  const processImageFile = (file: File) => {
-    if (!file.type.startsWith('image/')) {
-      alert('Please select an image file (PNG, JPG, WEBP, or SVG).');
+  // --- MULTI-IMAGE FILE UPLOAD & MANAGEMENT ---
+  const processImageFiles = (files: FileList | File[]) => {
+    const fileList = Array.from(files).filter(f => f.type.startsWith('image/'));
+    if (fileList.length === 0) {
+      alert('Please select valid image files (PNG, JPG, WEBP, or SVG).');
       return;
     }
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const dataUrl = e.target?.result as string;
-      if (dataUrl && editingProduct) {
+
+    const readers = fileList.map(file => {
+      return new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve((e.target?.result as string) || '');
+        reader.readAsDataURL(file);
+      });
+    });
+
+    Promise.all(readers).then((newUrls) => {
+      const validUrls = newUrls.filter(Boolean);
+      if (validUrls.length > 0 && editingProduct) {
+        const existingImages = editingProduct.images && editingProduct.images.length > 0 
+          ? editingProduct.images 
+          : (editingProduct.imageUrl ? [editingProduct.imageUrl] : []);
+        const combined = [...existingImages, ...validUrls];
         setEditingProduct({
           ...editingProduct,
-          imageUrl: dataUrl
+          imageUrl: combined[0] || '',
+          images: combined
         });
-        showToast('Image uploaded and preview updated.');
+        showToast(`Added ${validUrls.length} image(s). Total: ${combined.length}`);
       }
-    };
-    reader.readAsDataURL(file);
+    });
   };
 
   const handleImageFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      processImageFile(e.target.files[0]);
+    if (e.target.files && e.target.files.length > 0) {
+      processImageFiles(e.target.files);
+      e.target.value = '';
     }
   };
 
   const handleImageDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDraggingImage(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      processImageFile(e.dataTransfer.files[0]);
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      processImageFiles(e.dataTransfer.files);
     }
+  };
+
+  const handleRemoveImage = (indexToRemove: number) => {
+    if (!editingProduct) return;
+    const existing = editingProduct.images && editingProduct.images.length > 0
+      ? [...editingProduct.images]
+      : (editingProduct.imageUrl ? [editingProduct.imageUrl] : []);
+
+    existing.splice(indexToRemove, 1);
+    const newPrimary = existing[0] || '';
+    setEditingProduct({
+      ...editingProduct,
+      imageUrl: newPrimary,
+      images: existing
+    });
+    showToast('Image removed.');
+  };
+
+  const handleSetPrimaryImage = (index: number) => {
+    if (!editingProduct) return;
+    const existing = editingProduct.images && editingProduct.images.length > 0
+      ? [...editingProduct.images]
+      : (editingProduct.imageUrl ? [editingProduct.imageUrl] : []);
+
+    if (index >= 0 && index < existing.length) {
+      const selected = existing.splice(index, 1)[0];
+      const reordered = [selected, ...existing];
+      setEditingProduct({
+        ...editingProduct,
+        imageUrl: selected,
+        images: reordered
+      });
+      showToast('Set as main product photo.');
+    }
+  };
+
+  const handleAddImageUrl = (urlToAdd: string) => {
+    if (!urlToAdd.trim() || !editingProduct) return;
+    const existing = editingProduct.images && editingProduct.images.length > 0
+      ? [...editingProduct.images]
+      : (editingProduct.imageUrl ? [editingProduct.imageUrl] : []);
+    const updated = [...existing, urlToAdd.trim()];
+    setEditingProduct({
+      ...editingProduct,
+      imageUrl: updated[0] || '',
+      images: updated
+    });
+    showToast('Image link added.');
   };
 
   // --- TABULAR COLUMN (DIMENSIONS) HANDLING ---
@@ -778,12 +841,18 @@ export const AdminDashboard: React.FC = () => {
                     <span className="absolute top-3 right-3 bg-slate-900/80 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono text-white">
                       ID: {prod.id}
                     </span>
+                    {prod.images && prod.images.length > 1 && (
+                      <span className="absolute bottom-3 right-3 bg-slate-900/85 backdrop-blur-md px-2 py-0.5 rounded-full text-[10px] text-white flex items-center gap-1 font-medium shadow">
+                        <ImageIcon className="w-3 h-3 text-[#00A6FB]" />
+                        {prod.images.length} photos
+                      </span>
+                    )}
                   </div>
 
                   <div className="p-5 flex-1 flex flex-col justify-between">
                     <div>
                       <div className="text-[11px] font-mono text-slate-400 uppercase tracking-wider mb-1 font-semibold">
-                        {prod.subGroup || prod.department || 'Industrial Automation'}
+                        {prod.department ? `${prod.department} • ${prod.category}` : prod.category}
                       </div>
                       <h3 className="font-heading font-bold text-base text-slate-900 group-hover:text-[#00A6FB] transition-colors line-clamp-1 break-words [overflow-wrap:anywhere]">
                         {prod.title}
@@ -1115,20 +1184,21 @@ export const AdminDashboard: React.FC = () => {
             </div>
 
             <form onSubmit={handleSaveProduct} className="space-y-6">
-              {/* Basic Fields */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Product Title *</label>
-                  <input
-                    type="text"
-                    value={editingProduct.title}
-                    onChange={(e) => setEditingProduct({ ...editingProduct, title: e.target.value })}
-                    required
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
-                    placeholder="e.g. Tie Rod Pneumatic Cylinder (ISO 15552)"
-                  />
-                </div>
+              {/* Product Title */}
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Product Title *</label>
+                <input
+                  type="text"
+                  value={editingProduct.title}
+                  onChange={(e) => setEditingProduct({ ...editingProduct, title: e.target.value })}
+                  required
+                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
+                  placeholder="e.g. Tie Rod Pneumatic Cylinder (ISO 15552)"
+                />
+              </div>
 
+              {/* Department & Category */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Department Dropdown */}
                 <div>
                   <div className="flex items-center justify-between mb-1">
@@ -1152,7 +1222,7 @@ export const AdminDashboard: React.FC = () => {
                     />
                   ) : (
                     <select
-                      value={editingProduct.department || 'Factory Automation'}
+                      value={editingProduct.department || 'Pneumatics'}
                       onChange={(e) => {
                         const val = e.target.value;
                         if (val === 'Custom Department...') {
@@ -1162,7 +1232,8 @@ export const AdminDashboard: React.FC = () => {
                           setEditingProduct({
                             ...editingProduct,
                             department: val,
-                            category: cats[0] || editingProduct.category
+                            category: cats[0] || editingProduct.category,
+                            subGroup: cats[0] || editingProduct.category
                           });
                         }
                       }}
@@ -1174,9 +1245,7 @@ export const AdminDashboard: React.FC = () => {
                     </select>
                   )}
                 </div>
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Category Dropdown */}
                 <div>
                   <div className="flex items-center justify-between mb-1">
@@ -1193,7 +1262,7 @@ export const AdminDashboard: React.FC = () => {
                     <input
                       type="text"
                       value={editingProduct.category}
-                      onChange={(e) => setEditingProduct({ ...editingProduct, category: e.target.value })}
+                      onChange={(e) => setEditingProduct({ ...editingProduct, category: e.target.value, subGroup: e.target.value })}
                       required
                       className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-[#00A6FB]"
                       placeholder="Type custom category name..."
@@ -1206,11 +1275,10 @@ export const AdminDashboard: React.FC = () => {
                         if (val === '__custom__') {
                           setIsCustomCategory(true);
                         } else {
-                          const sgs = PRESET_SUBGROUPS_BY_CAT[val] || [];
                           setEditingProduct({
                             ...editingProduct,
                             category: val,
-                            subGroup: sgs[0] || editingProduct.subGroup
+                            subGroup: val
                           });
                         }
                       }}
@@ -1223,134 +1291,179 @@ export const AdminDashboard: React.FC = () => {
                     </select>
                   )}
                 </div>
-
-                {/* SubGroup Dropdown */}
-                <div>
-                  <div className="flex items-center justify-between mb-1">
-                    <label className="block text-xs font-semibold text-slate-700">Sub-Group / Series</label>
-                    <button
-                      type="button"
-                      onClick={() => setIsCustomSubGroup(!isCustomSubGroup)}
-                      className="text-[11px] text-[#0086c9] hover:underline"
-                    >
-                      {isCustomSubGroup ? 'Choose from list' : '+ Custom Sub-Group'}
-                    </button>
-                  </div>
-                  {isCustomSubGroup ? (
-                    <input
-                      type="text"
-                      value={editingProduct.subGroup || ''}
-                      onChange={(e) => setEditingProduct({ ...editingProduct, subGroup: e.target.value })}
-                      className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-[#00A6FB]"
-                      placeholder="Type custom subgroup / series..."
-                    />
-                  ) : (
-                    <select
-                      value={editingProduct.subGroup || ''}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        if (val === '__custom__') {
-                          setIsCustomSubGroup(true);
-                        } else {
-                          setEditingProduct({ ...editingProduct, subGroup: val });
-                        }
-                      }}
-                      className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
-                    >
-                      <option value="">-- Select Sub-Group --</option>
-                      {currentCategorySubgroups.map(sg => (
-                        <option key={sg} value={sg}>{sg}</option>
-                      ))}
-                      <option value="__custom__">+ Custom Sub-Group...</option>
-                    </select>
-                  )}
-                </div>
               </div>
 
-              {/* ----------------- IMAGE UPLOAD SECTION ----------------- */}
-              <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                <div className="flex items-center justify-between mb-2">
-                  <label className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                    <ImageIcon className="w-4 h-4 text-[#00A6FB]" />
-                    Product Photo (Upload File)
-                  </label>
+              {/* ----------------- MULTI-IMAGE UPLOAD SECTION ----------------- */}
+              <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200">
+                <div className="flex items-center justify-between mb-3">
+                  <div>
+                    <label className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                      <ImageIcon className="w-4 h-4 text-[#00A6FB]" />
+                      Product Photos (Upload Multiple Images)
+                      {editingProduct.images && editingProduct.images.length > 0 && (
+                        <span className="ml-1.5 px-2 py-0.5 rounded-full text-[11px] bg-blue-100 text-[#0086c9] font-bold">
+                          {editingProduct.images.length} {editingProduct.images.length === 1 ? 'image' : 'images'}
+                        </span>
+                      )}
+                    </label>
+                    <p className="text-[11px] text-slate-500 mt-0.5">
+                      Select multiple images at once or drag them in. Click the red ✕ on any thumbnail to remove it.
+                    </p>
+                  </div>
                   <button
                     type="button"
                     onClick={() => setShowUrlFallback(!showUrlFallback)}
                     className="text-[11px] text-[#0086c9] hover:underline flex items-center gap-1 font-semibold"
                   >
                     <Link2 className="w-3 h-3" />
-                    {showUrlFallback ? 'Hide URL paste' : 'Or paste image URL instead'}
+                    {showUrlFallback ? 'Hide URL paste' : 'Or paste image URL'}
                   </button>
                 </div>
 
-                {/* Hidden File Input */}
+                {/* Hidden Multi-File Input */}
                 <input
                   type="file"
                   accept="image/*"
+                  multiple
                   ref={imageFileInputRef}
                   onChange={handleImageFileChange}
                   className="hidden"
                 />
 
-                {/* Drag & Drop Upload Zone */}
-                <div
-                  onDragOver={(e) => { e.preventDefault(); setIsDraggingImage(true); }}
-                  onDragLeave={() => setIsDraggingImage(false)}
-                  onDrop={handleImageDrop}
-                  onClick={() => imageFileInputRef.current?.click()}
-                  className={`border-2 border-dashed rounded-xl p-5 text-center cursor-pointer transition-all ${
-                    isDraggingImage 
-                      ? 'border-[#00A6FB] bg-blue-50/50' 
-                      : 'border-slate-300 hover:border-[#00A6FB] bg-white hover:bg-slate-50'
-                  }`}
-                >
-                  {editingProduct.imageUrl ? (
-                    <div className="flex flex-col sm:flex-row items-center gap-4 justify-center">
-                      <div className="w-24 h-24 rounded-xl overflow-hidden border border-slate-200 shadow-sm bg-slate-100 shrink-0">
-                        <img
-                          src={editingProduct.imageUrl}
-                          alt="Preview"
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div className="text-left space-y-1">
-                        <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                          <CheckCircle className="w-3.5 h-3.5" />
-                          Photo Ready
-                        </span>
-                        <p className="text-xs text-slate-700 font-medium">Click or drag a new image here to replace this photo.</p>
-                        <p className="text-[11px] text-slate-400">Supports PNG, JPG, WEBP, SVG</p>
-                      </div>
+                {/* Thumbnails Gallery */}
+                {editingProduct.images && editingProduct.images.length > 0 ? (
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-3">
+                      {editingProduct.images.map((imgSrc, idx) => (
+                        <div
+                          key={idx}
+                          className="relative group rounded-xl overflow-hidden border-2 border-slate-200 bg-white aspect-square shadow-2xs hover:border-[#00A6FB] transition-all"
+                        >
+                          <img
+                            src={imgSrc}
+                            alt={`Product photo ${idx + 1}`}
+                            className="w-full h-full object-cover"
+                          />
+
+                          {/* Primary Badge */}
+                          {idx === 0 ? (
+                            <span className="absolute bottom-1.5 left-1.5 bg-[#00A6FB] text-white text-[10px] font-bold px-1.5 py-0.5 rounded shadow">
+                              Main Photo
+                            </span>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={() => handleSetPrimaryImage(idx)}
+                              className="absolute bottom-1.5 left-1.5 opacity-0 group-hover:opacity-100 bg-slate-900/85 hover:bg-[#00A6FB] text-white text-[10px] font-semibold px-1.5 py-0.5 rounded transition-all shadow"
+                              title="Set as main photo"
+                            >
+                              Make Main
+                            </button>
+                          )}
+
+                          {/* Red '✕' Delete Button */}
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleRemoveImage(idx);
+                            }}
+                            className="absolute top-1.5 right-1.5 w-6 h-6 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center shadow-md hover:scale-110 active:scale-95 transition-all z-10"
+                            title="Remove this image"
+                          >
+                            <X className="w-3.5 h-3.5 stroke-[2.5]" />
+                          </button>
+                        </div>
+                      ))}
+
+                      {/* Add More Photos Card in the Grid */}
+                      <button
+                        type="button"
+                        onClick={() => imageFileInputRef.current?.click()}
+                        className="aspect-square rounded-xl border-2 border-dashed border-slate-300 hover:border-[#00A6FB] bg-white hover:bg-blue-50/50 flex flex-col items-center justify-center text-slate-500 hover:text-[#00A6FB] transition-all group cursor-pointer"
+                      >
+                        <Plus className="w-6 h-6 mb-1 text-slate-400 group-hover:text-[#00A6FB] group-hover:scale-110 transition-transform" />
+                        <span className="text-[11px] font-bold">Add Photos</span>
+                      </button>
                     </div>
-                  ) : (
+
+                    <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1">
+                      <span>Drag more images into the box or click "+ Add Photos"</span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (window.confirm('Remove all uploaded photos for this product?')) {
+                            setEditingProduct({ ...editingProduct, imageUrl: '', images: [] });
+                          }
+                        }}
+                        className="text-red-500 hover:text-red-700 hover:underline"
+                      >
+                        Clear All Photos
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  /* Empty state Drag & Drop Zone */
+                  <div
+                    onDragOver={(e) => { e.preventDefault(); setIsDraggingImage(true); }}
+                    onDragLeave={() => setIsDraggingImage(false)}
+                    onDrop={handleImageDrop}
+                    onClick={() => imageFileInputRef.current?.click()}
+                    className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all ${
+                      isDraggingImage
+                        ? 'border-[#00A6FB] bg-blue-50/50'
+                        : 'border-slate-300 hover:border-[#00A6FB] bg-white hover:bg-slate-50'
+                    }`}
+                  >
                     <div className="space-y-2">
                       <div className="w-12 h-12 rounded-full bg-blue-50 text-[#00A6FB] flex items-center justify-center mx-auto">
                         <UploadCloud className="w-6 h-6" />
                       </div>
                       <p className="text-xs font-bold text-slate-800">
-                        Click to upload product image or drag & drop file here
+                        Click to select images or drag & drop files here
                       </p>
                       <p className="text-[11px] text-slate-500">
-                        High-resolution PNG, JPG, WEBP or SVG
+                        Supports multiple PNG, JPG, WEBP, or SVG files at once
                       </p>
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
 
-                {/* Optional URL Paste input */}
+                {/* Optional Direct URL Paste */}
                 {showUrlFallback && (
                   <div className="mt-3 pt-3 border-t border-slate-200">
                     <label className="block text-[11px] font-semibold text-slate-600 mb-1">
-                      Direct Image Web Link
+                      Add Direct Image Web Link
                     </label>
-                    <input
-                      type="url"
-                      value={editingProduct.imageUrl}
-                      onChange={(e) => setEditingProduct({ ...editingProduct, imageUrl: e.target.value })}
-                      className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-[#00A6FB]"
-                      placeholder="https://images.unsplash.com/photo-..."
-                    />
+                    <div className="flex gap-2">
+                      <input
+                        type="url"
+                        id="direct-img-url-input"
+                        placeholder="https://images.unsplash.com/photo-..."
+                        className="flex-1 px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-[#00A6FB]"
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            const input = e.currentTarget;
+                            handleAddImageUrl(input.value);
+                            input.value = '';
+                          }
+                        }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const input = document.getElementById('direct-img-url-input') as HTMLInputElement;
+                          if (input && input.value) {
+                            handleAddImageUrl(input.value);
+                            input.value = '';
+                          }
+                        }}
+                        className="px-4 py-2 bg-[#00A6FB] hover:bg-[#0095e0] text-white text-xs font-bold rounded-xl transition-colors shrink-0"
+                      >
+                        Add URL
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>

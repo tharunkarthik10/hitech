@@ -49,6 +49,9 @@ const SECONDARY_IMAGE_POOLS: Record<string, string[]> = {
 };
 
 function getProductImages(product: ProductDetailItem): string[] {
+  if (product.images && product.images.length > 0) {
+    return product.images;
+  }
   const primary = product.imageUrl;
   const pool = SECONDARY_IMAGE_POOLS[product.category] || SECONDARY_IMAGE_POOLS.default;
   

@@ -37,6 +37,7 @@ export interface ProductDetailItem {
   description: string;
   features: string[];
   imageUrl: string;
+  images?: string[];
   dimensions?: ProductDimensionRow[];
 }
 
