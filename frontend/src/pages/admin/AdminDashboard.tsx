@@ -183,7 +183,6 @@ export const AdminDashboard: React.FC = () => {
   // Applications State
   const [applications, setApplications] = useState<CandidateApplication[]>([]);
   const [applicationSearch, setApplicationSearch] = useState('');
-  const [statusFilter, setStatusFilter] = useState<string>('All');
   const [viewingApp, setViewingApp] = useState<CandidateApplication | null>(null);
 
   // Notification Toast
@@ -686,11 +685,12 @@ export const AdminDashboard: React.FC = () => {
 
   // Filtered Applications
   const filteredApps = applications.filter(a => {
-    const matchesSearch = a.candidateName.toLowerCase().includes(applicationSearch.toLowerCase()) ||
-                          a.jobTitle.toLowerCase().includes(applicationSearch.toLowerCase()) ||
-                          a.email.toLowerCase().includes(applicationSearch.toLowerCase());
-    const matchesStatus = statusFilter === 'All' || a.status === statusFilter;
-    return matchesSearch && matchesStatus;
+    const q = applicationSearch.toLowerCase().trim();
+    if (!q) return true;
+    return a.candidateName.toLowerCase().includes(q) ||
+           a.jobTitle.toLowerCase().includes(q) ||
+           a.email.toLowerCase().includes(q) ||
+           (a.phone && a.phone.toLowerCase().includes(q));
   });
 
   return (
@@ -813,23 +813,15 @@ export const AdminDashboard: React.FC = () => {
           </div>
 
           {/* Action Button depending on tab - Sized and aligned on mobile */}
-          <div className="flex items-center justify-between sm:justify-end gap-2 w-full sm:w-auto">
+          <div className="flex items-center justify-end gap-2 w-full sm:w-auto">
             {activeTab === 'products' && (
-              <>
-                <button
-                  onClick={handleResetProducts}
-                  className="flex-1 sm:flex-none text-center px-3 py-2 rounded-xl bg-white hover:bg-slate-100 text-xs text-slate-600 hover:text-slate-900 border border-slate-200 transition-colors shadow-xs font-medium cursor-pointer"
-                >
-                  Reset Defaults
-                </button>
-                <button
-                  onClick={handleOpenNewProduct}
-                  className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-[#00A6FB] hover:bg-[#0095e0] text-white font-bold text-xs shadow-md shadow-[#00A6FB]/20 transition-all cursor-pointer"
-                >
-                  <Plus className="w-4 h-4 shrink-0" />
-                  <span>Add New Product</span>
-                </button>
-              </>
+              <button
+                onClick={handleOpenNewProduct}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-[#00A6FB] hover:bg-[#0095e0] text-white font-bold text-xs shadow-md shadow-[#00A6FB]/20 transition-all cursor-pointer"
+              >
+                <Plus className="w-4 h-4 shrink-0" />
+                <span>Add New Product</span>
+              </button>
             )}
             {activeTab === 'careers' && (
               <button
@@ -1152,33 +1144,16 @@ export const AdminDashboard: React.FC = () => {
         {activeTab === 'applications' && (
           <div className="space-y-6">
             {/* Filter Bar */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-between items-center bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-              <div className="relative w-full sm:w-80">
+            <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200 shadow-xs">
+              <div className="relative w-full">
                 <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
                   type="text"
                   value={applicationSearch}
                   onChange={(e) => setApplicationSearch(e.target.value)}
-                  placeholder="Search applicant name, email, role..."
-                  className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
+                  placeholder="Search applicant name, email, role, or phone..."
+                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-[#00A6FB] transition-colors"
                 />
-              </div>
-
-              {/* Status Filters */}
-              <div className="flex flex-wrap gap-2">
-                {['All', 'Under Review', 'Shortlisted', 'Interview Scheduled', 'Hired', 'Rejected'].map((st) => (
-                  <button
-                    key={st}
-                    onClick={() => setStatusFilter(st)}
-                    className={`px-3 py-1.5 rounded-lg text-xs transition-colors ${
-                      statusFilter === st
-                        ? 'bg-[#00A6FB] text-white font-bold shadow-sm'
-                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900 font-medium'
-                    }`}
-                  >
-                    {st}
-                  </button>
-                ))}
               </div>
             </div>
 
@@ -1196,15 +1171,6 @@ export const AdminDashboard: React.FC = () => {
                       </span>
                       <span className="text-xs text-[#0086c9] font-semibold bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-200">
                         {app.jobTitle}
-                      </span>
-                      <span className={`text-[10px] font-mono px-2 py-0.5 rounded font-bold uppercase ${
-                        app.status === 'Shortlisted' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
-                        app.status === 'Interview Scheduled' ? 'bg-purple-50 text-purple-700 border border-purple-200' :
-                        app.status === 'Hired' ? 'bg-green-50 text-green-700 border border-green-200' :
-                        app.status === 'Rejected' ? 'bg-red-50 text-red-600 border border-red-200' :
-                        'bg-blue-50 text-blue-700 border border-blue-200'
-                      }`}>
-                        {app.status}
                       </span>
                     </div>
 
@@ -1230,23 +1196,11 @@ export const AdminDashboard: React.FC = () => {
                     )}
                   </div>
 
-                  {/* Actions & Status Dropdown */}
-                  <div className="flex items-center justify-end gap-2.5 shrink-0 w-full md:w-auto pt-2.5 md:pt-0 border-t md:border-t-0 border-slate-100">
-                    <select
-                      value={app.status}
-                      onChange={(e) => handleStatusChange(app.id, e.target.value as any)}
-                      className="bg-slate-50 border border-slate-300 rounded-lg text-xs text-slate-800 px-2.5 py-1.5 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
-                    >
-                      <option value="Under Review">Under Review</option>
-                      <option value="Shortlisted">Shortlisted</option>
-                      <option value="Interview Scheduled">Interview Scheduled</option>
-                      <option value="Hired">Hired</option>
-                      <option value="Rejected">Rejected</option>
-                    </select>
-
+                  {/* Actions */}
+                  <div className="flex items-center justify-end gap-2 shrink-0 w-full md:w-auto pt-2.5 md:pt-0 border-t md:border-t-0 border-slate-100">
                     <button
                       onClick={() => setViewingApp(app)}
-                      className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 transition-colors shadow-sm"
+                      className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 transition-colors shadow-xs cursor-pointer"
                       title="View Full Profile"
                     >
                       <Eye className="w-4 h-4" />
@@ -1254,7 +1208,7 @@ export const AdminDashboard: React.FC = () => {
 
                     <button
                       onClick={() => handleDeleteApp(app.id)}
-                      className="p-2 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 transition-colors border border-red-100 shadow-sm"
+                      className="p-2 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 transition-colors border border-red-100 shadow-xs cursor-pointer"
                       title="Delete Application"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -2045,29 +1999,10 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               )}
 
-              <div className="pt-4 border-t border-slate-200 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="text-slate-500 font-medium">Status:</span>
-                  <select
-                    value={viewingApp.status}
-                    onChange={(e) => {
-                      const next = e.target.value as any;
-                      handleStatusChange(viewingApp.id, next);
-                      setViewingApp({ ...viewingApp, status: next });
-                    }}
-                    className="bg-slate-50 border border-slate-300 rounded-lg text-xs text-slate-800 px-2 py-1 focus:outline-none focus:bg-white focus:border-[#00A6FB]"
-                  >
-                    <option value="Under Review">Under Review</option>
-                    <option value="Shortlisted">Shortlisted</option>
-                    <option value="Interview Scheduled">Interview Scheduled</option>
-                    <option value="Hired">Hired</option>
-                    <option value="Rejected">Rejected</option>
-                  </select>
-                </div>
-
+              <div className="pt-4 border-t border-slate-200 flex items-center justify-end">
                 <button
                   onClick={() => setViewingApp(null)}
-                  className="px-4 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition-colors"
+                  className="px-5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition-colors cursor-pointer"
                 >
                   Close
                 </button>
